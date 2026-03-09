@@ -4,1730 +4,1151 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-/* ── RESET & TOKENS ─────────────────────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d0f14;
-  --surface:#161920;
-  --surface2:#1e222d;
-  --surface3:#252a38;
-  --border:#2a3040;
-  --border2:#333d52;
-  --text:#e8eaf0;
-  --muted:#7a8499;
-  --muted2:#4a5568;
-  --accent:#4f9cf9;
-  --accent-dim:#1e3a5a;
-  --accent-glow:rgba(79,156,249,0.15);
-  --green:#22d37a;
-  --green-dim:#0d2e1f;
-  --yellow:#f5c842;
-  --yellow-dim:#2e2510;
-  --red:#f25c5c;
-  --red-dim:#2e1010;
-  --orange:#f8943a;
-  --orange-dim:#2e1b08;
-  --purple:#a78bfa;
-  --purple-dim:#1e1730;
-  --teal:#2dd4bf;
-  --teal-dim:#0d2825;
-  --mono:'IBM Plex Mono',monospace;
-  --sans:'IBM Plex Sans',sans-serif;
-  --radius:8px;
-  --radius-lg:14px;
+  --bg:#0d0f14;--surface:#161920;--surface2:#1e222d;--surface3:#252a38;
+  --border:#2a3040;--border2:#333d52;--text:#e8eaf0;--muted:#7a8499;--muted2:#4a5568;
+  --accent:#4f9cf9;--accent-dim:#1e3a5a;--accent-glow:rgba(79,156,249,0.15);
+  --green:#22d37a;--green-dim:#0d2e1f;--yellow:#f5c842;--yellow-dim:#2e2510;
+  --red:#f25c5c;--red-dim:#2e1010;--orange:#f8943a;--orange-dim:#2e1b08;
+  --purple:#a78bfa;--purple-dim:#1e1730;--teal:#2dd4bf;--teal-dim:#0d2825;
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+  --r:8px;--rl:14px;
 }
-
 body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 
-/* scrollbar */
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
-
-/* ── LAYOUT ─────────────────────────────────────────────────────────────── */
-#app-wrap{display:flex;height:100vh;overflow:hidden}
-
-/* ── SIDEBAR ─────────────────────────────────────────────────────────────── */
-#sidebar{
-  width:260px;flex-shrink:0;
-  background:var(--surface);
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  overflow:hidden;
-  transition:width .25s ease;
-}
+#wrap{display:flex;height:100vh;overflow:hidden}
+#sidebar{width:260px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:width .25s ease}
 #sidebar.collapsed{width:0}
-.sb-header{
-  padding:18px 16px 14px;
-  border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.sb-logo{font-family:var(--mono);font-size:1.25rem;font-weight:700;letter-spacing:-1px;color:var(--text)}
+.sb-hd{padding:18px 16px 14px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-logo{font-family:var(--mono);font-size:1.25rem;font-weight:700;letter-spacing:-1px}
 .sb-logo span{color:var(--accent)}
-.sb-tagline{font-size:0.7rem;color:var(--muted);margin-top:2px;font-style:italic}
+.sb-tag{font-size:0.7rem;color:var(--muted);margin-top:2px;font-style:italic}
 .sb-cases{flex:1;overflow-y:auto;padding:8px 0}
-.sb-section-label{
-  font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:.12em;
-  color:var(--muted2);text-transform:uppercase;
-  padding:12px 16px 6px;
-}
-.sb-case-btn{
-  width:100%;background:none;border:none;cursor:pointer;
-  padding:9px 16px;text-align:left;
-  display:flex;align-items:center;gap:10px;
-  transition:background .12s;
-  border-left:3px solid transparent;
-}
-.sb-case-btn:hover{background:var(--surface2)}
-.sb-case-btn.active{background:var(--accent-dim);border-left-color:var(--accent)}
-.sb-case-btn .case-num{font-family:var(--mono);font-size:0.68rem;color:var(--muted);min-width:28px}
-.sb-case-btn .case-title{font-size:0.82rem;color:var(--text);line-height:1.3;flex:1}
-.sb-case-btn.active .case-title{color:var(--accent)}
-.sb-case-btn .case-badge{font-size:0.65rem;font-family:var(--mono);padding:1px 5px;border-radius:4px;flex-shrink:0}
-.sb-case-btn .case-badge.win{background:var(--green-dim);color:var(--green)}
-.sb-case-btn .case-badge.lose{background:var(--red-dim);color:var(--red)}
-.sb-case-btn .case-badge.miss{background:var(--red-dim);color:var(--red)}
+.sb-sec{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:.12em;color:var(--muted2);text-transform:uppercase;padding:12px 16px 6px}
+.sb-btn{width:100%;background:none;border:none;cursor:pointer;padding:9px 16px;text-align:left;display:flex;align-items:center;gap:10px;transition:background .12s;border-left:3px solid transparent}
+.sb-btn:hover{background:var(--surface2)}
+.sb-btn.active{background:var(--accent-dim);border-left-color:var(--accent)}
+.sb-btn .cn{font-family:var(--mono);font-size:0.68rem;color:var(--muted);min-width:28px}
+.sb-btn .ct{font-size:0.82rem;color:var(--text);flex:1;text-align:left}
+.sb-btn.active .ct{color:var(--accent)}
+.cbadge{font-size:0.65rem;font-family:var(--mono);padding:1px 5px;border-radius:4px;flex-shrink:0}
+.cbadge.done{background:var(--green-dim);color:var(--green)}
 
-/* ── MAIN AREA ───────────────────────────────────────────────────────────── */
 #main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-
-/* ── TOP BAR ─────────────────────────────────────────────────────────────── */
-#topbar{
-  padding:12px 20px;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:12px;
-  background:var(--surface);
-  flex-shrink:0;
-  position:sticky;top:0;z-index:100;
-}
-.tb-toggle{
-  background:none;border:1px solid var(--border2);border-radius:6px;
-  padding:6px 9px;cursor:pointer;color:var(--muted);font-size:0.85rem;
-  transition:all .15s;
-}
-.tb-toggle:hover{border-color:var(--accent);color:var(--accent)}
-.tb-title{font-family:var(--mono);font-size:0.88rem;font-weight:600;color:var(--muted)}
-.tb-case-name{font-size:0.88rem;color:var(--text);font-weight:600}
-.tb-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.tb-phase{
-  font-family:var(--mono);font-size:0.7rem;font-weight:600;
-  padding:4px 10px;border-radius:20px;letter-spacing:.04em;
-}
-.tb-phase.phase-1{background:var(--purple-dim);color:var(--purple)}
-.tb-phase.phase-2{background:var(--teal-dim);color:var(--teal)}
-.tb-phase.phase-commit{background:var(--orange-dim);color:var(--orange)}
-.tb-phase.phase-debrief{background:var(--green-dim);color:var(--green)}
-.efficiency-meter{
-  display:flex;align-items:center;gap:6px;
-  font-family:var(--mono);font-size:0.72rem;color:var(--muted);
-}
-.eff-bar{width:60px;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
-.eff-fill{height:100%;border-radius:3px;transition:width .4s ease,background .4s}
-
-/* ── CONTENT AREA ────────────────────────────────────────────────────────── */
+#topbar{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--surface);flex-shrink:0;position:sticky;top:0;z-index:100}
+.tb-tog{background:none;border:1px solid var(--border2);border-radius:6px;padding:6px 9px;cursor:pointer;color:var(--muted);font-size:0.85rem;transition:all .15s}
+.tb-tog:hover{border-color:var(--accent);color:var(--accent)}
+#tbName{font-size:0.88rem;color:var(--text);font-weight:600}
+#tbRight{margin-left:auto;display:flex;align-items:center;gap:10px}
+.tb-phase{font-family:var(--mono);font-size:0.7rem;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.04em}
+.tp-1{background:var(--purple-dim);color:var(--purple)}
+.tp-2{background:var(--teal-dim);color:var(--teal)}
+.tp-c{background:var(--orange-dim);color:var(--orange)}
+.tp-d{background:var(--green-dim);color:var(--green)}
+.tp-x{background:var(--red-dim);color:var(--red)}
+.eff-wrap{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:0.7rem;color:var(--muted)}
+.eff-bar{width:55px;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.eff-fill{height:100%;border-radius:3px;transition:width .4s,background .4s}
 #content{flex:1;padding:24px 28px;max-width:820px;margin:0 auto;width:100%}
 
-/* ── WELCOME SCREEN ──────────────────────────────────────────────────────── */
-.welcome{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:70vh;gap:8px;text-align:center;
-}
-.welcome-logo{font-family:var(--mono);font-size:3.5rem;font-weight:700;letter-spacing:-4px;color:var(--text)}
-.welcome-logo span{color:var(--accent)}
-.welcome-sub{font-size:0.95rem;color:var(--muted);max-width:340px;line-height:1.7;margin-top:4px}
-.welcome-hint{
-  margin-top:28px;font-size:0.78rem;color:var(--muted2);
-  border:1px dashed var(--border2);border-radius:var(--radius);
-  padding:10px 18px;font-family:var(--mono);
-}
+/* ── MODAL ── */
+#modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
+#modal-overlay.hidden{display:none}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);max-width:620px;width:100%;max-height:90vh;overflow-y:auto;padding:28px 30px}
+.modal-logo{font-family:var(--mono);font-size:2rem;font-weight:700;letter-spacing:-2px;margin-bottom:4px}
+.modal-logo span{color:var(--accent)}
+.modal-tag{font-size:0.85rem;color:var(--muted);margin-bottom:22px}
+.m-phases{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.mp{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:13px 15px;display:flex;gap:13px;align-items:flex-start}
+.mp-badge{font-family:var(--mono);font-size:0.62rem;font-weight:700;padding:3px 8px;border-radius:20px;flex-shrink:0;margin-top:2px}
+.mp-badge.p1{background:var(--purple-dim);color:var(--purple)}
+.mp-badge.p2{background:var(--teal-dim);color:var(--teal)}
+.mp-badge.p3{background:var(--orange-dim);color:var(--orange)}
+.mp-title{font-size:0.88rem;font-weight:700;margin-bottom:3px}
+.mp-desc{font-size:0.78rem;color:var(--muted);line-height:1.6}
+.m-rule{background:var(--red-dim);border:1px solid var(--red);border-radius:var(--r);padding:12px 14px;margin-bottom:18px;font-size:0.79rem;line-height:1.65}
+.m-rule strong{color:var(--red)}
+.m-badges{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px}
+.mb{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:var(--r);background:var(--surface2);border:1px solid var(--border);font-size:0.77rem}
+.m-start{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:0.92rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:opacity .15s}
+.m-start:hover{opacity:.88}
 
-/* ── PHASE LABELS ────────────────────────────────────────────────────────── */
-.phase-header{
-  display:flex;align-items:center;gap:12px;margin-bottom:20px;
-}
-.ph-num{
-  font-family:var(--mono);font-size:0.65rem;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:3px 8px;border-radius:4px;
-}
+/* ── WELCOME ── */
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;gap:8px;text-align:center}
+.wl{font-family:var(--mono);font-size:3.5rem;font-weight:700;letter-spacing:-4px}
+.wl span{color:var(--accent)}
+.ws{font-size:0.95rem;color:var(--muted);max-width:340px;line-height:1.7;margin-top:4px}
+.wh{margin-top:28px;font-size:0.78rem;color:var(--muted2);border:1px dashed var(--border2);border-radius:var(--r);padding:10px 18px;font-family:var(--mono)}
+
+/* ── PHASE HEADER ── */
+.ph{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.ph-num{font-family:var(--mono);font-size:0.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px}
 .ph-num.p1{background:var(--purple-dim);color:var(--purple)}
 .ph-num.p2{background:var(--teal-dim);color:var(--teal)}
 .ph-num.pc{background:var(--orange-dim);color:var(--orange)}
 .ph-num.pd{background:var(--green-dim);color:var(--green)}
-.ph-title{font-size:1.1rem;font-weight:700;color:var(--text)}
+.ph-title{font-size:1.05rem;font-weight:700}
 .ph-sub{font-size:0.8rem;color:var(--muted);margin-top:1px}
 
-/* ── VIGNETTE CARD ───────────────────────────────────────────────────────── */
-.vignette-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:20px 22px;margin-bottom:20px;
-  border-left:3px solid var(--accent);
-}
-.vignette-label{
-  font-family:var(--mono);font-size:0.65rem;font-weight:600;
-  letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;
-}
-.vignette-text{font-size:1rem;line-height:1.75;color:var(--text)}
+/* ── VIGNETTE ── */
+.vig{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--rl);padding:18px 20px;margin-bottom:16px}
+.vig-lbl{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:8px}
+.vig-txt{font-size:0.95rem;line-height:1.75}
 
-/* ── VITAMIN CDE SCAFFOLD ────────────────────────────────────────────────── */
-.scaffold-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:16px;
-}
-.scaffold-label{
-  font-family:var(--mono);font-size:0.65rem;font-weight:600;
-  letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;
-  display:flex;align-items:center;gap:8px;
-}
-.scaffold-grid{display:flex;flex-wrap:wrap;gap:6px}
-.vit-chip{
-  padding:5px 11px;border-radius:20px;font-size:0.75rem;font-weight:600;
-  cursor:pointer;border:1.5px solid var(--border2);color:var(--muted);
-  background:var(--surface2);transition:all .15s;user-select:none;
-  font-family:var(--mono);
-}
+/* ── VITAMIN CDE ── */
+.scaffold{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:14px 16px;margin-bottom:14px}
+.scaffold-lbl{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+.vit-grid{display:flex;flex-wrap:wrap;gap:5px}
+.vit-chip{padding:4px 10px;border-radius:20px;font-size:0.73rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);color:var(--muted);background:var(--surface2);transition:all .15s;user-select:none;font-family:var(--mono)}
 .vit-chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
-.vit-chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.vit-hint{font-size:0.72rem;color:var(--muted);margin-top:10px;line-height:1.5;font-style:italic}
+.vit-chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.vit-hint{font-size:0.72rem;color:var(--muted);margin-top:10px;line-height:1.5;min-height:18px;font-style:italic}
 
-/* ── DIFFERENTIAL BUILDER ────────────────────────────────────────────────── */
-.diff-builder{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:16px;
-}
-.diff-builder-label{
-  font-family:var(--mono);font-size:0.65rem;font-weight:600;
-  letter-spacing:.1em;color:var(--muted);text-transform:uppercase;
-  margin-bottom:14px;
-}
+/* ── DIFF BUILDER ── */
+.diff-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:16px 18px;margin-bottom:14px}
+.diff-box-lbl{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
+.tag-row{display:flex;gap:6px;margin-bottom:10px}
+.tag-btn{padding:5px 12px;border-radius:20px;font-size:0.74rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);color:var(--muted);background:var(--surface2);transition:all .15s}
+.tag-btn.t-mnm{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+.tag-btn.t-wd{border-color:var(--yellow);color:var(--yellow);background:var(--yellow-dim)}
 
-/* search input */
-.search-wrap{position:relative;margin-bottom:14px}
-.dx-search{
-  width:100%;padding:10px 14px;
-  background:var(--surface2);border:1.5px solid var(--border2);
-  border-radius:var(--radius);color:var(--text);font-size:0.9rem;
-  font-family:var(--sans);outline:none;transition:border-color .18s,box-shadow .18s;
-}
-.dx-search:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-.dx-search::placeholder{color:var(--muted2)}
-.search-dropdown{
-  position:absolute;top:calc(100%+4px);left:0;right:0;
-  background:var(--surface2);border:1.5px solid var(--border2);
-  border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.4);
-  z-index:200;max-height:240px;overflow-y:auto;display:none;
-}
-.search-dropdown.show{display:block}
-.sd-group-label{
-  font-family:var(--mono);font-size:0.6rem;letter-spacing:.1em;
-  color:var(--muted2);text-transform:uppercase;
-  padding:8px 12px 4px;border-top:1px solid var(--border);
-}
-.sd-group-label:first-child{border-top:none}
-.sd-item{
-  padding:9px 13px;font-size:0.85rem;cursor:pointer;color:var(--text);
-  transition:background .1s;display:flex;align-items:center;gap:8px;
-}
-.sd-item:hover,.sd-item.focused{background:var(--accent-dim);color:var(--accent)}
-.sd-item.used{color:var(--muted2);cursor:default}
-.sd-item.used:hover{background:transparent;color:var(--muted2)}
-.sd-type{font-size:0.65rem;font-family:var(--mono);color:var(--muted2);margin-left:auto;flex-shrink:0}
-.sd-type.umbrella{color:var(--teal)}
-.sd-type.subtype{color:var(--purple);padding-left:10px}
-.sd-empty{padding:10px 13px;font-size:0.83rem;color:var(--muted);font-style:italic}
+/* search */
+.srch-wrap{position:relative;margin-bottom:12px}
+.srch-inp{width:100%;padding:10px 14px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:0.9rem;font-family:var(--sans);outline:none;transition:border-color .18s,box-shadow .18s}
+.srch-inp:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.srch-inp::placeholder{color:var(--muted2)}
+.srch-dd{position:absolute;top:calc(100%+4px);left:0;right:0;background:var(--surface2);border:1.5px solid var(--border2);border-radius:var(--r);box-shadow:0 10px 30px rgba(0,0,0,.45);z-index:200;max-height:240px;overflow-y:auto;display:none}
+.srch-dd.show{display:block}
+.dd-grp{font-family:var(--mono);font-size:0.6rem;letter-spacing:.1em;color:var(--muted2);text-transform:uppercase;padding:8px 12px 4px;border-top:1px solid var(--border)}
+.dd-grp:first-child{border-top:none}
+.dd-item{padding:9px 13px;font-size:0.85rem;cursor:pointer;color:var(--text);transition:background .1s;display:flex;align-items:center;gap:8px}
+.dd-item:hover,.dd-item.focused{background:var(--accent-dim);color:var(--accent)}
+.dd-item.used{color:var(--muted2);cursor:default}
+.dd-item.used:hover{background:transparent;color:var(--muted2)}
+.dd-kind{font-size:0.62rem;font-family:var(--mono);color:var(--muted2);margin-left:auto;flex-shrink:0}
+.dd-kind.umb{color:var(--teal)}.dd-kind.sub{color:var(--purple)}
+.dd-empty{padding:10px 13px;font-size:0.83rem;color:var(--muted);font-style:italic}
 
-/* tag type toggle */
-.tag-type-row{display:flex;gap:6px;margin-bottom:14px}
-.tag-type-btn{
-  padding:5px 12px;border-radius:20px;font-size:0.74rem;font-weight:600;
-  cursor:pointer;border:1.5px solid var(--border2);color:var(--muted);
-  background:var(--surface2);transition:all .15s;
-}
-.tag-type-btn:hover{border-color:var(--orange);color:var(--orange)}
-.tag-type-btn.active-mnm{background:var(--red);border-color:var(--red);color:#fff}
-.tag-type-btn.active-wd{background:var(--yellow);border-color:var(--yellow);color:#000}
-
-/* differential list */
-.diff-list{display:flex;flex-direction:column;gap:6px;min-height:40px}
-.diff-empty{
-  font-size:0.82rem;color:var(--muted2);font-style:italic;
-  padding:10px 0;text-align:center;font-family:var(--mono);
-}
-.diff-entry{
-  background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:var(--radius);padding:8px 12px;
-  display:flex;align-items:flex-start;gap:8px;
-  transition:border-color .15s;
-  animation:entryIn .2s ease;
-}
-@keyframes entryIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
-.diff-entry.mnm{border-left:3px solid var(--red)}
-.diff-entry.wd{border-left:3px solid var(--yellow)}
-.diff-entry.eliminated{opacity:.35;border-style:dashed}
-.diff-entry.eliminated .de-name{text-decoration:line-through}
-.de-left{flex:1;min-width:0}
-.de-name{font-size:0.88rem;font-weight:600;color:var(--text);line-height:1.3}
-.de-tag{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:0.65rem;font-family:var(--mono);font-weight:700;
-  padding:2px 7px;border-radius:10px;margin-top:4px;
-}
-.de-tag.mnm{background:var(--red-dim);color:var(--red)}
-.de-tag.wd{background:var(--yellow-dim);color:var(--yellow)}
-.de-subtypes{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
-.de-subtype{
-  font-size:0.72rem;padding:2px 8px;border-radius:20px;
-  background:var(--surface3);border:1px solid var(--border2);color:var(--muted);
-  cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:4px;
-  font-family:var(--mono);
-}
-.de-subtype:hover{border-color:var(--red);color:var(--red)}
-.de-subtype.elim{text-decoration:line-through;opacity:.4;border-color:transparent}
-.de-subtype.elim:hover{opacity:.6;border-color:var(--muted2);color:var(--muted)}
-.de-actions{display:flex;flex-direction:column;gap:4px;flex-shrink:0}
-.de-btn{
-  background:none;border:1px solid var(--border2);border-radius:5px;
-  padding:3px 7px;font-size:0.65rem;cursor:pointer;color:var(--muted);
-  transition:all .12s;font-family:var(--mono);white-space:nowrap;
-}
+/* diff list entries */
+.dlist{display:flex;flex-direction:column;gap:5px;min-height:34px}
+.dempty{font-size:0.8rem;color:var(--muted2);font-style:italic;padding:8px 0;text-align:center;font-family:var(--mono)}
+.de{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;transition:border-color .15s;animation:ein .2s ease;overflow:hidden}
+@keyframes ein{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
+.de.mnm-e{border-left:3px solid var(--red)}.de.wd-e{border-left:3px solid var(--yellow)}
+.de.elim .de-top{opacity:.4}.de.elim{border-style:dashed}
+.de.drag-over{border-color:var(--accent);background:var(--accent-dim)}
+.de[draggable="true"]{cursor:default}
+.de.dragging{opacity:.35}
+.de-top{display:flex;align-items:flex-start;gap:7px;padding:8px 10px}
+.de-drag{color:var(--muted2);font-size:0.78rem;flex-shrink:0;margin-top:2px;cursor:grab;user-select:none;padding:1px 3px}
+.de-rank{font-family:var(--mono);font-size:0.68rem;color:var(--muted2);width:16px;text-align:center;flex-shrink:0;margin-top:2px}
+.de-main{flex:1;min-width:0}
+.de-name{font-size:0.87rem;font-weight:600;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.de-name.elim-name{text-decoration:line-through;color:var(--muted)}
+.de-tag{display:inline-flex;align-items:center;font-size:0.6rem;font-family:var(--mono);font-weight:700;padding:2px 5px;border-radius:7px}
+.de-tag.t-mnm{background:var(--red-dim);color:var(--red)}.de-tag.t-wd{background:var(--yellow-dim);color:var(--yellow)}
+.de-lock{font-size:0.63rem;color:var(--red);margin-top:3px;display:flex;align-items:center;gap:3px;font-family:var(--mono)}
+.de-subs{padding:0 10px 8px 32px;display:flex;flex-wrap:wrap;gap:4px}
+.de-sub{font-size:0.69rem;padding:2px 8px;border-radius:20px;background:var(--surface3);border:1px solid var(--border2);color:var(--muted);cursor:pointer;transition:all .12s;font-family:var(--mono)}
+.de-sub:hover{border-color:var(--red);color:var(--red)}
+.de-sub.sub-elim{text-decoration:line-through;opacity:.35}
+.de-sub.sub-elim:hover{opacity:.7;border-color:var(--green);color:var(--green);text-decoration:none}
+.de-acts{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+.de-btn{background:none;border:1px solid var(--border2);border-radius:5px;padding:3px 8px;font-size:0.62rem;cursor:pointer;color:var(--muted);transition:all .12s;font-family:var(--mono);white-space:nowrap}
 .de-btn:hover{border-color:var(--red);color:var(--red);background:var(--red-dim)}
 .de-btn.restore:hover{border-color:var(--green);color:var(--green);background:var(--green-dim)}
-.de-btn.expand{font-size:0.7rem}
-.de-btn.expand:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-dim)}
 
-/* MNM lock indicator */
-.mnm-lock{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:0.65rem;font-family:var(--mono);color:var(--red);
-  margin-top:3px;
-}
+/* ── INV PANEL ── */
+.inv-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:15px 17px;margin-bottom:14px}
+.inv-panel-lbl{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+.inv-cats{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.inv-cat{padding:5px 11px;border-radius:20px;font-size:0.73rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);color:var(--muted);background:var(--surface2);transition:all .15s;font-family:var(--mono)}
+.inv-cat:hover,.inv-cat.on{border-color:var(--teal);color:var(--teal);background:var(--teal-dim)}
+.inv-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.inv-opt{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r);padding:10px 12px;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:3px}
+.inv-opt:hover{border-color:var(--teal);background:var(--teal-dim)}
+.inv-opt.used{opacity:.4;cursor:not-allowed;border-style:dashed;pointer-events:none}
+.io-name{font-size:0.83rem;font-weight:600}
+.io-cost{font-family:var(--mono);font-size:0.65rem;display:flex;align-items:center;gap:4px}
+.io-cost.free,.io-cost.low{color:var(--green)}.io-cost.mid{color:var(--yellow)}.io-cost.high{color:var(--red)}
+.cost-dot{width:5px;height:5px;border-radius:50%;display:inline-block;background:currentColor}
 
-/* ── PHASE 2: INVESTIGATION PANEL ────────────────────────────────────────── */
-.inv-panel{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:16px;
-}
-.inv-panel-label{
-  font-family:var(--mono);font-size:0.65rem;font-weight:600;
-  letter-spacing:.1em;color:var(--muted);text-transform:uppercase;
-  margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;
-}
-.cost-display{
-  font-size:0.68rem;color:var(--muted2);font-family:var(--mono);
-}
-.inv-categories{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
-.inv-cat-btn{
-  padding:5px 12px;border-radius:20px;font-size:0.75rem;font-weight:600;
-  cursor:pointer;border:1.5px solid var(--border2);color:var(--muted);
-  background:var(--surface2);transition:all .15s;font-family:var(--mono);
-}
-.inv-cat-btn:hover,.inv-cat-btn.active{border-color:var(--teal);color:var(--teal);background:var(--teal-dim)}
-.inv-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.inv-option{
-  background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:var(--radius);padding:11px 13px;cursor:pointer;
-  transition:all .18s;display:flex;flex-direction:column;gap:4px;
-}
-.inv-option:hover{border-color:var(--teal);background:var(--teal-dim)}
-.inv-option.used{opacity:.4;cursor:default;border-style:dashed}
-.inv-option.used:hover{border-color:var(--border);background:var(--surface2)}
-.io-name{font-size:0.84rem;font-weight:600;color:var(--text)}
-.io-cost{font-family:var(--mono);font-size:0.66rem;color:var(--muted2);display:flex;align-items:center;gap:4px}
-.io-cost .cost-dot{width:5px;height:5px;border-radius:50%;display:inline-block}
-.cost-low{color:var(--green)}.cost-low .cost-dot{background:var(--green)}
-.cost-mid{color:var(--yellow)}.cost-mid .cost-dot{background:var(--yellow)}
-.cost-high{color:var(--red)}.cost-high .cost-dot{background:var(--red)}
+/* findings */
+.findings{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.finding{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 15px;border-left:3px solid var(--border2);animation:ein .25s ease}
+.finding.h-f{border-left-color:var(--purple)}.finding.e-f{border-left-color:var(--teal)}.finding.i-f{border-left-color:var(--yellow)}.finding.a-f{border-left-color:var(--orange)}
+.f-type{font-family:var(--mono);font-size:0.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.f-type.h-f{color:var(--purple)}.f-type.e-f{color:var(--teal)}.f-type.i-f{color:var(--yellow)}.f-type.a-f{color:var(--orange)}
+.f-text{font-size:0.86rem;line-height:1.6}
 
-/* revealed findings */
-.findings-area{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.finding-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:13px 16px;
-  border-left:3px solid var(--border2);
-  animation:entryIn .25s ease;
-}
-.finding-card.history-f{border-left-color:var(--purple)}
-.finding-card.exam-f{border-left-color:var(--teal)}
-.finding-card.investigation-f{border-left-color:var(--yellow)}
-.finding-card.imaging-f{border-left-color:var(--orange)}
-.finding-type{
-  font-family:var(--mono);font-size:0.6rem;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;
-}
-.finding-type.history-f{color:var(--purple)}
-.finding-type.exam-f{color:var(--teal)}
-.finding-type.investigation-f{color:var(--yellow)}
-.finding-type.imaging-f{color:var(--orange)}
-.finding-text{font-size:0.88rem;line-height:1.6;color:var(--text)}
-.finding-hint{
-  font-size:0.76rem;color:var(--muted);margin-top:6px;padding-top:6px;
-  border-top:1px solid var(--border);font-style:italic;
-}
+/* ranking panel */
+.rank-panel{background:var(--surface);border:1px solid var(--teal);border-radius:var(--rl);padding:15px 17px;margin-bottom:14px;animation:ein .25s ease}
+.rank-panel-lbl{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:5px}
+.rank-panel-sub{font-size:0.78rem;color:var(--muted);margin-bottom:10px;line-height:1.5}
+.rank-list{display:flex;flex-direction:column;gap:4px}
+.ri{background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:7px 11px;display:flex;align-items:center;gap:8px;cursor:grab;user-select:none;transition:border-color .15s}
+.ri:hover{border-color:var(--teal)}
+.ri.drag-over{border-color:var(--accent);background:var(--accent-dim)}
+.ri.dragging{opacity:.35}
+.ri-num{font-family:var(--mono);font-size:0.68rem;color:var(--muted2);width:16px;text-align:center;flex-shrink:0}
+.ri-name{font-size:0.84rem;font-weight:600;flex:1}
+.ri-tag{font-size:0.6rem;font-family:var(--mono);padding:2px 5px;border-radius:7px}
+.ri-tag.mnm{background:var(--red-dim);color:var(--red)}.ri-tag.wd{background:var(--yellow-dim);color:var(--yellow)}
+.ri-drag{color:var(--muted2);font-size:0.75rem}
+.rank-done{margin-top:10px;padding:8px 16px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-size:0.82rem;font-weight:700;cursor:pointer;transition:opacity .15s}
+.rank-done:hover{opacity:.85}
 
-/* cost irrelevance warning */
-.cost-warning{
-  display:flex;align-items:flex-start;gap:8px;
-  background:var(--yellow-dim);border:1px solid var(--yellow);
-  border-radius:var(--radius);padding:10px 13px;margin-top:8px;
-  font-size:0.8rem;color:var(--yellow);line-height:1.5;
-  animation:entryIn .25s ease;
-}
-
-/* ── COMMIT PHASE ────────────────────────────────────────────────────────── */
-.commit-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:20px 22px;margin-bottom:16px;
-}
-.commit-label{
-  font-family:var(--mono);font-size:0.65rem;font-weight:600;
-  letter-spacing:.1em;color:var(--orange);text-transform:uppercase;margin-bottom:14px;
-}
-.final-diff-list{display:flex;flex-direction:column;gap:5px;margin-bottom:16px}
-.fde{
-  background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:var(--radius);padding:8px 12px;
-  display:flex;align-items:center;gap:8px;cursor:pointer;
-  transition:all .15s;
-}
+/* commit */
+.commit-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:16px 18px;margin-bottom:14px}
+.commit-lbl{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:.1em;color:var(--orange);text-transform:uppercase;margin-bottom:12px}
+.fde-list{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.fde{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r);padding:8px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .15s}
 .fde:hover{border-color:var(--accent);background:var(--accent-dim)}
-.fde.selected{border-color:var(--accent);background:var(--accent-dim)}
-.fde.eliminated-f{opacity:.3;text-decoration:line-through;cursor:not-allowed}
-.fde.eliminated-f:hover{border-color:var(--border);background:var(--surface2)}
-.fde-radio{
-  width:14px;height:14px;border-radius:50%;border:2px solid var(--border2);
-  flex-shrink:0;transition:all .15s;
-}
-.fde.selected .fde-radio{background:var(--accent);border-color:var(--accent)}
-.fde-name{font-size:0.87rem;font-weight:600;flex:1}
-.fde-tag{font-family:var(--mono);font-size:0.65rem}
-.fde-tag.mnm-f{color:var(--red)}
-.commit-btn{
-  width:100%;padding:13px;border-radius:var(--radius);
-  background:var(--orange);color:#fff;font-size:0.95rem;font-weight:700;
-  border:none;cursor:pointer;transition:opacity .15s;font-family:var(--sans);
-  letter-spacing:.02em;
-}
+.fde.sel{border-color:var(--accent);background:var(--accent-dim)}
+.fde.elim-f{opacity:.3;text-decoration:line-through;cursor:not-allowed}
+.fde.elim-f:hover{border-color:var(--border);background:var(--surface2)}
+.fde-radio{width:13px;height:13px;border-radius:50%;border:2px solid var(--border2);flex-shrink:0;transition:all .15s}
+.fde.sel .fde-radio{background:var(--accent);border-color:var(--accent)}
+.fde-nm{font-size:0.87rem;font-weight:600;flex:1}
+.fde-rank{font-family:var(--mono);font-size:0.66rem;color:var(--muted2)}
+.commit-btn{width:100%;padding:12px;border-radius:var(--r);background:var(--orange);color:#fff;font-size:0.92rem;font-weight:700;border:none;cursor:pointer;transition:opacity .15s;font-family:var(--sans)}
 .commit-btn:hover{opacity:.88}
-.commit-btn:disabled{opacity:.35;cursor:not-allowed}
+.commit-btn:disabled{opacity:.3;cursor:not-allowed}
 
-/* ── CRITICAL MISS SCREEN ────────────────────────────────────────────────── */
-.critical-miss{
-  background:var(--red-dim);border:2px solid var(--red);
-  border-radius:var(--radius-lg);padding:24px 26px;
-  animation:shakeIn .35s ease;
-}
-@keyframes shakeIn{0%{transform:translateX(-8px)}20%{transform:translateX(8px)}40%{transform:translateX(-4px)}60%{transform:translateX(4px)}80%{transform:translateX(-2px)}100%{transform:translateX(0)}}
-.cm-icon{font-size:2.2rem;margin-bottom:10px}
-.cm-title{font-size:1.3rem;font-weight:700;color:var(--red);margin-bottom:8px;font-family:var(--mono)}
-.cm-body{font-size:0.9rem;line-height:1.7;color:var(--text);margin-bottom:16px}
-.cm-missed{
-  background:rgba(242,92,92,.1);border:1px solid var(--red);
-  border-radius:var(--radius);padding:10px 14px;margin-bottom:14px;
-  font-size:0.85rem;color:var(--red);font-family:var(--mono);
-}
-.cm-actions{display:flex;gap:8px;flex-wrap:wrap}
+/* critical miss */
+.crit{background:var(--red-dim);border:2px solid var(--red);border-radius:var(--rl);padding:24px 26px;animation:shake .35s ease}
+@keyframes shake{0%{transform:translateX(-8px)}20%{transform:translateX(8px)}40%{transform:translateX(-4px)}60%{transform:translateX(4px)}100%{transform:translateX(0)}}
+.crit-icon{font-size:2.2rem;margin-bottom:10px}
+.crit-title{font-size:1.3rem;font-weight:700;color:var(--red);font-family:var(--mono);margin-bottom:8px}
+.crit-body{font-size:0.88rem;line-height:1.7;margin-bottom:12px}
+.crit-missed{background:rgba(242,92,92,.12);border:1px solid var(--red);border-radius:var(--r);padding:10px 13px;margin-bottom:12px;font-size:0.84rem;color:var(--red);font-family:var(--mono)}
+.crit-actions{display:flex;gap:8px;flex-wrap:wrap}
 
-/* ── DEBRIEF SCREEN ──────────────────────────────────────────────────────── */
-.debrief{display:flex;flex-direction:column;gap:16px}
-.debrief-header{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:20px 22px;
-}
-.dh-outcome{font-family:var(--mono);font-size:0.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.dh-dx{font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:4px}
-.dh-sub{font-size:0.82rem;color:var(--muted)}
+/* debrief */
+.debrief{display:flex;flex-direction:column;gap:13px}
+.db-header{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:17px 19px}
+.db-out{font-family:var(--mono);font-size:0.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.db-dx{font-size:1.2rem;font-weight:700;margin-bottom:3px}
+.db-sub{font-size:0.79rem;color:var(--muted)}
+.badges-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.badge{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:var(--r);border:1.5px solid transparent}
+.badge.earned{opacity:1}.badge.unearned{opacity:.2;filter:saturate(0)}
+.badge-ico{font-size:1.1rem}
+.badge-name{font-size:0.78rem;font-weight:700}
+.badge-desc{font-size:0.63rem;color:var(--muted)}
+.b-safe{background:var(--red-dim);border-color:var(--red)}.b-safe .badge-name{color:var(--red)}
+.b-eff{background:var(--green-dim);border-color:var(--green)}.b-eff .badge-name{color:var(--green)}
+.b-prec{background:var(--accent-dim);border-color:var(--accent)}.b-prec .badge-name{color:var(--accent)}
+.b-reas{background:var(--purple-dim);border-color:var(--purple)}.b-reas .badge-name{color:var(--purple)}
+.score-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:15px 17px}
+.score-lbl{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:11px}
+.sc-rows{display:flex;flex-direction:column;gap:7px}
+.sc-row{display:flex;align-items:center;gap:8px;font-size:0.82rem}
+.sc-name{flex:1;color:var(--text)}
+.sc-bar{flex:2;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.sc-fill{height:100%;border-radius:3px;transition:width .6s .2s}
+.sc-fill.g{background:var(--green)}.sc-fill.y{background:var(--yellow)}.sc-fill.r{background:var(--red)}
+.sc-pts{font-family:var(--mono);font-size:0.75rem;text-align:right;min-width:48px}
+.sc-total{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.sc-total-lbl{font-size:0.85rem;font-weight:700}
+.sc-total-num{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--accent)}
+.timeline{display:flex;flex-direction:column;gap:6px}
+.tl-step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 14px}
+.tl-hd{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.tl-num{font-family:var(--mono);font-size:0.63rem;font-weight:700;width:19px;height:19px;border-radius:50%;background:var(--surface3);color:var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tl-type{font-family:var(--mono);font-size:0.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;flex:1}
+.tl-cost{font-family:var(--mono);font-size:0.6rem;padding:2px 6px;border-radius:4px}
+.tl-cost.free,.tl-cost.low{background:var(--green-dim);color:var(--green)}.tl-cost.mid{background:var(--yellow-dim);color:var(--yellow)}.tl-cost.high{background:var(--red-dim);color:var(--red)}
+.tl-irrel{display:inline-flex;align-items:center;gap:4px;font-size:0.65rem;font-family:var(--mono);color:var(--yellow);background:var(--yellow-dim);padding:2px 6px;border-radius:4px;margin-bottom:4px}
+.tl-finding{font-size:0.83rem;line-height:1.55;margin-bottom:5px}
+.tl-expert{font-size:0.78rem;color:var(--muted);line-height:1.55;border-top:1px solid var(--border);padding-top:6px;font-style:italic}
+.rank-debrief{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:15px 17px}
+.rank-snap{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:9px 11px;margin-bottom:7px}
+.rank-snap-lbl{font-size:0.71rem;font-weight:600;color:var(--muted);margin-bottom:5px}
+.rsi{display:flex;align-items:center;gap:7px;font-size:0.79rem;padding:2px 0}
+.rsi-pos{font-family:var(--mono);font-size:0.63rem;color:var(--muted2);width:14px}
+.rsi-name{flex:1}
+.rsi-ok{color:var(--green);font-family:var(--mono);font-size:0.63rem}
+.rsi-bad{color:var(--red);font-family:var(--mono);font-size:0.63rem}
+.ss-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:15px 17px}
+.ss-row{display:flex;gap:7px;flex-wrap:wrap}
+.ss-box{flex:1;min-width:120px;padding:9px 11px;border-radius:var(--r);background:var(--surface2);border:1px solid var(--border)}
+.ss-box-title{font-size:0.71rem;font-weight:700;margin-bottom:3px}
+.ss-box-text{font-size:0.75rem;color:var(--muted);line-height:1.5}
+.ss-box.sens .ss-box-title{color:var(--teal)}.ss-box.spec .ss-box-title{color:var(--purple)}.ss-box.safe .ss-box-title{color:var(--red)}
+.db-actions{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:40px;margin-top:4px}
 
-/* badges */
-.badges-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.badge{
-  display:flex;align-items:center;gap:7px;
-  padding:8px 14px;border-radius:var(--radius);
-  border:1.5px solid transparent;
-  transition:opacity .2s;
-}
-.badge.earned{opacity:1}
-.badge.unearned{opacity:.28;filter:saturate(0)}
-.badge-icon{font-size:1.2rem}
-.badge-text{display:flex;flex-direction:column}
-.badge-name{font-size:0.8rem;font-weight:700}
-.badge-desc{font-size:0.68rem;color:var(--muted)}
-.badge.b-safety{background:var(--red-dim);border-color:var(--red)}
-.badge.b-safety .badge-name{color:var(--red)}
-.badge.b-efficient{background:var(--green-dim);border-color:var(--green)}
-.badge.b-efficient .badge-name{color:var(--green)}
-.badge.b-precision{background:var(--accent-dim);border-color:var(--accent)}
-.badge.b-precision .badge-name{color:var(--accent)}
-.badge.b-reasoner{background:var(--purple-dim);border-color:var(--purple)}
-.badge.b-reasoner .badge-name{color:var(--purple)}
-
-/* scoring breakdown */
-.score-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:18px 20px;
-}
-.score-label{
-  font-family:var(--mono);font-size:0.65rem;font-weight:600;
-  letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;
-}
-.score-rows{display:flex;flex-direction:column;gap:8px}
-.score-row{display:flex;align-items:center;gap:10px;font-size:0.85rem}
-.sr-name{flex:1;color:var(--text)}
-.sr-bar{flex:2;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
-.sr-fill{height:100%;border-radius:3px;transition:width .6s .2s}
-.sr-fill.good{background:var(--green)}
-.sr-fill.ok{background:var(--yellow)}
-.sr-fill.poor{background:var(--red)}
-.sr-pts{font-family:var(--mono);font-size:0.78rem;color:var(--text);text-align:right;min-width:55px}
-.score-total{
-  margin-top:12px;padding-top:12px;border-top:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;
-}
-.score-total-label{font-size:0.88rem;font-weight:700;color:var(--text)}
-.score-total-num{font-family:var(--mono);font-size:1.15rem;font-weight:700;color:var(--accent)}
-
-/* reasoning timeline */
-.reasoning-timeline{display:flex;flex-direction:column;gap:0}
-.rt-step{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:13px 16px;
-  margin-bottom:6px;
-}
-.rt-step-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.rt-step-num{
-  font-family:var(--mono);font-size:0.68rem;font-weight:700;
-  width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  background:var(--surface3);color:var(--muted);flex-shrink:0;
-}
-.rt-step-type{font-family:var(--mono);font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.rt-step-cost{font-family:var(--mono);font-size:0.65rem;margin-left:auto;padding:2px 6px;border-radius:4px}
-.rt-step-cost.c-free{background:var(--green-dim);color:var(--green)}
-.rt-step-cost.c-low{background:var(--green-dim);color:var(--green)}
-.rt-step-cost.c-mid{background:var(--yellow-dim);color:var(--yellow)}
-.rt-step-cost.c-high{background:var(--red-dim);color:var(--red)}
-.rt-finding{font-size:0.85rem;color:var(--text);line-height:1.5;margin-bottom:6px}
-.rt-expert{
-  font-size:0.8rem;color:var(--muted);line-height:1.55;
-  border-top:1px solid var(--border);padding-top:8px;font-style:italic;
-}
-.rt-irrelevant{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:0.68rem;font-family:var(--mono);color:var(--yellow);
-  background:var(--yellow-dim);padding:2px 6px;border-radius:4px;margin-bottom:6px;
-}
-
-/* sensitivity/specificity callouts */
-.sens-spec{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:16px 18px;
-}
-.ss-label{
-  font-family:var(--mono);font-size:0.65rem;font-weight:600;
-  letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;
-}
-.ss-row{display:flex;gap:8px;flex-wrap:wrap}
-.ss-box{
-  flex:1;min-width:140px;padding:10px 12px;border-radius:var(--radius);
-  background:var(--surface2);border:1px solid var(--border);
-}
-.ss-box-title{font-size:0.72rem;font-weight:700;margin-bottom:4px}
-.ss-box-text{font-size:0.78rem;color:var(--muted);line-height:1.5}
-.ss-box.sens .ss-box-title{color:var(--teal)}
-.ss-box.spec .ss-box-title{color:var(--purple)}
-.ss-box.safety .ss-box-title{color:var(--red)}
-
-/* debrief actions */
-.debrief-actions{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:40px;margin-top:4px}
-.action-btn{
-  padding:10px 18px;border-radius:var(--radius);font-size:0.85rem;font-weight:600;
-  cursor:pointer;border:1.5px solid var(--border2);color:var(--muted);
-  background:var(--surface);transition:all .15s;
-}
+/* shared util */
+.tip{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--r);padding:9px 12px;font-size:0.78rem;color:var(--muted);line-height:1.55;margin-bottom:12px}
+.tip strong{color:var(--accent)}
+.nudge{background:var(--yellow-dim);border:1px solid var(--yellow);border-radius:var(--r);padding:9px 12px;margin-bottom:12px;font-size:0.79rem;color:var(--yellow);line-height:1.55}
+.nudge strong{color:#fff}
+.pnav{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center}
+.pnav-btn{padding:9px 18px;border-radius:var(--r);font-size:0.84rem;font-weight:700;cursor:pointer;border:none;transition:opacity .15s}
+.pnav-btn:hover{opacity:.85}
+.pnav-btn.go{background:var(--teal);color:#000}
+.pnav-btn.commit-go{background:var(--orange);color:#fff}
+.pnav-btn.sec{background:var(--surface2);color:var(--muted);border:1.5px solid var(--border2)}
+.pnav-btn.sec:hover{border-color:var(--muted);color:var(--text)}
+.prof{display:inline-flex;align-items:center;gap:5px;font-size:0.73rem;color:var(--muted);cursor:pointer;border:1px dashed var(--border2);border-radius:20px;padding:4px 10px;transition:all .15s}
+.prof:hover{border-color:var(--yellow);color:var(--yellow)}
+.prof-reveal{margin-top:7px;background:var(--yellow-dim);border:1px solid var(--yellow);border-radius:var(--r);padding:9px 12px;font-size:0.79rem;color:var(--yellow);line-height:1.5}
+.action-btn{padding:9px 16px;border-radius:var(--r);font-size:0.82rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);color:var(--muted);background:var(--surface);transition:all .15s}
 .action-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 .action-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .action-btn.primary:hover{opacity:.88}
 
-/* ── PROGRESS DOTS ───────────────────────────────────────────────────────── */
-.progress-dots{display:flex;gap:5px;align-items:center}
-.pdot{
-  width:7px;height:7px;border-radius:50%;background:var(--border2);
-  transition:all .25s;
-}
-.pdot.done{background:var(--green)}
-.pdot.active{background:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);width:9px;height:9px}
-.pdot.missed{background:var(--red)}
-
-/* ── UTILITY ─────────────────────────────────────────────────────────────── */
-.divider{height:1px;background:var(--border);margin:16px 0}
-.tip-box{
-  background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent);
-  border-radius:var(--radius);padding:10px 13px;font-size:0.8rem;color:var(--muted);
-  line-height:1.55;margin-bottom:14px;
-}
-.tip-box strong{color:var(--accent)}
-
-/* soft-recovery nudge */
-.soft-nudge{
-  background:var(--yellow-dim);border:1px solid var(--yellow);
-  border-radius:var(--radius);padding:12px 14px;margin-bottom:14px;
-  font-size:0.82rem;color:var(--yellow);line-height:1.55;
-  animation:entryIn .25s ease;
-}
-.soft-nudge strong{color:#fff}
-
-/* phase nav buttons */
-.phase-nav{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.pnav-btn{
-  padding:9px 18px;border-radius:var(--radius);font-size:0.85rem;font-weight:700;
-  cursor:pointer;border:none;transition:opacity .15s;
-}
-.pnav-btn:hover{opacity:.85}
-.pnav-btn.continue{background:var(--teal);color:#000}
-.pnav-btn.commit-phase{background:var(--orange);color:#fff}
-.pnav-btn.secondary{background:var(--surface2);color:var(--muted);border:1.5px solid var(--border2)}
-.pnav-btn.secondary:hover{border-color:var(--muted);color:var(--text)}
-
-/* professor hint */
-.prof-hint{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:0.75rem;color:var(--muted);cursor:pointer;
-  border:1px dashed var(--border2);border-radius:20px;padding:4px 11px;
-  transition:all .15s;margin-top:8px;
-}
-.prof-hint:hover{border-color:var(--yellow);color:var(--yellow)}
-.prof-hint-reveal{
-  margin-top:8px;background:var(--yellow-dim);border:1px solid var(--yellow);
-  border-radius:var(--radius);padding:9px 12px;font-size:0.8rem;color:var(--yellow);
-  line-height:1.5;animation:entryIn .2s ease;
-}
-
-/* responsive */
 @media(max-width:680px){
   #sidebar{position:fixed;top:0;left:0;bottom:0;z-index:300;transform:translateX(-100%);transition:transform .25s}
   #sidebar.mobile-open{transform:translateX(0)}
-  .inv-options{grid-template-columns:1fr}
-  #content{padding:16px}
+  .inv-grid{grid-template-columns:1fr}
+  #content{padding:14px}
 }
 </style>
 </head>
 <body>
 
-<div id="app-wrap">
-  <!-- SIDEBAR -->
+<!-- TUTORIAL MODAL -->
+<div id="modal-overlay">
+  <div class="modal">
+    <div class="modal-logo"><span>Dx</span>/</div>
+    <div class="modal-tag">A clinical reasoning trainer · NUS Medicine</div>
+    <div class="m-phases">
+      <div class="mp">
+        <span class="mp-badge p1">Phase 1</span>
+        <div>
+          <div class="mp-title">Build Your Differential</div>
+          <div class="mp-desc">Read the vignette. Use the VITAMIN CDE scaffold to think systematically. Search for diagnoses and add them — tag each as <strong style="color:var(--red)">Must Not Miss</strong> or <strong style="color:var(--yellow)">Working Diagnosis</strong>. Selecting an umbrella diagnosis (e.g. "Myocardial Infarction") includes all its subtypes. You can drag entries to rank them by likelihood.</div>
+        </div>
+      </div>
+      <div class="mp">
+        <span class="mp-badge p2">Phase 2</span>
+        <div>
+          <div class="mp-title">Investigate & Rank</div>
+          <div class="mp-desc">Choose what to ask, examine, or test. After each finding is revealed, <strong>drag your differential into order</strong> — most likely at the top. This is Bayesian reasoning: each new finding updates your probabilities. Eliminate subtypes or whole diagnoses as evidence accumulates. Irrelevant tests cost efficiency points; high-cost tests cost more.</div>
+        </div>
+      </div>
+      <div class="mp">
+        <span class="mp-badge p3">Phase 3</span>
+        <div>
+          <div class="mp-title">Commit & Debrief</div>
+          <div class="mp-desc">Commit to your single final diagnosis. The debrief shows your badges, score breakdown, expert reasoning at each step, how your ranking evolved vs the expert, and sensitivity/specificity lessons from the case.</div>
+        </div>
+      </div>
+    </div>
+    <div class="m-rule"><strong>🔴 Hard rule:</strong> If you proceed to Phase 2 without a must-not-miss diagnosis on your list, the case pauses and explains the clinical consequence. You can go back and add it, or continue — but you forfeit the Safety Net badge and it's recorded in your debrief.</div>
+    <div class="m-badges">
+      <div class="mb">🛡️ <strong>Safety Net</strong> — all MNMs on differential</div>
+      <div class="mb">⚡ <strong>Efficient</strong> — minimal irrelevant tests</div>
+      <div class="mb">🎯 <strong>Precision</strong> — correct final diagnosis</div>
+      <div class="mb">🧠 <strong>Reasoner</strong> — correct ranking progression</div>
+    </div>
+    <button class="m-start" onclick="closeModal()">Start Playing →</button>
+  </div>
+</div>
+
+<div id="wrap">
   <div id="sidebar">
-    <div class="sb-header">
+    <div class="sb-hd">
       <div class="sb-logo"><span>Dx</span>/</div>
-      <div class="sb-tagline">Clinical reasoning trainer</div>
+      <div class="sb-tag">Clinical reasoning trainer</div>
     </div>
     <div class="sb-cases" id="sbCases"></div>
   </div>
-
-  <!-- MAIN -->
   <div id="main">
     <div id="topbar">
-      <button class="tb-toggle" onclick="toggleSidebar()" title="Cases">☰</button>
-      <span class="tb-title" id="tbCaseName">Select a case</span>
-      <div class="tb-right" id="tbRight">
-        <div class="progress-dots" id="progressDots"></div>
-      </div>
+      <button class="tb-tog" onclick="toggleSidebar()">☰</button>
+      <span id="tbName">Select a case</span>
+      <div id="tbRight"></div>
     </div>
     <div id="content"></div>
   </div>
 </div>
 
 <script>
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // CASE DATA
-// ════════════════════════════════════════════════════════════════════════
-const CASES = [
-  {
-    id: "case_001",
-    title: "Epigastric Pain & Nausea",
-    system: "Cardiovascular",
-    finalDiagnosis: "Inferior STEMI",
-    finalDiagnosisId: "cvs_001",
-    finalUmbrella: "Myocardial Infarction",
-    snomedCode: "57054005",
-    mustNotMiss: ["Myocardial Infarction", "Aortic Dissection"],
-
-    vignette: "A 62-year-old male presents to the ED with a 2-hour history of epigastric pain and nausea. He describes it as a \"heavy\" sensation in the upper abdomen, radiating to his jaw. He has had two similar but milder episodes over the past week that resolved spontaneously.",
-
-    differentialPool: [
-      // Cardiovascular
-      { id:"cvs_001", name:"Myocardial Infarction", system:"Cardiovascular", isUmbrella:true,
-        subtypes:["STEMI","NSTEMI","Inferior MI","Anterior MI"],
-        mnm:true },
-      { id:"cvs_002", name:"Unstable Angina", system:"Cardiovascular", isUmbrella:false, mnm:true },
-      { id:"cvs_012", name:"Aortic Dissection", system:"Cardiovascular", isUmbrella:false, mnm:true },
-      { id:"cvs_029", name:"Acute Pericarditis", system:"Cardiovascular", isUmbrella:false, mnm:false },
-      { id:"cvs_010", name:"Viral Myocarditis", system:"Cardiovascular", isUmbrella:false, mnm:false },
-      // GI
-      { id:"gi_001", name:"Peptic Ulcer Disease", system:"Gastrointestinal", isUmbrella:true,
-        subtypes:["Gastric Ulcer","Duodenal Ulcer"], mnm:false },
-      { id:"gi_002", name:"Gastro-oesophageal Reflux (GORD)", system:"Gastrointestinal", isUmbrella:false, mnm:false },
-      { id:"gi_003", name:"Acute Pancreatitis", system:"Gastrointestinal", isUmbrella:false, mnm:false },
-      { id:"gi_004", name:"Acute Cholecystitis", system:"Gastrointestinal", isUmbrella:false, mnm:false },
-      { id:"gi_005", name:"Oesophageal Spasm", system:"Gastrointestinal", isUmbrella:false, mnm:false },
-      // Respiratory
-      { id:"resp_027", name:"Pulmonary Embolism", system:"Respiratory", isUmbrella:false, mnm:true },
-    ],
-
-    // Investigation rounds — each has category, name, cost tier, finding, expert reasoning, isRelevant
-    investigations: [
-      // HISTORY
-      { id:"h1", category:"History", name:"Cardiovascular risk factors", costTier:"free",
-        finding:"He has a 15-year history of hypertension and type 2 diabetes. He smokes 20 cigarettes/day for 30 years. Father had an MI at age 58.",
-        isRelevant:true, relevantFor:["Myocardial Infarction","Unstable Angina","Aortic Dissection"],
-        expert:"Strong cardiovascular risk profile (hypertension, DM, smoking, family history) significantly raises the pre-test probability of ACS. This narrows the differential substantially toward ischaemic causes. The episodic nature suggests crescendo angina — a hallmark of unstable ACS." },
-      { id:"h2", category:"History", name:"Character & radiation of pain", costTier:"free",
-        finding:"The pain is pressure-like, rated 7/10, radiating from epigastrium to jaw and left shoulder. Associated with diaphoresis and mild dyspnoea.",
-        isRelevant:true, relevantFor:["Myocardial Infarction","Unstable Angina","Aortic Dissection"],
-        expert:"Radiation to jaw and left shoulder with diaphoresis is a classic pattern of myocardial ischaemia, reflecting shared C3-C5 dermatome innervation. Inferior MI classically radiates to jaw and presents as epigastric pain — a critical diagnostic pitfall that causes missed diagnoses." },
-      { id:"h3", category:"History", name:"GI history", costTier:"free",
-        finding:"No prior history of peptic ulcer disease, no NSAID use, no relationship of pain to meals, no acid reflux symptoms.",
-        isRelevant:true, relevantFor:["Peptic Ulcer Disease","GORD","Acute Pancreatitis"],
-        expert:"Absence of a GI history, meal-related symptoms, or risk factors significantly reduces the probability of peptic ulcer disease and GORD as primary diagnoses. These were reasonable initial considerations but can now be deprioritised." },
-      { id:"h4", category:"History", name:"Alcohol and gallstone history", costTier:"free",
-        finding:"Drinks 1-2 units/week. No known gallstones. No prior abdominal surgeries.",
-        isRelevant:false, relevantFor:["Acute Pancreatitis","Acute Cholecystitis"],
-        expert:"This history reduces pancreatitis and cholecystitis probability further but is less discriminating than cardiovascular history at this stage." },
-      // EXAMINATION
-      { id:"e1", category:"Examination", name:"Vital signs", costTier:"low",
-        finding:"BP 158/96 mmHg (bilateral arms equal), HR 58 bpm and regular, RR 18, SpO₂ 96% on room air, afebrile. Skin is diaphoretic.",
-        isRelevant:true, relevantFor:["Myocardial Infarction","Unstable Angina","Aortic Dissection"],
-        expert:"Equal bilateral BP largely excludes aortic dissection (which typically shows >20 mmHg difference). Bradycardia with diaphoresis and the overall haemodynamic profile is consistent with inferior MI — the inferior wall is supplied by the RCA, which also supplies the SA and AV nodes, causing bradyarrhythmias." },
-      { id:"e2", category:"Examination", name:"Cardiovascular examination", costTier:"low",
-        finding:"JVP not elevated. Heart sounds normal, no murmurs. Peripheral pulses equal. No peripheral oedema.",
-        isRelevant:true, relevantFor:["Myocardial Infarction","Acute Pericarditis","Viral Myocarditis"],
-        expert:"Absence of pericardial rub reduces likelihood of pericarditis. No haemodynamic compromise yet. Normal peripheral pulses with equal BPs supports against dissection." },
-      { id:"e3", category:"Examination", name:"Abdominal examination", costTier:"low",
-        finding:"Abdomen soft, mild epigastric tenderness on deep palpation only. No guarding, no rebound, no Murphy's sign. Bowel sounds normal.",
-        isRelevant:true, relevantFor:["Acute Pancreatitis","Acute Cholecystitis","Peptic Ulcer Disease"],
-        expert:"Absence of peritonism, Murphy's sign, and the mild non-localised epigastric tenderness on deep palpation are inconsistent with acute cholecystitis or peritonism from perforated PUD. This pattern is well-recognised in inferior MI where visceral pain projects to the epigastrium." },
-      { id:"e4", category:"Examination", name:"Respiratory examination", costTier:"low",
-        finding:"Lungs clear bilaterally, no crackles.",
-        isRelevant:false, relevantFor:["Pulmonary Embolism"],
-        expert:"Clear lungs reduce probability of PE-associated infarction and early pulmonary oedema. Reasonably reassuring but not definitive for excluding these." },
-      // BASIC INVESTIGATIONS
-      { id:"i1", category:"Basic Investigations", name:"12-lead ECG", costTier:"low",
-        finding:"ST elevation 2-3 mm in leads II, III, and aVF. Reciprocal ST depression in I and aVL. Normal sinus rhythm at 56 bpm.",
-        isRelevant:true, relevantFor:["Myocardial Infarction"],
-        expert:"ST elevation in II, III, aVF with reciprocal changes in I and aVL is diagnostic of inferior STEMI — this is the single most important investigation in suspected ACS. The pattern localises to the right coronary artery (RCA) territory. This finding alone triggers the STEMI protocol. All GI diagnoses are now effectively excluded." },
-      { id:"i2", category:"Basic Investigations", name:"Serum troponin (hs-TnI)", costTier:"low",
-        finding:"Initial hs-TnI elevated at 248 ng/L (normal <26 ng/L). Repeat at 3 hours: 1,840 ng/L (rising pattern).",
-        isRelevant:true, relevantFor:["Myocardial Infarction","Unstable Angina","Viral Myocarditis"],
-        expert:"Rising troponin confirms myocardial necrosis. The delta-troponin rise at 3 hours confirms acute MI rather than chronic elevation. Combined with inferior ST elevation, this confirms inferior STEMI requiring immediate primary PCI." },
-      { id:"i3", category:"Basic Investigations", name:"Lipase / amylase", costTier:"low",
-        finding:"Serum lipase: 42 U/L (normal). Amylase: 78 U/L (normal).",
-        isRelevant:false, relevantFor:["Acute Pancreatitis"],
-        expert:"Normal pancreatic enzymes effectively exclude acute pancreatitis. This was a reasonable consideration given epigastric pain but is now eliminated. Note: ordering this before an ECG in this presentation represents a delay in the priority investigation." },
-      { id:"i4", category:"Basic Investigations", name:"FBC, UECr, glucose", costTier:"low",
-        finding:"WBC 11.2 ×10⁹/L (stress leucocytosis). Creatinine 98 µmol/L. BSL 9.8 mmol/L (known diabetic). Haemoglobin 144 g/L.",
-        isRelevant:false, relevantFor:[],
-        expert:"Useful for baseline prior to intervention (PCI) and contrast administration, but does not change the primary diagnosis. Mild leucocytosis and hyperglycaemia are non-specific findings in acute MI." },
-      // ADVANCED
-      { id:"a1", category:"Advanced Investigations", name:"CT aortogram", costTier:"high",
-        finding:"Aorta: no dissection flap. Normal calibre throughout. No evidence of Type A or B dissection.",
-        isRelevant:false, relevantFor:["Aortic Dissection"],
-        expert:"CT aortogram is NOT indicated here — equal bilateral BPs and typical inferior STEMI pattern on ECG already make dissection very unlikely. Ordering this delays time-to-balloon in STEMI, which directly increases myocardial damage and mortality. This is a costly and harmful investigative choice in this presentation." },
-      { id:"a2", category:"Advanced Investigations", name:"Echocardiogram (urgent)", costTier:"mid",
-        finding:"Regional wall motion abnormality in inferior and inferolateral walls. Mild RV involvement. EF estimated 45-50%.",
-        isRelevant:true, relevantFor:["Myocardial Infarction","Viral Myocarditis"],
-        expert:"Echo confirms inferior STEMI — regional (not global) wall motion abnormality in RCA territory. Distinguishes from myocarditis (global dysfunction). RV involvement alerts team to avoid nitrates and excessive preload reduction. Confirms diagnosis but in true STEMI should not delay catheterisation." },
-      { id:"a3", category:"Advanced Investigations", name:"Coronary angiography (primary PCI)", costTier:"high",
-        finding:"Total occlusion of the mid-right coronary artery (RCA). Successful primary PCI performed with drug-eluting stent. TIMI III flow restored.",
-        isRelevant:true, relevantFor:["Myocardial Infarction"],
-        expert:"Coronary angiography is both diagnostic and therapeutic in STEMI — it confirms total RCA occlusion and allows immediate reperfusion. This is the definitive investigation and treatment. Door-to-balloon target is <90 minutes." },
-    ],
-
-    // Expert reasoning for debrief
-    expertNarrative: "This case is a classic inferior STEMI presenting as epigastric pain — one of the most dangerous diagnostic pitfalls in emergency medicine. Inferior MI (RCA territory) frequently presents without classic central chest pain: epigastric pain, nausea, and vomiting are common due to shared vagal innervation. Key reasoning: (1) Never anchor on the 'epigastric' location — always obtain an ECG in any patient over 40 with unexplained upper abdominal pain. (2) Cardiovascular risk factors and radiation pattern should shift your differential heavily toward ACS early. (3) Equal BPs rule out dissection. (4) The ECG is the pivot — ST elevation in II/III/aVF with reciprocal depression is diagnostic and triggers immediate action. (5) Troponin confirms but must not delay reperfusion. Time-to-balloon is the primary outcome driver.",
-
-    sensitivityNote: "Inferior MI can present identically to PUD, GORD, or acute pancreatitis — its sensitivity for 'typical' chest pain is LOW (~40-50%). This means a HIGHLY sensitive screening tool (ECG) must be applied broadly to all undifferentiated epigastric pain.",
-    specificityNote: "ST elevation in II/III/aVF with reciprocal changes is highly SPECIFIC for inferior STEMI (~95%). Once this ECG pattern is identified, competing diagnoses are largely excluded and the management pathway is unambiguous."
-  },
-
-  // ── CASE 2: PULMONARY TUBERCULOSIS ──────────────────────────────────────
-  {
-    id: "case_002",
-    title: "Persistent Cough & Weight Loss",
-    system: "Respiratory",
-    finalDiagnosis: "Pulmonary Tuberculosis",
-    finalDiagnosisId: "resp_008",
-    finalUmbrella: "Pulmonary Tuberculosis",
-    snomedCode: "154283005",
-    mustNotMiss: ["Lung Cancer", "Pulmonary Tuberculosis"],
-
-    vignette: "A 38-year-old male construction worker originally from Myanmar presents with a 6-week history of productive cough. He has been feeling tired and has lost 5 kg unintentionally over the past 2 months.",
-
-    differentialPool: [
-      { id:"resp_008", name:"Pulmonary Tuberculosis", system:"Respiratory", isUmbrella:true,
-        subtypes:["Primary TB","Secondary (Post-primary) TB","Miliary TB"],
-        mnm:true },
-      { id:"resp_021", name:"Lung Adenocarcinoma", system:"Respiratory", isUmbrella:false, mnm:true },
-      { id:"resp_022", name:"Squamous Cell Carcinoma of Lung", system:"Respiratory",
-        isUmbrella:false, mnm:true },
-      { id:"resp_023", name:"Small Cell Lung Carcinoma", system:"Respiratory", isUmbrella:false, mnm:true },
-      { id:"resp_006", name:"Community-Acquired Pneumonia", system:"Respiratory", isUmbrella:true,
-        subtypes:["Lobar Pneumonia","Atypical Pneumonia"], mnm:false },
-      { id:"resp_019", name:"Sarcoidosis", system:"Respiratory", isUmbrella:false, mnm:false },
-      { id:"resp_017", name:"Idiopathic Pulmonary Fibrosis", system:"Respiratory", isUmbrella:false, mnm:false },
-      { id:"resp_014", name:"Bronchiectasis", system:"Respiratory", isUmbrella:false, mnm:false },
-      { id:"resp_010", name:"Pneumocystis Pneumonia (PCP)", system:"Respiratory", isUmbrella:false, mnm:true },
-      { id:"resp_012", name:"Asthma", system:"Respiratory", isUmbrella:false, mnm:false },
-      { id:"resp_026", name:"Pleural Effusion", system:"Respiratory", isUmbrella:false, mnm:false },
-    ],
-
-    investigations: [
-      // HISTORY
-      { id:"h1", category:"History", name:"Cough characteristics", costTier:"free",
-        finding:"Cough is productive of yellow-green sputum, occasionally blood-tinged (haemoptysis — small streaks twice). No pleuritic pain. Onset insidious over 6 weeks.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Lung Adenocarcinoma","Squamous Cell Carcinoma of Lung","Bronchiectasis"],
-        expert:"Subacute productive cough with haemoptysis and constitutional symptoms (weight loss, fatigue) is the classic TB presentation. However, haemoptysis + weight loss must also prompt consideration of lung malignancy — both diagnoses must remain on the differential at this stage. The 6-week timeline argues against acute bacterial pneumonia." },
-      { id:"h2", category:"History", name:"Systemic and constitutional symptoms", costTier:"free",
-        finding:"Drenching night sweats for 4 weeks. Low-grade fever (self-reported). Anorexia. No rash, no joint pains, no lymph node swelling noticed by patient.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Lung Adenocarcinoma","Sarcoidosis"],
-        expert:"Night sweats + fever + weight loss = the classic 'B symptoms' / constitutional triad of TB. These are non-specific but significantly raise pre-test probability of TB in an endemic region migrant. The same triad occurs in lymphoma and some lung malignancies. Sarcoidosis can cause similar constitutional symptoms." },
-      { id:"h3", category:"History", name:"Epidemiological risk factors", costTier:"free",
-        finding:"Born and raised in Myanmar (high TB-endemic country). Lives in a dormitory with 20 other workers. No prior TB treatment, never had BCG documentation. Works in dusty construction environment.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis"],
-        expert:"This is the single most important piece of history for TB: origin from a high-incidence country + overcrowded living conditions = dramatically elevated pre-test probability. Singapore has specific mandatory TB reporting and contact tracing protocols. Dormitory living amplifies exposure risk. BCG status does not exclude TB in adults." },
-      { id:"h4", category:"History", name:"HIV and immunosuppression history", costTier:"free",
-        finding:"Denies IV drug use. No known HIV. Not on immunosuppressive medications. No recent weight loss prior to 2 months ago.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Pneumocystis Pneumonia (PCP)"],
-        expert:"HIV status is critical in TB workup — HIV co-infection dramatically changes the presentation (atypical TB) and management. PCP must be considered in any immunocompromised patient with bilateral lung infiltrates. While HIV is not confirmed negative here, the history reduces but does not exclude immunocompromise." },
-      { id:"h5", category:"History", name:"Smoking history", costTier:"free",
-        finding:"Smokes 10 cigarettes/day for 15 years (15 pack-year history). No occupational asbestos exposure.",
-        isRelevant:true, relevantFor:["Squamous Cell Carcinoma of Lung","Lung Adenocarcinoma","COPD"],
-        expert:"15 pack-year history is a meaningful lung cancer risk factor, though lung cancer is less common at age 38 than TB in this demographic. Smoking history combined with haemoptysis and constitutional symptoms means lung malignancy cannot be deprioritised — it must remain on the differential until excluded." },
-      // EXAMINATION
-      { id:"e1", category:"Examination", name:"Vital signs", costTier:"low",
-        finding:"Temp 37.9°C. HR 92 bpm. BP 118/76. RR 18. SpO₂ 95% on air. BMI 18.5 (underweight).",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Community-Acquired Pneumonia"],
-        expert:"Low-grade fever with borderline SpO₂ and underweight BMI is consistent with TB. Undernutrition is both a risk factor and consequence of TB. Temperature 37.9°C supports an infectious aetiology but is less impressive than the constitutional triad. Malignancy can also cause fever (paraneoplastic)." },
-      { id:"e2", category:"Examination", name:"Respiratory examination", costTier:"low",
-        finding:"Trachea central. Dull percussion left upper zone. Reduced breath sounds left upper zone. Post-tussive crepitations in left upper zone. Right lung clear.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Lung Adenocarcinoma","Squamous Cell Carcinoma of Lung","Pleural Effusion"],
-        expert:"Left upper zone consolidation/cavity pattern on examination is the CLASSIC location for post-primary TB — reactivation TB preferentially affects the apical/upper lobes due to higher oxygen tension. A mass lesion (malignancy) can also cause localised dullness. Upper lobe involvement in a young person from an endemic country substantially increases TB probability." },
-      { id:"e3", category:"Examination", name:"Lymph node examination", costTier:"low",
-        finding:"Left posterior cervical lymph node 1.5 cm, firm, non-tender. No axillary or inguinal lymphadenopathy. No hepatosplenomegaly.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Lung Adenocarcinoma","Sarcoidosis"],
-        expert:"Cervical lymphadenopathy in the context of lung disease adds sarcoidosis and lymphoma to the differential alongside TB. In TB, extra-pulmonary lymphadenopathy is common and may represent scrofula (tuberculous lymphadenitis). Malignant nodes are typically hard, matted, non-tender — this node is firm but non-tender, consistent with TB." },
-      { id:"e4", category:"Examination", name:"Clubbing and peripheral signs", costTier:"low",
-        finding:"No clubbing. No peripheral cyanosis. No Horner's syndrome. No signs of superior vena caval obstruction.",
-        isRelevant:false, relevantFor:["Lung Adenocarcinoma","Small Cell Lung Carcinoma"],
-        expert:"Absence of clubbing, Horner's, or SVC obstruction reduces probability of advanced malignancy but cannot exclude early-stage lung cancer. These are late signs." },
-      // BASIC INVESTIGATIONS
-      { id:"i1", category:"Basic Investigations", name:"Chest X-ray (PA)", costTier:"low",
-        finding:"Left upper lobe opacification with a 2 cm cavitating lesion. Hilar lymphadenopathy. No pleural effusion. Right lung clear.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Lung Adenocarcinoma","Squamous Cell Carcinoma of Lung"],
-        expert:"Left upper lobe cavitation with hilar lymphadenopathy is the radiological hallmark of post-primary TB. Cavitation results from liquefaction necrosis of the caseous centre and drainage into the bronchus. HOWEVER — lung malignancy must still be excluded as cavitating lung masses occur in SCC. This CXR finding mandates sputum AFB smear AND CT chest." },
-      { id:"i2", category:"Basic Investigations", name:"Sputum AFB smear × 3 (early morning)", costTier:"low",
-        finding:"Sputum AFB smear: 2/3 specimens positive for acid-fast bacilli (ZN stain). Culture sent (results pending 4-6 weeks).",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis"],
-        expert:"Positive AFB smear in 2/3 specimens is highly suggestive of pulmonary TB and is sufficient to initiate treatment and isolation in Singapore's TB protocol. Culture is the gold standard but takes weeks. GeneXpert (if available) can confirm within 2 hours and detect rifampicin resistance. Smear-positive TB is highly infectious." },
-      { id:"i3", category:"Basic Investigations", name:"FBC, ESR, CRP, LFTs", costTier:"low",
-        finding:"WBC 8.9 (lymphopenia: lymphocytes 0.9). Hb 108 g/L (normocytic anaemia). ESR 88 mm/hr. CRP 67 mg/L. LFTs: mildly elevated ALT (52 U/L).",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Lung Adenocarcinoma","Sarcoidosis"],
-        expert:"Lymphopenia + elevated ESR/CRP + normocytic anaemia of chronic disease is consistent with TB. These are non-specific markers of chronic infection/inflammation. Mild ALT elevation is relevant as first-line TB drugs (rifampicin, isoniazid, pyrazinamide) are hepatotoxic — baseline LFT is mandatory before starting RIPE therapy." },
-      { id:"i4", category:"Basic Investigations", name:"HIV serology (opt-out)", costTier:"low",
-        finding:"HIV Ag/Ab combo: NEGATIVE. CD4 count not required.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Pneumocystis Pneumonia (PCP)"],
-        expert:"HIV testing is standard practice and mandatory in TB workup in Singapore. A negative HIV result allows TB to be treated with standard RIPE regimen. HIV co-infection would require different sequencing (TB treatment first, ART later to avoid IRIS) and altered drug interactions." },
-      { id:"i5", category:"Basic Investigations", name:"Sputum cytology", costTier:"low",
-        finding:"Sputum cytology: no malignant cells identified. Class I (negative).",
-        isRelevant:true, relevantFor:["Lung Adenocarcinoma","Squamous Cell Carcinoma of Lung"],
-        expert:"Negative sputum cytology reduces but does not exclude lung malignancy — sputum cytology has moderate sensitivity (~60-70%) for central malignancies, lower for peripheral lesions. However, combined with positive AFB smear and consistent clinical picture, TB is now the working diagnosis." },
-      // ADVANCED
-      { id:"a1", category:"Advanced Investigations", name:"CT chest (with contrast)", costTier:"mid",
-        finding:"Left upper lobe 2.3 cm cavitating lesion with surrounding consolidation and tree-in-bud pattern. Mediastinal and hilar lymphadenopathy. Satellite nodules. Right lung clear. No pleural disease.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis","Lung Adenocarcinoma","Squamous Cell Carcinoma of Lung"],
-        expert:"CT chest confirms: tree-in-bud pattern (endobronchial spread of TB), satellite nodules, upper lobe cavitation with mediastinal lymphadenopathy — this is the radiological fingerprint of post-primary TB with endobronchial dissemination. A malignant cavitating lesion typically shows thick irregular walls without tree-in-bud. This CT significantly raises TB probability while reducing malignancy probability." },
-      { id:"a2", category:"Advanced Investigations", name:"GeneXpert MTB/RIF (rapid molecular)", costTier:"mid",
-        finding:"GeneXpert POSITIVE for M. tuberculosis. Rifampicin resistance NOT detected.",
-        isRelevant:true, relevantFor:["Pulmonary Tuberculosis"],
-        expert:"GeneXpert confirms M. tuberculosis AND excludes rifampicin-resistant TB (a proxy for MDR-TB). This is the definitive rapid diagnostic tool. Combined with clinical, radiological, and smear findings, the diagnosis of drug-sensitive pulmonary TB is confirmed. RIPE therapy can be initiated with confidence." },
-      { id:"a3", category:"Advanced Investigations", name:"Bronchoscopy + BAL", costTier:"high",
-        finding:"Not performed — patient producing adequate sputum and GeneXpert positive.",
-        isRelevant:false, relevantFor:["Pulmonary Tuberculosis","Lung Adenocarcinoma"],
-        expert:"Bronchoscopy is reserved for smear-negative cases or when malignancy needs to be excluded in a patient who cannot produce sputum. It is not needed here given positive GeneXpert — performing it would expose the bronchoscopist and staff to infectious aerosols unnecessarily." },
-      { id:"a4", category:"Advanced Investigations", name:"PET-CT scan", costTier:"high",
-        finding:"Not clinically indicated at this stage.",
-        isRelevant:false, relevantFor:["Lung Adenocarcinoma","Small Cell Lung Carcinoma"],
-        expert:"PET-CT is the staging investigation for confirmed lung malignancy. Ordering it before excluding TB is premature and costly — active TB shows intense FDG uptake mimicking malignancy, leading to confusion rather than clarity. This investigation should not be ordered until malignancy is confirmed or TB adequately excluded." },
-    ],
-
-    expertNarrative: "This case illustrates TB as the great mimicker — presenting identically to lung malignancy in any middle-aged patient with haemoptysis and weight loss. The key reasoning pathway: (1) Demographics are paramount. A 38-year-old male from Myanmar with constitutional symptoms and upper lobe disease has TB until proven otherwise. (2) The must-not-miss for this presentation is BOTH TB (public health implications, treatment needed) and lung malignancy (different management entirely). (3) The investigation sequence matters: CXR → AFB smear × 3 → GeneXpert is the efficient pathway. CT chest adds value once the CXR is abnormal. PET-CT and bronchoscopy are downstream of confirmed diagnosis. (4) Positive AFB smear in Singapore mandates immediate notification to MOH and respiratory isolation. (5) Baseline LFTs before RIPE therapy is mandatory, not optional — drug-induced hepatitis is common and potentially fatal.",
-
-    sensitivityNote: "TB is a great mimicker. Its clinical sensitivity for 'classic' presentation is low — many patients present atypically. A HIGHLY SENSITIVE approach is required: any migrant with >2-3 weeks of cough, weight loss, or haemoptysis must have TB prominently in the differential.",
-    specificityNote: "Positive GeneXpert MTB/RIF is highly SPECIFIC (>99%) for M. tuberculosis. Once positive, it effectively confirms TB and guides treatment. Sputum AFB smear alone is less specific — non-tuberculous mycobacteria can give false positives."
-  }
+// ═══════════════════════════════════════════════════════
+const CASES=[
+{
+  id:"case_001",title:"Epigastric Pain & Nausea",system:"Cardiovascular",
+  finalDiagnosis:"Inferior STEMI",finalUmbrella:"Myocardial Infarction",snomedCode:"57054005",
+  mustNotMiss:["Myocardial Infarction","Aortic Dissection"],
+  vignette:"A 62-year-old male presents to the ED with a 2-hour history of epigastric pain and nausea. He describes it as a \"heavy\" sensation in the upper abdomen, radiating to his jaw. He has had two similar but milder episodes over the past week that resolved spontaneously.",
+  differentialPool:[
+    {id:"cvs_001",name:"Myocardial Infarction",system:"Cardiovascular",isUmbrella:true,subtypes:["STEMI","NSTEMI","Inferior MI","Anterior MI"],mnm:true},
+    {id:"cvs_002",name:"Unstable Angina",system:"Cardiovascular",isUmbrella:false,mnm:true},
+    {id:"cvs_012",name:"Aortic Dissection",system:"Cardiovascular",isUmbrella:false,mnm:true},
+    {id:"cvs_029",name:"Acute Pericarditis",system:"Cardiovascular",isUmbrella:false,mnm:false},
+    {id:"cvs_010",name:"Viral Myocarditis",system:"Cardiovascular",isUmbrella:false,mnm:false},
+    {id:"gi_001",name:"Peptic Ulcer Disease",system:"Gastrointestinal",isUmbrella:true,subtypes:["Gastric Ulcer","Duodenal Ulcer"],mnm:false},
+    {id:"gi_002",name:"Gastro-oesophageal Reflux (GORD)",system:"Gastrointestinal",isUmbrella:false,mnm:false},
+    {id:"gi_003",name:"Acute Pancreatitis",system:"Gastrointestinal",isUmbrella:false,mnm:false},
+    {id:"gi_004",name:"Acute Cholecystitis",system:"Gastrointestinal",isUmbrella:false,mnm:false},
+    {id:"gi_005",name:"Oesophageal Spasm",system:"Gastrointestinal",isUmbrella:false,mnm:false},
+    {id:"resp_027",name:"Pulmonary Embolism",system:"Respiratory",isUmbrella:false,mnm:true},
+  ],
+  investigations:[
+    {id:"h1",category:"History",name:"Cardiovascular risk factors",costTier:"free",finding:"15-year history of hypertension and type 2 diabetes. Smokes 20 cigarettes/day for 30 years. Father had an MI at age 58.",isRelevant:true,relevantFor:["Myocardial Infarction","Unstable Angina","Aortic Dissection"],expert:"Strong cardiovascular risk profile (hypertension, DM, smoking, family history) significantly raises the pre-test probability of ACS. The episodic nature suggests crescendo angina — a hallmark of unstable ACS."},
+    {id:"h2",category:"History",name:"Character & radiation of pain",costTier:"free",finding:"Pressure-like pain rated 7/10, radiating from epigastrium to jaw and left shoulder. Associated diaphoresis and mild dyspnoea.",isRelevant:true,relevantFor:["Myocardial Infarction","Unstable Angina","Aortic Dissection"],expert:"Radiation to jaw and left shoulder with diaphoresis is a classic pattern of myocardial ischaemia (shared C3-C5 innervation). Inferior MI classically radiates to jaw and presents as epigastric pain — a critical diagnostic pitfall."},
+    {id:"h3",category:"History",name:"GI history",costTier:"free",finding:"No prior peptic ulcer disease, no NSAID use, no meal-related symptoms, no acid reflux.",isRelevant:true,relevantFor:["Peptic Ulcer Disease","Gastro-oesophageal Reflux (GORD)","Acute Pancreatitis"],expert:"Absence of GI history, meal-related symptoms, or risk factors significantly reduces probability of PUD and GORD. These were reasonable initial considerations but can now be deprioritised."},
+    {id:"h4",category:"History",name:"Alcohol and gallstone history",costTier:"free",finding:"Drinks 1-2 units/week. No known gallstones. No prior abdominal surgeries.",isRelevant:false,relevantFor:["Acute Pancreatitis","Acute Cholecystitis"],expert:"Reduces pancreatitis and cholecystitis probability further but is less discriminating than cardiovascular history at this stage."},
+    {id:"e1",category:"Examination",name:"Vital signs",costTier:"low",finding:"BP 158/96 mmHg (bilateral arms equal), HR 58 bpm, RR 18, SpO₂ 96%, afebrile. Diaphoretic.",isRelevant:true,relevantFor:["Myocardial Infarction","Unstable Angina","Aortic Dissection"],expert:"Equal bilateral BP largely excludes aortic dissection (>20 mmHg difference expected). Bradycardia with diaphoresis is consistent with inferior MI — the RCA also supplies the SA/AV nodes."},
+    {id:"e2",category:"Examination",name:"Cardiovascular examination",costTier:"low",finding:"JVP not elevated. Heart sounds normal, no murmurs. Peripheral pulses equal. No oedema.",isRelevant:true,relevantFor:["Myocardial Infarction","Acute Pericarditis","Viral Myocarditis"],expert:"No pericardial rub (reduces pericarditis). Normal peripheral pulses with equal BPs supports against dissection. No haemodynamic compromise yet."},
+    {id:"e3",category:"Examination",name:"Abdominal examination",costTier:"low",finding:"Soft abdomen, mild epigastric tenderness on deep palpation only. No guarding, no rebound, no Murphy's sign.",isRelevant:true,relevantFor:["Acute Pancreatitis","Acute Cholecystitis","Peptic Ulcer Disease"],expert:"Absence of peritonism and Murphy's sign is inconsistent with cholecystitis or perforated PUD. Mild non-localised epigastric tenderness is well-recognised in inferior MI — visceral pain projects to the epigastrium."},
+    {id:"e4",category:"Examination",name:"Respiratory examination",costTier:"low",finding:"Lungs clear bilaterally, no crackles.",isRelevant:false,relevantFor:["Pulmonary Embolism"],expert:"Clear lungs reduce PE probability. Reasonable to check but lower yield than cardiovascular examination at this stage."},
+    {id:"i1",category:"Basic Investigations",name:"12-lead ECG",costTier:"low",finding:"ST elevation 2-3 mm in leads II, III, aVF. Reciprocal ST depression in I and aVL. Sinus rhythm at 56 bpm.",isRelevant:true,relevantFor:["Myocardial Infarction"],expert:"ST elevation in II/III/aVF with reciprocal changes in I/aVL is diagnostic of inferior STEMI, localising to RCA territory. This single finding triggers the STEMI protocol and excludes all GI diagnoses. If not ordered first, you have caused a potentially fatal delay."},
+    {id:"i2",category:"Basic Investigations",name:"Serum troponin (hs-TnI)",costTier:"low",finding:"Initial hs-TnI 248 ng/L (normal <26). Repeat at 3 hours: 1,840 ng/L (rising).",isRelevant:true,relevantFor:["Myocardial Infarction","Unstable Angina","Viral Myocarditis"],expert:"Rising delta-troponin confirms acute myocardial necrosis. Combined with inferior ST elevation, this confirms inferior STEMI requiring immediate primary PCI."},
+    {id:"i3",category:"Basic Investigations",name:"Lipase / amylase",costTier:"low",finding:"Lipase 42 U/L (normal). Amylase 78 U/L (normal).",isRelevant:false,relevantFor:["Acute Pancreatitis"],expert:"Excludes acute pancreatitis. However, ordering this before an ECG in this presentation represents a delay in the priority investigation."},
+    {id:"i4",category:"Basic Investigations",name:"FBC, UECr, glucose",costTier:"low",finding:"WBC 11.2 (stress leucocytosis). Creatinine 98. BSL 9.8 (known DM). Hb 144.",isRelevant:false,relevantFor:[],expert:"Useful baseline before PCI/contrast but does not change the primary diagnosis. Ordering this before ECG wastes critical time."},
+    {id:"a1",category:"Advanced Investigations",name:"CT aortogram",costTier:"high",finding:"No dissection flap. Normal aortic calibre throughout.",isRelevant:false,relevantFor:["Aortic Dissection"],expert:"NOT indicated — equal bilateral BPs and typical inferior STEMI ECG already make dissection very unlikely. Ordering this in a STEMI delays door-to-balloon time, directly increasing myocardial damage. This is a costly and harmful choice."},
+    {id:"a2",category:"Advanced Investigations",name:"Echocardiogram (urgent)",costTier:"mid",finding:"Regional wall motion abnormality in inferior/inferolateral walls. Mild RV involvement. EF 45-50%.",isRelevant:true,relevantFor:["Myocardial Infarction","Viral Myocarditis"],expert:"Confirms inferior STEMI — regional (not global) wall motion abnormality in RCA territory, distinguishing from myocarditis. RV involvement: avoid nitrates, watch preload. Useful but should not delay catheterisation."},
+    {id:"a3",category:"Advanced Investigations",name:"Coronary angiography (primary PCI)",costTier:"high",finding:"Total occlusion of mid-RCA. Successful primary PCI with drug-eluting stent. TIMI III flow restored.",isRelevant:true,relevantFor:["Myocardial Infarction"],expert:"Both diagnostic and therapeutic — confirms total RCA occlusion and allows immediate reperfusion. Door-to-balloon target <90 minutes. This is the definitive investigation and treatment."},
+  ],
+  expertNarrative:"Classic inferior STEMI presenting as epigastric pain — one of the most dangerous diagnostic pitfalls in emergency medicine. Inferior MI (RCA territory) frequently presents without chest pain due to shared vagal innervation. Key reasoning: (1) Never anchor on 'epigastric' — always ECG in any patient >40 with unexplained upper abdominal pain. (2) Cardiovascular risk factors and radiation pattern should shift the differential toward ACS early. (3) Equal BPs rule out dissection. (4) The ECG is the pivot — ST elevation II/III/aVF with reciprocal depression is diagnostic and triggers immediate action. (5) Troponin confirms but must not delay reperfusion. Time-to-balloon is the primary outcome driver.",
+  sensitivityNote:"Inferior MI can present identically to PUD, GORD, or pancreatitis — its sensitivity for 'typical' chest pain is only ~40-50%. A HIGHLY sensitive screening tool (ECG) must be applied broadly to all undifferentiated epigastric pain.",
+  specificityNote:"ST elevation in II/III/aVF with reciprocal changes is highly SPECIFIC for inferior STEMI (~95%). Once this ECG pattern is seen, competing diagnoses are largely excluded.",
+},
+{
+  id:"case_002",title:"Persistent Cough & Weight Loss",system:"Respiratory",
+  finalDiagnosis:"Pulmonary Tuberculosis",finalUmbrella:"Pulmonary Tuberculosis",snomedCode:"154283005",
+  mustNotMiss:["Lung Cancer","Pulmonary Tuberculosis"],
+  vignette:"A 38-year-old male construction worker originally from Myanmar presents with a 6-week history of productive cough. He has been feeling tired and has lost 5 kg unintentionally over the past 2 months.",
+  differentialPool:[
+    {id:"resp_008",name:"Pulmonary Tuberculosis",system:"Respiratory",isUmbrella:true,subtypes:["Primary TB","Post-primary TB","Miliary TB"],mnm:true},
+    {id:"resp_021",name:"Lung Cancer",system:"Respiratory",isUmbrella:true,subtypes:["Adenocarcinoma","Squamous Cell Carcinoma","Small Cell Lung Cancer"],mnm:true},
+    {id:"resp_006",name:"Community-Acquired Pneumonia",system:"Respiratory",isUmbrella:true,subtypes:["Lobar Pneumonia","Atypical Pneumonia"],mnm:false},
+    {id:"resp_019",name:"Sarcoidosis",system:"Respiratory",isUmbrella:false,mnm:false},
+    {id:"resp_014",name:"Bronchiectasis",system:"Respiratory",isUmbrella:false,mnm:false},
+    {id:"resp_010",name:"Pneumocystis Pneumonia (PCP)",system:"Respiratory",isUmbrella:false,mnm:true},
+    {id:"resp_017",name:"Idiopathic Pulmonary Fibrosis",system:"Respiratory",isUmbrella:false,mnm:false},
+    {id:"resp_012",name:"Asthma",system:"Respiratory",isUmbrella:false,mnm:false},
+  ],
+  investigations:[
+    {id:"h1",category:"History",name:"Cough characteristics",costTier:"free",finding:"Productive yellow-green sputum with occasional blood-tinged streaks (haemoptysis twice). Insidious onset over 6 weeks. No pleuritic pain.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Lung Cancer","Bronchiectasis"],expert:"Subacute productive cough with haemoptysis and constitutional symptoms is the classic TB presentation. However, haemoptysis + weight loss must also prompt consideration of lung malignancy — both remain on the differential. 6-week timeline argues against acute bacterial pneumonia."},
+    {id:"h2",category:"History",name:"Constitutional symptoms",costTier:"free",finding:"Drenching night sweats for 4 weeks. Low-grade fever (self-reported). Anorexia. No rash, no joint pains.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Lung Cancer","Sarcoidosis"],expert:"Night sweats + fever + weight loss = the classic TB constitutional triad. Non-specific but significantly raises pre-test probability in a high-risk individual. Same triad occurs in lymphoma and some lung malignancies."},
+    {id:"h3",category:"History",name:"Epidemiological risk factors",costTier:"free",finding:"Born and raised in Myanmar (high TB-endemic country). Lives in a dormitory with 20 other workers. No prior TB treatment, no BCG documentation.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis"],expert:"The single most important piece of history for TB: origin from a high-incidence country + overcrowded dormitory = dramatically elevated pre-test probability. Singapore has mandatory TB notification and contact tracing. BCG does not exclude TB in adults."},
+    {id:"h4",category:"History",name:"HIV and immunosuppression",costTier:"free",finding:"Denies IV drug use. No known HIV. Not on immunosuppressive medications.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Pneumocystis Pneumonia (PCP)"],expert:"HIV status is critical — co-infection dramatically changes presentation and management. PCP must be considered in any immunocompromised patient with bilateral infiltrates. History reduces but does not exclude immunocompromise."},
+    {id:"h5",category:"History",name:"Smoking history",costTier:"free",finding:"Smokes 10 cigarettes/day for 15 years (15 pack-year). No occupational asbestos exposure.",isRelevant:true,relevantFor:["Lung Cancer"],expert:"15 pack-years is a meaningful lung cancer risk factor. Smoking + haemoptysis + constitutional symptoms means lung malignancy cannot be deprioritised — it must remain on the differential until actively excluded."},
+    {id:"e1",category:"Examination",name:"Vital signs",costTier:"low",finding:"Temp 37.9°C. HR 92. BP 118/76. RR 18. SpO₂ 95%. BMI 18.5 (underweight).",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Community-Acquired Pneumonia"],expert:"Low-grade fever with borderline SpO₂ and underweight BMI consistent with TB. Undernutrition is both a risk factor and consequence. Malignancy can also cause fever (paraneoplastic)."},
+    {id:"e2",category:"Examination",name:"Respiratory examination",costTier:"low",finding:"Trachea central. Dull percussion left upper zone. Reduced breath sounds left upper zone. Post-tussive crepitations left upper zone. Right lung clear.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Lung Cancer"],expert:"Left upper zone consolidation/cavitation is the CLASSIC location for post-primary TB — reactivation preferentially affects apical/upper lobes (higher oxygen tension). Upper lobe disease in a young person from an endemic country strongly favours TB, but a mass lesion must still be excluded."},
+    {id:"e3",category:"Examination",name:"Lymph node examination",costTier:"low",finding:"Left posterior cervical lymph node 1.5 cm, firm, non-tender. No axillary or inguinal lymphadenopathy.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Lung Cancer","Sarcoidosis"],expert:"Cervical lymphadenopathy adds sarcoidosis alongside TB. In TB, extrapulmonary lymphadenopathy (scrofula) is common. Firm but non-tender is more consistent with TB than hard/matted malignant nodes."},
+    {id:"e4",category:"Examination",name:"Clubbing and peripheral signs",costTier:"low",finding:"No clubbing. No Horner's syndrome. No SVC obstruction signs.",isRelevant:false,relevantFor:["Lung Cancer"],expert:"Absence of these signs reduces probability of advanced malignancy but cannot exclude early-stage disease — these are late signs."},
+    {id:"i1",category:"Basic Investigations",name:"Chest X-ray (PA)",costTier:"low",finding:"Left upper lobe opacification with 2 cm cavitating lesion. Hilar lymphadenopathy. No pleural effusion. Right lung clear.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Lung Cancer"],expert:"Left upper lobe cavitation with hilar lymphadenopathy is the radiological hallmark of post-primary TB. However, cavitating lung masses also occur in squamous cell carcinoma — this CXR mandates sputum AFB smear AND CT chest to exclude malignancy."},
+    {id:"i2",category:"Basic Investigations",name:"Sputum AFB smear × 3",costTier:"low",finding:"AFB smear: 2/3 specimens positive for acid-fast bacilli (ZN stain). Culture pending 4-6 weeks.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis"],expert:"Positive AFB smear in 2/3 specimens is sufficient to initiate treatment and isolation in Singapore's TB protocol. Smear-positive TB is highly infectious. GeneXpert can confirm in 2 hours and detect rifampicin resistance."},
+    {id:"i3",category:"Basic Investigations",name:"FBC, ESR, CRP, LFTs",costTier:"low",finding:"WBC 8.9 (lymphopenia 0.9). Hb 108 (normocytic). ESR 88. CRP 67. ALT 52 (mildly elevated).",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Lung Cancer","Sarcoidosis"],expert:"Lymphopenia + elevated ESR/CRP + anaemia of chronic disease consistent with TB. Mild ALT elevation is critical — first-line TB drugs (RIPE) are hepatotoxic. Baseline LFT is mandatory before starting therapy."},
+    {id:"i4",category:"Basic Investigations",name:"HIV serology (opt-out)",costTier:"low",finding:"HIV Ag/Ab combo: NEGATIVE.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Pneumocystis Pneumonia (PCP)"],expert:"Mandatory in TB workup in Singapore. Negative HIV allows standard RIPE regimen. HIV co-infection would require different sequencing (TB first, ART later to avoid IRIS)."},
+    {id:"i5",category:"Basic Investigations",name:"Sputum cytology",costTier:"low",finding:"No malignant cells. Class I (negative).",isRelevant:true,relevantFor:["Lung Cancer"],expert:"Negative sputum cytology reduces but does not exclude lung malignancy — sensitivity ~60-70% for central lesions, lower for peripheral. Combined with positive AFB smear, TB is now the leading diagnosis."},
+    {id:"a1",category:"Advanced Investigations",name:"CT chest (with contrast)",costTier:"mid",finding:"Left upper lobe 2.3 cm cavitating lesion with tree-in-bud pattern. Mediastinal and hilar lymphadenopathy. Satellite nodules. Right lung clear.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis","Lung Cancer"],expert:"Tree-in-bud pattern (endobronchial TB spread) + satellite nodules + upper lobe cavitation = radiological fingerprint of post-primary TB. Malignant cavities typically show thick irregular walls without tree-in-bud. This CT significantly raises TB probability."},
+    {id:"a2",category:"Advanced Investigations",name:"GeneXpert MTB/RIF",costTier:"mid",finding:"POSITIVE for M. tuberculosis. Rifampicin resistance NOT detected.",isRelevant:true,relevantFor:["Pulmonary Tuberculosis"],expert:"GeneXpert confirms M. tuberculosis AND excludes rifampicin-resistant TB. Drug-sensitive pulmonary TB confirmed. RIPE therapy can begin with confidence."},
+    {id:"a3",category:"Advanced Investigations",name:"Bronchoscopy + BAL",costTier:"high",finding:"Not performed — adequate sputum produced and GeneXpert positive.",isRelevant:false,relevantFor:["Pulmonary Tuberculosis","Lung Cancer"],expert:"Reserved for smear-negative cases or when malignancy requires exclusion in patients who cannot produce sputum. Not needed here — would expose staff to infectious aerosols unnecessarily."},
+    {id:"a4",category:"Advanced Investigations",name:"PET-CT scan",costTier:"high",finding:"Not clinically indicated at this stage.",isRelevant:false,relevantFor:["Lung Cancer"],expert:"PET-CT is for staging confirmed malignancy. Ordering it before excluding TB is premature — active TB shows intense FDG uptake mimicking malignancy, causing confusion rather than clarity."},
+  ],
+  expertNarrative:"TB is the great mimicker — presenting identically to lung malignancy in any patient with haemoptysis and weight loss. Key reasoning: (1) Demographics are paramount — a 38-year-old from Myanmar with constitutional symptoms and upper lobe disease has TB until proven otherwise. (2) Both TB and lung cancer are must-not-miss. (3) Efficient sequence: CXR → AFB smear × 3 → GeneXpert. CT chest adds value once CXR is abnormal. PET-CT and bronchoscopy come after diagnosis confirmation. (4) Positive AFB smear mandates immediate MOH notification and respiratory isolation. (5) Baseline LFTs before RIPE therapy is mandatory — drug-induced hepatitis is common and potentially fatal.",
+  sensitivityNote:"TB is a great mimicker with low clinical sensitivity for 'classic' presentation. A HIGHLY SENSITIVE approach is required: any migrant with >2-3 weeks of cough, weight loss, or haemoptysis must have TB prominently in the differential.",
+  specificityNote:"Positive GeneXpert MTB/RIF is highly SPECIFIC (>99%) for M. tuberculosis. Once positive, it effectively confirms TB and guides treatment.",
+}
 ];
 
-// ════════════════════════════════════════════════════════════════════════
-// DIAGNOSIS POOL (autocomplete source — all diagnosis names across cases)
-// ════════════════════════════════════════════════════════════════════════
-function buildDiagPool() {
-  const seen = new Set();
-  const pool = [];
-  CASES.forEach(c => {
-    c.differentialPool.forEach(d => {
-      if (!seen.has(d.name)) {
-        seen.add(d.name);
-        pool.push(d);
-      }
-      if (d.subtypes) {
-        d.subtypes.forEach(st => {
-          if (!seen.has(st)) {
-            seen.add(st);
-            pool.push({ id: d.id+'_'+st, name: st, system: d.system, isSubtype: true, parentName: d.name, mnm: false });
-          }
-        });
-      }
-    });
-  });
-  return pool.sort((a,b) => a.name.localeCompare(b.name));
-}
-const DIAG_POOL = buildDiagPool();
+// ═══════════════════════════════════════════════════════
+// GLOBALS
+// ═══════════════════════════════════════════════════════
+let G=null, sidebarOpen=true;
+let dragSrc=null, rankDragSrc=null;
 
-// ════════════════════════════════════════════════════════════════════════
-// GAME STATE
-// ════════════════════════════════════════════════════════════════════════
-let G = null; // current game state
-let sidebarOpen = true;
-
-function freshState(caseIdx) {
-  const cas = CASES[caseIdx];
-  return {
-    caseIdx,
-    phase: 'phase1',        // phase1 | phase2 | commit | debrief | critical_miss
-    differential: [],       // [{diagId, name, tag:'mnm'|'wd', eliminated:false, eliminatedSubtypes:[], subtypesExpanded:false}]
-    investigations: [],     // [{invId, category, finding, isRelevant, costTier}]
-    activeInvCategory: 'History',
-    profHintShown: false,
-    profHintText: '',
-    committedDx: null,
-    score: { safety:0, efficiency:100, precision:0, reasoner:0 },
-    costPenalty: 0,
-    irrelevantCount: { History:0, Examination:0, 'Basic Investigations':0, 'Advanced Investigations':0 },
-    softNudge: null,
-    // Phase 1 UI state
-    searchQuery: '',
-    searchFocusIdx: -1,
-    pendingTagType: 'wd',   // 'mnm' | 'wd'
+function freshState(idx){
+  return{
+    caseIdx:idx,phase:'phase1',
+    differential:[],
+    investigations:[],
+    activeInvCat:'History',
+    pendingTag:'wd',
+    profHintShown:false,
+    softNudge:null,
+    committedDx:null,
+    mnmForced:false,
+    missedMNM:[],
+    rankingSnapshots:[],
+    pendingRank:false,
+    lastInvName:'',
+    score:{safety:100,efficiency:100,precision:0,reasoner:0},
   };
 }
 
-// ════════════════════════════════════════════════════════════════════════
-// COST / PENALTY SYSTEM
-// ════════════════════════════════════════════════════════════════════════
-const COST_PENALTY = {
-  // [tier][relevant|irrelevant]
-  free:       { relevant: 0,  irrelevant: 0  },
-  low:        { relevant: 0,  irrelevant: 3  },  // e.g. exam finding, basic lab
-  mid:        { relevant: 0,  irrelevant: 8  },  // e.g. echo, CT
-  high:       { relevant: 0,  irrelevant: 18 },  // e.g. angiogram, PET
-};
+const COST_LABEL={free:'Free',low:'Low cost',mid:'Moderate cost',high:'High cost'};
+const COST_PENALTY={free:0,low:3,mid:8,high:18};
+const CAT_ICONS={History:'📖',Examination:'🩺','Basic Investigations':'🧪','Advanced Investigations':'🔬'};
+const CAT_CLASS={History:'h-f',Examination:'e-f','Basic Investigations':'i-f','Advanced Investigations':'a-f'};
 
-const COST_LABEL = { free:'Free', low:'Low cost', mid:'Moderate cost', high:'High cost' };
-const COST_CLASS = { free:'c-free', low:'c-low', mid:'c-mid', high:'c-high' };
+function closeModal(){document.getElementById('modal-overlay').classList.add('hidden');}
 
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // SIDEBAR
-// ════════════════════════════════════════════════════════════════════════
-function buildSidebar() {
-  const el = document.getElementById('sbCases');
-  el.innerHTML = `<div class="sb-section-label">Cases</div>` +
-    CASES.map((c, i) => {
-      const res = G && G.caseIdx === i && G.phase === 'debrief' ? 'win' : '';
-      return `<button class="sb-case-btn ${G && G.caseIdx===i?'active':''}" onclick="startCase(${i})">
-        <span class="case-num">${String(i+1).padStart(2,'0')}</span>
-        <span class="case-title">${c.title}</span>
-        ${res ? `<span class="case-badge ${res}">${res.toUpperCase()}</span>` : ''}
+// ═══════════════════════════════════════════════════════
+function buildSidebar(){
+  document.getElementById('sbCases').innerHTML=
+    '<div class="sb-sec">Cases</div>'+
+    CASES.map((c,i)=>{
+      const done=G&&G.caseIdx===i&&G.phase==='debrief';
+      return`<button class="sb-btn ${G&&G.caseIdx===i?'active':''}" onclick="startCase(${i})">
+        <span class="cn">${String(i+1).padStart(2,'0')}</span>
+        <span class="ct">${c.title}</span>
+        ${done?'<span class="cbadge done">DONE</span>':''}
       </button>`;
     }).join('');
 }
+function toggleSidebar(){sidebarOpen=!sidebarOpen;document.getElementById('sidebar').classList.toggle('collapsed',!sidebarOpen);}
 
-function toggleSidebar() {
-  sidebarOpen = !sidebarOpen;
-  document.getElementById('sidebar').classList.toggle('collapsed', !sidebarOpen);
-}
-
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // RENDER ROUTER
-// ════════════════════════════════════════════════════════════════════════
-function render() {
+// ═══════════════════════════════════════════════════════
+function render(){
   buildSidebar();
-  if (!G) { renderWelcome(); return; }
+  if(!G){renderWelcome();return;}
   updateTopbar();
-  const cas = CASES[G.caseIdx];
-  switch(G.phase) {
-    case 'phase1': renderPhase1(); break;
-    case 'phase2': renderPhase2(); break;
-    case 'commit': renderCommit(); break;
-    case 'debrief': renderDebrief(); break;
-    case 'critical_miss': renderCriticalMiss(); break;
+  switch(G.phase){
+    case'phase1':renderPhase1();break;
+    case'phase2':renderPhase2();break;
+    case'commit':renderCommit();break;
+    case'debrief':renderDebrief();break;
+    case'critical_miss':renderCriticalMiss();break;
   }
 }
 
-function updateTopbar() {
-  const cas = CASES[G.caseIdx];
-  document.getElementById('tbCaseName').textContent = cas.title;
-  const phases = {
-    phase1: ['PHASE 1 — BUILD DIFFERENTIAL','phase-1'],
-    phase2: ['PHASE 2 — INVESTIGATE','phase-2'],
-    commit: ['PHASE 3 — COMMIT','phase-commit'],
-    debrief: ['DEBRIEF','phase-debrief'],
-    critical_miss: ['CRITICAL MISS','phase-1'],
-  };
-  const [label, cls] = phases[G.phase] || ['',''];
-  const phaseEl = document.querySelector('.tb-phase');
-  const effEl = document.querySelector('.efficiency-meter');
-  const tbRight = document.getElementById('tbRight');
-  const dots = buildProgressDots();
-  tbRight.innerHTML = `<div class="progress-dots">${dots}</div>
-    <div class="tb-phase ${cls}">${label}</div>
-    <div class="efficiency-meter">
-      <span>Eff</span>
-      <div class="eff-bar"><div class="eff-fill" style="width:${Math.max(0,G.score.efficiency)}%;background:${G.score.efficiency>60?'var(--green)':G.score.efficiency>30?'var(--yellow)':'var(--red)'}"></div></div>
-      <span>${Math.max(0,G.score.efficiency)}%</span>
+function updateTopbar(){
+  document.getElementById('tbName').textContent=CASES[G.caseIdx].title;
+  const pm={phase1:['PHASE 1','tp-1'],phase2:['PHASE 2','tp-2'],commit:['COMMIT','tp-c'],debrief:['DEBRIEF','tp-d'],critical_miss:['CRITICAL MISS','tp-x']};
+  const[lbl,cls]=pm[G.phase]||['',''];
+  const eff=Math.max(0,G.score.efficiency);
+  const ec=eff>60?'var(--green)':eff>30?'var(--yellow)':'var(--red)';
+  document.getElementById('tbRight').innerHTML=
+    `<div class="eff-wrap">Eff <div class="eff-bar"><div class="eff-fill" style="width:${eff}%;background:${ec}"></div></div> ${eff}%</div>
+     <div class="tb-phase ${cls}">${lbl}</div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// WELCOME
+// ═══════════════════════════════════════════════════════
+function renderWelcome(){
+  document.getElementById('content').innerHTML=`
+    <div class="welcome">
+      <div class="wl"><span>Dx</span>/</div>
+      <div class="ws">Build your differential. Investigate systematically. Commit to your diagnosis. Learn from every decision.</div>
+      <div class="wh">← Select a case to begin</div>
     </div>`;
 }
 
-function buildProgressDots() {
-  const invCount = CASES[G.caseIdx].investigations.filter(i=>i.isRelevant).length;
-  const revealed = G.investigations.length;
-  const steps = Math.max(5, invCount);
-  return Array.from({length:steps},(_,i)=>{
-    let cls = i < revealed ? 'done' : i === revealed ? 'active' : '';
-    return `<div class="pdot ${cls}"></div>`;
+// ═══════════════════════════════════════════════════════
+// PHASE 1
+// ═══════════════════════════════════════════════════════
+function startCase(idx){G=freshState(idx);render();}
+
+function renderPhase1(){
+  const cas=CASES[G.caseIdx];
+  document.getElementById('content').innerHTML=`
+    <div class="ph"><div class="ph-num p1">Phase 1</div>
+      <div><div class="ph-title">Build Your Differential</div>
+        <div class="ph-sub">Think broadly first — breadth before depth. Add every diagnosis you'd seriously consider.</div>
+      </div>
+    </div>
+    <div class="vig"><div class="vig-lbl">📋 Opening Vignette</div><div class="vig-txt">${cas.vignette}</div></div>
+    <div class="scaffold">
+      <div class="scaffold-lbl">🧱 VITAMIN CDE Scaffold <span style="font-size:0.67rem;font-family:var(--sans);font-weight:400;letter-spacing:0;color:var(--muted2)">(click each category to see examples)</span></div>
+      <div class="vit-grid">${['Vascular','Infective','Trauma','Autoimmune','Metabolic','Idiopathic','Neoplastic','Congenital','Degenerative','Endocrine'].map(v=>`<div class="vit-chip" onclick="toggleVit(this)">${v}</div>`).join('')}</div>
+      <div class="vit-hint" id="vitHint">Click a category to see example diagnoses.</div>
+    </div>
+    <div class="diff-box">
+      <div class="diff-box-lbl">Your Differential Diagnosis</div>
+      <div class="tag-row">
+        <button class="tag-btn ${G.pendingTag==='mnm'?'t-mnm':''}" onclick="setTag('mnm')">🔴 Must Not Miss</button>
+        <button class="tag-btn ${G.pendingTag==='wd'?'t-wd':''}" onclick="setTag('wd')">🟡 Working Diagnosis</button>
+      </div>
+      <div class="tip" style="margin-bottom:10px"><strong>How to add:</strong> Select your tag above, then type in the search box. Selecting an <em>umbrella</em> (e.g. "Myocardial Infarction") includes all subtypes — you can eliminate individual subtypes later. Drag the ⠿ handle to reorder by likelihood.</div>
+      <div class="srch-wrap">
+        <input class="srch-inp" id="dxSearch" type="text" placeholder="Search diagnoses…" autocomplete="off"
+          oninput="onSrchInput()" onkeydown="onSrchKey(event)" onfocus="showDd()">
+        <div class="srch-dd" id="srchDd"></div>
+      </div>
+      <div class="dlist" id="diffList">${renderDiffEntries()}</div>
+    </div>
+    ${G.softNudge?`<div class="nudge">⚠️ ${G.softNudge}</div>`:''}
+    <div class="pnav">
+      <button class="pnav-btn go" onclick="toPhase2()">Proceed to Investigations →</button>
+      <span class="prof" onclick="toggleProf()">🎓 Ask the Professor</span>
+    </div>
+    ${G.profHintShown?`<div class="prof-reveal">💡 Think about which systems could explain ALL the symptoms together. Then work through VITAMIN CDE within each relevant system. Don't forget atypical presentations — cardiovascular and infectious diseases are notorious mimickers of other conditions.</div>`:''}
+  `;
+  bindDd();
+}
+
+const VIT_MAP={
+  Vascular:'ACS, PE, aortic dissection, DVT, stroke, peripheral arterial disease',
+  Infective:'Pneumonia, TB, endocarditis, meningitis, sepsis, UTI',
+  Trauma:'Haematoma, pneumothorax, fracture, solid organ injury',
+  Autoimmune:'SLE, RA, IBD, pericarditis, myositis, vasculitis',
+  Metabolic:'DKA, hepatic encephalopathy, B12/thiamine deficiency, electrolyte disorders',
+  Idiopathic:'IPF, sarcoidosis, IIH — no identifiable cause',
+  Neoplastic:'Primary vs metastatic — lung, GI, haematological, CNS',
+  Congenital:'HCM, coarctation, cystic fibrosis — born with it',
+  Degenerative:"COPD, PAD, Parkinson's, osteoarthritis",
+  Endocrine:'Thyroid, adrenal crisis, pituitary, DM complications'
+};
+
+function toggleVit(el){
+  el.classList.toggle('on');
+  const active=[...document.querySelectorAll('.vit-chip.on')].map(c=>c.textContent);
+  document.getElementById('vitHint').textContent=active.length
+    ?active.map(v=>VIT_MAP[v]||v).join(' | ')
+    :'Click a category to see example diagnoses.';
+}
+
+function setTag(t){
+  G.pendingTag=t;
+  const btns=document.querySelectorAll('.tag-btn');
+  if(!btns.length)return;
+  btns[0].className='tag-btn'+(t==='mnm'?' t-mnm':'');
+  btns[1].className='tag-btn'+(t==='wd'?' t-wd':'');
+}
+
+function toPhase2(){
+  if(G.differential.filter(d=>!d.eliminated).length<2){
+    G.softNudge='Add at least 2 diagnoses before proceeding.';render();return;
+  }
+  const cas=CASES[G.caseIdx];
+  const missed=cas.mustNotMiss.filter(m=>!G.differential.find(d=>normMatch(d.name,m)));
+  if(missed.length>0){G.phase='critical_miss';G.missedMNM=missed;render();return;}
+  G.phase='phase2';G.softNudge=null;render();
+}
+
+function normMatch(a,b){
+  if(!a||!b)return false;
+  if(a===b)return true;
+  const al=a.toLowerCase(),bl=b.toLowerCase();
+  if(al===bl)return true;
+  if(al.includes(bl)||bl.includes(al))return true;
+  return false;
+}
+
+// ═══════════════════════════════════════════════════════
+// DIFF ENTRIES — used by Phase 1 and Phase 2
+// All mutations go through G.differential, then call re_renderDiff()
+// ═══════════════════════════════════════════════════════
+function renderDiffEntries(){
+  if(!G.differential.length)return`<div class="dempty">No diagnoses added yet</div>`;
+  const cas=CASES[G.caseIdx];
+  return G.differential.map((d,i)=>{
+    const pool=cas.differentialPool.find(p=>p.name===d.name);
+    const subs=pool?.subtypes||[];
+    const isElim=d.eliminated;
+    return`<div class="de ${d.tag==='mnm'?'mnm-e':'wd-e'} ${isElim?'elim':''}" id="de-${i}"
+      draggable="true"
+      ondragstart="onDragStart(event,${i})"
+      ondragover="onDragOver(event,${i})"
+      ondrop="onDrop(event,${i})"
+      ondragleave="onDragLeave(event,${i})"
+      ondragend="onDragEnd()">
+      <div class="de-top">
+        <span class="de-drag" title="Drag to reorder">⠿</span>
+        <span class="de-rank">${i+1}</span>
+        <div class="de-main">
+          <div class="de-name ${isElim?'elim-name':''}">
+            ${escHtml(d.name)}
+            <span class="de-tag t-${d.tag}">${d.tag==='mnm'?'🔴 MNM':'🟡 WD'}</span>
+          </div>
+          ${d.mnm&&isElim?`<div class="de-lock">🔒 MNM — deprioritised only</div>`:''}
+        </div>
+        <div class="de-acts">
+          ${isElim
+            ?`<button class="de-btn restore" onclick="restoreDiff(${i})">Restore</button>`
+            :`<button class="de-btn" onclick="elimDiff(${i})">${d.mnm?'Deprioritise':'Eliminate'}</button>`
+          }
+        </div>
+      </div>
+      ${subs.length?`<div class="de-subs">${subs.map(st=>{
+        const elim=d.eliminatedSubtypes.includes(st);
+        return`<span class="de-sub ${elim?'sub-elim':''}" onclick="toggleSub(${i},'${escJs(st)}')" title="${elim?'Click to restore':'Click to eliminate this subtype'}">${elim?'✕ ':''} ${escHtml(st)}</span>`;
+      }).join('')}</div>`:''}
+    </div>`;
   }).join('');
 }
 
-// ════════════════════════════════════════════════════════════════════════
-// WELCOME
-// ════════════════════════════════════════════════════════════════════════
-function renderWelcome() {
-  document.getElementById('content').innerHTML = `
-    <div class="welcome">
-      <div class="welcome-logo"><span>Dx</span>/</div>
-      <div class="welcome-sub">Build your differential. Investigate systematically. Commit to your diagnosis. Learn from every decision.</div>
-      <div class="welcome-hint">← Select a case to begin</div>
-    </div>`;
+function re_renderDiff(){
+  const el=document.getElementById('diffList');
+  if(el)el.innerHTML=renderDiffEntries();
 }
 
-// ════════════════════════════════════════════════════════════════════════
-// PHASE 1 — DIFFERENTIAL BUILDER
-// ════════════════════════════════════════════════════════════════════════
-function startCase(idx) {
-  G = freshState(idx);
+// Eliminate / Restore
+function elimDiff(i){
+  if(i<0||i>=G.differential.length)return;
+  const d=G.differential[i];
+  d.eliminated=true;
+  if(d.mnm){
+    d.tag='wd';
+    G.softNudge=`"${d.name}" is a must-not-miss. Deprioritised but kept on your list.`;
+    // update nudge in DOM if it exists, else re-render
+    const nudgeEl=document.querySelector('.nudge');
+    if(nudgeEl)nudgeEl.textContent='⚠️ '+G.softNudge;
+    else{renderPhase1();return;}
+  }
+  re_renderDiff();
+}
+
+function restoreDiff(i){
+  if(i<0||i>=G.differential.length)return;
+  G.differential[i].eliminated=false;
+  re_renderDiff();
+}
+
+function toggleSub(diagIdx,subtype){
+  const d=G.differential[diagIdx];if(!d)return;
+  const idx=d.eliminatedSubtypes.indexOf(subtype);
+  if(idx>=0)d.eliminatedSubtypes.splice(idx,1);
+  else d.eliminatedSubtypes.push(subtype);
+  re_renderDiff();
+}
+
+// ═══════════════════════════════════════════════════════
+// DRAG-TO-RANK (differential list)
+// ═══════════════════════════════════════════════════════
+function onDragStart(e,i){
+  dragSrc=i;e.dataTransfer.effectAllowed='move';
+  setTimeout(()=>{document.getElementById('de-'+i)?.classList.add('dragging');},0);
+}
+function onDragOver(e,i){
+  e.preventDefault();e.dataTransfer.dropEffect='move';
+  if(i!==dragSrc)document.getElementById('de-'+i)?.classList.add('drag-over');
+}
+function onDragLeave(e,i){document.getElementById('de-'+i)?.classList.remove('drag-over');}
+function onDrop(e,i){
+  e.preventDefault();
+  document.getElementById('de-'+i)?.classList.remove('drag-over');
+  if(dragSrc===null||dragSrc===i)return;
+  const moved=G.differential.splice(dragSrc,1)[0];
+  G.differential.splice(i,0,moved);
+  re_renderDiff();dragSrc=null;
+}
+function onDragEnd(){
+  dragSrc=null;
+  document.querySelectorAll('.de').forEach(el=>el.classList.remove('dragging','drag-over'));
+}
+
+// ═══════════════════════════════════════════════════════
+// DRAG-TO-RANK (ranking panel in phase 2)
+// ═══════════════════════════════════════════════════════
+function onRankDragStart(e,i){
+  rankDragSrc=i;e.dataTransfer.effectAllowed='move';
+  setTimeout(()=>{document.getElementById('ri-'+i)?.classList.add('dragging');},0);
+}
+function onRankDragOver(e,i){
+  e.preventDefault();
+  if(i!==rankDragSrc)document.getElementById('ri-'+i)?.classList.add('drag-over');
+}
+function onRankDragLeave(e,i){document.getElementById('ri-'+i)?.classList.remove('drag-over');}
+function onRankDrop(e,i){
+  e.preventDefault();
+  document.getElementById('ri-'+i)?.classList.remove('drag-over');
+  if(rankDragSrc===null||rankDragSrc===i)return;
+  const moved=G.differential.splice(rankDragSrc,1)[0];
+  G.differential.splice(i,0,moved);
+  re_renderRankPanel();rankDragSrc=null;
+}
+function onRankDragEnd(){
+  rankDragSrc=null;
+  document.querySelectorAll('.ri').forEach(el=>el.classList.remove('dragging','drag-over'));
+}
+function re_renderRankPanel(){
+  const el=document.getElementById('rankPanel');
+  if(el)el.innerHTML=buildRankItems();
+}
+function buildRankItems(){
+  return G.differential.filter(d=>!d.eliminated).map((d,i)=>
+    `<div class="ri" id="ri-${i}" draggable="true"
+      ondragstart="onRankDragStart(event,${i})"
+      ondragover="onRankDragOver(event,${i})"
+      ondrop="onRankDrop(event,${i})"
+      ondragleave="onRankDragLeave(event,${i})"
+      ondragend="onRankDragEnd()">
+      <span class="ri-num">${i+1}</span>
+      <span class="ri-name">${escHtml(d.name)}</span>
+      <span class="ri-tag ${d.tag==='mnm'?'mnm':'wd'}">${d.tag==='mnm'?'🔴':'🟡'}</span>
+      <span class="ri-drag">⠿</span>
+    </div>`
+  ).join('');
+}
+
+function confirmRanking(){
+  G.rankingSnapshots.push({afterInv:G.lastInvName,ranking:G.differential.filter(d=>!d.eliminated).map(d=>d.name)});
+  G.pendingRank=false;
   render();
 }
 
-function renderPhase1() {
-  const cas = CASES[G.caseIdx];
-  const mnmList = cas.mustNotMiss;
-  const diffHTML = renderDiffList();
-  const mnmMissed = mnmList.filter(m => !G.differential.find(d => d.name === m || (d.name.includes(m.split(' ')[0]))));
-
-  document.getElementById('content').innerHTML = `
-    <div class="phase-header">
-      <div class="ph-num p1">Phase 1</div>
-      <div><div class="ph-title">Build Your Differential</div>
-        <div class="ph-sub">Add diagnoses you'd consider for this presentation. Think systematically.</div></div>
-    </div>
-
-    <div class="vignette-card">
-      <div class="vignette-label">📋 Opening Vignette</div>
-      <div class="vignette-text">${cas.vignette}</div>
-    </div>
-
-    <div class="scaffold-card">
-      <div class="scaffold-label">🧱 VITAMIN CDE Scaffold <span style="font-size:0.7rem;color:var(--muted2);font-family:var(--sans);font-weight:400;letter-spacing:0">(use as a checklist — click to highlight)</span></div>
-      <div class="scaffold-grid" id="vitGrid">
-        ${['Vascular','Infective','Trauma','Autoimmune','Metabolic','Idiopathic','Neoplastic','Congenital','Degenerative','Endocrine'].map(v=>
-          `<div class="vit-chip" onclick="toggleVit(this)">${v}</div>`
-        ).join('')}
-      </div>
-      <div class="vit-hint" id="vitHint">Click a category to prompt your thinking. Not all categories apply to every case.</div>
-    </div>
-
-    <div class="diff-builder">
-      <div class="diff-builder-label">Your Differential Diagnosis</div>
-      <div class="tag-type-row">
-        <button class="tag-type-btn ${G.pendingTagType==='mnm'?'active-mnm':''}" onclick="setPendingTag('mnm')">🔴 Must Not Miss</button>
-        <button class="tag-type-btn ${G.pendingTagType==='wd'?'active-wd':''}" onclick="setPendingTag('wd')">🟡 Working Diagnosis</button>
-      </div>
-      <div class="search-wrap">
-        <input class="dx-search" id="dxSearch" type="text" placeholder="Type to search diagnoses…"
-          autocomplete="off" value="${escHtml(G.searchQuery)}"
-          oninput="onSearchInput()" onkeydown="onSearchKey(event)" onfocus="showDropdown()">
-        <div class="search-dropdown" id="searchDropdown"></div>
-      </div>
-      <div class="diff-list" id="diffList">${diffHTML || '<div class="diff-empty">No diagnoses added yet</div>'}</div>
-    </div>
-
-    ${G.softNudge ? `<div class="soft-nudge">⚠️ <strong>Soft Recovery:</strong> ${G.softNudge}</div>` : ''}
-
-    <div class="tip-box">
-      <strong>Sensitivity first:</strong> In Phase 1, prioritise adding diagnoses you must not miss — even if they seem less likely. You can tag them as "Must Not Miss" to track them. Use the VITAMIN CDE scaffold to ensure you've considered all categories.
-    </div>
-
-    <div class="phase-nav">
-      <button class="pnav-btn continue" onclick="proceedToPhase2()">Continue to Investigations →</button>
-      <span class="prof-hint" onclick="showProfHint('phase1')">🎓 Ask the Professor</span>
-    </div>
-    ${G.profHintShown ? `<div class="prof-hint-reveal">💡 ${G.profHintText}</div>` : ''}
-  `;
-  bindSearchEvents();
-}
-
-function toggleVit(el) {
-  el.classList.toggle('active');
-  const vitMap = {
-    Vascular:'Think: ACS, PE, dissection, DVT, stroke — anything with a vessel',
-    Infective:'Think: pneumonia, TB, endocarditis, meningitis, sepsis',
-    Trauma:'Think: haematoma, pneumothorax, fracture — any recent injury?',
-    Autoimmune:'Think: SLE, RA, IBD, pericarditis, myositis',
-    Metabolic:'Think: DKA, hepatic encephalopathy, B12/thiamine, electrolytes',
-    Idiopathic:'Think: IPF, sarcoidosis, IIH — no identifiable cause',
-    Neoplastic:'Think: primary vs metastatic — lung, GI, haematological',
-    Congenital:'Think: HCM, coarctation, CF — born with it',
-    Degenerative:'Think: COPD, PAD, Parkinson\'s, osteoarthritis',
-    Endocrine:'Think: thyroid, adrenal, pituitary, DM complications'
-  };
-  const active = [...document.querySelectorAll('.vit-chip.active')].map(c=>c.textContent);
-  document.getElementById('vitHint').textContent = active.length
-    ? active.map(v => vitMap[v] || v).join(' | ')
-    : 'Click a category to prompt your thinking.';
-}
-
-function setPendingTag(type) {
-  G.pendingTagType = type;
-  const btns = document.querySelectorAll('.tag-type-btn');
-  btns[0].className = 'tag-type-btn' + (type==='mnm'?' active-mnm':'');
-  btns[1].className = 'tag-type-btn' + (type==='wd'?' active-wd':'');
-}
-
-function proceedToPhase2() {
-  if (G.differential.length < 2) {
-    showSoftNudge('Please add at least 2 diagnoses to your differential before investigating.');
-    return;
-  }
-  const cas = CASES[G.caseIdx];
-  const mnmMissed = cas.mustNotMiss.filter(m =>
-    !G.differential.find(d => d.name === m || d.name.toLowerCase().includes(m.toLowerCase().split(' ')[0]))
-  );
-  if (mnmMissed.length > 0) {
-    G.phase = 'critical_miss';
-    G.missedMNM = mnmMissed;
-    render();
-    return;
-  }
-  G.phase = 'phase2';
-  G.softNudge = null;
-  render();
-}
-
-function showSoftNudge(msg) {
-  G.softNudge = msg;
-  const el = document.querySelector('.soft-nudge');
-  if (el) { el.textContent = '⚠️ ' + msg; }
-  else { render(); }
-}
-
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // CRITICAL MISS
-// ════════════════════════════════════════════════════════════════════════
-function renderCriticalMiss() {
-  const cas = CASES[G.caseIdx];
-  const missed = G.missedMNM;
-  document.getElementById('content').innerHTML = `
-    <div class="critical-miss">
-      <div class="cm-icon">🚨</div>
-      <div class="cm-title">Critical Miss</div>
-      <div class="cm-body">
-        You proceeded to investigate without including a must-not-miss diagnosis on your differential.
-        In real clinical practice, failing to consider this diagnosis at the outset — before any investigation — 
-        means you will not order the right tests, and the window for intervention closes.
-      </div>
-      <div class="cm-missed">
-        Not on your differential: <strong>${missed.join(', ')}</strong>
-      </div>
-      <div style="font-size:0.82rem;color:var(--muted);line-height:1.6;margin-bottom:16px">
-        ${getHardLockExplanation(missed[0], cas)}
-      </div>
-      <div class="cm-actions">
-        <button class="action-btn primary" onclick="retryPhase1()">← Go Back & Add It</button>
-        <button class="action-btn" onclick="forcePhase2()">Continue Anyway (lose Safety Net badge)</button>
+// ═══════════════════════════════════════════════════════
+function renderCriticalMiss(){
+  const cas=CASES[G.caseIdx];
+  const missed=G.missedMNM;
+  document.getElementById('content').innerHTML=`
+    <div class="crit">
+      <div class="crit-icon">🚨</div>
+      <div class="crit-title">Critical Miss</div>
+      <div class="crit-body">You proceeded without a must-not-miss diagnosis on your differential. In real practice, this means you won't order the right tests — and the window for intervention closes.</div>
+      <div class="crit-missed">Not on your differential: <strong>${missed.join(', ')}</strong></div>
+      <div style="font-size:0.84rem;color:var(--muted);line-height:1.65;margin-bottom:16px">${getMNMExplanation(missed[0])}</div>
+      <div class="crit-actions">
+        <button class="action-btn primary" onclick="retryP1()">← Go Back & Add It</button>
+        <button class="action-btn" onclick="forceP2()">Continue Anyway (forfeit Safety Net badge)</button>
       </div>
     </div>`;
 }
-
-function getHardLockExplanation(name, cas) {
-  if (name.toLowerCase().includes('myocardial') || name.toLowerCase().includes('infarct')) {
-    return 'Inferior MI accounts for approximately 40% of all STEMIs and frequently presents as epigastric pain — it is the classic dangerous mimic. Without MI on your differential, you will not request an ECG, and door-to-balloon time will be critically delayed. Every minute of delay is equivalent to ~1,000 cardiomyocytes lost.';
-  }
-  if (name.toLowerCase().includes('dissection')) {
-    return 'Aortic dissection carries a 1-2% per hour mortality if untreated. Failure to consider it means the distinguishing test (bilateral BP comparison, CT aortogram) will not be done.';
-  }
-  if (name.toLowerCase().includes('tuberculosis') || name.toLowerCase().includes('tb')) {
-    return 'TB in Singapore is a notifiable disease. Missing it has consequences not just for the patient (delayed treatment → cavitation, dissemination) but for the 20 dormitory co-workers who need contact tracing and screening immediately.';
-  }
-  if (name.toLowerCase().includes('lung') || name.toLowerCase().includes('carcinoma')) {
-    return 'Lung malignancy in a patient with haemoptysis and weight loss must be considered and excluded — delayed diagnosis typically means a higher stage at presentation, with significantly worse outcomes.';
-  }
-  return `${name} is a must-not-miss diagnosis in this presentation due to its time-sensitive nature and the consequences of delay.`;
+function getMNMExplanation(name){
+  const n=(name||'').toLowerCase();
+  if(n.includes('myocardial')||n.includes('infarct'))return'Inferior MI accounts for ~40% of STEMIs and frequently presents as epigastric pain. Without MI on your list, you will not order an ECG — every minute of delay costs ~1,000 cardiomyocytes.';
+  if(n.includes('dissection'))return'Aortic dissection carries 1-2% per hour mortality untreated. Without it on your list, the distinguishing test (bilateral BP comparison, CT aortogram) will not be performed.';
+  if(n.includes('tuberculosis')||n.includes('tb'))return'TB in Singapore is notifiable. Missing it means delayed treatment (→ cavitation, dissemination) AND failure to screen 20 dormitory co-workers who are at risk.';
+  if(n.includes('lung')||n.includes('cancer')||n.includes('carcinoma'))return'Lung malignancy with haemoptysis and weight loss must be actively excluded — delayed diagnosis means higher stage at presentation and significantly worse outcomes.';
+  return`${name} is a must-not-miss because diagnostic delay causes irreversible harm.`;
 }
+function retryP1(){G.phase='phase1';G.missedMNM=[];render();}
+function forceP2(){G.phase='phase2';G.score.safety=0;G.mnmForced=true;render();}
 
-function retryPhase1() {
-  G.phase = 'phase1';
-  G.missedMNM = [];
-  render();
-}
+// ═══════════════════════════════════════════════════════
+// PHASE 2
+// ═══════════════════════════════════════════════════════
+function renderPhase2(){
+  const cas=CASES[G.caseIdx];
+  const usedIds=new Set(G.investigations.map(i=>i.id));
+  const cats=['History','Examination','Basic Investigations','Advanced Investigations'];
+  const options=cas.investigations.filter(i=>i.category===G.activeInvCat);
 
-function forcePhase2() {
-  G.phase = 'phase2';
-  G.score.safety = 0; // no safety net badge
-  G.mnmForced = true;
-  render();
-}
+  const findingsHTML=G.investigations.map(inv=>{
+    const cc=CAT_CLASS[inv.category]||'';
+    return`<div class="finding ${cc}">
+      <div class="f-type ${cc}">${CAT_ICONS[inv.category]||''} ${inv.category}</div>
+      <div class="f-text"><strong>${escHtml(inv.name)}:</strong> ${escHtml(inv.finding)}</div>
+    </div>`;
+  }).join('');
 
-// ════════════════════════════════════════════════════════════════════════
-// PHASE 2 — INVESTIGATIONS
-// ════════════════════════════════════════════════════════════════════════
-function renderPhase2() {
-  const cas = CASES[G.caseIdx];
-  const usedIds = new Set(G.investigations.map(i=>i.id));
-  const cats = ['History','Examination','Basic Investigations','Advanced Investigations'];
-  const catIcons = {History:'📖',Examination:'🩺','Basic Investigations':'🧪','Advanced Investigations':'🔬'};
-  const activeCat = G.activeInvCategory;
-  const options = cas.investigations.filter(i=>i.category===activeCat);
+  const rankPanelHTML=G.pendingRank?`
+    <div class="rank-panel">
+      <div class="rank-panel-lbl">📊 Update Your Ranking</div>
+      <div class="rank-panel-sub">Based on this new finding, drag your differential into order — <strong>most likely at the top</strong>. This is the Bayesian update step: each finding should shift your probability estimate.</div>
+      <div class="rank-list" id="rankPanel">${buildRankItems()}</div>
+      <button class="rank-done" onclick="confirmRanking()">Confirm Ranking & Continue →</button>
+    </div>`:'';
 
-  const findingsHTML = G.investigations.length > 0 ? `
-    <div class="findings-area">
-      ${G.investigations.map(inv => {
-        const typeClass = {History:'history-f',Examination:'exam-f','Basic Investigations':'investigation-f','Advanced Investigations':'imaging-f'}[inv.category] || '';
-        return `<div class="finding-card ${typeClass}">
-          <div class="finding-type ${typeClass}">${catIcons[inv.category] || ''} ${inv.category}</div>
-          <div class="finding-text"><strong>${inv.name}:</strong> ${inv.finding}</div>
-          ${!inv.isRelevant ? `<div class="finding-hint">⚠️ This finding did not meaningfully change your differential — consider whether this investigation was necessary at this stage.</div>` : ''}
-        </div>`;
-      }).join('')}
-    </div>` : '';
-
-  document.getElementById('content').innerHTML = `
-    <div class="phase-header">
-      <div class="ph-num p2">Phase 2</div>
-      <div><div class="ph-title">Choose Your Next Step</div>
-        <div class="ph-sub">Each action has a cost. Irrelevant investigations cost efficiency points.</div></div>
+  document.getElementById('content').innerHTML=`
+    <div class="ph"><div class="ph-num p2">Phase 2</div>
+      <div><div class="ph-title">Investigate & Update</div>
+        <div class="ph-sub">Choose your next action. After each finding, rank your differential by likelihood — most likely at top.</div>
+      </div>
     </div>
-
-    <div class="vignette-card">
-      <div class="vignette-label">📋 Case</div>
-      <div class="vignette-text">${cas.vignette}</div>
-    </div>
-
-    ${findingsHTML}
-
+    <div class="vig"><div class="vig-lbl">📋 Case</div><div class="vig-txt">${cas.vignette}</div></div>
+    ${findingsHTML?`<div class="findings">${findingsHTML}</div>`:''}
+    ${rankPanelHTML}
+    ${!G.pendingRank?`
     <div class="inv-panel">
-      <div class="inv-panel-label">
-        <span>What would you like to do next?</span>
-        <span class="cost-display">Irrelevant exam: −3 pts | Irrelevant basic inv: −8 pts | Irrelevant advanced inv: −18 pts</span>
-      </div>
-      <div class="inv-categories">
-        ${cats.map(c => `<button class="inv-cat-btn ${c===activeCat?'active':''}" onclick="setInvCat('${c}')">${catIcons[c]} ${c}</button>`).join('')}
-      </div>
-      <div class="inv-options">
-        ${options.map(inv => `
-          <div class="inv-option ${usedIds.has(inv.id)?'used':''}" onclick="${usedIds.has(inv.id)?'':'doInvestigation(\''+inv.id+'\')'}" title="${usedIds.has(inv.id)?'Already done':''}">
-            <div class="io-name">${usedIds.has(inv.id)?'✓ ':''} ${inv.name}</div>
-            <div class="io-cost cost-${inv.costTier}"><span class="cost-dot"></span>${COST_LABEL[inv.costTier]}${!inv.isRelevant?' · ⚠️ potential penalty':''}</div>
-          </div>`
-        ).join('')}
+      <div class="inv-panel-lbl">What would you like to do next?</div>
+      <div class="inv-cats">${cats.map(c=>`<button class="inv-cat ${c===G.activeInvCat?'on':''}" onclick="setInvCat('${c}')">${CAT_ICONS[c]} ${c}</button>`).join('')}</div>
+      <div class="inv-grid">${options.map(inv=>`
+        <div class="inv-opt ${usedIds.has(inv.id)?'used':''}" onclick="doInv('${escJs(inv.id)}')">
+          <div class="io-name">${usedIds.has(inv.id)?'✓ ':''} ${escHtml(inv.name)}</div>
+          <div class="io-cost ${inv.costTier}"><span class="cost-dot"></span>${COST_LABEL[inv.costTier]}</div>
+        </div>`).join('')}
       </div>
     </div>
-
-    <div class="diff-builder" style="padding:14px 18px">
-      <div class="diff-builder-label" style="margin-bottom:10px">Your Current Differential <span style="font-size:0.68rem;font-family:var(--sans);font-weight:400;color:var(--muted2)">(click subtypes or "Eliminate" to update)</span></div>
-      <div class="diff-list">${renderDiffList(true)}</div>
+    <div class="diff-box" style="padding:12px 15px">
+      <div class="diff-box-lbl" style="margin-bottom:7px">Your Differential <span style="font-size:0.63rem;font-family:var(--sans);font-weight:400;color:var(--muted2)">(drag ⠿ to reorder · click subtype to eliminate · Eliminate to remove entry)</span></div>
+      <div class="dlist" id="diffList">${renderDiffEntries()}</div>
     </div>
-
-    ${G.softNudge ? `<div class="soft-nudge">💬 <strong>Soft Recovery:</strong> ${G.softNudge}</div>` : ''}
-
-    <div class="phase-nav">
-      <button class="pnav-btn commit-phase" onclick="proceedToCommit()">Commit to Diagnosis →</button>
-      <span class="prof-hint" onclick="showProfHint('phase2')">🎓 Ask the Professor</span>
+    ${G.softNudge?`<div class="nudge">💬 ${G.softNudge}</div>`:''}
+    <div class="pnav">
+      <button class="pnav-btn commit-go" onclick="toCommit()">Commit to Diagnosis →</button>
+      <span class="prof" onclick="toggleProf()">🎓 Ask the Professor</span>
     </div>
-    ${G.profHintShown ? `<div class="prof-hint-reveal">💡 ${G.profHintText}</div>` : ''}
+    ${G.profHintShown?`<div class="prof-reveal">💡 Which investigation will most efficiently narrow your differential? Start with: (1) tests that rule in or out a must-not-miss diagnosis, (2) the most specific test for your leading working diagnosis. Advanced investigations are expensive — don't use them without a clear indication.</div>`:''}
+    `:''}
   `;
 }
 
-function setInvCat(cat) {
-  G.activeInvCategory = cat;
-  G.profHintShown = false;
-  render();
-}
+function setInvCat(cat){G.activeInvCat=cat;G.profHintShown=false;render();}
 
-function doInvestigation(invId) {
-  const cas = CASES[G.caseIdx];
-  const inv = cas.investigations.find(i=>i.id===invId);
-  if (!inv) return;
-  if (G.investigations.find(i=>i.id===invId)) return;
-
+function doInv(invId){
+  const cas=CASES[G.caseIdx];
+  const inv=cas.investigations.find(i=>i.id===invId);
+  if(!inv||G.investigations.find(i=>i.id===invId))return;
   G.investigations.push(inv);
-
-  if (!inv.isRelevant) {
-    const penalty = COST_PENALTY[inv.costTier].irrelevant;
-    G.score.efficiency = Math.max(0, G.score.efficiency - penalty);
-    G.irrelevantCount[inv.category] = (G.irrelevantCount[inv.category]||0) + 1;
-    if (penalty > 0) {
-      G.softNudge = `This ${inv.category.toLowerCase()} (${inv.name}) did not change your differential. ${inv.category === 'Advanced Investigations' ? 'Advanced investigations carry real cost and procedural risk — reserve them for when they\'ll change management.' : inv.category === 'Basic Investigations' ? 'Basic tests are low-cost but ordering them reflexively without clinical reasoning slows diagnosis.' : 'History-taking is low-risk but unfocused questions waste clinical time.'}`;
-    } else {
-      G.softNudge = null;
+  G.lastInvName=inv.name;
+  if(!inv.isRelevant){
+    const pen=COST_PENALTY[inv.costTier];
+    if(pen>0){
+      G.score.efficiency=Math.max(0,G.score.efficiency-pen);
+      G.softNudge=`This ${inv.category.toLowerCase()} (${inv.name}) didn't change your differential — efficiency −${pen} pts. ${inv.category==='Advanced Investigations'?'Advanced investigations carry real cost and procedural risk.':inv.category==='Basic Investigations'?'Ordering tests without clear reasoning slows diagnosis.':'Unfocused questioning wastes clinical time.'}`;
     }
-  } else {
-    G.softNudge = null;
-    // Check if newly found info should trigger a soft recovery for missing dx
+  }else{
+    G.softNudge=null;
     checkSoftRecovery(inv);
   }
+  G.pendingRank=true;
   render();
 }
 
-function checkSoftRecovery(inv) {
-  if (!inv.isRelevant || !inv.relevantFor) return;
-  const inDiff = G.differential.map(d=>d.name);
-  const missing = inv.relevantFor.filter(dx => !inDiff.includes(dx) && !G.differential.find(d=>d.name.toLowerCase().includes(dx.toLowerCase().split(' ')[0])));
-  if (missing.length > 0) {
-    const cas = CASES[G.caseIdx];
-    const mnmMissing = missing.filter(m => cas.mustNotMiss.includes(m));
-    const nonMnmMissing = missing.filter(m => !cas.mustNotMiss.includes(m));
-    if (nonMnmMissing.length > 0) {
-      G.softNudge = `This finding is consistent with ${nonMnmMissing.join(' or ')} — consider adding it to your differential. You can still do so below. (Note: adding diagnoses reactively rather than proactively will be reflected in your Reasoner score.)`;
-    }
+function checkSoftRecovery(inv){
+  if(!inv.relevantFor)return;
+  const inDiff=G.differential.map(d=>d.name);
+  const missing=(inv.relevantFor||[]).filter(dx=>!inDiff.find(n=>normMatch(n,dx)));
+  if(missing.length){
+    const cas=CASES[G.caseIdx];
+    const nonMNM=missing.filter(m=>!cas.mustNotMiss.find(mn=>normMatch(mn,m)));
+    if(nonMNM.length)G.softNudge=`This finding is also consistent with ${nonMNM.join(' or ')}. Consider adding it — adding reactively reduces your Reasoner score.`;
   }
 }
 
-function proceedToCommit() {
-  const active = G.differential.filter(d=>!d.eliminated);
-  if (active.length === 0) {
-    G.softNudge = 'You have eliminated all diagnoses — please restore at least one before committing.';
-    render();
-    return;
-  }
-  G.phase = 'commit';
-  G.softNudge = null;
-  render();
+function toCommit(){
+  if(!G.differential.filter(d=>!d.eliminated).length){G.softNudge='Restore at least one diagnosis first.';render();return;}
+  G.phase='commit';G.softNudge=null;G.pendingRank=false;render();
 }
 
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // PHASE 3 — COMMIT
-// ════════════════════════════════════════════════════════════════════════
-function renderCommit() {
-  const cas = CASES[G.caseIdx];
-  const active = G.differential.filter(d=>!d.eliminated);
-  const all = G.differential;
-
-  document.getElementById('content').innerHTML = `
-    <div class="phase-header">
-      <div class="ph-num pc">Phase 3</div>
+// ═══════════════════════════════════════════════════════
+function renderCommit(){
+  const all=G.differential;
+  document.getElementById('content').innerHTML=`
+    <div class="ph"><div class="ph-num pc">Phase 3</div>
       <div><div class="ph-title">Commit to Your Diagnosis</div>
-        <div class="ph-sub">Based on everything you've gathered — what is the most likely diagnosis?</div></div>
+        <div class="ph-sub">Based on all the evidence — what is the single most likely diagnosis?</div>
+      </div>
     </div>
-
     <div class="commit-card">
-      <div class="commit-label">Your Remaining Differential</div>
-      <div class="final-diff-list">
-        ${all.map(d => `
-          <div class="fde ${d.eliminated?'eliminated-f':''} ${G.committedDx===d.name?'selected':''}"
-            onclick="${d.eliminated?'':'selectDx(\''+escJs(d.name)+'\')'}">
-            <div class="fde-radio"></div>
-            <div class="fde-name">${d.name}${d.eliminated?' (eliminated)':''}</div>
-            ${d.mnm ? `<span class="fde-tag mnm-f">🔴 MNM</span>` : ''}
-          </div>`
-        ).join('')}
+      <div class="commit-lbl">Your Differential</div>
+      <div class="fde-list">${all.map((d,i)=>`
+        <div class="fde ${d.eliminated?'elim-f':''} ${G.committedDx===d.name?'sel':''}" onclick="${d.eliminated?'':'selectDx(\''+escJs(d.name)+'\')'}">
+          <div class="fde-radio"></div>
+          <div class="fde-nm">${escHtml(d.name)}${d.eliminated?' (eliminated)':''}</div>
+          <div class="fde-rank">#${i+1}</div>
+          ${d.mnm?`<span style="font-size:0.63rem;font-family:var(--mono);color:var(--red)">MNM</span>`:''}
+        </div>`).join('')}
       </div>
       <button class="commit-btn" onclick="submitCommit()" ${!G.committedDx?'disabled':''}>
-        ${G.committedDx ? `Commit: "${G.committedDx}" →` : 'Select a diagnosis above'}
+        ${G.committedDx?`Commit: "${escHtml(G.committedDx)}" →`:'Select a diagnosis above'}
       </button>
     </div>
-
-    ${G.softNudge ? `<div class="soft-nudge">⚠️ ${G.softNudge}</div>` : ''}
-
-    <div class="tip-box">
-      <strong>Specificity now:</strong> You've gathered enough information. Which single diagnosis best explains all the findings? Eliminating diagnoses is as important as adding them — commit with confidence.
-    </div>
+    <div class="tip"><strong>Specificity now:</strong> You've gathered evidence across history, examination, and investigations. Which single diagnosis best explains ALL the findings?</div>
   `;
 }
 
-function selectDx(name) {
-  G.committedDx = name;
-  render();
-}
+function selectDx(name){G.committedDx=name;render();}
+function submitCommit(){if(!G.committedDx)return;calcScore();G.phase='debrief';render();}
 
-function submitCommit() {
-  if (!G.committedDx) return;
-  calculateScore();
-  G.phase = 'debrief';
-  render();
-}
-
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // SCORING
-// ════════════════════════════════════════════════════════════════════════
-function calculateScore() {
-  const cas = CASES[G.caseIdx];
-  const isCorrect = G.committedDx === cas.finalDiagnosis ||
-    G.committedDx === cas.finalUmbrella ||
-    cas.finalDiagnosis.toLowerCase().includes(G.committedDx.toLowerCase()) ||
-    G.committedDx.toLowerCase().includes(cas.finalDiagnosis.toLowerCase().split(' ')[0]);
-
-  // Safety Net: had all MNMs in differential before phase2 and didn't force
-  const hadAllMNM = !G.mnmForced;
-  G.score.safety = hadAllMNM ? 100 : 0;
-
-  // Precision: correct final diagnosis
-  G.score.precision = isCorrect ? 100 : 0;
-
-  // Efficiency: already tracked, just cap
-  G.score.efficiency = Math.max(0, Math.min(100, G.score.efficiency));
-
-  // Reasoner: did they add diagnoses reactively (after relevant finding nudged them)?
-  // Penalise if final differential doesn't include the correct answer AND they used >6 investigations
-  const reactiveNudges = G.softNudge ? 1 : 0;
-  const invCount = G.investigations.length;
-  const relevantCount = G.investigations.filter(i=>i.isRelevant).length;
-  const hitRatio = invCount > 0 ? relevantCount / invCount : 1;
-  G.score.reasoner = Math.round(hitRatio * 100);
+// ═══════════════════════════════════════════════════════
+function calcScore(){
+  const cas=CASES[G.caseIdx];
+  const correct=normMatch(G.committedDx,cas.finalDiagnosis)||normMatch(G.committedDx,cas.finalUmbrella);
+  G.score.safety=G.mnmForced?0:100;
+  G.score.precision=correct?100:0;
+  G.score.efficiency=Math.max(0,Math.min(100,G.score.efficiency));
+  if(G.rankingSnapshots.length>0){
+    let pts=0;
+    G.rankingSnapshots.forEach(snap=>{
+      const pos=snap.ranking.findIndex(n=>normMatch(n,cas.finalDiagnosis)||normMatch(n,cas.finalUmbrella));
+      const half=Math.ceil(snap.ranking.length/2);
+      if(pos!==-1&&pos<half)pts+=100/G.rankingSnapshots.length;
+    });
+    G.score.reasoner=Math.round(pts);
+  }else{
+    G.score.reasoner=0;
+  }
 }
 
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // DEBRIEF
-// ════════════════════════════════════════════════════════════════════════
-function renderDebrief() {
-  const cas = CASES[G.caseIdx];
-  const s = G.score;
-  const isCorrect = s.precision === 100;
-
-  const badges = [
-    { key:'safety', icon:'🛡️', name:'Safety Net', desc:'All must-not-miss diagnoses in differential', cls:'b-safety', earned: s.safety===100 },
-    { key:'efficient', icon:'⚡', name:'Efficient', desc:'Minimal unnecessary investigations', cls:'b-efficient', earned: s.efficiency>=70 },
-    { key:'precision', icon:'🎯', name:'Precision', desc:'Correct final diagnosis', cls:'b-precision', earned: isCorrect },
-    { key:'reasoner', icon:'🧠', name:'Reasoner', desc:'High ratio of relevant investigations chosen', cls:'b-reasoner', earned: s.reasoner>=75 },
+// ═══════════════════════════════════════════════════════
+function renderDebrief(){
+  const cas=CASES[G.caseIdx];
+  const s=G.score;
+  const correct=s.precision===100;
+  const badges=[
+    {cls:'b-safe',ico:'🛡️',name:'Safety Net',desc:'All MNMs on differential',earned:s.safety===100},
+    {cls:'b-eff',ico:'⚡',name:'Efficient',desc:'Minimal irrelevant tests',earned:s.efficiency>=70},
+    {cls:'b-prec',ico:'🎯',name:'Precision',desc:'Correct final diagnosis',earned:correct},
+    {cls:'b-reas',ico:'🧠',name:'Reasoner',desc:'Correct ranking progression',earned:s.reasoner>=75},
   ];
-
-  const scoreRows = [
-    { name:'Safety Net', pts:s.safety, max:100 },
-    { name:'Efficiency', pts:s.efficiency, max:100 },
-    { name:'Precision', pts:s.precision, max:100 },
-    { name:'Reasoning', pts:s.reasoner, max:100 },
+  const sRows=[
+    {name:'Safety Net',pts:s.safety,max:100},
+    {name:'Efficiency',pts:s.efficiency,max:100},
+    {name:'Precision',pts:s.precision,max:100},
+    {name:'Reasoning',pts:s.reasoner,max:100},
   ];
-  const total = Math.round(scoreRows.reduce((sum,r)=>sum+r.pts,0)/4);
-  const totalClass = total >= 75 ? 'good' : total >= 50 ? 'ok' : 'poor';
-
-  const timelineHTML = G.investigations.map((inv,i) => {
-    const typeClass = {History:'history-f',Examination:'exam-f','Basic Investigations':'investigation-f','Advanced Investigations':'imaging-f'}[inv.category]||'';
-    return `<div class="rt-step">
-      <div class="rt-step-header">
-        <div class="rt-step-num">${i+1}</div>
-        <div class="rt-step-type">${inv.category} → ${inv.name}</div>
-        <div class="rt-step-cost ${COST_CLASS[inv.costTier]}">${COST_LABEL[inv.costTier]}</div>
+  const total=Math.round(sRows.reduce((sum,r)=>sum+r.pts,0)/4);
+  const tlHTML=G.investigations.map((inv,i)=>{
+    const cc=inv.costTier;
+    return`<div class="tl-step">
+      <div class="tl-hd">
+        <div class="tl-num">${i+1}</div>
+        <div class="tl-type">${CAT_ICONS[inv.category]||''} ${inv.category} — ${escHtml(inv.name)}</div>
+        <div class="tl-cost ${cc}">${COST_LABEL[cc]}</div>
       </div>
-      ${!inv.isRelevant ? `<div class="rt-irrelevant">⚠️ Did not change differential</div>` : ''}
-      <div class="rt-finding">${inv.finding}</div>
-      <div class="rt-expert">💡 ${inv.expert}</div>
+      ${!inv.isRelevant?`<div class="tl-irrel">⚠️ Did not change differential${COST_PENALTY[cc]>0?' · −'+COST_PENALTY[cc]+' efficiency':''}</div>`:''}
+      <div class="tl-finding">${escHtml(inv.finding)}</div>
+      <div class="tl-expert">💡 ${escHtml(inv.expert)}</div>
     </div>`;
   }).join('');
 
-  document.getElementById('content').innerHTML = `
+  const rankHTML=G.rankingSnapshots.length>0?`
+    <div class="rank-debrief">
+      <div class="score-lbl">Your Ranking Progression</div>
+      ${G.rankingSnapshots.map(snap=>{
+        return`<div class="rank-snap">
+          <div class="rank-snap-lbl">After: ${escHtml(snap.afterInv)}</div>
+          <div>${snap.ranking.map((n,i)=>{
+            const isFinal=normMatch(n,cas.finalDiagnosis)||normMatch(n,cas.finalUmbrella);
+            const good=isFinal&&i<Math.ceil(snap.ranking.length/2);
+            return`<div class="rsi"><span class="rsi-pos">${i+1}</span><span class="rsi-name">${escHtml(n)}</span>${isFinal?(good?`<span class="rsi-ok">✓</span>`:`<span class="rsi-bad">↓ should be higher</span>`):''}</div>`;
+          }).join('')}</div>
+        </div>`;
+      }).join('')}
+    </div>`:
+    `<div class="rank-debrief"><div class="score-lbl">Ranking Progression</div><p style="font-size:0.82rem;color:var(--muted);font-style:italic;padding-top:4px">No ranking snapshots recorded. In Phase 2, confirm each ranking after every investigation — this is the Bayesian update step and contributes to your Reasoner score.</p></div>`;
+
+  document.getElementById('content').innerHTML=`
     <div class="debrief">
-      <div class="debrief-header">
-        <div class="dh-outcome">${isCorrect ? '✅ Correct Diagnosis' : '❌ Incorrect Diagnosis'}</div>
-        <div class="dh-dx">${cas.finalDiagnosis}</div>
-        <div class="dh-sub">SNOMED: ${cas.snomedCode} · Your answer: ${G.committedDx || 'Not committed'}</div>
-        <div class="badges-row">
-          ${badges.map(b=>`<div class="badge ${b.cls} ${b.earned?'earned':'unearned'}">
-            <span class="badge-icon">${b.icon}</span>
-            <div class="badge-text"><span class="badge-name">${b.name}</span><span class="badge-desc">${b.desc}</span></div>
-          </div>`).join('')}
-        </div>
+      <div class="db-header">
+        <div class="db-out">${correct?'✅ Correct diagnosis':'❌ Incorrect diagnosis'}</div>
+        <div class="db-dx">${escHtml(cas.finalDiagnosis)}</div>
+        <div class="db-sub">SNOMED: ${cas.snomedCode} · Your answer: ${escHtml(G.committedDx||'—')}</div>
+        <div class="badges-row">${badges.map(b=>`<div class="badge ${b.cls} ${b.earned?'earned':'unearned'}"><span class="badge-ico">${b.ico}</span><div><div class="badge-name">${b.name}</div><div class="badge-desc">${b.desc}</div></div></div>`).join('')}</div>
       </div>
-
       <div class="score-card">
-        <div class="score-label">Score Breakdown</div>
-        <div class="score-rows">
-          ${scoreRows.map(r=>{
-            const pct = (r.pts/r.max)*100;
-            const cls = pct>=75?'good':pct>=50?'ok':'poor';
-            return `<div class="score-row">
-              <span class="sr-name">${r.name}</span>
-              <div class="sr-bar"><div class="sr-fill ${cls}" style="width:${pct}%"></div></div>
-              <span class="sr-pts">${r.pts} / ${r.max}</span>
-            </div>`;
-          }).join('')}
-        </div>
-        <div class="score-total">
-          <span class="score-total-label">Overall Score</span>
-          <span class="score-total-num ${totalClass}">${total} / 100</span>
-        </div>
+        <div class="score-lbl">Score Breakdown</div>
+        <div class="sc-rows">${sRows.map(r=>{const p=(r.pts/r.max)*100;const c=p>=75?'g':p>=50?'y':'r';return`<div class="sc-row"><span class="sc-name">${r.name}</span><div class="sc-bar"><div class="sc-fill ${c}" style="width:${p}%"></div></div><span class="sc-pts">${r.pts}/${r.max}</span></div>`;}).join('')}</div>
+        <div class="sc-total"><span class="sc-total-lbl">Overall</span><span class="sc-total-num">${total}/100</span></div>
       </div>
-
       <div class="score-card">
-        <div class="score-label">Expert Reasoning</div>
-        <p style="font-size:0.88rem;line-height:1.7;color:var(--muted)">${cas.expertNarrative}</p>
+        <div class="score-lbl">Expert Reasoning</div>
+        <p style="font-size:0.85rem;line-height:1.7;color:var(--muted)">${escHtml(cas.expertNarrative)}</p>
       </div>
-
-      <div class="sens-spec">
-        <div class="ss-label">Sensitivity & Specificity — This Case</div>
+      ${rankHTML}
+      <div class="score-card">
+        <div class="score-lbl">Investigation Pathway</div>
+        <div class="timeline">${tlHTML||'<p style="font-size:0.82rem;color:var(--muted);font-style:italic">No investigations performed.</p>'}</div>
+      </div>
+      <div class="ss-card">
+        <div class="score-lbl">Sensitivity & Specificity — This Case</div>
         <div class="ss-row">
-          <div class="ss-box sens">
-            <div class="ss-box-title">🔍 Sensitivity Thinking</div>
-            <div class="ss-box-text">${cas.sensitivityNote}</div>
-          </div>
-          <div class="ss-box spec">
-            <div class="ss-box-title">🎯 Specificity Thinking</div>
-            <div class="ss-box-text">${cas.specificityNote}</div>
-          </div>
-          <div class="ss-box safety">
-            <div class="ss-box-title">🛡️ Safety Net Rule</div>
-            <div class="ss-box-text">Must-not-miss diagnoses require HIGH sensitivity screening — apply the relevant test early, even when probability seems low, because the cost of missing them is catastrophic.</div>
-          </div>
+          <div class="ss-box sens"><div class="ss-box-title">🔍 Sensitivity Thinking</div><div class="ss-box-text">${escHtml(cas.sensitivityNote)}</div></div>
+          <div class="ss-box spec"><div class="ss-box-title">🎯 Specificity Thinking</div><div class="ss-box-text">${escHtml(cas.specificityNote)}</div></div>
+          <div class="ss-box safe"><div class="ss-box-title">🛡️ Safety Net Rule</div><div class="ss-box-text">Must-not-miss diagnoses require HIGH sensitivity screening — apply the relevant test early even when probability seems low. The cost of missing them is catastrophic.</div></div>
         </div>
       </div>
-
-      <div class="score-card">
-        <div class="score-label">Your Investigation Pathway</div>
-        <div class="reasoning-timeline">${timelineHTML || '<div style="color:var(--muted);font-size:0.85rem;font-style:italic">No investigations performed.</div>'}</div>
-      </div>
-
-      <div class="debrief-actions">
+      <div class="db-actions">
         <button class="action-btn primary" onclick="startCase(${G.caseIdx})">Try Again</button>
         <button class="action-btn" onclick="startCase(${(G.caseIdx+1)%CASES.length})">Next Case →</button>
       </div>
     </div>`;
 }
 
-// ════════════════════════════════════════════════════════════════════════
-// DIFFERENTIAL LIST RENDERER
-// ════════════════════════════════════════════════════════════════════════
-function renderDiffList(interactive=false) {
-  if (!G.differential.length) return '<div class="diff-empty">No diagnoses added yet</div>';
-  return G.differential.map((d,i) => {
-    const cas = CASES[G.caseIdx];
-    const poolEntry = cas.differentialPool.find(p=>p.name===d.name);
-    const subtypes = poolEntry?.subtypes || [];
-    return `<div class="diff-entry ${d.tag} ${d.eliminated?'eliminated':''}">
-      <div class="de-left">
-        <div class="de-name">${d.name}</div>
-        <div><span class="de-tag ${d.tag}">${d.tag==='mnm'?'🔴 Must Not Miss':'🟡 Working Dx'}</span></div>
-        ${d.mnm ? `<div class="mnm-lock">🔒 Hard-locked — cannot be fully removed</div>` : ''}
-        ${subtypes.length > 0 ? `<div class="de-subtypes">
-          ${subtypes.map(st=>`<span class="de-subtype ${d.eliminatedSubtypes.includes(st)?'elim':''}"
-            onclick="toggleSubtype(${i},'${escJs(st)}')" title="${d.eliminatedSubtypes.includes(st)?'Restore this subtype':'Eliminate this subtype'}">
-            ${d.eliminatedSubtypes.includes(st)?'✕ ':''}${st}
-          </span>`).join('')}
-        </div>` : ''}
-      </div>
-      <div class="de-actions">
-        ${d.eliminated
-          ? `<button class="de-btn restore" onclick="restoreDiff(${i})">Restore</button>`
-          : `<button class="de-btn" onclick="eliminateDiff(${i})">${d.mnm?'Deprioritise':'Eliminate'}</button>`
-        }
-        ${subtypes.length > 0 ? `<button class="de-btn expand" onclick="toggleSubtypes(${i})">${d.subtypesExpanded?'▲':'▼'} subtypes</button>` : ''}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function eliminateDiff(i) {
-  if (G.differential[i].mnm) {
-    G.differential[i].eliminated = true; // soft deprioritise only
-    G.differential[i].tag = 'wd'; // downgrade
-    // Show warning
-    G.softNudge = `⚠️ "${G.differential[i].name}" is a must-not-miss diagnosis. You've deprioritised it but it remains on your list — eliminating a MNM entirely requires strong evidence.`;
-  } else {
-    G.differential[i].eliminated = true;
-  }
-  re_renderDiff();
-}
-
-function restoreDiff(i) {
-  G.differential[i].eliminated = false;
-  re_renderDiff();
-}
-
-function toggleSubtype(diagIdx, subtype) {
-  const d = G.differential[diagIdx];
-  if (!d) return;
-  const idx = d.eliminatedSubtypes.indexOf(subtype);
-  if (idx >= 0) {
-    d.eliminatedSubtypes.splice(idx,1);
-  } else {
-    d.eliminatedSubtypes.push(subtype);
-  }
-  re_renderDiff();
-}
-
-function toggleSubtypes(diagIdx) {
-  G.differential[diagIdx].subtypesExpanded = !G.differential[diagIdx].subtypesExpanded;
-  re_renderDiff();
-}
-
-function re_renderDiff() {
-  const el = document.getElementById('diffList');
-  if (el) el.innerHTML = renderDiffList() || '<div class="diff-empty">No diagnoses added yet</div>';
-}
-
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // SEARCH / AUTOCOMPLETE
-// ════════════════════════════════════════════════════════════════════════
-let srFocusIdx = -1;
-let searchSelected = '';
+// ═══════════════════════════════════════════════════════
+let srFocusIdx=-1;
+function bindDd(){document.addEventListener('mousedown',outsideClick,true);}
+function outsideClick(e){if(!document.querySelector('.srch-wrap')?.contains(e.target))closeDd();}
+function showDd(){renderDd(document.getElementById('dxSearch')?.value||'');}
+function onSrchInput(){srFocusIdx=-1;renderDd(document.getElementById('dxSearch').value);}
+function closeDd(){document.getElementById('srchDd')?.classList.remove('show');srFocusIdx=-1;}
 
-function bindSearchEvents() {
-  document.addEventListener('mousedown', outsideClickHandler, true);
-}
-function outsideClickHandler(e) {
-  const wrap = document.querySelector('.search-wrap');
-  if (!wrap || !wrap.contains(e.target)) closeDropdown();
-}
-function showDropdown() {
-  renderDropdown(document.getElementById('dxSearch')?.value||'');
-}
-function onSearchInput() {
-  searchSelected = '';
-  srFocusIdx = -1;
-  G.searchQuery = document.getElementById('dxSearch').value;
-  renderDropdown(G.searchQuery);
-}
-function renderDropdown(q) {
-  const dd = document.getElementById('searchDropdown');
-  if (!dd) return;
-  const query = q.trim().toLowerCase();
-  const alreadyIn = new Set(G.differential.map(d=>d.name));
-  const cas = CASES[G.caseIdx];
-
-  // Filter from case's differential pool (umbrella + subtypes)
-  let matches = [];
-  cas.differentialPool.forEach(d => {
-    const nameMatch = !query || d.name.toLowerCase().includes(query);
-    if (nameMatch) matches.push({...d, isSubtype:false});
-    if (d.subtypes) {
-      d.subtypes.forEach(st => {
-        if (!query || st.toLowerCase().includes(query)) {
-          matches.push({ id:d.id+'_'+st, name:st, system:d.system, isSubtype:true, parentName:d.name, mnm:false });
-        }
-      });
-    }
-  });
-  if (!query) matches = matches.slice(0,20);
-
-  if (!matches.length) {
-    dd.innerHTML = `<div class="sd-empty">No matches found</div>`;
-  } else {
-    // Group by system
-    const grouped = {};
-    matches.forEach(m => {
-      const sys = m.system || 'Other';
-      if (!grouped[sys]) grouped[sys] = [];
-      grouped[sys].push(m);
+function renderDd(q){
+  const dd=document.getElementById('srchDd');if(!dd)return;
+  const query=q.trim().toLowerCase();
+  const added=new Set(G.differential.map(d=>d.name));
+  const cas=CASES[G.caseIdx];
+  const matches=[];
+  cas.differentialPool.forEach(d=>{
+    if(!query||d.name.toLowerCase().includes(query))matches.push({name:d.name,isSubtype:false,mnm:d.mnm,system:d.system});
+    if(d.subtypes)d.subtypes.forEach(st=>{
+      if(!query||st.toLowerCase().includes(query))matches.push({name:st,isSubtype:true,parentName:d.name,mnm:false,system:d.system});
     });
-    let html = '';
-    let idx = 0;
-    Object.entries(grouped).forEach(([sys, items]) => {
-      html += `<div class="sd-group-label">${sys}</div>`;
-      items.forEach(m => {
-        const used = alreadyIn.has(m.name);
-        const hl = query ? m.name.replace(new RegExp(`(${escRe(query)})`, 'gi'), '<strong>$1</strong>') : m.name;
-        html += `<div class="sd-item${used?' used':''}" data-val="${escHtml(m.name)}" data-idx="${idx}"
-          onmousedown="pickDiag('${escJs(m.name)}',${used})">
-          <span>${hl}</span>
-          <span class="sd-type ${m.isSubtype?'subtype':'umbrella'}">${m.isSubtype?'subtype':'umbrella'}</span>
-          ${used ? '<span style="font-size:0.65rem;color:var(--muted2);margin-left:auto">✓ added</span>' : ''}
-        </div>`;
-        idx++;
-      });
-    });
-    dd.innerHTML = html;
-  }
-  dd.classList.add('show');
-  srFocusIdx = -1;
-}
-
-function onSearchKey(e) {
-  const dd = document.getElementById('searchDropdown');
-  const items = dd ? [...dd.querySelectorAll('.sd-item:not(.used)')] : [];
-  if (e.key==='ArrowDown'){ e.preventDefault(); srFocusIdx=Math.min(srFocusIdx+1,items.length-1); updateFocus(items); }
-  else if (e.key==='ArrowUp'){ e.preventDefault(); srFocusIdx=Math.max(srFocusIdx-1,-1); updateFocus(items); }
-  else if (e.key==='Enter'){ e.preventDefault(); if(srFocusIdx>=0&&items[srFocusIdx]) pickDiag(items[srFocusIdx].dataset.val,false); else addTopmatch(); }
-  else if (e.key==='Escape') closeDropdown();
-}
-function updateFocus(items) {
-  items.forEach((it,i)=>it.classList.toggle('focused',i===srFocusIdx));
-  if (items[srFocusIdx]) items[srFocusIdx].scrollIntoView({block:'nearest'});
-}
-function closeDropdown() {
-  document.getElementById('searchDropdown')?.classList.remove('show');
-  srFocusIdx = -1;
-}
-function addTopmatch() {
-  const q = (document.getElementById('dxSearch')?.value||'').trim().toLowerCase();
-  if (!q) return;
-  const cas = CASES[G.caseIdx];
-  const match = cas.differentialPool.find(d=>d.name.toLowerCase().includes(q));
-  if (match) pickDiag(match.name, false);
-}
-function pickDiag(name, used) {
-  if (used) return;
-  const inp = document.getElementById('dxSearch');
-  if (inp) { inp.value = ''; G.searchQuery = ''; }
-  closeDropdown();
-  addDiagToList(name);
-}
-
-function addDiagToList(name) {
-  if (G.differential.find(d=>d.name===name)) return;
-  const cas = CASES[G.caseIdx];
-  const poolEntry = cas.differentialPool.find(p=>p.name===name || (p.subtypes&&p.subtypes.includes(name)));
-  const isMNM = poolEntry?.mnm || false;
-  G.differential.push({
-    name, tag: G.pendingTagType,
-    eliminated: false,
-    eliminatedSubtypes: [],
-    subtypesExpanded: false,
-    mnm: isMNM,
   });
+  if(!matches.length){dd.innerHTML=`<div class="dd-empty">No matches</div>`;dd.classList.add('show');return;}
+  const grouped={};
+  matches.forEach(m=>{const s=m.system||'Other';if(!grouped[s])grouped[s]=[];grouped[s].push(m);});
+  let html='',idx=0;
+  Object.entries(grouped).forEach(([sys,items])=>{
+    html+=`<div class="dd-grp">${sys}</div>`;
+    items.forEach(m=>{
+      const used=added.has(m.name);
+      const hl=query?m.name.replace(new RegExp(`(${escRe(query)})`,'gi'),'<strong>$1</strong>'):m.name;
+      html+=`<div class="dd-item${used?' used':''}" data-val="${escHtml(m.name)}" data-i="${idx}"
+        onmousedown="pickDx('${escJs(m.name)}',${used})"
+        style="${m.isSubtype?'padding-left:22px':''}">
+        <span>${hl}</span>
+        <span class="dd-kind ${m.isSubtype?'sub':'umb'}">${m.isSubtype?'subtype':'umbrella'}</span>
+        ${used?'<span style="font-size:0.62rem;color:var(--muted2)">✓</span>':''}
+      </div>`;
+      idx++;
+    });
+  });
+  dd.innerHTML=html;dd.classList.add('show');srFocusIdx=-1;
+}
+
+function onSrchKey(e){
+  const dd=document.getElementById('srchDd');
+  const items=dd?[...dd.querySelectorAll('.dd-item:not(.used)')]:[]; 
+  if(e.key==='ArrowDown'){e.preventDefault();srFocusIdx=Math.min(srFocusIdx+1,items.length-1);updFocus(items);}
+  else if(e.key==='ArrowUp'){e.preventDefault();srFocusIdx=Math.max(srFocusIdx-1,-1);updFocus(items);}
+  else if(e.key==='Enter'){e.preventDefault();if(srFocusIdx>=0&&items[srFocusIdx])pickDx(items[srFocusIdx].dataset.val,false);else firstMatch();}
+  else if(e.key==='Escape')closeDd();
+}
+function updFocus(items){items.forEach((it,i)=>it.classList.toggle('focused',i===srFocusIdx));if(items[srFocusIdx])items[srFocusIdx].scrollIntoView({block:'nearest'});}
+function firstMatch(){
+  const q=(document.getElementById('dxSearch')?.value||'').trim().toLowerCase();if(!q)return;
+  const cas=CASES[G.caseIdx];
+  const m=cas.differentialPool.find(d=>d.name.toLowerCase().includes(q));
+  if(m)pickDx(m.name,false);
+}
+
+function pickDx(name,used){
+  if(used)return;
+  const inp=document.getElementById('dxSearch');
+  if(inp)inp.value='';
+  closeDd();addToDiff(name);
+}
+
+function addToDiff(name){
+  if(G.differential.find(d=>d.name===name))return;
+  const cas=CASES[G.caseIdx];
+  const pool=cas.differentialPool.find(p=>p.name===name||(p.subtypes&&p.subtypes.includes(name)));
+  G.differential.push({name,tag:G.pendingTag,eliminated:false,eliminatedSubtypes:[],mnm:pool?.mnm||false});
   re_renderDiff();
 }
 
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // PROFESSOR HINT
-// ════════════════════════════════════════════════════════════════════════
-function showProfHint(phase) {
-  const cas = CASES[G.caseIdx];
-  const hints = {
-    phase1: `Think about the system involved first. For this presentation, consider: which systems could explain ALL the symptoms together? Then within each relevant system, work through VITAMIN CDE. Don't forget that some diagnoses present atypically — especially cardiovascular and infectious causes.`,
-    phase2: `Which investigation will most efficiently narrow your differential? Start with: (1) investigations that could rule in or rule out a must-not-miss diagnosis, (2) the most specific test for your top working diagnosis. Advanced investigations are expensive and carry risk — don't use them before establishing a clear indication.`
-  };
-  G.profHintShown = !G.profHintShown;
-  G.profHintText = hints[phase] || '';
-  const el = document.querySelector('.prof-hint-reveal');
-  if (el) { el.style.display = G.profHintShown ? 'block' : 'none'; el.textContent = '💡 ' + G.profHintText; }
+// ═══════════════════════════════════════════════════════
+function toggleProf(){
+  G.profHintShown=!G.profHintShown;
+  const el=document.querySelector('.prof-reveal');
+  if(el)el.style.display=G.profHintShown?'block':'none';
   else render();
 }
 
-// ════════════════════════════════════════════════════════════════════════
-// UTILITIES
-// ════════════════════════════════════════════════════════════════════════
-function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
-function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function escJs(s){ return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"'); }
+// ═══════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════
+function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escJs(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"');}
 
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // BOOT
-// ════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 render();
 </script>
 </body>
