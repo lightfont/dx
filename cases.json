@@ -1,0 +1,1552 @@
+{
+  "cases": [
+    {
+      "id": "case_001",
+      "title": "Epigastric Pain & Nausea",
+      "approach": "An Approach to Abdominal Pain",
+      "secondaryApproach": "An Approach to Chest Pain",
+      "system": "Cardiovascular",
+      "difficulty": "challenging",
+      "patient": "Mr Tan Wei Ming, 62M, Bus Driver",
+      "snomedCode": "57054005",
+      "vignette": "Mr Tan Wei Ming is a 62-year-old male bus driver who walks into the Emergency Department supported by his wife, looking pale and sweaty. He tells you he has had a heavy, squeezing discomfort in his upper abdomen for the past 2 hours. He has also been feeling nauseous and vomited once on the way to hospital.",
+      "caseMNMs": [
+        "Myocardial Infarction",
+        "Aortic Dissection",
+        "Mesenteric Ischaemia",
+        "Aortic Aneurysm / Ruptured AAA"
+      ],
+      "expectedP1": [
+        "Peptic Ulcer Disease",
+        "Acute Pancreatitis",
+        "GORD / Acid Reflux",
+        "Acute Cholecystitis",
+        "Pulmonary Embolism",
+        "Acute Pericarditis",
+        "Acute Gastritis",
+        "Biliary Colic"
+      ],
+      "finalDx": "Inferior STEMI",
+      "finalUmbrella": "Myocardial Infarction",
+      "diagnosisScore": {
+        "Inferior STEMI": 100,
+        "Inferior MI": 100,
+        "STEMI": 75,
+        "Myocardial Infarction": 50,
+        "Anterior STEMI": 50,
+        "Anterior MI": 50,
+        "Lateral STEMI": 50,
+        "Lateral MI": 50,
+        "Posterior MI": 50,
+        "NSTEMI": 35,
+        "Unstable Angina": 20
+      },
+      "required": [
+        "pe02",
+        "bi01"
+      ],
+      "sigNegs": [
+        {
+          "id": "pe02",
+          "label": "Equal bilateral arm BPs → rules out Aortic Dissection",
+          "pts": 10
+        },
+        {
+          "id": "pe05",
+          "label": "No peritonism → rules out surgical emergency (peritonitis, perforated viscus)",
+          "pts": 10
+        },
+        {
+          "id": "bi06",
+          "label": "Normal lipase/amylase → rules out Acute Pancreatitis",
+          "pts": 10
+        }
+      ],
+      "keyTeachingPoints": [
+        "Inferior MI frequently presents as epigastric (upper abdominal) pain rather than chest pain. This happens because the lower part of the heart and the upper abdomen share the same spinal nerve supply (T6-T10). Always think of a heart attack when an older patient with risk factors has unexplained upper abdominal discomfort.",
+        "The 4 must-not-miss diagnoses for epigastric pain are Myocardial Infarction, Aortic Dissection, Mesenteric Ischaemia, and Ruptured Aortic Aneurysm. All can be rapidly fatal if missed. They must be on your differential before you start investigating.",
+        "Checking both arm blood pressures takes 60 seconds and effectively rules out aortic dissection. A difference of more than 20 mmHg between arms suggests the aorta is torn. Equal pressures — as in this case — largely exclude it.",
+        "Absence of peritonism (no muscle guarding, no rebound tenderness) on abdominal examination rules out peritonitis from a ruptured organ. The mild tenderness on deep pressure only is actually a recognised feature of inferior MI.",
+        "The 12-lead ECG is the single most important investigation in this case — free, fast, and diagnostic. In any patient over 40 with unexplained upper abdominal symptoms and cardiovascular risk factors, order the ECG immediately.",
+        "ST elevation in the inferior leads (II, III, aVF) with opposite changes in leads I and aVL is the ECG signature of Inferior STEMI. This pattern is about 95% specific for the diagnosis.",
+        "Time matters critically in heart attacks. Every 10-minute delay in opening the blocked artery means approximately 1,000 more heart muscle cells die permanently. This is why the ECG must be done before other tests."
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Myocardial Infarction",
+          "status": "ruled-in",
+          "statusLbl": "Confirmed — this is the diagnosis",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Squeezing epigastric pain radiating to jaw and left shoulder, with sweating and nausea — classic features of inferior MI"
+            },
+            {
+              "type": "hx",
+              "text": "Crescendo pattern: 2 similar episodes in past week, each resolving spontaneously — unstable angina progressing to MI"
+            },
+            {
+              "type": "hx",
+              "text": "Loaded cardiovascular risk profile: hypertension, diabetes, 30 pack-year smoking, father died of MI at 58"
+            },
+            {
+              "type": "inv",
+              "text": "ECG: ST elevation in leads II, III, aVF with reciprocal depression in I and aVL — diagnostic of Inferior STEMI"
+            },
+            {
+              "type": "inv",
+              "text": "Troponin 10 times above normal, rising significantly at 3 hours — confirms ongoing heart muscle death"
+            }
+          ]
+        },
+        {
+          "mnm": "Aortic Dissection",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No sudden tearing onset, no radiation to the back between the shoulder blades — both features of dissection are absent"
+            },
+            {
+              "type": "ex",
+              "text": "Equal blood pressures in both arms (R: 158/96, L: 156/94 — difference only 2 mmHg). Dissection typically causes >20 mmHg difference"
+            },
+            {
+              "type": "ex",
+              "text": "All peripheral pulses equal bilaterally — no evidence of blood vessel compression from a dissection"
+            }
+          ]
+        },
+        {
+          "mnm": "Aortic Aneurysm / Ruptured AAA",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "No pulsatile mass felt in the abdomen — a large AAA may be palpable"
+            },
+            {
+              "type": "ex",
+              "text": "Haemodynamically stable (blood pressure maintained) — ruptured AAA typically causes circulatory collapse"
+            },
+            {
+              "type": "ex",
+              "text": "Equal peripheral pulses — no evidence of iliac artery involvement from an expanding aneurysm"
+            }
+          ]
+        },
+        {
+          "mnm": "Mesenteric Ischaemia",
+          "status": "ruled-out",
+          "statusLbl": "Largely excluded",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No history of atrial fibrillation, recent heart attack, or severe hardening of arteries — the usual causes of bowel ischaemia"
+            },
+            {
+              "type": "ex",
+              "text": "Soft abdomen without peritonism. Mesenteric ischaemia classically causes 'pain out of proportion to the examination', but frank peritonism develops later as bowel dies"
+            },
+            {
+              "type": "inv",
+              "text": "Lactate 1.9 mmol/L (borderline normal). Severe mesenteric ischaemia typically causes lactic acidosis with lactate well above 2.0 mmol/L"
+            }
+          ]
+        }
+      ],
+      "approachTitle": "An Approach to Abdominal Pain",
+      "approachSub": "Reference: Nigel Fong, Algorithms in Differential Diagnosis",
+      "approachText": "A systematic approach to abdominal pain organises causes by mechanism, ensuring you consider dangerous diagnoses that might not initially come to mind:",
+      "approachCats": [
+        {
+          "name": "Surgical Emergency",
+          "eg": "Appendicitis, perforated ulcer, bowel obstruction, mesenteric ischaemia, ruptured AAA",
+          "hl": false
+        },
+        {
+          "name": "Upper GI",
+          "eg": "Peptic ulcer disease, GORD, gastritis, pancreatitis, oesophageal spasm",
+          "hl": false
+        },
+        {
+          "name": "Hepatobiliary",
+          "eg": "Cholecystitis, biliary colic, gallstone in bile duct, hepatitis",
+          "hl": false
+        },
+        {
+          "name": "Vascular / Referred ← THIS CASE",
+          "eg": "Myocardial infarction, aortic dissection — pain 'referred' from the chest via shared nerve levels T6-T10",
+          "hl": true
+        },
+        {
+          "name": "Metabolic / Systemic",
+          "eg": "Diabetic ketoacidosis, adrenal crisis, high calcium, sickle cell crisis",
+          "hl": false
+        },
+        {
+          "name": "Genitourinary",
+          "eg": "Kidney stone, kidney infection, ovarian torsion, ectopic pregnancy",
+          "hl": false
+        },
+        {
+          "name": "Functional / Other",
+          "eg": "Irritable bowel, functional pain, nerve root pain from the spine",
+          "hl": false
+        }
+      ],
+      "approachInsight": "The VASCULAR/REFERRED category is the most commonly missed in clinical practice. Inferior MI belongs here — it causes epigastric pain not because the stomach is damaged, but because the pain signals from the lower heart wall travel through the same spinal nerves (T6-T10) as signals from the stomach. Using a systematic approach forces you to consider this category even when the symptom looks entirely GI.",
+      "expertNarrative": "Inferior STEMI presenting as epigastric pain is the most important diagnostic pitfall in emergency medicine. The right coronary artery (RCA) supplies the lower (inferior) wall of the left ventricle, the right ventricle, and the heart's natural pacemaker. Blockage explains all the features: epigastric pain (shared T6-T10 nerve supply), sweating and nausea (vagal activation), and slow heart rate (pacemaker ischaemia). Never let the location of pain determine what organ you think about — in any patient over 40 with cardiovascular risk factors and upper abdominal discomfort, obtain an ECG immediately.",
+      "sensitivityNote": "Inferior MI is poorly sensitive for 'classic' central chest pain — only about 40-50% of inferior MIs present this way. The rest present as epigastric pain, nausea, jaw pain, or arm pain. This means you must use a highly sensitive screening test (ECG) broadly for any patient over 40 with unexplained upper abdominal symptoms.",
+      "specificityNote": "ST elevation in leads II, III, and aVF with reciprocal changes in I and aVL is highly SPECIFIC for inferior STEMI (~95%). Once this ECG pattern is seen, the diagnosis is established with high confidence — competing diagnoses do not need further investigation before starting treatment.",
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Onset and character of pain",
+          "cost": "free",
+          "rel": true,
+          "find": "Began 2 hours ago as a vague upper abdominal ache, gradually worsening to 7/10. Heavy and squeezing quality. Gradual onset — no sudden 'tearing' start. He has had two similar but milder episodes over the past week, each lasting 20-30 minutes and going away on their own.",
+          "exp": "The gradual, squeezing onset is typical of myocardial ischaemia. A sudden tearing onset radiating to the back would suggest aortic dissection. The crescendo pattern (episodes getting more frequent and severe over one week) is a red flag for escalating, unstable heart disease — this is the classic story of unstable angina progressing to a heart attack."
+        },
+        {
+          "id": "h02",
+          "lbl": "Radiation of pain",
+          "cost": "free",
+          "rel": true,
+          "find": "Pain radiates up to his jaw and to his left shoulder. He also notices a heaviness in his left arm. No radiation to the back.",
+          "exp": "Radiation to the jaw and left shoulder is a classic warning sign for a heart attack. It happens because pain signals from the heart travel through the same nerve pathways as signals from the jaw and arm. Inferior MI (affecting the bottom of the heart) characteristically radiates to the jaw. Absence of radiation to the back argues strongly against aortic dissection, which classically radiates between the shoulder blades."
+        },
+        {
+          "id": "h03",
+          "lbl": "What makes it better or worse?",
+          "cost": "free",
+          "rel": true,
+          "find": "No relief from antacids. No relationship to meals. Not worsened by breathing or moving. Not reproduced by pressing on the abdomen. No relief from sitting forward.",
+          "exp": "Failure to improve with antacids argues against acid reflux and gastritis. No worsening with breathing argues against pleurisy, PE, and pericarditis. No positional relief rules against pericarditis (which typically improves leaning forward). Pain not reproduced by pressing on the abdomen argues against musculoskeletal and peritonitic causes."
+        },
+        {
+          "id": "h04",
+          "lbl": "Associated symptoms",
+          "cost": "free",
+          "rel": true,
+          "find": "Heavy sweating since pain started. Nauseous and vomited once. Mildly short of breath at rest. No palpitations, no fainting, no blood in vomit, no black stools.",
+          "exp": "Heavy sweating and nausea/vomiting are classic features of inferior MI — the blocked right coronary artery activates the vagus nerve, causing this 'vagotonic' picture. Absence of blood in vomit reduces concern for GI bleeding. Mild breathlessness may mean the heart is not pumping as efficiently as usual."
+        },
+        {
+          "id": "h05",
+          "lbl": "Previous episodes and timeline",
+          "cost": "free",
+          "rel": true,
+          "find": "Two shorter, milder episodes in the past week — each 20-30 minutes long, going away by themselves, not taken to hospital.",
+          "exp": "A crescendo pattern of escalating episodic pain that resolves spontaneously is the clinical signature of unstable angina progressing to a heart attack. Each episode likely represents transient coronary blockage with spontaneous clot dissolution. This is a high-risk pattern requiring urgent action."
+        },
+        {
+          "id": "h06",
+          "lbl": "Past medical history",
+          "cost": "free",
+          "rel": true,
+          "find": "Hypertension for 10 years (on amlodipine). Type 2 diabetes for 8 years (on metformin). No prior heart attacks, no stomach ulcers, no gallstones, no abdominal surgery.",
+          "exp": "Hypertension and diabetes are two of the most important risk factors for heart disease. Having both significantly raises the probability this is a cardiac cause. Absence of prior stomach problems reduces the likelihood of peptic ulcer disease."
+        },
+        {
+          "id": "h07",
+          "lbl": "Medications and allergies",
+          "cost": "free",
+          "rel": true,
+          "find": "Amlodipine 5mg daily, Metformin 500mg twice daily. No NSAIDs, no blood thinners, no aspirin. No known drug allergies.",
+          "exp": "No NSAIDs significantly reduces NSAID-induced stomach ulcers as a cause. Knowing medications is essential before starting heart attack treatment — metformin must be withheld before the contrast dye used in the emergency heart procedure (PCI), as it can cause a dangerous acid buildup."
+        },
+        {
+          "id": "h08",
+          "lbl": "Family history",
+          "cost": "free",
+          "rel": true,
+          "find": "Father had a heart attack at age 58 and died from it. Mother has high blood pressure.",
+          "exp": "A parent who had a heart attack before age 60 is an independent risk factor for heart disease. This is personally significant — this patient may be experiencing the same fatal event his father had at nearly the same age."
+        },
+        {
+          "id": "h09",
+          "lbl": "Social history",
+          "cost": "free",
+          "rel": true,
+          "find": "Smokes 20 cigarettes per day for 30 years (30 pack-years). Alcohol: 1-2 units per week. Bus driver. Mostly sedentary. Lives with wife.",
+          "exp": "30 pack-years of smoking is a major risk factor for heart disease. Low alcohol makes alcoholic pancreatitis and hepatitis less likely. His job as a bus driver is relevant — after a heart attack, he needs cardiological clearance from the transport authority before returning to work."
+        },
+        {
+          "id": "h10",
+          "lbl": "Cardiovascular systems review",
+          "cost": "free",
+          "rel": true,
+          "find": "Has been getting more breathless than usual when walking for the past 2 months. No swollen ankles, no waking up at night breathless, no prior palpitations or blackouts.",
+          "exp": "Progressive breathlessness on exertion over 2 months suggests slowly worsening heart function or developing angina. Absence of ankle swelling and night breathlessness makes established heart failure less likely, though early failure could be contributing."
+        },
+        {
+          "id": "h11",
+          "lbl": "GI systems review",
+          "cost": "free",
+          "rel": true,
+          "find": "Normal bowel habits. No blood in stool, no black tarry stools. No difficulty swallowing. No significant weight loss recently. No yellowing of skin or eyes.",
+          "exp": "This negative GI review provides important discriminating information — no rectal bleeding makes GI haemorrhage very unlikely, no jaundice makes liver and gallbladder disease less likely. These negatives help deprioritise the GI causes on your differential."
+        },
+        {
+          "id": "h12",
+          "lbl": "Respiratory systems review",
+          "cost": "free",
+          "rel": false,
+          "find": "No cough, no blood in phlegm, no wheeze. No recent immobility or long flights to suggest PE risk factors.",
+          "exp": "Negative respiratory symptoms reduce the probability of pulmonary embolism as the primary cause. Still a reasonable review given the mild breathlessness, but the overall clinical picture points strongly toward a cardiac cause."
+        },
+        {
+          "id": "h13",
+          "lbl": "Urinary systems review",
+          "cost": "free",
+          "rel": false,
+          "find": "No pain on urination, no blood in urine, no loin-to-groin pain. Normal urine output.",
+          "exp": "Negative urinary review makes kidney stones and kidney infection very unlikely. Ureteric colic typically causes severe cramping loin-to-groin pain — quite distinct from this presentation."
+        },
+        {
+          "id": "h14",
+          "lbl": "Travel history",
+          "cost": "free",
+          "rel": false,
+          "find": "No recent travel outside Singapore. Born and raised here.",
+          "exp": "Travel history is not relevant for this presentation. It would matter if malaria, typhoid, or dengue were being seriously considered."
+        },
+        {
+          "id": "h15",
+          "lbl": "ICE — Ideas, Concerns, Expectations",
+          "cost": "free",
+          "rel": false,
+          "ice": true,
+          "find": "Patient thinks it is 'too much spicy food' or stomach acid. His main worry is missing work tomorrow — he has a bus route to drive. He wants some antacid tablets and to go home quickly.",
+          "exp": "This is an important component of patient-centred care. His belief that it is a stomach problem is extremely common in patients having inferior heart attacks — this is precisely why the condition is so frequently missed in primary care. His concern about work over his health may reflect denial, which is psychologically common in men experiencing heart attacks. Understanding this allows you to communicate the urgency of the situation effectively."
+        },
+        {
+          "id": "h16",
+          "lbl": "Obstetric / gynaecological history",
+          "cost": "free",
+          "rel": false,
+          "find": "Not applicable — patient is male.",
+          "exp": "Not applicable in this male patient. This would be essential in a female patient, where ectopic pregnancy and ovarian torsion are must-not-miss diagnoses requiring specific obstetric history."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "General inspection",
+          "cost": "free",
+          "rel": true,
+          "find": "Visibly distressed and anxious. Pale skin. Profusely sweating (diaphoretic). Slightly short of breath at rest. Sitting upright. No yellow skin or eyes. No signs of chronic liver disease.",
+          "exp": "Pallor and heavy sweating reflect the body's stress response to a cardiac emergency. The combination of a pale, sweating, distressed 62-year-old with cardiovascular risk factors should immediately raise concern for a serious cardiac event. Absence of jaundice makes liver and gallbladder causes less likely."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Vital signs — including BOTH arm blood pressures",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "required": true,
+          "find": "Blood pressure: Right arm 158/96 mmHg, Left arm 156/94 mmHg — EQUAL (difference only 2 mmHg). Heart rate: 56 beats/minute, regular. Breathing rate: 18/min. Oxygen level: 96% on room air. Temperature: 37.1°C. Fully alert.",
+          "exp": "CRITICAL NEGATIVE: Equal blood pressures in both arms (difference under 10 mmHg) makes aortic dissection very unlikely — dissection typically causes a difference of more than 20 mmHg because it compresses the artery to one arm. The slow heart rate (56 bpm) is characteristic of inferior MI — the right coronary artery also supplies the heart's pacemaker, so blockage slows it down. No fever argues against an infectious cause."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Heart examination",
+          "cost": "free",
+          "rel": true,
+          "find": "Neck veins not raised. Normal heart sounds, no abnormal sounds or murmurs. No rubbing sound (pericardial rub). All pulses equal in both arms and legs.",
+          "exp": "Absence of a pericardial rub reduces likelihood of pericarditis. Equal pulses throughout, combined with equal arm BPs, effectively rules out aortic dissection. Normal neck veins suggest the right heart is not under severe strain yet."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Lung examination",
+          "cost": "free",
+          "rel": true,
+          "find": "Air entry equal both sides. Lungs completely clear — no crackling sounds, no wheeze, no pleural rub.",
+          "exp": "Clear lungs argue against pneumonia and against fluid in the lungs from heart failure (which would cause crackling sounds at the lung bases). No pleural rub argues against pleurisy and PE."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Abdominal examination",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "find": "Abdomen soft and not distended. Mild tenderness to deep pressure only in the upper-middle abdomen — no muscle tensing (guarding), no rigidity, no rebound tenderness. Murphy's sign negative (pressing under right rib cage does not cause sudden pain worsening). Liver and spleen not enlarged. Normal bowel sounds. No pulsatile mass.",
+          "exp": "CRITICAL NEGATIVE: No peritonism (no guarding, rigidity, or rebound tenderness) effectively rules out peritonitis from a perforated organ. Negative Murphy's sign argues strongly against acute cholecystitis. The mild non-specific tenderness on deep pressure is actually a recognised feature of inferior MI — the heart pain refers to the upper abdomen via shared nerve supply. No pulsatile abdominal mass makes ruptured aortic aneurysm less likely."
+        },
+        {
+          "id": "pe06",
+          "lbl": "Peripheral vascular examination (circulation to limbs)",
+          "cost": "free",
+          "rel": true,
+          "find": "All pulses present and equal in both wrists, elbows, groins, behind knees, and at feet. Capillary refill under 2 seconds. No evidence of poor circulation to any limb.",
+          "exp": "Equal peripheral pulses throughout, combined with equal arm BPs, comprehensively excludes aortic dissection. Good peripheral circulation confirms adequate heart output despite the slow heart rate."
+        },
+        {
+          "id": "pe07",
+          "lbl": "Chest wall examination",
+          "cost": "free",
+          "rel": false,
+          "find": "No tender spots on chest wall. No rib deformity. Pressing on the chest wall does not reproduce the patient's pain.",
+          "exp": "Absence of reproducible chest wall tenderness argues against costochondritis and rib fractures. A useful negative — if pressing on the chest exactly reproduced the pain, a musculoskeletal cause would become more likely."
+        },
+        {
+          "id": "pe08",
+          "lbl": "Rectal examination",
+          "cost": "free",
+          "rel": false,
+          "find": "Not performed — no bowel symptoms reported.",
+          "exp": "Rectal examination is a priority if GI bleeding is suspected. In this case with no bowel symptoms and a strongly cardiac picture, this should not be performed before getting an ECG."
+        },
+        {
+          "id": "pe09",
+          "lbl": "Neurological examination (upper limbs)",
+          "cost": "free",
+          "rel": false,
+          "penalize": true,
+          "find": "Strength, reflexes, and sensation normal in both arms.",
+          "exp": "Not indicated in this presentation. There are no neurological symptoms. Performing this before completing the cardiovascular examination in a patient with cardiovascular risk factors and epigastric pain reflects poor clinical prioritisation."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "12-lead ECG (heart tracing)",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "find": "ST elevation 2-3mm in leads II, III, and aVF (the 'inferior' leads). Reciprocal ST depression in leads I and aVL. Normal sinus rhythm at 56 beats/min. No bundle branch block.",
+          "exp": "DIAGNOSTIC: ST elevation in the inferior leads with reciprocal changes is the hallmark of an Inferior STEMI — the right coronary artery is completely blocked. This single finding triggers the emergency heart procedure (primary PCI) protocol immediately. All GI diagnoses are now effectively excluded. This should have been the FIRST test ordered."
+        },
+        {
+          "id": "bi02",
+          "lbl": "Troponin blood test",
+          "cost": "low",
+          "rel": true,
+          "find": "Troponin (hs-TnI): 248 ng/L at arrival (normal under 26 ng/L — about 10 times above normal). Repeat at 3 hours: 1,840 ng/L — rising significantly.",
+          "exp": "Rising troponin confirms heart muscle cells are dying. Troponin is a protein released when heart cells are damaged. The pattern of a rising level (not just a one-off elevation) is what tells us this is an acute, ongoing event. Combined with the ECG, this confirms Inferior STEMI."
+        },
+        {
+          "id": "bi03",
+          "lbl": "Full blood count (FBC)",
+          "cost": "low",
+          "rel": false,
+          "find": "Haemoglobin 144 g/L (normal). White cells 11.8 (mildly elevated — a non-specific stress response). Platelets 228 (normal).",
+          "exp": "Mildly elevated white count is a non-specific response to physiological stress, including a heart attack. Normal haemoglobin makes anaemia unlikely. FBC is a useful pre-procedural baseline but does not help diagnose this case."
+        },
+        {
+          "id": "bi04",
+          "lbl": "Kidney function and electrolytes",
+          "cost": "low",
+          "rel": false,
+          "find": "Sodium 138 (normal), Potassium 4.2 (normal), Creatinine 102 µmol/L (slightly reduced kidney function). All acceptable.",
+          "exp": "Normal potassium is reassuring — low potassium increases the risk of dangerous heart rhythms during a heart attack. Mildly reduced kidney function is important to know before giving contrast dye for the heart procedure. Pre-procedural baseline, not a diagnostic investigation."
+        },
+        {
+          "id": "bi05",
+          "lbl": "Liver function tests (LFTs)",
+          "cost": "low",
+          "rel": false,
+          "find": "All liver enzymes (ALT, AST, ALP, bilirubin, albumin) within normal range.",
+          "exp": "Normal LFTs make liver and gallbladder disease as the primary cause unlikely. A useful negative for the GI differential, but not the priority investigation."
+        },
+        {
+          "id": "bi06",
+          "lbl": "Pancreatic enzymes (lipase and amylase)",
+          "cost": "low",
+          "rel": false,
+          "sigNeg": true,
+          "find": "Lipase 36 U/L (normal — pancreatitis typically causes levels 3 times the upper limit of normal or higher). Amylase 74 U/L (normal).",
+          "exp": "SIGNIFICANT NEGATIVE: Normal lipase effectively rules out acute pancreatitis. Pancreatitis was a reasonable early consideration given the epigastric pain with nausea. However, ordering this before getting an ECG in someone with cardiovascular risk factors is poor test sequencing."
+        },
+        {
+          "id": "bi07",
+          "lbl": "Blood sugar (glucose)",
+          "cost": "low",
+          "rel": false,
+          "find": "Blood glucose 11.2 mmol/L (elevated). Urine: glucose present (expected in a diabetic), no ketones.",
+          "exp": "Mildly elevated glucose is expected in a diabetic under stress. Absence of ketones makes diabetic ketoacidosis very unlikely. Pre-procedural baseline, not a diagnostic tool here."
+        },
+        {
+          "id": "bi08",
+          "lbl": "Chest X-ray",
+          "cost": "low",
+          "rel": false,
+          "find": "Heart size normal. Mediastinum (space in middle of chest) not widened. Lung fields clear. No collapsed lung, no fluid around the lung.",
+          "exp": "A normal mediastinal width reduces (but does not exclude) aortic dissection — the equal bilateral BPs have already largely excluded this. Clear lungs argue against pneumonia and pulmonary oedema. Chest X-ray does not diagnose heart attacks. Useful baseline but the ECG comes first."
+        },
+        {
+          "id": "bi09",
+          "lbl": "Urine dipstick",
+          "cost": "low",
+          "rel": false,
+          "find": "Glucose in urine (expected in his diabetes). No blood, no protein, no signs of infection.",
+          "exp": "Negative urine makes kidney stones and kidney infection very unlikely. Not a diagnostic investigation in this presentation."
+        },
+        {
+          "id": "bi10",
+          "lbl": "Blood gas (ABG/VBG)",
+          "cost": "low",
+          "rel": false,
+          "find": "pH 7.40 (normal). Oxygen level adequate. Lactate 1.9 mmol/L (borderline — acceptable).",
+          "exp": "Borderline lactate may reflect mildly reduced heart output. No metabolic acidosis. If significantly elevated (above 2.5), it would raise concern for mesenteric ischaemia or cardiogenic shock. Limited diagnostic value here."
+        },
+        {
+          "id": "bi11",
+          "lbl": "D-dimer blood test",
+          "cost": "low",
+          "rel": false,
+          "find": "D-dimer 0.45 mg/L (mildly elevated — non-specific, elevated in many conditions including heart attacks).",
+          "exp": "D-dimer is only useful for ruling OUT pulmonary embolism when the clinical probability of PE is LOW. This patient's clinical picture does not have low PE probability, and the ECG has already established the diagnosis. A mildly elevated D-dimer is non-specific and very common in heart attacks. Ordering this here reflects unclear reasoning."
+        },
+        {
+          "id": "bi12",
+          "lbl": "CRP (inflammation marker)",
+          "cost": "low",
+          "rel": false,
+          "find": "CRP 14 mg/L (mildly elevated). ESR 22 mm/hr (normal).",
+          "exp": "Mild CRP elevation is a non-specific response to any tissue damage, including a heart attack. This test does not help distinguish MI from GI causes and was not a priority investigation in this case."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "Coronary angiogram + emergency PCI (emergency heart procedure)",
+          "cost": "high",
+          "rel": true,
+          "find": "Complete blockage of the mid right coronary artery (RCA) confirmed. Drug-coated stent successfully placed to open the artery. Blood flow restored. Time from arrival to balloon: 72 minutes (within the 90-minute target).",
+          "exp": "DEFINITIVE INVESTIGATION AND TREATMENT: The coronary angiogram confirms total right coronary artery (RCA) blockage as the cause of this inferior STEMI. Emergency PCI restores blood flow and saves heart muscle. The RCA supplies the lower heart wall, the right ventricle, and the heart's pacemaker — explaining all features of this presentation. This is why the ECG had to be done first."
+        },
+        {
+          "id": "ai02",
+          "lbl": "Echocardiogram (heart ultrasound)",
+          "cost": "mid",
+          "rel": true,
+          "find": "The lower (inferior) and side (inferolateral) heart walls are moving poorly. Mild right ventricular involvement. Pumping function approximately 48% (slightly below normal 55%). No fluid around the heart.",
+          "exp": "Confirms inferior STEMI — the walls supplied by the blocked right coronary artery are not moving properly. This distinguishes it from viral myocarditis, which causes global (all-over) poor movement. Right ventricular involvement is clinically important: these patients can collapse if given blood pressure-lowering medications like nitrates."
+        },
+        {
+          "id": "ai03",
+          "lbl": "CT aortogram (CT scan to look for aortic tear)",
+          "cost": "high",
+          "rel": false,
+          "penalize": true,
+          "find": "No tear in the aorta found. Normal aortic dimensions.",
+          "exp": "NOT APPROPRIATE: Aortic dissection has already been excluded by equal bilateral blood pressures — that check took 60 seconds. Ordering a CT aortogram in a confirmed STEMI patient delays the emergency heart procedure and causes more heart muscle to die. Every minute of delay matters. This represents a critical sequencing error."
+        },
+        {
+          "id": "ai04",
+          "lbl": "CT pulmonary angiography (CT scan to look for blood clots in lungs)",
+          "cost": "high",
+          "rel": false,
+          "penalize": true,
+          "find": "No blood clots in the lung arteries.",
+          "exp": "NOT APPROPRIATE: This presentation is not consistent with PE — the ECG has established inferior STEMI, and PE typically presents with fast heart rate and sharp chest pain worsened by breathing. Ordering this delays emergency treatment and reflects a failure to use the ECG findings."
+        },
+        {
+          "id": "ai05",
+          "lbl": "CT scan of abdomen and pelvis",
+          "cost": "mid",
+          "rel": false,
+          "penalize": true,
+          "find": "No free gas or fluid. No bowel obstruction or appendicitis. Aorta normal diameter.",
+          "exp": "NOT APPROPRIATE: The diagnosis of inferior STEMI has been established. CT abdomen exposes the patient to radiation and contrast dye and delays the heart procedure. This reflects anchoring on the 'epigastric' symptom while ignoring the cardiovascular history and ECG findings."
+        },
+        {
+          "id": "ai06",
+          "lbl": "Upper GI endoscopy (camera into stomach)",
+          "cost": "high",
+          "rel": false,
+          "penalize": true,
+          "find": "Procedure deferred — not appropriate in this setting.",
+          "exp": "COMPLETELY INAPPROPRIATE: A stomach camera is an elective procedure that would never be done in an acute heart attack. Even if a stomach ulcer were being considered, endoscopy would wait until after the heart is stabilised. This reflects anchoring entirely on the epigastric symptom."
+        },
+        {
+          "id": "ai07",
+          "lbl": "Abdominal ultrasound",
+          "cost": "mid",
+          "rel": false,
+          "find": "No gallstones. Normal liver and bile ducts. Normal kidney. Aorta normal diameter.",
+          "exp": "Abdominal ultrasound would be appropriate as a first-line test if gallbladder disease were high on the differential. After the ECG has confirmed inferior STEMI, this scan is not indicated. The normal aortic diameter further supports against a ruptured aneurysm."
+        },
+        {
+          "id": "ai08",
+          "lbl": "V/Q scan (alternative scan for blood clots in lungs)",
+          "cost": "mid",
+          "rel": false,
+          "penalize": true,
+          "find": "Not performed — not clinically indicated.",
+          "exp": "NOT APPROPRIATE: A V/Q scan is an alternative way to look for pulmonary embolism, used in patients who cannot have contrast dye. In this case, the ECG has established the diagnosis. Selecting this shows a misunderstanding of both the diagnosis and when this scan is used."
+        }
+      ]
+    },
+    {
+      "id": "case_002",
+      "title": "Progressive Breathlessness & Weight Loss",
+      "approach": "An Approach to Dyspnoea",
+      "secondaryApproach": "An Approach to Electrolyte Imbalances (Hyponatraemia)",
+      "system": "Respiratory",
+      "difficulty": "challenging",
+      "patient": "Mr Lim Ah Kow, 58M, Retired Factory Worker",
+      "snomedCode": "254637007",
+      "vignette": "Mr Lim Ah Kow, a 58-year-old retired factory worker, is brought into the Emergency Department by his son. His son reports that his father has been getting progressively more breathless over the past 6 weeks, and has lost a lot of weight. Today, he seems more confused and unsteady than usual.",
+      "caseMNMs": [
+        "Pulmonary Embolism",
+        "Cardiac Tamponade",
+        "Tension Pneumothorax",
+        "Addisonian Crisis"
+      ],
+      "expectedP1": [
+        "Lung Cancer",
+        "COPD Exacerbation",
+        "Pneumonia",
+        "Pulmonary Tuberculosis",
+        "Pleural Effusion",
+        "Heart Failure",
+        "Pulmonary Embolism",
+        "SIADH"
+      ],
+      "finalDx": "Small Cell Lung Cancer (SCLC) with Paraneoplastic SIADH",
+      "finalUmbrella": "Lung Cancer",
+      "diagnosisScore": {
+        "Small Cell Lung Cancer (SCLC) with Paraneoplastic SIADH": 100,
+        "Small Cell Lung Cancer": 100,
+        "SCLC": 100,
+        "Lung Cancer": 50,
+        "Adenocarcinoma": 30,
+        "Squamous Cell Carcinoma of Lung": 30,
+        "SIADH": 20,
+        "Pulmonary Tuberculosis": 10
+      },
+      "required": [
+        "bi01",
+        "bi04"
+      ],
+      "sigNegs": [
+        {
+          "id": "pe03",
+          "label": "No raised JVP, no ankle oedema → cardiac cause of dyspnoea less likely",
+          "pts": 8
+        },
+        {
+          "id": "bi02",
+          "label": "Normal D-dimer → PE effectively excluded given low pre-test probability",
+          "pts": 8
+        },
+        {
+          "id": "bi04",
+          "label": "Serum sodium 122 mmol/L (euvolaemic) → confirms SIADH pattern",
+          "pts": 12
+        },
+        {
+          "id": "pe07",
+          "label": "Euvolaemia confirmed clinically → consistent with SIADH, not dehydration or fluid overload",
+          "pts": 8
+        }
+      ],
+      "keyTeachingPoints": [
+        "Small cell lung cancer (SCLC) is an aggressive lung cancer strongly associated with heavy smoking. It commonly presents late with weeks to months of symptoms, and is often already widespread at diagnosis.",
+        "Paraneoplastic syndromes occur when tumour cells produce substances that affect other organs — without the cancer having spread there. SCLC is the cancer most commonly associated with paraneoplastic syndromes.",
+        "SIADH (Syndrome of Inappropriate ADH secretion) occurs in 5-10% of SCLC patients clinically, though up to 45% may produce ADH without symptoms. The cancer cells themselves produce ADH, causing the kidneys to retain excess water and diluting the blood sodium.",
+        "Euvolaemic hyponatraemia (low sodium with normal body fluid volume — not dehydrated, not fluid overloaded) is the hallmark clinical pattern of SIADH. Confirming euvolaemia on examination is essential to distinguish SIADH from other causes of low sodium.",
+        "The diagnostic criteria for SIADH require: low blood sodium, low serum osmolality (<275 mOsm/kg), inappropriately concentrated urine (osmolality >100, typically >300 mOsm/kg), urine sodium >40 mmol/L, and euvolaemia — with exclusion of adrenal insufficiency, hypothyroidism, and diuretic use.",
+        "When you find one abnormality (e.g. low sodium causing confusion), always ask: what is the underlying cause? In this case, the hyponatraemia is a clue pointing to the lungs — the cancer is causing SIADH. Do not treat the sodium in isolation without finding its cause.",
+        "A heavy smoker with progressive breathlessness, significant unintentional weight loss, haemoptysis, and constitutional symptoms has lung cancer until proven otherwise. The combination of these features demands urgent chest imaging.",
+        "Addisonian crisis (adrenal insufficiency) must always be actively excluded in euvolaemic hyponatraemia — it is life-threatening and immediately treatable with steroid replacement."
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Pulmonary Embolism",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No recent immobility, long-haul travel, or leg swelling — classic PE risk factors absent"
+            },
+            {
+              "type": "hx",
+              "text": "Gradual onset of breathlessness over 6 weeks — PE typically presents acutely, not with weeks of progressive dyspnoea"
+            },
+            {
+              "type": "inv",
+              "text": "Normal D-dimer — in this context (low pre-test probability for PE), a normal D-dimer effectively excludes it"
+            }
+          ]
+        },
+        {
+          "mnm": "Cardiac Tamponade",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "JVP not elevated — tamponade classically causes markedly raised JVP (Beck's triad: raised JVP, hypotension, muffled heart sounds)"
+            },
+            {
+              "type": "ex",
+              "text": "Blood pressure maintained without pulsus paradoxus — tamponade causes circulatory compromise and pulsus paradoxus >10 mmHg"
+            },
+            {
+              "type": "ex",
+              "text": "Heart sounds normal — tamponade causes muffled heart sounds from surrounding fluid"
+            }
+          ]
+        },
+        {
+          "mnm": "Tension Pneumothorax",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Progressive onset over 6 weeks — tension pneumothorax is an acute emergency, presenting suddenly with rapid deterioration"
+            },
+            {
+              "type": "ex",
+              "text": "Trachea deviated toward the left (not away from midline as in tension pneumothorax — here it is pulled toward the effusion)"
+            },
+            {
+              "type": "ex",
+              "text": "Haemodynamically stable — tension pneumothorax causes rapid cardiovascular collapse if not immediately decompressed"
+            }
+          ]
+        },
+        {
+          "mnm": "Addisonian Crisis",
+          "status": "ruled-out",
+          "statusLbl": "Excluded by investigation",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "Haemodynamically stable with maintained blood pressure — Addisonian crisis typically causes severe hypotension and shock"
+            },
+            {
+              "type": "inv",
+              "text": "Morning cortisol adequate; short ACTH stimulation test (Synacthen test): cortisol rises to >550 nmol/L at 30 minutes — adrenal function confirmed intact"
+            },
+            {
+              "type": "inv",
+              "text": "Potassium 3.9 mmol/L (normal) — Addison's typically causes hyperkalaemia alongside hyponatraemia; normal potassium makes it less likely"
+            }
+          ]
+        }
+      ],
+      "approachTitle": "An Approach to Dyspnoea",
+      "approachSub": "Reference: Nigel Fong, Algorithms in Differential Diagnosis",
+      "approachText": "Shortness of breath is caused by conditions affecting the lungs, heart, blood, or the body's ability to use oxygen. A systematic approach organises causes to ensure dangerous ones are not missed:",
+      "approachCats": [
+        {
+          "name": "Immediately Life-Threatening",
+          "eg": "Tension pneumothorax, cardiac tamponade, massive PE, flash pulmonary oedema",
+          "hl": false
+        },
+        {
+          "name": "Upper Airway / Anaphylaxis",
+          "eg": "Foreign body, anaphylaxis, angioedema, epiglottitis",
+          "hl": false
+        },
+        {
+          "name": "Lower Respiratory — Parenchymal",
+          "eg": "Pneumonia, COPD exacerbation, asthma, pulmonary fibrosis, TB",
+          "hl": false
+        },
+        {
+          "name": "Pleural / Mediastinal",
+          "eg": "Pleural effusion, pneumothorax, mediastinal mass",
+          "hl": false
+        },
+        {
+          "name": "Pulmonary Vascular",
+          "eg": "Pulmonary embolism, pulmonary hypertension",
+          "hl": false
+        },
+        {
+          "name": "Cardiac",
+          "eg": "Heart failure, pericardial effusion, arrhythmia, cardiac tamponade",
+          "hl": false
+        },
+        {
+          "name": "Malignancy ← THIS CASE",
+          "eg": "SCLC causing direct compression, pleural effusion, AND paraneoplastic SIADH — explains both dyspnoea AND confusion",
+          "hl": true
+        },
+        {
+          "name": "Neuromuscular / Metabolic",
+          "eg": "Severe anaemia, metabolic acidosis, diaphragm weakness, hyponatraemia causing confusion",
+          "hl": false
+        }
+      ],
+      "approachInsight": "This case illustrates a key clinical principle: when a patient presents with two seemingly unrelated problems (breathlessness AND confusion), always ask whether one underlying diagnosis can explain both. In SCLC, the cancer explains the breathlessness directly (tumour mass, pleural effusion) AND the confusion indirectly (paraneoplastic SIADH causing hyponatraemia → brain dysfunction). Treating the low sodium without finding its cause would miss the cancer entirely — the sodium is a clue, not the diagnosis.",
+      "expertNarrative": "SCLC presenting with paraneoplastic SIADH is a classic challenging case. SCLC cells produce ectopic ADH, causing kidneys to inappropriately retain water. This dilutes the blood sodium (hyponatraemia). When sodium falls below 125 mmol/L, brain swelling occurs — explaining the confusion. The key clinical reasoning: (1) A heavy smoker with progressive dyspnoea, haemoptysis, and weight loss has lung cancer until proven otherwise. (2) When you find euvolaemic hyponatraemia, always think SIADH — and always ask what is causing the SIADH. (3) SCLC is the malignancy most strongly associated with SIADH. (4) Paraneoplastic SIADH is usually reversible with successful anti-tumour therapy — 80% resolve within 3 weeks of starting chemotherapy. (5) Addisonian crisis must always be actively excluded in euvolaemic hyponatraemia, as it is immediately treatable and life-threatening.",
+      "sensitivityNote": "SCLC has low sensitivity for 'classic' respiratory symptoms — it can present with weight loss, hyponatraemia, confusion, or neurological symptoms before obvious breathlessness develops. Paraneoplastic syndromes may precede the primary diagnosis. A high index of suspicion is needed in any heavy smoker with constitutional symptoms.",
+      "specificityNote": "Tissue biopsy (bronchoscopy, CT-guided, or EBUS) with characteristic SCLC histology (small cells with neuroendocrine features, high nuclear-to-cytoplasmic ratio) combined with a central lung mass on CT is highly specific. SIADH diagnosis requires the combination of hypoosmolar hyponatraemia + inappropriately concentrated urine (urine osmolality >100 mOsm/kg) + urine sodium >40 mmol/L + euvolaemia + exclusion of other causes.",
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Breathlessness — onset and progression",
+          "cost": "free",
+          "rel": true,
+          "find": "Progressively worsening breathlessness over 6 weeks. Initially only on climbing stairs; now present on walking short distances and occasionally at rest. No sudden onset. No wheeze. Not worsened by lying flat.",
+          "exp": "Progressive onset over weeks argues against an acute emergency (tension pneumothorax, massive PE — which present suddenly). The subacute course over 6 weeks raises concern for a growing structural cause: tumour, pleural effusion, or progressive heart failure. Absence of orthopnoea (worsening lying flat) makes heart failure less likely as the primary driver."
+        },
+        {
+          "id": "h02",
+          "lbl": "Cough and sputum",
+          "cost": "free",
+          "rel": true,
+          "find": "Persistent dry cough for 3 months. Over the past 3 weeks, occasionally coughing up small amounts of blood-streaked phlegm (haemoptysis). No foul-smelling purulent phlegm.",
+          "exp": "Haemoptysis in a heavy smoker is a red flag for lung cancer until proven otherwise. The 3-month duration argues against acute pneumonia (which typically peaks within days). Absence of purulent phlegm makes bacterial pneumonia less likely as the primary cause. The combination of progressive dyspnoea + haemoptysis + weight loss in a smoker is a highly suspicious triad for malignancy."
+        },
+        {
+          "id": "h03",
+          "lbl": "Weight loss and appetite",
+          "cost": "free",
+          "rel": true,
+          "find": "Significant unintentional weight loss — son estimates approximately 8-10 kg over 3 months. Very poor appetite. Low-grade fevers on and off. Night sweats.",
+          "exp": "Significant unintentional weight loss (>5% body weight over 3 months) with anorexia, night sweats, and low-grade fevers constitutes 'B-symptoms' — a highly concerning pattern for malignancy or chronic infection (TB). In a heavy smoker with respiratory symptoms, this combination demands urgent investigation for lung cancer."
+        },
+        {
+          "id": "h04",
+          "lbl": "Confusion and cognitive change",
+          "cost": "free",
+          "rel": true,
+          "find": "Son reports father has been 'not himself' for about 2 weeks — increasingly confused, forgetful, and unsteady on his feet. No fever. No headache. No limb weakness. No prior diagnosis of dementia.",
+          "exp": "New-onset confusion in a patient with a likely malignancy should immediately trigger consideration of metabolic causes (hyponatraemia, hypercalcaemia), CNS metastases, and infection. The gradual onset over 2 weeks, without fever or focal deficits, is more consistent with a metabolic cause than an acute vascular or infectious event. This is the key clinical clue that should prompt ordering serum electrolytes."
+        },
+        {
+          "id": "h05",
+          "lbl": "Smoking and occupational history",
+          "cost": "free",
+          "rel": true,
+          "find": "Smokes 30 cigarettes per day for 30 years (45 pack-years — very heavy smoker). Retired 3 years ago from factory work involving insulation materials (possible asbestos exposure). Drinks minimal alcohol.",
+          "exp": "45 pack-years of smoking is the single strongest risk factor for lung cancer — particularly SCLC (small cell) and squamous cell types, which arise centrally. Possible occupational asbestos exposure is an additional risk factor for mesothelioma and lung cancer. Low alcohol use makes alcoholic liver disease and its associated hyponatraemia (from portal hypertension/cirrhosis) less likely."
+        },
+        {
+          "id": "h06",
+          "lbl": "Past medical history",
+          "cost": "free",
+          "rel": true,
+          "find": "No prior lung conditions or prior cancer diagnosis. No known heart disease. No prior adrenal or thyroid problems. No diabetes. No prior psychiatric diagnoses.",
+          "exp": "Absence of prior lung disease means a new diagnosis is needed to explain the progressive breathlessness. No known adrenal disease reduces (but does not exclude) Addisonian crisis as a cause of the hyponatraemia — adrenal insufficiency must still be actively excluded with a Synacthen test, as it is life-threatening and immediately reversible. No hypothyroidism noted — hypothyroidism is another cause of euvolaemic hyponatraemia that must be excluded."
+        },
+        {
+          "id": "h07",
+          "lbl": "Medications and allergies",
+          "cost": "free",
+          "rel": true,
+          "find": "No regular medications. No recent new prescriptions. No diuretics, no SSRIs, no anticonvulsants, no chemotherapy agents. No known drug allergies.",
+          "exp": "Many medications cause SIADH and hyponatraemia — especially thiazide diuretics, SSRIs, and certain anticonvulsants. The absence of these drugs is important: it removes medications as a cause of the low sodium and shifts probability toward an underlying pathological cause (malignancy, adrenal insufficiency, pulmonary disease). This is a crucial exclusion for the SIADH diagnosis."
+        },
+        {
+          "id": "h08",
+          "lbl": "Cardiovascular symptom review",
+          "cost": "free",
+          "rel": true,
+          "find": "No chest pain, no palpitations. No ankle swelling. No waking up at night breathless (PND). No orthopnoea.",
+          "exp": "Absence of orthopnoea, PND, and ankle oedema makes heart failure as the primary cause of breathlessness less likely. This helps shift the differential toward a respiratory or malignant cause. No chest pain argues against pericarditis and pleurisy (though these are lower priority in this presentation)."
+        },
+        {
+          "id": "h09",
+          "lbl": "DVT / PE risk factors",
+          "cost": "free",
+          "rel": false,
+          "find": "No recent immobility, no long-haul travel, no leg swelling or calf pain. No prior DVT or PE.",
+          "exp": "Absence of classic PE risk factors reduces its probability. However, malignancy itself is prothrombotic — lung cancer significantly increases PE risk. PE cannot be fully excluded without investigation. The gradual 6-week onset of dyspnoea is atypical for PE, but a small or subacute PE contributing to symptoms is possible."
+        },
+        {
+          "id": "h10",
+          "lbl": "Urinary symptoms review",
+          "cost": "free",
+          "rel": false,
+          "find": "Urine output appears normal to son's observation — not obviously reduced. No visible blood in urine.",
+          "exp": "Normal urine output is relevant for assessing hyponatraemia cause. In SIADH, the kidneys produce inappropriately concentrated urine despite low blood sodium — the kidneys retain water when they should excrete it. This preserved urine output argues against severe dehydration as the cause of hyponatraemia."
+        },
+        {
+          "id": "h11",
+          "lbl": "Neurological symptom review",
+          "cost": "free",
+          "rel": true,
+          "find": "No specific limb weakness (just unsteady from confusion). No visual changes. No severe headache. No history of seizures. No speech difficulty.",
+          "exp": "Absence of focal neurological symptoms (one-sided weakness, speech problems, visual changes) makes an acute stroke less likely as the cause of confusion. The confusion here appears metabolic (likely from low sodium) rather than structural (brain lesion). However, SCLC commonly spreads to the brain — brain metastases are present in over 10% of SCLC patients at initial diagnosis and should be looked for on imaging."
+        },
+        {
+          "id": "h12",
+          "lbl": "ICE — Ideas, Concerns, Expectations",
+          "cost": "free",
+          "rel": false,
+          "ice": true,
+          "find": "Son says father attributed the breathlessness to 'getting old and smoking too much' and did not seek help for months. Son is very worried it is cancer. Patient, when lucid, says he mainly wants the confusion explained — he finds it frightening.",
+          "exp": "The patient's attribution of symptoms to ageing and smoking led to months of delayed presentation — a very common pattern in lung cancer. The son's suspicion of cancer is clinically astute. The patient's primary concern about his confusion is important: addressing it directly builds trust and allows you to explain that the confusion is likely from a low blood sodium, which itself is caused by the lung condition. ICE is important here for communication planning."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "General inspection and nutritional status",
+          "cost": "free",
+          "rel": true,
+          "find": "Looks unwell and confused — disoriented to time and place. Visibly thin and malnourished. Clothes appear loose. Pale. No jaundice. Finger clubbing present bilaterally. No peripheral lymphadenopathy visible.",
+          "exp": "Finger clubbing (bulbous rounding of the fingertips) is associated with lung cancer, chronic suppurative lung disease, and inflammatory bowel disease. Its presence in a heavy smoker with progressive breathlessness and weight loss is a significant clinical pointer toward malignancy. Malnourishment is consistent with chronic illness, particularly malignancy. Confusion confirms the central nervous system is being affected — the most likely cause in this context is metabolic (hyponatraemia from SIADH)."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Vital signs",
+          "cost": "free",
+          "rel": true,
+          "find": "Temperature 37.4°C (no significant fever). Heart rate 96 bpm (slightly elevated). Blood pressure 108/70 mmHg (slightly low-normal). Breathing rate 22/min (elevated). Oxygen saturation 91% on room air. BMI estimated 17 (underweight).",
+          "exp": "Elevated breathing rate and low oxygen saturation confirm significant respiratory compromise. Mildly elevated heart rate and slightly low blood pressure may reflect reduced cardiac output, dehydration (unlikely given euvolaemia), or early physiological stress. Blood pressure is maintained — this argues against Addisonian crisis, which typically causes profound hypotension. SpO2 of 91% requires immediate supplemental oxygen."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Cardiovascular examination",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "find": "JVP not elevated. Heart sounds normal — no murmurs, no muffled sounds, no pericardial rub. No pedal oedema. Capillary refill 2 seconds.",
+          "exp": "SIGNIFICANT NEGATIVE: Absence of raised JVP and pedal oedema makes heart failure as the primary cause of breathlessness significantly less likely. Normal heart sounds without muffled quality reduce cardiac tamponade. Combined with maintained blood pressure, this shifts the differential strongly toward a respiratory or malignant cause. Normal JVP also argues against cardiac tamponade (which causes markedly elevated JVP as a cardinal feature)."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Respiratory examination",
+          "cost": "free",
+          "rel": true,
+          "find": "Trachea deviated slightly to the LEFT. Percussion dull in the right lower and mid zones. Breath sounds reduced in the right lower zone. Bronchial breathing heard at right mid zone. No wheeze. Left lung clear.",
+          "exp": "Tracheal deviation to the left with right-sided dullness and reduced breath sounds is the classic pattern of a large right-sided pleural effusion (fluid pulling the trachea toward the same side — this is different from pneumothorax or collapse where trachea is pulled away from normal lung). Bronchial breathing at the right mid zone may represent a large central mass causing partial bronchial obstruction. A large pleural effusion in a smoker with weight loss and haemoptysis is highly suspicious for malignancy."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Abdominal examination",
+          "cost": "free",
+          "rel": true,
+          "find": "Abdomen soft. Liver edge palpable 2 cm below the right costal margin (mildly enlarged — hepatomegaly). Spleen not palpable. No ascites. No abdominal masses.",
+          "exp": "Mild hepatomegaly in the context of suspected lung cancer raises concern for liver metastases, which are common with SCLC. This finding warrants assessment with liver function tests and CT imaging. Absence of ascites and splenomegaly reduces portal hypertension from liver cirrhosis as a contributing cause of hyponatraemia."
+        },
+        {
+          "id": "pe06",
+          "lbl": "Lymph node examination",
+          "cost": "free",
+          "rel": true,
+          "find": "Right supraclavicular lymph node palpable — approximately 1.5 cm, firm, non-tender, fixed. No axillary lymphadenopathy.",
+          "exp": "A firm, non-tender, fixed right supraclavicular lymph node in the context of a right-sided lung mass is highly suspicious for nodal spread (metastasis) of lung cancer. Right supraclavicular lymphadenopathy indicates thoracic or cervical drainage pathway involvement. This finding strongly supports a diagnosis of lung cancer with locoregional spread and would guide staging workup."
+        },
+        {
+          "id": "pe07",
+          "lbl": "Fluid status assessment",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "find": "Skin turgor normal. Mucous membranes moist. No peripheral oedema. No raised JVP. Clinical assessment: EUVOLAEMIC — fluid balance appears normal, neither dehydrated nor fluid overloaded.",
+          "exp": "CRITICAL FINDING for interpreting the hyponatraemia: euvolaemia (normal fluid status) with a low serum sodium is the hallmark of SIADH. In contrast, hypovolaemic hyponatraemia (dry mucous membranes, reduced skin turgor) suggests sodium loss (vomiting, diarrhoea, Addison's); hypervolaemic hyponatraemia (oedema, raised JVP) suggests dilutional causes (heart failure, cirrhosis, nephrotic syndrome). Euvolaemic hyponatraemia significantly narrows the differential to SIADH, hypothyroidism, or Addison's — and the first thing to exclude is Addison's."
+        },
+        {
+          "id": "pe08",
+          "lbl": "Neurological examination",
+          "cost": "free",
+          "rel": true,
+          "find": "Disoriented to time and place (GCS 13). No focal limb weakness — power 5/5 throughout. Reflexes normal and symmetric. No cranial nerve abnormalities. Gait unsteady but no cerebellar signs. No neck stiffness.",
+          "exp": "Confusion without focal neurological deficits is consistent with a metabolic cause affecting brain function globally — most likely hyponatraemia causing cerebral oedema. Absence of neck stiffness reduces meningitis. No focal limb weakness makes an acute stroke less likely. However, SCLC commonly spreads to the brain — brain metastases can also cause confusion and should be excluded with MRI brain once the patient is stabilised."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "Chest X-ray",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "find": "Large right hilar mass (approximately 5 cm) adjacent to the right main bronchus. Right-sided pleural effusion causing opacification of the right lower zone. Left lung clear. No pneumothorax. No rib lesions.",
+          "exp": "A large central hilar mass with an ipsilateral pleural effusion in a heavy smoker with haemoptysis, weight loss, and 6 weeks of progressive breathlessness is the classic chest X-ray presentation of central lung cancer. SCLC typically arises centrally near the main airways (in contrast to adenocarcinoma which is usually peripheral). This finding immediately makes lung cancer the leading diagnosis and triggers urgent further investigation — CT chest and oncology referral."
+        },
+        {
+          "id": "bi02",
+          "lbl": "D-dimer blood test",
+          "cost": "low",
+          "rel": false,
+          "sigNeg": true,
+          "find": "D-dimer: 0.38 mg/L (within normal range for this laboratory).",
+          "exp": "SIGNIFICANT NEGATIVE: A normal D-dimer in this clinical context effectively reduces the probability of pulmonary embolism as a major contributor to the breathlessness. PE was a reasonable consideration given that malignancy is prothrombotic. A normal D-dimer combined with the subacute 6-week history and positive chest X-ray findings reduces this concern considerably."
+        },
+        {
+          "id": "bi03",
+          "lbl": "Full blood count (FBC)",
+          "cost": "low",
+          "rel": true,
+          "find": "Haemoglobin 95 g/L (low — anaemia). White blood cells 12.8 × 10⁹/L (mildly elevated — non-specific). Platelets 390 × 10⁹/L (normal).",
+          "exp": "Anaemia is common in malignancy — cancer causes anaemia of chronic disease by suppressing red blood cell production and consuming iron. This anaemia also contributes to the breathlessness and worsens physiological reserve. Mildly elevated white count is a non-specific stress response."
+        },
+        {
+          "id": "bi04",
+          "lbl": "Serum electrolytes and sodium",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "sigNeg": true,
+          "find": "Sodium 122 mmol/L (severely low — normal 135-145 mmol/L). Potassium 3.9 mmol/L (normal). Chloride 88 mmol/L (low, mirrors the hyponatraemia). Urea 2.8 mmol/L (low-normal). Creatinine 78 µmol/L (normal).",
+          "exp": "CRITICAL FINDING: Severely low sodium (122 mmol/L) confirms hyponatraemia — this is the cause of the confusion. In combination with euvolaemia confirmed on examination, this is the classic pattern of SIADH. Normal potassium argues against Addison's disease (which typically causes hyperkalaemia alongside hyponatraemia). Low urea reflects dilution from water retention, consistent with SIADH. Sodium at 122 mmol/L is in the range where neurological symptoms (confusion, unsteadiness) are expected. This investigation was the key test to order after noting confusion in a patient with suspected malignancy."
+        },
+        {
+          "id": "bi05",
+          "lbl": "Urine osmolality and urine sodium (SIADH diagnostic test)",
+          "cost": "low",
+          "rel": true,
+          "find": "Serum osmolality: 258 mOsm/kg (low — normal 275-295). Urine osmolality: 512 mOsm/kg (inappropriately HIGH — should be low if kidneys are working properly to excrete excess water). Urine sodium: 58 mmol/L (inappropriately HIGH — kidneys should be retaining sodium).",
+          "exp": "DIAGNOSTIC FOR SIADH: This is the combination that confirms SIADH: (1) Low serum osmolality (the blood is dilute), (2) Inappropriately high urine osmolality (the kidneys are concentrating urine when they should be diluting it to excrete the excess water), (3) High urine sodium (the kidneys are excreting sodium when they should be retaining it). This paradox — concentrated urine despite a low blood sodium — is the defining biochemical feature of SIADH. The cause in this case is ectopic ADH secretion by the SCLC tumour cells."
+        },
+        {
+          "id": "bi06",
+          "lbl": "Thyroid function tests",
+          "cost": "low",
+          "rel": true,
+          "find": "TSH: 1.8 mU/L (normal). Free T4: 14.6 pmol/L (normal). Thyroid function is normal.",
+          "exp": "Hypothyroidism (underactive thyroid) is a reversible cause of euvolaemic hyponatraemia that must be excluded before diagnosing SIADH. Normal thyroid function rules this out. This is a standard exclusion test in the workup of euvolaemic hyponatraemia."
+        },
+        {
+          "id": "bi07",
+          "lbl": "Morning cortisol and ACTH stimulation test",
+          "cost": "low",
+          "rel": true,
+          "find": "Morning cortisol: 318 nmol/L (adequate baseline). Short ACTH stimulation test (Synacthen): cortisol rises to 642 nmol/L at 30 minutes — NORMAL response (>550 nmol/L required). Adrenal function intact.",
+          "exp": "Addisonian crisis (adrenal insufficiency) must be actively excluded in any patient with euvolaemic hyponatraemia — it is immediately life-threatening and treatable with steroid replacement. A normal cortisol response to ACTH stimulation confirms the adrenal glands are working normally. This exclusion is mandatory before attributing hyponatraemia to SIADH from malignancy."
+        },
+        {
+          "id": "bi08",
+          "lbl": "Liver function tests and albumin",
+          "cost": "low",
+          "rel": true,
+          "find": "ALT 62 U/L (mildly elevated). AST 55 U/L (mildly elevated). ALP 168 U/L (elevated). Albumin 26 g/L (low — normal >35 g/L). Bilirubin 14 µmol/L (normal).",
+          "exp": "Mildly elevated transaminases and ALP with low albumin suggest hepatic involvement — consistent with liver metastases in the context of suspected lung cancer. Low albumin also reflects nutritional deficiency from malignancy. These findings support advanced disease with possible hepatic spread and warrant CT imaging for staging."
+        },
+        {
+          "id": "bi09",
+          "lbl": "Sputum cytology and culture",
+          "cost": "low",
+          "rel": true,
+          "find": "Culture: no bacterial pathogens isolated. Cytology: MALIGNANT CELLS identified — small cells with scant cytoplasm and high nuclear-to-cytoplasmic ratio. Morphology consistent with small cell carcinoma.",
+          "exp": "Sputum cytology can detect malignant cells in central lung tumours. The description of 'small cells with high nuclear-to-cytoplasmic ratio' is the classic microscopic appearance of SCLC — the same neuroendocrine cells that produce ectopic ADH. This finding significantly supports the diagnosis and may avoid more invasive biopsy in some patients, though bronchoscopy biopsy provides more definitive tissue."
+        },
+        {
+          "id": "bi10",
+          "lbl": "ABG (blood gas)",
+          "cost": "low",
+          "rel": true,
+          "find": "pH 7.38 (normal). PaO₂ 8.0 kPa (low — normal >10 kPa on room air). PaCO₂ 5.1 kPa (borderline). Type 1 respiratory failure (low oxygen without CO₂ retention). Lactate 1.8 mmol/L (normal).",
+          "exp": "Type 1 respiratory failure (low PaO₂ without elevated PaCO₂) is the pattern seen with conditions that impair gas exchange in the lungs — including pneumonia, pleural effusion, and lung cancer. This confirms the respiratory compromise is from impaired oxygenation rather than ventilatory failure (which would show elevated CO₂). Normal lactate argues against cardiogenic shock or severe sepsis."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "CT chest, abdomen and pelvis (staging CT)",
+          "cost": "mid",
+          "rel": true,
+          "find": "Right hilar mass (5.4 × 4.9 cm) at the right main bronchus with mediastinal lymphadenopathy. Right-sided pleural effusion (moderate). Multiple hepatic lesions consistent with metastases (largest 2.1 cm). Adrenal glands appear normal. No obvious bone metastases on this scan.",
+          "exp": "The CT confirms a large central right-sided lung mass with mediastinal nodal involvement and liver metastases — the typical advanced presentation of SCLC. SCLC spreads rapidly and is frequently already widely disseminated at diagnosis ('extensive stage' SCLC). CT also characterises the pleural effusion and confirms hepatic involvement suggested by the abnormal LFTs. Adrenal glands appear normal on CT, consistent with the normal Synacthen test. Brain metastases require separate MRI."
+        },
+        {
+          "id": "ai02",
+          "lbl": "Bronchoscopy and biopsy",
+          "cost": "high",
+          "rel": true,
+          "find": "Bronchoscopy: right upper lobe bronchus almost completely obstructed by an endobronchial mass. Biopsy: SMALL CELL LUNG CANCER (SCLC) — dense sheets of small cells with scant cytoplasm, stippled chromatin. Immunohistochemistry: TTF-1 positive, synaptophysin positive, CD56 positive. Ki-67 >80% (very high proliferative rate).",
+          "exp": "Bronchoscopy with tissue biopsy is the gold standard for diagnosis of central lung tumours. The histology confirms SCLC — the characteristic neuroendocrine features (synaptophysin, CD56, TTF-1 positivity) and extremely high Ki-67 (proliferative index) are diagnostic. These same neuroendocrine cells produce ectopic ADH causing the paraneoplastic SIADH. SCLC is staged as 'limited' (one hemithorax, radiotherapy-targetable) or 'extensive' (beyond this) — this patient has extensive stage disease given hepatic metastases."
+        },
+        {
+          "id": "ai03",
+          "lbl": "MRI brain",
+          "cost": "mid",
+          "rel": true,
+          "find": "Two small enhancing lesions: right frontal lobe (1.1 cm) and right cerebellar hemisphere (0.7 cm). Findings consistent with brain metastases. No significant surrounding oedema or midline shift. No leptomeningeal enhancement.",
+          "exp": "Brain metastases are present in >10% of SCLC patients at diagnosis and ultimately develop in up to 80% over the course of the disease. MRI brain is more sensitive than CT for brain metastases and should be performed in all SCLC patients at staging. Finding brain metastases classifies this as extensive stage disease and may warrant whole-brain prophylactic radiotherapy. These metastases may also contribute to the confusion alongside the hyponatraemia."
+        },
+        {
+          "id": "ai04",
+          "lbl": "PET-CT scan",
+          "cost": "high",
+          "rel": false,
+          "find": "Not performed at this stage — histological confirmation and CT staging being completed first.",
+          "exp": "PET-CT uses radioactive glucose tracer to identify metabolically active tissue (including cancer). For SCLC, the staging system is simpler than other lung cancers (limited vs extensive stage) and CT + MRI brain is generally sufficient. PET-CT may be used in selected cases for limited-stage SCLC to determine radiotherapy field planning, but is not the priority at initial diagnosis with obvious extensive disease."
+        },
+        {
+          "id": "ai05",
+          "lbl": "Pleural fluid aspiration (thoracocentesis)",
+          "cost": "mid",
+          "rel": true,
+          "find": "450 mL of straw-coloured fluid aspirated. Analysis: exudate (protein-rich, meets Light's criteria). Cytology: malignant cells consistent with SCLC. Culture: negative.",
+          "exp": "Pleural fluid aspiration confirms malignant pleural effusion — cytology showing SCLC cells confirms pleural spread of the cancer. This both confirms the diagnosis and has therapeutic value (removing the fluid improves breathing and oxygen levels). Malignant pleural effusion classifies the disease as extensive stage and changes management toward systemic chemotherapy."
+        }
+      ]
+    },
+    {
+      "id": "case_003",
+      "title": "Worsening Headache with Arm Weakness",
+      "approach": "An Approach to Headache",
+      "secondaryApproach": "An Approach to Focal Neurological Deficit",
+      "system": "Neurology",
+      "difficulty": "challenging",
+      "patient": "Miss Chen Mei Ling, 28F, Primary School Teacher",
+      "snomedCode": "34842006",
+      "vignette": "Miss Chen Mei Ling is a 28-year-old primary school teacher who presents to the Emergency Department with a 5-day history of progressively worsening headache. The headache has not responded to paracetamol. This morning, she noticed weakness in her left arm while writing on the whiteboard.",
+      "caseMNMs": [
+        "Subarachnoid Haemorrhage (SAH)",
+        "Meningitis",
+        "Ischaemic Stroke",
+        "Hypertensive Emergency"
+      ],
+      "expectedP1": [
+        "Migraine",
+        "Tension Headache",
+        "Cerebral Venous Sinus Thrombosis (CVST)",
+        "Idiopathic Intracranial Hypertension (IIH)",
+        "Viral Encephalitis / Herpes Encephalitis",
+        "Brain Abscess",
+        "Raised Intracranial Pressure",
+        "Cluster Headache"
+      ],
+      "finalDx": "Cerebral Venous Sinus Thrombosis (CVST)",
+      "finalUmbrella": "Ischaemic Stroke",
+      "diagnosisScore": {
+        "Cerebral Venous Sinus Thrombosis (CVST)": 100,
+        "Cerebral Venous Sinus Thrombosis": 100,
+        "CVST": 100,
+        "Cerebral Venous Thrombosis": 100,
+        "Ischaemic Stroke": 40,
+        "Stroke": 35,
+        "Migraine": 15,
+        "Idiopathic Intracranial Hypertension (IIH)": 20
+      },
+      "required": [
+        "pe02",
+        "bi02",
+        "ai01"
+      ],
+      "sigNegs": [
+        {
+          "id": "bi01",
+          "label": "Normal CRP and WBC → bacterial meningitis and brain abscess very unlikely",
+          "pts": 10
+        },
+        {
+          "id": "pe04",
+          "label": "No neck stiffness, no photophobia → reduces meningitis probability significantly",
+          "pts": 8
+        },
+        {
+          "id": "bi02",
+          "label": "CT head: no subarachnoid blood → SAH excluded on imaging; subtle dense sinus sign noted",
+          "pts": 12
+        },
+        {
+          "id": "bi07",
+          "label": "LP: clear CSF, no xanthochromia, elevated opening pressure → SAH excluded, raised ICP confirmed",
+          "pts": 8
+        }
+      ],
+      "keyTeachingPoints": [
+        "Cerebral Venous Sinus Thrombosis (CVST) is a blood clot in the large veins that drain blood from the brain. Unlike arterial stroke, it typically presents with a progressively worsening headache over days, making it easy to miss and misdiagnose as migraine.",
+        "The oral contraceptive pill (OCP) is the most important risk factor for CVST in young women. Oestrogen in the combined OCP increases clotting tendency (prothrombotic effect) by 3-6 times. Any young woman on OCP presenting with an unusual or progressive headache should have CVST considered.",
+        "Subarachnoid haemorrhage (SAH) — bleeding around the brain from a ruptured aneurysm — is the most dangerous must-not-miss diagnosis for any severe headache. SAH typically presents as a 'thunderclap headache' (worst headache of life, maximal within seconds). CT head within 6 hours has ~95% sensitivity; if negative, lumbar puncture is required.",
+        "Meningitis must always be considered in anyone with headache. The classic triad is headache, fever, and neck stiffness — but not all features are always present. A non-blanching purpuric rash is a dermatological emergency requiring immediate IV antibiotics.",
+        "CVST can cause focal neurological deficits (like the left arm weakness in this case) because blocked venous drainage causes brain swelling and localised venous ischaemia — affecting the cortex served by the obstructed sinus.",
+        "MRI with MR venography (MRV) is the gold-standard investigation for CVST. CT head and CT angiography can be normal or show only subtle signs. The absence of blood on a regular CT does not exclude CVST — and should not falsely reassure if clinical suspicion remains.",
+        "Treatment of CVST is anticoagulation (blood thinners), even in the presence of haemorrhage on imaging — this is counterintuitive but supported by evidence. The OCP should be stopped immediately. Prognosis is generally good if diagnosed early.",
+        "Primary headaches (migraine, tension-type headache) are diagnoses of exclusion — dangerous secondary causes must be excluded first. Red flags that mandate investigation: new/worst headache, progressive headache, focal neurological deficit, papilloedema, fever, altered consciousness, or known cancer/immunocompromise."
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Subarachnoid Haemorrhage (SAH)",
+          "status": "ruled-out",
+          "statusLbl": "Excluded",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Headache is progressive over 5 days — SAH classically presents as 'thunderclap' (worst headache of life, maximal within seconds of onset, not gradually worsening)"
+            },
+            {
+              "type": "inv",
+              "text": "CT head: no subarachnoid blood in cisterns or sulci — CT within 6 hours has ~95% sensitivity for SAH"
+            },
+            {
+              "type": "inv",
+              "text": "Lumbar puncture: CSF colourless and clear, no xanthochromia (yellow staining from blood breakdown products), no red blood cells — excludes SAH definitively"
+            }
+          ]
+        },
+        {
+          "mnm": "Meningitis",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No fever, no recent infection, no immunosuppression — classic risk factors for bacterial meningitis absent"
+            },
+            {
+              "type": "ex",
+              "text": "No neck stiffness (Kernig's and Brudzinski's signs negative). No photophobia. No purpuric rash on skin examination."
+            },
+            {
+              "type": "inv",
+              "text": "Normal CRP and white cell count — bacterial meningitis causes a marked systemic inflammatory response; normal inflammatory markers make it very unlikely"
+            },
+            {
+              "type": "inv",
+              "text": "CSF analysis: clear fluid, normal glucose ratio (>0.6), normal protein, no organisms on Gram stain, no white cells — excludes bacterial and viral meningitis"
+            }
+          ]
+        },
+        {
+          "mnm": "Ischaemic Stroke",
+          "status": "ruled-out",
+          "statusLbl": "Excluded — this is venous, not arterial",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Gradual onset headache over 5 days before focal deficit — arterial stroke typically causes sudden onset focal deficit without days of prodromal headache"
+            },
+            {
+              "type": "inv",
+              "text": "CT head: no arterial territory infarct. MRI DWI: no restricted diffusion in an arterial territory — rules out arterial ischaemic stroke"
+            },
+            {
+              "type": "inv",
+              "text": "MR venography: absent flow signal in superior sagittal sinus and right transverse sinus — confirms venous (not arterial) thrombosis as the cause of the focal deficit"
+            }
+          ]
+        },
+        {
+          "mnm": "Hypertensive Emergency",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "Blood pressure 134/86 mmHg — elevated but not in hypertensive emergency range (>180/120 mmHg with end-organ damage)"
+            },
+            {
+              "type": "ex",
+              "text": "No papilloedema on fundoscopy attributable to hypertension — the papilloedema here is from raised ICP due to venous obstruction, not hypertensive retinopathy"
+            },
+            {
+              "type": "hx",
+              "text": "No prior history of hypertension. Young patient. Mild BP elevation is likely reactive to pain and raised ICP rather than the primary cause."
+            }
+          ]
+        }
+      ],
+      "approachTitle": "An Approach to Headache",
+      "approachSub": "Reference: Nigel Fong, Algorithms in Differential Diagnosis",
+      "approachText": "The key principle in headache is distinguishing dangerous secondary headaches (caused by a serious underlying condition) from benign primary headaches (no underlying disease). Red flags identify secondary headaches that must not be missed:",
+      "approachCats": [
+        {
+          "name": "Vascular — Bleeding",
+          "eg": "SAH (thunderclap), intracerebral haemorrhage, subdural haematoma",
+          "hl": false
+        },
+        {
+          "name": "Vascular — Clot ← THIS CASE",
+          "eg": "CVST, ischaemic stroke, TIA, carotid artery dissection",
+          "hl": true
+        },
+        {
+          "name": "Infectious / Inflammatory",
+          "eg": "Bacterial meningitis, viral meningitis, TB meningitis, brain abscess, encephalitis",
+          "hl": false
+        },
+        {
+          "name": "Raised Intracranial Pressure",
+          "eg": "Brain tumour, idiopathic intracranial hypertension, hydrocephalus",
+          "hl": false
+        },
+        {
+          "name": "Hypertensive",
+          "eg": "Hypertensive emergency, pre-eclampsia",
+          "hl": false
+        },
+        {
+          "name": "Primary Headaches (diagnosis of exclusion)",
+          "eg": "Migraine, tension-type headache, cluster headache — only after dangerous causes excluded",
+          "hl": false
+        }
+      ],
+      "approachInsight": "CVST is the classic 'dangerous diagnosis masquerading as a primary headache.' It presents with a progressive headache that can be misdiagnosed as migraine for days. The RED FLAGS that should prompt urgent investigation are: (1) Progressive worsening despite treatment, (2) New focal neurological deficit, (3) OCP use or other prothrombotic risk factors — identified in drug history, (4) Papilloedema on fundoscopy. The critical lesson: migraine and tension headache are diagnoses of EXCLUSION — you must first rule out all dangerous secondary causes.",
+      "expertNarrative": "CVST in a young woman on the combined OCP is the classic presentation. Oestrogen in the OCP increases clotting factor activity, reducing natural anticoagulant protein S activity and raising the risk of venous thrombosis by 3-6 times. Thrombosis of the superior sagittal sinus and transverse sinus obstructs venous outflow from the brain, causing raised intracranial pressure (explaining the progressive headache and papilloedema) and cortical venous congestion/ischaemia (explaining the focal left arm weakness from right parietal lobe involvement). The key diagnostic insight: unlike SAH (thunderclap, maximal at onset) or arterial stroke (sudden focal deficit, no headache prodrome), CVST is subacute and progressive over days. It requires MR venography for diagnosis — a normal CT head does not exclude it. Treatment is anticoagulation. The antiphospholipid antibody screen was positive here, identifying an additional prothrombotic risk factor that was amplified by OCP use.",
+      "sensitivityNote": "CVST is poorly sensitive for a 'classic' headache presentation — it is subacute, progressive, and mimics migraine. Headache occurs in ~90% of cases but its character is variable. A high index of suspicion is required in young women on OCP with unusual or progressive headache. CT head and LP may be normal — MR venography is the essential investigation.",
+      "specificityNote": "MR venography showing absent flow in a dural venous sinus (e.g. superior sagittal sinus, transverse sinus) is highly specific for CVST. The 'empty delta sign' on CT with contrast (filling defect in the sinus where there should be enhancing flowing blood, surrounded by enhancing walls) is also specific but less sensitive (~30%). D-dimer elevation supports the diagnosis but is not specific.",
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Headache — onset, character, and progression",
+          "cost": "free",
+          "rel": true,
+          "find": "Headache started 5 days ago, gradual onset, progressively worsening each day. Now 8/10 severity. Located over the top of the head and behind both eyes — diffuse, bilateral. Pressure-like and throbbing quality. NOT 'the worst of her life' and did NOT start suddenly at maximum intensity.",
+          "exp": "The GRADUALLY PROGRESSIVE onset over 5 days is the key distinguishing feature from SAH (which is thunderclap — maximal intensity within seconds of onset). A headache that is new, atypical, and worsening daily — especially in a patient with risk factors — is a red flag that mandates investigation. The bilateral, progressive nature over days is the characteristic pattern of CVST, which causes raised intracranial pressure as venous outflow is obstructed."
+        },
+        {
+          "id": "h02",
+          "lbl": "Focal neurological symptoms",
+          "cost": "free",
+          "rel": true,
+          "find": "Left arm weakness noticed this morning while writing on the whiteboard — unable to write normally. No leg weakness. No speech difficulty. No facial drooping. Bilateral blurred vision for the past 2 days (not one-sided visual loss).",
+          "exp": "Left arm weakness is a focal neurological deficit — this is a critical red flag that immediately removes this from the category of primary headache (migraine, tension). Focal deficits occur in approximately 40% of CVST patients due to venous congestion causing cortical ischaemia. Bilateral blurred vision in the context of a headache raises concern for papilloedema (swelling of the optic nerve head from raised intracranial pressure) rather than unilateral visual loss from retinal ischaemia. Together, progressive headache + focal deficit mandates emergency imaging."
+        },
+        {
+          "id": "h03",
+          "lbl": "Associated symptoms (nausea, fever, rash)",
+          "cost": "free",
+          "rel": true,
+          "find": "Nausea and two episodes of vomiting over the past 2 days. No fever. No rash. No photophobia. No phonophobia.",
+          "exp": "Nausea and vomiting with headache can occur in migraine, raised intracranial pressure, and meningitis. Absence of fever and rash reduces bacterial meningitis likelihood. Absence of photophobia and phonophobia reduces (but does not exclude) migraine with aura. The key point: the 5-day progressive course with worsening vomiting is not typical for episodic migraine. Vomiting from raised intracranial pressure tends to be projectile and occurs without nausea — though this distinction is not reliable clinically."
+        },
+        {
+          "id": "h04",
+          "lbl": "Prior headache history",
+          "cost": "free",
+          "rel": true,
+          "find": "Has had occasional migraines since university — typically right-sided, with flashing lights (aura) beforehand, responding well to sumatriptan and rest. This current headache feels completely DIFFERENT — bilateral, no aura, not responding to her usual migraine medication, and getting worse every day for 5 days.",
+          "exp": "This is a critically important piece of history: the patient herself recognises this headache as DIFFERENT from her usual migraines. 'A new, different, or worst headache' is the most important red flag in headache assessment. The lack of response to her usual migraine treatment is another red flag. This history rules out 'just another migraine' — a different diagnosis must be sought. Any patient with a change in headache pattern or a headache that does not behave like their usual migraines requires investigation."
+        },
+        {
+          "id": "h05",
+          "lbl": "Medications and drug history",
+          "cost": "free",
+          "rel": true,
+          "find": "Started the combined oral contraceptive pill (Microgynon 30 — contains oestrogen and progesterone) 4 months ago. Sumatriptan (for migraines) as needed. Paracetamol — not helping with this headache. No other regular medications. No known drug allergies.",
+          "exp": "CRITICAL PIECE OF HISTORY: The combined oral contraceptive pill (combined OCP) is the most important risk factor for CVST in young women. Oestrogen in the combined OCP increases thrombotic risk by 3-6 times by raising clotting factor levels and reducing protein S activity. Starting OCP 4 months ago is very clinically relevant — CVST can develop at any time during OCP use. The OCP must be stopped immediately once CVST is confirmed. This information would NOT be known if drug history were not specifically taken."
+        },
+        {
+          "id": "h06",
+          "lbl": "Past medical and surgical history",
+          "cost": "free",
+          "rel": true,
+          "find": "No prior neurological conditions. No prior blood clots (DVT or PE). No recent surgery or prolonged immobility. No known clotting disorders. No cancer. No autoimmune disease.",
+          "exp": "Absence of prior DVT, PE, and known thrombophilia reduces (but does not exclude) inherited clotting tendency. The OCP alone is sufficient as a risk factor for CVST. However, an underlying thrombophilia (such as antiphospholipid syndrome, Factor V Leiden, or protein C/S deficiency) combined with OCP use substantially amplifies the risk. Thrombophilia screen is warranted after the acute event is managed."
+        },
+        {
+          "id": "h07",
+          "lbl": "Family history of blood clots or stroke",
+          "cost": "free",
+          "rel": true,
+          "find": "Mother had a deep vein thrombosis (DVT) in her leg at age 38. No other family history of clots, strokes, or neurological conditions. No family history of autoimmune disease.",
+          "exp": "Family history of DVT in the mother at a young age raises the possibility of an inherited thrombophilia — a hereditary tendency to form blood clots. Common inherited thrombophilias include Factor V Leiden (most common), prothrombin gene mutation, and antithrombin/protein C/S deficiency. This history makes antiphospholipid syndrome or an inherited thrombophilia more likely, and substantially increases CVST risk when combined with OCP use. Thrombophilia screening should be arranged."
+        },
+        {
+          "id": "h08",
+          "lbl": "Obstetric, menstrual, and pregnancy history",
+          "cost": "free",
+          "rel": true,
+          "find": "Last menstrual period 3 weeks ago (normal cycle on OCP). Not pregnant (urine pregnancy test negative in triage). No prior pregnancies. No history of miscarriage.",
+          "exp": "Confirming she is not pregnant is essential — pregnancy is itself a high-risk period for CVST (particularly in the third trimester and postpartum). A negative pregnancy test allows full investigation including CT/MRI with contrast without obstetric concern. No prior miscarriage reduces the clinical likelihood of antiphospholipid syndrome, though a single negative test does not exclude it — antiphospholipid antibody testing should still be sent."
+        },
+        {
+          "id": "h09",
+          "lbl": "Social history and lifestyle",
+          "cost": "free",
+          "rel": false,
+          "find": "Non-smoker. Occasional alcohol (1-2 glasses per week). Works as a primary school teacher. No illicit drug use.",
+          "exp": "Smoking is a prothrombotic risk factor — reassuringly absent here. Drug use (cocaine, amphetamines) can cause cerebral vasospasm and haemorrhagic stroke in young people — absence noted. Absence of additional cardiovascular risk factors is consistent with the young, otherwise healthy profile. The primary risk factors in this case are OCP use and the family history suggesting possible inherited thrombophilia."
+        },
+        {
+          "id": "h10",
+          "lbl": "Systemic review — fever, rash, joint pains",
+          "cost": "free",
+          "rel": true,
+          "find": "No fever. No recent infection. No rash (no purpura, no malar rash). No oral ulcers. No joint pains or swellings. No dry eyes or dry mouth.",
+          "exp": "Absence of fever and rash reduces infectious meningitis and meningococcal septicaemia. Absence of oral ulcers, malar rash, and joint pains reduces SLE — an autoimmune disease associated with antiphospholipid syndrome, which is a recognised cause of CVST in young women. However, antiphospholipid syndrome must still be screened for with specific blood tests even in the absence of these features."
+        },
+        {
+          "id": "h11",
+          "lbl": "ICE — Ideas, Concerns, Expectations",
+          "cost": "free",
+          "rel": false,
+          "ice": true,
+          "find": "She initially thought she had a 'very bad migraine' and hoped for stronger migraine medication. She is now frightened because the arm weakness has alarmed her — she has never had this before. She wants to know what is wrong and whether it is serious.",
+          "exp": "ICE is important here. Her initial interpretation as migraine is understandable given her history — but it delayed her presentation by 4 days. Her fear at the focal neurological deficit is clinically appropriate and represents a correct alarm signal. Communicating clearly and empathetically about the need for urgent imaging is essential. Her expectation of 'stronger migraine tablets' needs to be redirected — this is not a migraine, and the management is fundamentally different."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "General inspection and conscious level",
+          "cost": "free",
+          "rel": true,
+          "find": "Looks distressed and in pain, holding her head. Alert and oriented to person, place, and time (GCS 15). No rash anywhere on the body — no petechiae, no purpura. No facial asymmetry at rest.",
+          "exp": "Preserved consciousness (GCS 15) is reassuring against rapidly rising intracranial pressure causing imminent herniation. Actively inspecting for a non-blanching purpuric rash is essential in anyone with headache — the rash of meningococcal septicaemia is a dermatological emergency: if found, IV benzylpenicillin should be given immediately before any other investigation. Absence of rash is an important negative finding."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Vital signs",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "find": "Temperature 37.2°C (no fever). Blood pressure 134/86 mmHg (mildly elevated). Heart rate 88 bpm. Breathing rate 16/min. Oxygen saturation 99% on room air.",
+          "exp": "No fever — important negative against infectious meningitis and encephalitis. Mildly elevated blood pressure may be reactive (pain, anxiety) or represent Cushing's reflex (raised BP + bradycardia) from raised intracranial pressure — though true Cushing's reflex indicates imminent herniation. Not in hypertensive emergency range (>180/120 mmHg with end-organ damage). Normal oxygen saturation is reassuring."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Fundoscopy (examining the back of the eye)",
+          "cost": "free",
+          "rel": true,
+          "find": "BILATERAL PAPILLOEDEMA — blurring and elevation of both optic disc margins, with loss of spontaneous venous pulsations. No retinal haemorrhages.",
+          "exp": "Papilloedema (swelling of the optic nerve head visible at the back of the eye) is caused by raised intracranial pressure — the increased pressure inside the skull is transmitted along the optic nerve sheath. Bilateral papilloedema in a young woman with progressive headache, visual changes, and focal neurological deficit is a critical clinical finding that demands urgent brain imaging. It confirms genuinely raised intracranial pressure from any cause (venous thrombosis, tumour, IIH, etc.)."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Meningism — neck stiffness and signs",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "find": "Neck stiffness: ABSENT — full range of neck movement without pain. Kernig's sign: NEGATIVE (can straighten the knee with hip flexed to 90°). Brudzinski's sign: NEGATIVE. No photophobia on direct examination. No phonophobia.",
+          "exp": "SIGNIFICANT NEGATIVE: Absence of meningism (neck stiffness, positive Kernig's/Brudzinski's) significantly reduces bacterial meningitis probability. These signs result from irritation of the meningeal lining by infection or blood. However, meningism can be absent in early meningitis — if clinical suspicion remains, CSF examination is still required. In this case, normal inflammatory markers (CRP, WBC) provide further reassurance against bacterial meningitis."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Neurological examination — power and coordination",
+          "cost": "free",
+          "rel": true,
+          "find": "LEFT arm: power 3/5 (moderately weak — cannot overcome gravity fully). Left arm reflexes brisk. Left-sided coordination impaired (finger-nose test). RIGHT arm: power 5/5 (normal). Both legs: power 5/5. LEFT plantar reflex: UPGOING (Babinski sign positive — indicates upper motor neuron dysfunction). Sensation intact bilaterally.",
+          "exp": "Left-sided upper limb weakness with brisk reflexes and an upgoing Babinski sign indicates an UPPER MOTOR NEURON (UMN) lesion in the RIGHT cerebral hemisphere (the right brain controls the left side of the body). This localises the injury to the right cortex or right corticospinal tract. In CVST, this occurs because thrombosis of the superior sagittal sinus causes venous hypertension and ischaemia in the right parietal cortex — the area controlling left arm movement. This pattern distinguishes cerebral pathology from a peripheral nerve lesion."
+        },
+        {
+          "id": "pe06",
+          "lbl": "Visual fields and visual acuity",
+          "cost": "free",
+          "rel": true,
+          "find": "Visual fields: full to confrontation in both eyes. Visual acuity: 6/6 bilaterally. Colour vision normal.",
+          "exp": "Full visual fields argue against homonymous hemianopia (loss of half the visual field on one side), which would suggest a posterior cerebral lesion (occipital lobe or optic radiation involvement). Normal visual acuity despite papilloedema is expected in early raised ICP — sustained high pressure eventually damages the optic nerves, but this is a late complication. The bilateral blurred vision the patient described is more consistent with papilloedema-related optical distortion than a field cut."
+        },
+        {
+          "id": "pe07",
+          "lbl": "Skin examination (head-to-toe rash check)",
+          "cost": "free",
+          "rel": true,
+          "find": "No rash on any body surface — no petechiae (tiny red dots), no purpura (larger purple spots). Normal skin turgor. No oral ulcers or mucosal lesions.",
+          "exp": "A thorough skin examination for non-blanching purpuric rash is mandatory in any patient presenting with headache. The rash of meningococcal septicaemia requires immediate IV penicillin before any investigation — the rash is the trigger to act, not CT or blood tests. Absence of rash is reassuring. Absence of oral ulcers reduces Behçet's disease (a vasculitis that causes both oral ulcers and CVST)."
+        },
+        {
+          "id": "pe08",
+          "lbl": "Cardiovascular examination",
+          "cost": "free",
+          "rel": false,
+          "find": "Heart sounds normal, no murmurs. Lungs clear. No signs of heart failure. Regular rhythm.",
+          "exp": "A baseline cardiovascular examination is reasonable in any neurological presentation. Absence of murmurs reduces the risk of infective endocarditis with septic emboli as a cause of the neurological signs — an uncommon but important cause of stroke in young people. Not a discriminating examination in this specific case."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "Full blood count and CRP",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "find": "White blood cells: 8.4 × 10⁹/L (normal). Haemoglobin 128 g/L (mildly low). Platelets 292 × 10⁹/L (normal). CRP: 7 mg/L (normal).",
+          "exp": "SIGNIFICANT NEGATIVE: Normal white cell count and CRP make bacterial meningitis and brain abscess very unlikely — these conditions cause a marked systemic inflammatory response with elevated WBC and CRP. Mildly low haemoglobin may reflect iron deficiency. Normal platelet count argues against thrombocytopenia-related thrombosis. Combined with absent meningism on examination, normal inflammatory markers effectively exclude bacterial meningitis."
+        },
+        {
+          "id": "bi02",
+          "lbl": "CT head (non-contrast)",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "sigNeg": true,
+          "find": "No subarachnoid blood. No intracerebral haemorrhage. No midline shift. No obvious hypodense infarct. Subtle HYPERDENSITY (whiteness) noted in the superior sagittal sinus — possible 'dense sinus sign', suggesting the sinus contains thrombosed (clotted) rather than flowing blood. No evidence of raised ICP on CT.",
+          "exp": "CT head is essential to exclude subarachnoid haemorrhage (which appears as bright white blood in the subarachnoid space) and intracranial haemorrhage. Absence of subarachnoid blood effectively excludes SAH (sensitivity ~95% within 6 hours of onset). The subtle 'dense sinus sign' — the venous sinus appearing whiter than usual on non-contrast CT — is an indirect CT sign of venous sinus thrombosis, but it is subtle and easily missed on CT alone. CT head alone is INSUFFICIENT to confirm or exclude CVST — MR venography is required."
+        },
+        {
+          "id": "bi03",
+          "lbl": "Coagulation profile",
+          "cost": "low",
+          "rel": true,
+          "find": "Prothrombin time (PT/INR): normal. APTT: normal. Fibrinogen: 4.1 g/L (normal).",
+          "exp": "Basic clotting tests are important before any invasive procedure (lumbar puncture, anticoagulation). Normal coagulation profile means anticoagulation can be started safely. Note: antiphospholipid antibodies (lupus anticoagulant, anticardiolipin antibodies) are a specific cause of CVST and require dedicated testing — they are NOT detected by standard coagulation screens."
+        },
+        {
+          "id": "bi04",
+          "lbl": "Serum electrolytes and renal function",
+          "cost": "low",
+          "rel": false,
+          "find": "Sodium 139 mmol/L (normal). All other electrolytes and renal function within normal range.",
+          "exp": "Normal electrolytes make metabolic causes of confusion (hyponatraemia, uraemia) unlikely. Useful pre-treatment baseline, but not a discriminating investigation in this case. Normal sodium is consistent with CVST, where confusion arises from focal cerebral ischaemia rather than metabolic derangement."
+        },
+        {
+          "id": "bi05",
+          "lbl": "Pregnancy test",
+          "cost": "low",
+          "rel": true,
+          "find": "Urine beta-hCG: NEGATIVE. Not pregnant.",
+          "exp": "A pregnancy test is mandatory in any woman of childbearing age before CT/MRI with contrast and before starting anticoagulation. Pregnancy is a high-risk period for CVST, particularly in the third trimester and postpartum. A negative result allows full imaging and treatment without obstetric complication."
+        },
+        {
+          "id": "bi06",
+          "lbl": "D-dimer",
+          "cost": "low",
+          "rel": true,
+          "find": "D-dimer: 2.6 mg/L (elevated — above upper limit of normal).",
+          "exp": "An elevated D-dimer is consistent with active thrombosis anywhere in the body, including CVST. D-dimer is not specific for CVST and is elevated in many other conditions. However, in a patient with risk factors and clinical features of CVST, an elevated D-dimer provides supporting evidence. A NORMAL D-dimer in a low-risk patient would reduce the probability of CVST, but a normal D-dimer does NOT exclude CVST in a high-risk patient — imaging is still required."
+        },
+        {
+          "id": "bi07",
+          "lbl": "Lumbar puncture (LP) with opening pressure",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "find": "Opening pressure: 28 cmH₂O (ELEVATED — normal under 20 cmH₂O). CSF appearance: clear, colourless fluid. No red blood cells. No white blood cells. Protein: normal. Glucose ratio: >0.6 (normal). No organisms on Gram stain. Xanthochromia: NEGATIVE.",
+          "exp": "LP is essential to exclude SAH when CT head is negative but suspicion remains (LP should always be done AFTER CT to exclude a mass lesion that would make LP dangerous). The ELEVATED opening pressure (28 cmH₂O) confirms raised intracranial pressure — consistent with CVST obstructing venous drainage from the brain. Clear, colourless CSF with no blood and NEGATIVE xanthochromia definitively excludes SAH. Normal glucose, no white cells, and no organisms exclude both bacterial and viral meningitis. The raised opening pressure is the key LP finding here."
+        },
+        {
+          "id": "bi08",
+          "lbl": "Thrombophilia screen",
+          "cost": "low",
+          "rel": true,
+          "find": "Antiphospholipid antibodies: POSITIVE — lupus anticoagulant detected. Anticardiolipin IgG: 52 GPL units (elevated, above 40 units). Factor V Leiden: NEGATIVE. Prothrombin gene mutation: NEGATIVE. Protein C and S: normal (note: may be transiently low on anticoagulation — repeat off treatment).",
+          "exp": "Antiphospholipid syndrome (APS) is an autoimmune prothrombotic condition. Diagnosis requires positive tests on TWO occasions 12 weeks apart — this positive result needs to be confirmed. Finding antiphospholipid antibodies in a young woman with CVST is very significant: it means the OCP triggered CVST in a patient already predisposed to clotting. APS requires long-term anticoagulation and the combined OCP is permanently contraindicated. This explains the family history of early DVT — the mother likely also has APS or an inherited thrombophilia."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "MRI brain with MR venography (MRV)",
+          "cost": "mid",
+          "rel": true,
+          "required": true,
+          "find": "MRI brain: area of T2 signal change (oedema/early venous infarction) in the right parietal lobe — consistent with venous congestion from obstructed drainage. MR venography: ABSENT FLOW SIGNAL in the superior sagittal sinus (SSS) and right transverse sinus. All other sinuses show normal flow. CONFIRMS CEREBRAL VENOUS SINUS THROMBOSIS involving the SSS and right transverse sinus.",
+          "exp": "MRI with MR venography (MRV) is the GOLD STANDARD investigation for CVST. MRV specifically examines blood flow in the large venous sinuses — absent flow signal confirms thrombosis. The superior sagittal sinus (SSS) is the most commonly affected sinus in CVST. The right parietal lobe signal change explains the left arm weakness (right hemisphere controls left body movement). This investigation clinches the diagnosis and guides treatment. MRV should be performed in any patient with suspected CVST after CT head has excluded haemorrhage."
+        },
+        {
+          "id": "ai02",
+          "lbl": "CT venography (CT with contrast looking at brain veins)",
+          "cost": "mid",
+          "rel": true,
+          "find": "CT venography: 'Empty delta sign' present in the superior sagittal sinus — triangular filling defect (non-enhancing clot) surrounded by enhancing sinus walls. Confirms superior sagittal sinus thrombosis. Findings correlate with MR venography.",
+          "exp": "CT venography is an alternative to MR venography when MRI is contraindicated. The 'empty delta sign' (a triangular filling defect in the posterior SSS on contrast CT) is a classic finding of CVST — though it is seen in only ~30% of cases and absence does not exclude CVST. When present, it is highly specific. Combined with MRV, this provides high-confidence confirmation. CT venography is faster than MRI and may be preferred in unstable patients."
+        },
+        {
+          "id": "ai03",
+          "lbl": "MRI brain with contrast (gadolinium)",
+          "cost": "mid",
+          "rel": true,
+          "find": "Right parietal lobe: T2/FLAIR signal change and mild restricted diffusion (early venous infarction/oedema). No ring-enhancing lesions (excludes brain abscess). No leptomeningeal enhancement (argues against meningitis). Findings are in the right parietal cortex in the drainage territory of the superior sagittal sinus.",
+          "exp": "MRI with contrast adds information about the extent of brain injury from the CVST. The right parietal signal change — in the SSS drainage territory — explains the left arm weakness (right parietal lobe controls left arm). Absence of ring-enhancing lesions excludes brain abscess. Absence of leptomeningeal enhancement argues against meningitis. Understanding which drainage territory is affected helps predict the clinical deficits."
+        },
+        {
+          "id": "ai04",
+          "lbl": "CT angiography (looking at the brain arteries)",
+          "cost": "high",
+          "rel": false,
+          "find": "CT angiography: cerebral arteries normal throughout. No arterial occlusion, no aneurysm, no arteriovenous malformation.",
+          "exp": "CT angiography examines the brain ARTERIES — it is used to look for arterial stroke (arterial occlusion) or SAH source (aneurysm). In CVST, the arteries are normal — the problem is in the veins. Ordering CT angiography here reflects a failure to distinguish between arterial stroke and venous thrombosis. MR venography was the correct investigation. This is a common error when the concept of venous vs arterial stroke is not well understood."
+        },
+        {
+          "id": "ai05",
+          "lbl": "EEG (brain electrical activity recording)",
+          "cost": "mid",
+          "rel": false,
+          "find": "Slowing of electrical activity over the right hemisphere — consistent with focal brain dysfunction. No epileptiform discharges at the time of recording.",
+          "exp": "EEG measures brain electrical activity and is primarily useful for diagnosing epilepsy. CVST can cause seizures (in 20-40% of patients), and EEG would be important if the patient had a seizure or if subclinical seizures were suspected. However, ordering EEG as a first-line investigation before confirming the diagnosis with venography is not the priority. It would be used to monitor for seizure activity after the diagnosis is established."
+        }
+      ]
+    }
+  ]
+}

@@ -10,7 +10,7 @@
 :root{
   --bg:#0d0f14;--surf:#161920;--surf2:#1c2030;--surf3:#232838;
   --bdr:#252d3d;--bdr2:#2e3850;--text:#e8eaf0;--muted:#7a8499;--muted2:#3d4a60;
-  --accent:#4f9cf9;--adim:#182d47;--aglow:rgba(79,156,249,.15);
+  --accent:#4f9cf9;--adim:#182d47;
   --green:#22d37a;--gdim:#0a2217;--yellow:#f5c842;--ydim:#26200c;
   --red:#f25c5c;--rdim:#2a1010;--orange:#f8943a;--odim:#281808;
   --purple:#a78bfa;--pdim:#1a1630;--teal:#2dd4bf;--tdim:#0a2220;
@@ -19,385 +19,413 @@
 }
 body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;overflow:hidden}
 ::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:4px}
+
+/* FIX #6 — exam mode hides all .study-aid elements */
+body.exam .study-aid{display:none!important}
+body.exam .lrow-desc{display:none!important}
+
 #app{display:flex;height:100vh;overflow:hidden}
 
-/* ─── LIBRARY ────────────────────────────────── */
-#lib{width:288px;flex-shrink:0;background:#0f1218;border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;transition:width .22s}
+/* ── LIBRARY ── */
+#lib{width:284px;flex-shrink:0;background:#0f1218;border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;transition:width .22s}
 #lib.hide{width:0}
 .lib-hd{padding:11px 12px 9px;border-bottom:1px solid var(--bdr);flex-shrink:0}
-.lib-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.lib-logo{font-family:var(--mono);font-size:1rem;font-weight:700;letter-spacing:-1px}
+.lib-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.lib-logo{font-family:var(--mono);font-size:.95rem;font-weight:700;letter-spacing:-1px}
 .lib-logo span{color:var(--accent)}
-.lib-tag-hint{font-size:.62rem;color:var(--muted2)}
-.lib-tag-row{display:flex;gap:5px}
+.lib-hint{font-size:.61rem;color:var(--muted2);font-family:var(--mono)}
+.lib-tags{display:flex;gap:5px}
 .ltag{padding:3px 9px;border-radius:20px;font-size:.69rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf2);transition:all .12s;white-space:nowrap}
 .ltag.sel-mnm{border-color:var(--red);color:var(--red);background:var(--rdim)}
 .ltag.sel-wd{border-color:var(--yellow);color:var(--yellow);background:var(--ydim)}
-.lib-srch-wrap{padding:7px 10px;border-bottom:1px solid var(--bdr);flex-shrink:0}
+.lib-srch-wrap{padding:6px 10px;border-bottom:1px solid var(--bdr);flex-shrink:0}
 .lib-srch{width:100%;padding:6px 10px;background:var(--surf2);border:1px solid var(--bdr2);border-radius:var(--r);color:var(--text);font-size:.8rem;font-family:var(--sans);outline:none;transition:border-color .13s}
 .lib-srch:focus{border-color:var(--accent)}
 .lib-srch::placeholder{color:var(--muted2)}
-.lib-sys-row{display:flex;gap:3px;padding:6px 10px;border-bottom:1px solid var(--bdr);overflow-x:auto;flex-shrink:0}
-.lib-sys-row::-webkit-scrollbar{height:3px}
+.lib-sysrow{display:flex;gap:3px;padding:5px 10px;border-bottom:1px solid var(--bdr);overflow-x:auto;flex-shrink:0}
+.lib-sysrow::-webkit-scrollbar{height:3px}
 .lsf{padding:2px 7px;border-radius:20px;font-size:.6rem;font-weight:700;cursor:pointer;border:1px solid var(--bdr2);color:var(--muted2);background:var(--surf2);white-space:nowrap;transition:all .11s}
 .lsf:hover{border-color:var(--accent);color:var(--accent)}
 .lsf.on{background:var(--accent);border-color:var(--accent);color:#000}
-.lib-body{flex:1;overflow-y:auto;padding-bottom:16px}
+.lib-body{flex:1;overflow-y:auto;padding-bottom:14px}
 .lsys{border-bottom:1px solid var(--bdr)}
 .lsys-hd{display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;transition:background .1s;user-select:none}
 .lsys-hd:hover{background:var(--surf2)}
 .lsys-ico{font-size:.88rem;flex-shrink:0}
-.lsys-name{font-size:.73rem;font-weight:600;flex:1}
-.lsys-arr{font-size:.58rem;color:var(--muted2);transition:transform .13s}
+.lsys-nm{font-size:.73rem;font-weight:600;flex:1}
+.lsys-arr{font-size:.57rem;color:var(--muted2);transition:transform .13s}
 .lsys-arr.open{transform:rotate(90deg)}
-.ldiags{display:none;padding:1px 0 4px}
+.ldiags{display:none}
 .ldiags.open{display:block}
 .lrow{display:flex;align-items:flex-start;gap:5px;padding:4px 10px 4px 12px;cursor:pointer;transition:background .09s}
 .lrow:hover{background:var(--surf2)}
 .lrow.sub{padding-left:22px}
+.lrow.sub .lrow-nm{font-size:.69rem;color:var(--muted)}
 .lrow-txt{flex:1;min-width:0}
-.lrow-name{font-size:.75rem;line-height:1.3;color:var(--text)}
-.lrow-name.added{color:var(--muted2);text-decoration:line-through}
-.lrow.sub .lrow-name{font-size:.7rem;color:var(--muted)}
-.lrow-desc{font-size:.66rem;color:var(--muted2);line-height:1.3;margin-top:1px}
+.lrow-nm{font-size:.74rem;line-height:1.3}
+.lrow-nm.added{color:var(--muted2);text-decoration:line-through}
+.lrow-desc{font-size:.64rem;color:var(--muted2);line-height:1.3;margin-top:1px}
 .lrow-add{width:17px;height:17px;border-radius:4px;border:1px solid var(--bdr2);background:var(--surf3);display:flex;align-items:center;justify-content:center;font-size:.72rem;color:var(--muted);flex-shrink:0;margin-top:1px;transition:all .1s}
 .lrow:hover .lrow-add{border-color:var(--accent);color:var(--accent);background:var(--adim)}
 .lrow-add.done{border-color:var(--green);color:var(--green);background:var(--gdim)}
-.lrow-exp{font-size:.58rem;color:var(--muted2);transition:transform .12s;flex-shrink:0;margin-top:3px}
+.lrow-exp{font-size:.57rem;color:var(--muted2);transition:transform .12s;flex-shrink:0;margin-top:3px}
 .lrow-exp.open{transform:rotate(90deg)}
 
-/* ─── MAIN ───────────────────────────────────── */
+/* ── MAIN ── */
 #main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 #topbar{border-bottom:1px solid var(--bdr);background:var(--surf);flex-shrink:0;display:flex;align-items:stretch;height:44px}
-.tb-left{display:flex;align-items:center;gap:8px;padding:0 14px;border-right:1px solid var(--bdr)}
-.tb-tog{background:none;border:1px solid var(--bdr2);border-radius:5px;padding:3px 7px;cursor:pointer;color:var(--muted);font-size:.8rem;transition:all .12s}
+.tb-left{display:flex;align-items:center;gap:8px;padding:0 12px;border-right:1px solid var(--bdr);flex-shrink:0}
+.tb-tog{background:none;border:1px solid var(--bdr2);border-radius:5px;padding:3px 6px;cursor:pointer;color:var(--muted);font-size:.78rem;transition:all .12s}
 .tb-tog:hover{border-color:var(--accent);color:var(--accent)}
-.tb-cname{font-size:.76rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.tb-cname{font-size:.75rem;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+
+/* FIX #4 — stage tabs much more visible */
 .tb-stages{display:flex;align-items:stretch;flex:1;overflow-x:auto}
-.tb-stages::-webkit-scrollbar{height:3px}
-.tbs{display:flex;align-items:center;padding:0 11px;font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.03em;color:var(--muted2);border-right:1px solid var(--bdr);white-space:nowrap;gap:4px}
-.tbs.active{color:var(--accent);background:var(--adim)}
-.tbs.done{color:var(--green)}
-.tbs.locked{opacity:.28}
-.tb-scores{display:flex;align-items:center;gap:9px;padding:0 14px;border-left:1px solid var(--bdr);flex-shrink:0}
-.tbs-item{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:.62rem;color:var(--muted)}
-.tbs-bar{width:34px;height:4px;background:var(--bdr2);border-radius:2px;overflow:hidden}
+.tb-stages::-webkit-scrollbar{height:2px}
+.tbs{display:flex;align-items:center;padding:0 12px;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.03em;border-right:1px solid var(--bdr);white-space:nowrap;gap:5px;transition:all .14s}
+.tbs.locked{color:#2e3a4e}
+.tbs.done{color:#2da05c;background:rgba(34,211,122,.06)}
+.tbs.done::after{content:'✓';font-size:.58rem;color:var(--green)}
+.tbs.active{color:#fff;background:rgba(79,156,249,.2);border-bottom:2px solid var(--accent)}
+
+.tb-right{display:flex;align-items:center;gap:8px;padding:0 12px;border-left:1px solid var(--bdr);flex-shrink:0}
+/* FIX #6 — mode toggle */
+.mode-btn{padding:3px 10px;border-radius:20px;font-size:.65rem;font-weight:700;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf2);transition:all .13s;font-family:var(--mono);white-space:nowrap}
+.mode-btn.study{border-color:var(--green);color:var(--green);background:var(--gdim)}
+.mode-btn.exam{border-color:var(--yellow);color:var(--yellow);background:var(--ydim)}
+.tb-scores{display:flex;gap:8px;align-items:center}
+.tbs-item{display:flex;align-items:center;gap:3px;font-family:var(--mono);font-size:.61rem;color:var(--muted)}
+.tbs-bar{width:30px;height:4px;background:var(--bdr2);border-radius:2px;overflow:hidden}
 .tbs-fill{height:100%;border-radius:2px;transition:width .4s,background .4s}
+
 #content{flex:1;overflow-y:auto;padding:18px 22px;max-width:860px;margin:0 auto;width:100%}
 
-/* ─── MODAL ──────────────────────────────────── */
+/* ── LOADER ── */
+#loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:999}
+#loader.hide{display:none}
+.ld-logo{font-family:var(--mono);font-size:2.2rem;font-weight:700;letter-spacing:-3px}
+.ld-logo span{color:var(--accent)}
+.ld-msg{font-size:.82rem;color:var(--muted)}
+.ld-err{font-size:.78rem;color:var(--red);max-width:420px;text-align:center;line-height:1.65}
+.ld-upload{border:2px dashed var(--bdr2);border-radius:var(--rl);padding:18px 26px;text-align:center;cursor:pointer;transition:border-color .15s;margin-top:10px}
+.ld-upload:hover{border-color:var(--accent)}
+.ld-upload input{display:none}
+
+/* ── MODAL ── */
 #mover{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px}
 #mover.hide{display:none}
 .modal{background:var(--surf);border:1px solid var(--bdr2);border-radius:var(--rl);max-width:620px;width:100%;max-height:90vh;overflow-y:auto;padding:24px 26px}
 .m-logo{font-family:var(--mono);font-size:1.7rem;font-weight:700;letter-spacing:-2px;margin-bottom:3px}
 .m-logo span{color:var(--accent)}
-.m-sub{font-size:.8rem;color:var(--muted);margin-bottom:18px}
-.m-phases{display:flex;flex-direction:column;gap:8px;margin-bottom:15px}
+.m-sub{font-size:.79rem;color:var(--muted);margin-bottom:16px}
+.m-phases{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
 .mp{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:11px 13px;display:flex;gap:11px;align-items:flex-start}
 .mp-badge{font-family:var(--mono);font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:20px;flex-shrink:0;margin-top:1px}
 .mp-badge.p1{background:var(--pdim);color:var(--purple)}
 .mp-badge.p2{background:var(--tdim);color:var(--teal)}
 .mp-badge.p3{background:var(--odim);color:var(--orange)}
 .mp-title{font-size:.83rem;font-weight:700;margin-bottom:3px}
-.mp-desc{font-size:.74rem;color:var(--muted);line-height:1.6}
+.mp-desc{font-size:.73rem;color:var(--muted);line-height:1.6}
 .m-rule{background:var(--rdim);border:1px solid var(--red);border-radius:var(--r);padding:10px 12px;margin-bottom:13px;font-size:.74rem;line-height:1.65}
 .m-rule strong{color:var(--red)}
-.m-scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:15px}
-.mscore{padding:8px 10px;border-radius:var(--r);background:var(--surf2);border:1px solid var(--bdr);font-size:.74rem;line-height:1.5}
-.mscore-lbl{font-weight:700;margin-bottom:3px;font-size:.76rem}
-.mscore-desc{color:var(--muted);font-size:.71rem}
+.m-scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px}
+.mscore{padding:8px 10px;border-radius:var(--r);background:var(--surf2);border:1px solid var(--bdr)}
+.mscore-lbl{font-weight:700;font-size:.74rem;margin-bottom:3px}
+.mscore-desc{color:var(--muted);font-size:.7rem;line-height:1.4}
 .m-start{width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:.88rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:opacity .13s}
 .m-start:hover{opacity:.85}
 
-/* ─── CONTENT PIECES ─────────────────────────── */
-.ph-hd{display:flex;align-items:center;gap:9px;margin-bottom:13px}
-.ph-badge{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+/* ── CONTENT ── */
+.ph-hd{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.ph-badge{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
 .ph-badge.setup{background:var(--pdim);color:var(--purple)}
-.ph-badge.history{background:var(--tdim);color:var(--teal)}
-.ph-badge.pe{background:var(--tdim);color:var(--teal)}
+.ph-badge.history,.ph-badge.pe{background:var(--tdim);color:var(--teal)}
 .ph-badge.basic{background:var(--ydim);color:var(--yellow)}
-.ph-badge.advanced{background:var(--odim);color:var(--orange)}
-.ph-badge.commit{background:var(--odim);color:var(--orange)}
+.ph-badge.advanced,.ph-badge.commit{background:var(--odim);color:var(--orange)}
 .ph-badge.debrief{background:var(--gdim);color:var(--green)}
 .ph-title{font-size:.97rem;font-weight:700}
-.ph-sub{font-size:.75rem;color:var(--muted);margin-top:1px}
-
+.ph-sub{font-size:.74rem;color:var(--muted);margin-top:1px}
 .vig{background:var(--surf);border:1px solid var(--bdr);border-left:3px solid var(--accent);border-radius:var(--rl);padding:14px 16px;margin-bottom:12px}
-.vig-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:6px}
-.vig-txt{font-size:.9rem;line-height:1.78}
+.vig-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:6px}
+.vig-txt{font-size:.89rem;line-height:1.78}
 
-/* differential */
-.diff-section{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:12px 14px;margin-bottom:12px}
-.ds-hd{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
-.ds-hint{font-size:.63rem;color:var(--muted2);font-family:var(--sans);font-weight:400;letter-spacing:0}
-.dlist{display:flex;flex-direction:column;gap:4px;min-height:28px}
-.dempty{font-size:.76rem;color:var(--muted2);font-style:italic;padding:6px 0;text-align:center;font-family:var(--mono)}
+/* ── DIFFERENTIAL ── */
+.diff-box{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:12px 14px;margin-bottom:12px}
+.diff-hd{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.diff-hint{font-size:.62rem;color:var(--muted2);font-family:var(--sans);font-weight:400;letter-spacing:0}
+.dlist{display:flex;flex-direction:column;gap:4px;min-height:26px}
+.dempty{font-size:.75rem;color:var(--muted2);font-style:italic;padding:6px 0;text-align:center;font-family:var(--mono)}
+/* FIX #2 — elim looks identical for MNM and non-MNM entries */
 .de{background:var(--surf2);border:1.5px solid var(--bdr);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden;transition:border-color .12s}
-.de.mnm-e{border-left:3px solid var(--red)}.de.wd-e{border-left:3px solid var(--yellow)}
-.de.elim{border-style:dashed;opacity:.38}
-.de.reactive{border-left:3px solid var(--purple)}
+.de.mnm-e{border-left:3px solid var(--red)}.de.wd-e{border-left:3px solid var(--yellow)}.de.rx-e{border-left:3px solid var(--purple)}
+.de.elim{border-style:dashed;opacity:.36;border-left-color:var(--bdr2)!important}
 .de.drag-over{border-color:var(--accent);background:var(--adim)}
 .de.dragging{opacity:.28}
 .de-top{display:flex;align-items:flex-start;gap:5px;padding:6px 8px}
 .de-drag{color:var(--muted2);font-size:.72rem;flex-shrink:0;cursor:grab;margin-top:2px;padding:0 2px;user-select:none}
-.de-rank{font-family:var(--mono);font-size:.63rem;color:var(--muted2);width:14px;text-align:center;flex-shrink:0;margin-top:2px}
+.de-rank{font-family:var(--mono);font-size:.62rem;color:var(--muted2);width:14px;text-align:center;flex-shrink:0;margin-top:2px}
 .de-main{flex:1;min-width:0}
 .de-nm{font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap;line-height:1.3}
-.de-nm.elim-nm{text-decoration:line-through;color:var(--muted)}
+.de-nm.crossed{text-decoration:line-through;color:var(--muted)}
 .de-tag{font-size:.57rem;font-family:var(--mono);font-weight:700;padding:1px 5px;border-radius:6px}
-.de-tag.t-mnm{background:var(--rdim);color:var(--red)}.de-tag.t-wd{background:var(--ydim);color:var(--yellow)}
-.de-tag.t-reactive{background:var(--pdim);color:var(--purple)}
-.de-lock{font-size:.6rem;color:var(--red);margin-top:2px;font-family:var(--mono);display:flex;align-items:center;gap:3px}
+.de-tag.t-mnm{background:var(--rdim);color:var(--red)}.de-tag.t-wd{background:var(--ydim);color:var(--yellow)}.de-tag.t-rx{background:var(--pdim);color:var(--purple)}
 .de-subs{padding:0 8px 6px 28px;display:flex;flex-wrap:wrap;gap:3px}
 .de-sub{font-size:.65rem;padding:1px 7px;border-radius:20px;background:var(--surf3);border:1px solid var(--bdr2);color:var(--muted);cursor:pointer;transition:all .1s;font-family:var(--mono)}
 .de-sub:hover{border-color:var(--red);color:var(--red)}
-.de-sub.sub-elim{text-decoration:line-through;opacity:.3}
-.de-sub.sub-elim:hover{opacity:.65;border-color:var(--green);color:var(--green);text-decoration:none}
+.de-sub.sub-x{text-decoration:line-through;opacity:.32}
+.de-sub.sub-x:hover{opacity:.65;border-color:var(--green);color:var(--green);text-decoration:none}
 .de-acts{display:flex;flex-direction:column;gap:2px;flex-shrink:0}
+/* FIX #2 — unified "Eliminate" button */
 .de-btn{background:none;border:1px solid var(--bdr2);border-radius:4px;padding:2px 7px;font-size:.59rem;cursor:pointer;color:var(--muted);transition:all .1s;font-family:var(--mono);white-space:nowrap}
 .de-btn:hover{border-color:var(--red);color:var(--red);background:var(--rdim)}
 .de-btn.restore:hover{border-color:var(--green);color:var(--green);background:var(--gdim)}
 
-/* stage options */
+/* ── STAGE OPTIONS ── */
 .stage-box{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:12px 14px;margin-bottom:12px}
-.stage-box-hd{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.stage-hd{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
 .opts-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
 .opts-grid.two-col{grid-template-columns:1fr 1fr}
 .opt{background:var(--surf2);border:1.5px solid var(--bdr);border-radius:var(--r);padding:8px 10px;cursor:pointer;transition:all .14s;display:flex;flex-direction:column;gap:3px}
 .opt:hover{border-color:var(--teal);background:var(--tdim)}
-.opt.used{opacity:.36;cursor:not-allowed;border-style:dashed;pointer-events:none}
-.opt-name{font-size:.77rem;font-weight:600;line-height:1.3}
+.opt-nm{font-size:.76rem;font-weight:600;line-height:1.3}
 .opt-cost{font-family:var(--mono);font-size:.6rem;display:flex;align-items:center;gap:3px}
 .opt-cost.free,.opt-cost.low{color:var(--green)}.opt-cost.mid{color:var(--yellow)}.opt-cost.high{color:var(--red)}
 .cpip{width:5px;height:5px;border-radius:50%;background:currentColor;display:inline-block}
 
-/* findings */
+/* ── FINDINGS ── */
 .findings{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
 .fc{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 13px;border-left:3px solid var(--bdr2)}
-.fc.h-f{border-left-color:var(--purple)}.fc.pe-f{border-left-color:var(--teal)}.fc.bi-f{border-left-color:var(--yellow)}.fc.ai-f{border-left-color:var(--orange)}.fc.ice-f{border-left-color:var(--muted)}
-.fc-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.fc-lbl.h-f{color:var(--purple)}.fc-lbl.pe-f{color:var(--teal)}.fc-lbl.bi-f{color:var(--yellow)}.fc-lbl.ai-f{color:var(--orange)}.fc-lbl.ice-f{color:var(--muted)}
-.fc-txt{font-size:.81rem;line-height:1.6}
-.fc-note{display:inline-flex;align-items:center;gap:3px;font-size:.63rem;font-family:var(--mono);padding:2px 6px;border-radius:4px;margin-top:5px}
+.fc.hf{border-left-color:var(--purple)}.fc.pef{border-left-color:var(--teal)}.fc.bif{border-left-color:var(--yellow)}.fc.aif{border-left-color:var(--orange)}.fc.icef{border-left-color:var(--muted)}
+.fc-lbl{font-family:var(--mono);font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.fc-lbl.hf{color:var(--purple)}.fc-lbl.pef{color:var(--teal)}.fc-lbl.bif{color:var(--yellow)}.fc-lbl.aif{color:var(--orange)}.fc-lbl.icef{color:var(--muted)}
+.fc-txt{font-size:.8rem;line-height:1.6}
+/* FIX #6 — fc-note is a study-aid */
+.fc-note{display:inline-flex;align-items:center;gap:3px;font-size:.62rem;font-family:var(--mono);padding:2px 6px;border-radius:4px;margin-top:5px}
 .fc-note.irrel{color:var(--yellow);background:var(--ydim)}
-.fc-note.signeg{color:var(--green);background:var(--gdim)}
+.fc-note.sig{color:var(--green);background:var(--gdim)}
 .fc-note.req{color:var(--accent);background:var(--adim)}
 .fc-note.ice{color:var(--muted);background:var(--surf3)}
 
-/* ranking */
+/* ── RANKING ── */
 .rp{background:var(--surf);border:1px solid var(--teal);border-radius:var(--rl);padding:13px 15px;margin-bottom:12px}
-.rp-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
-.rp-sub{font-size:.75rem;color:var(--muted);margin-bottom:9px;line-height:1.5}
-.rp-summary{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:8px 10px;margin-bottom:9px;font-size:.75rem;color:var(--muted);line-height:1.6}
-.rp-summary-lbl{font-family:var(--mono);font-size:.6rem;color:var(--text);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;font-weight:700}
+.rp-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+.rp-sub{font-size:.74rem;color:var(--muted);margin-bottom:8px;line-height:1.5}
+.rp-findings{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:8px 10px;margin-bottom:9px}
+.rp-findings-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;color:var(--text);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.rp-findings-body{font-size:.74rem;color:var(--muted);line-height:1.6}
 .rlist{display:flex;flex-direction:column;gap:3px}
 .ri{background:var(--surf2);border:1.5px solid var(--bdr);border-radius:6px;padding:6px 9px;display:flex;align-items:center;gap:7px;cursor:grab;user-select:none;transition:border-color .12s}
 .ri:hover{border-color:var(--teal)}.ri.drag-over{border-color:var(--accent);background:var(--adim)}.ri.dragging{opacity:.28}
-.ri-num{font-family:var(--mono);font-size:.63rem;color:var(--muted2);width:15px;text-align:center;flex-shrink:0}
-.ri-name{font-size:.8rem;font-weight:600;flex:1}
+.ri-num{font-family:var(--mono);font-size:.62rem;color:var(--muted2);width:15px;text-align:center;flex-shrink:0}
+.ri-nm{font-size:.79rem;font-weight:600;flex:1}
 .ri-tag{font-size:.57rem;font-family:var(--mono);padding:1px 5px;border-radius:6px}
-.ri-tag.mnm{background:var(--rdim);color:var(--red)}.ri-tag.wd{background:var(--ydim);color:var(--yellow)}.ri-tag.reactive{background:var(--pdim);color:var(--purple)}
+.ri-tag.mnm{background:var(--rdim);color:var(--red)}.ri-tag.wd{background:var(--ydim);color:var(--yellow)}.ri-tag.rx{background:var(--pdim);color:var(--purple)}
 .ri-ico{color:var(--muted2);font-size:.7rem}
-.rp-btn{margin-top:9px;padding:7px 15px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-size:.79rem;font-weight:700;cursor:pointer;transition:opacity .12s}
+.rp-btn{margin-top:9px;padding:7px 14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-size:.78rem;font-weight:700;cursor:pointer;transition:opacity .12s}
 .rp-btn:hover{opacity:.85}
 
-/* critical miss */
+/* ── CRITICAL MISS ── */
 .crit{background:var(--rdim);border:2px solid var(--red);border-radius:var(--rl);padding:20px 22px}
 .crit-ico{font-size:1.9rem;margin-bottom:7px}
 .crit-title{font-size:1.1rem;font-weight:700;color:var(--red);font-family:var(--mono);margin-bottom:6px}
-.crit-body{font-size:.83rem;line-height:1.72;margin-bottom:10px;color:var(--text)}
+.crit-body{font-size:.82rem;line-height:1.72;margin-bottom:10px}
 .crit-missed{background:rgba(242,92,92,.1);border:1px solid var(--red);border-radius:var(--r);padding:8px 11px;margin-bottom:9px;font-size:.8rem;color:var(--red);font-family:var(--mono)}
-.crit-penalty{background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:7px 10px;margin-bottom:11px;font-size:.76rem;color:var(--yellow);line-height:1.55}
-.crit-expl{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 12px;margin-bottom:11px;font-size:.79rem;color:var(--muted);line-height:1.65}
+.crit-penalty{background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:7px 10px;margin-bottom:10px;font-size:.75rem;color:var(--yellow);line-height:1.55}
+/* FIX #6 — crit-expl is study-aid */
+.crit-expl{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 12px;margin-bottom:10px;font-size:.78rem;color:var(--muted);line-height:1.65}
 .crit-expl p{margin-bottom:6px}.crit-expl p:last-child{margin-bottom:0}
 .crit-acts{display:flex;gap:7px;flex-wrap:wrap}
 
-/* commit */
+/* ── COMMIT ── */
 .commit-box{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:13px 15px;margin-bottom:12px}
-.commit-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:9px}
+.commit-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:9px}
 .cdx-list{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
 .cdx{background:var(--surf2);border:1.5px solid var(--bdr);border-radius:var(--r);padding:7px 10px;display:flex;align-items:center;gap:7px;cursor:pointer;transition:all .12s}
 .cdx:hover{border-color:var(--accent);background:var(--adim)}
 .cdx.sel{border-color:var(--accent);background:var(--adim)}
-.cdx.elim-f{opacity:.26;text-decoration:line-through;cursor:not-allowed}.cdx.elim-f:hover{border-color:var(--bdr);background:var(--surf2)}
+.cdx.elimf{opacity:.25;text-decoration:line-through;cursor:not-allowed}.cdx.elimf:hover{border-color:var(--bdr);background:var(--surf2)}
 .cdx-radio{width:12px;height:12px;border-radius:50%;border:2px solid var(--bdr2);flex-shrink:0;transition:all .12s}
 .cdx.sel .cdx-radio{background:var(--accent);border-color:var(--accent)}
-.cdx-nm{font-size:.82rem;font-weight:600;flex:1}
-.cdx-rank{font-family:var(--mono);font-size:.61rem;color:var(--muted2)}
-.cdx-reactive{font-size:.59rem;font-family:var(--mono);color:var(--purple)}
-.sub-sel{margin-top:6px;background:var(--surf3);border:1px solid var(--bdr2);border-radius:var(--r);padding:8px 10px}
+.cdx-nm{font-size:.81rem;font-weight:600;flex:1}
+.cdx-rank{font-family:var(--mono);font-size:.6rem;color:var(--muted2)}
+.cdx-rx{font-size:.58rem;font-family:var(--mono);color:var(--purple)}
+.sub-sel{margin-top:5px;background:var(--surf3);border:1px solid var(--bdr2);border-radius:var(--r);padding:8px 10px}
 .sub-sel-lbl{font-size:.65rem;color:var(--muted);margin-bottom:5px;font-family:var(--mono)}
 .sub-opts{display:flex;flex-wrap:wrap;gap:4px}
 .sopt{padding:3px 9px;border-radius:20px;font-size:.7rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf2);transition:all .11s;font-family:var(--mono)}
 .sopt:hover{border-color:var(--accent);color:var(--accent);background:var(--adim)}
 .sopt.sel{background:var(--accent);border-color:var(--accent);color:#000}
-.commit-warn{background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:8px 10px;margin-bottom:9px;font-size:.76rem;color:var(--yellow);line-height:1.55}
-.commit-btn{width:100%;padding:10px;border-radius:var(--r);background:var(--orange);color:#fff;font-size:.86rem;font-weight:700;border:none;cursor:pointer;transition:opacity .12s;font-family:var(--sans)}
+.commit-warn{background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:8px 10px;margin-bottom:9px;font-size:.75rem;color:var(--yellow);line-height:1.55}
+.commit-btn{width:100%;padding:10px;border-radius:var(--r);background:var(--orange);color:#fff;font-size:.85rem;font-weight:700;border:none;cursor:pointer;transition:opacity .12s;font-family:var(--sans)}
 .commit-btn:hover{opacity:.85}.commit-btn:disabled{opacity:.26;cursor:not-allowed}
 
-/* ─── DEBRIEF ────────────────────────────────── */
+/* ── DEBRIEF ── */
 .db{display:flex;flex-direction:column;gap:12px;padding-bottom:40px}
 .db-outcome{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:15px 17px}
-.db-out-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.db-res-lbl{font-family:var(--mono);font-size:.59rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .db-dx{font-size:1.1rem;font-weight:700;margin-bottom:3px}
-.db-sub{font-size:.76rem;color:var(--muted)}
+.db-sub{font-size:.75rem;color:var(--muted)}
 .score-trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
-.sc-card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:13px 14px}
-.sc-card-lbl{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px}
-.sc-card.approach .sc-card-lbl{color:var(--purple)}
-.sc-card.process .sc-card-lbl{color:var(--teal)}
-.sc-card.diagnosis .sc-card-lbl{color:var(--orange)}
+.sc{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:13px 14px}
+.sc-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px}
+.sc.approach .sc-lbl{color:var(--purple)}.sc.process .sc-lbl{color:var(--teal)}.sc.diagnosis .sc-lbl{color:var(--orange)}
 .sc-val{font-family:var(--mono);font-size:1.35rem;font-weight:700;margin-bottom:5px}
 .sc-bar-w{height:4px;background:var(--bdr2);border-radius:2px;overflow:hidden;margin-bottom:7px}
 .sc-bar-f{height:100%;border-radius:2px;transition:width .7s .3s}
 .sc-bar-f.g{background:var(--green)}.sc-bar-f.y{background:var(--yellow)}.sc-bar-f.r{background:var(--red)}
-.sc-expl{font-size:.72rem;color:var(--muted);line-height:1.55}
+.sc-expl{font-size:.71rem;color:var(--muted);line-height:1.55}
 .db-total{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
-.db-total-lbl{font-size:.84rem;font-weight:700}
+.db-total-lbl{font-size:.83rem;font-weight:700}
 .db-total-val{font-family:var(--mono);font-size:1.55rem;font-weight:700;color:var(--accent)}
-
-/* case summary */
 .db-card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:14px 16px}
-.db-card-lbl{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.db-card-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
 .ktp-list{display:flex;flex-direction:column;gap:7px}
-.ktp{display:flex;align-items:flex-start;gap:8px;font-size:.81rem;line-height:1.6}
-.ktp-num{font-family:var(--mono);font-size:.7rem;color:var(--accent);font-weight:700;flex-shrink:0;margin-top:2px}
-
-/* MNM rule-out table */
+.ktp{display:flex;align-items:flex-start;gap:8px;font-size:.8rem;line-height:1.6}
+.ktp-n{font-family:var(--mono);font-size:.69rem;color:var(--accent);font-weight:700;flex-shrink:0;margin-top:2px}
 .mnm-table{display:flex;flex-direction:column;gap:6px}
 .mnm-row{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:9px 11px}
 .mnm-row-hd{display:flex;align-items:center;gap:7px;margin-bottom:6px}
-.mnm-row-name{font-size:.82rem;font-weight:700;flex:1}
-.mnm-row-status{font-size:.67rem;font-family:var(--mono);padding:2px 6px;border-radius:20px}
-.mnm-row-status.ruled-in{background:var(--rdim);color:var(--red)}
-.mnm-row-status.ruled-out{background:var(--gdim);color:var(--green)}
-.mnm-row-status.not-excluded{background:var(--ydim);color:var(--yellow)}
+.mnm-row-nm{font-size:.81rem;font-weight:700;flex:1}
+.mnm-status{font-size:.66rem;font-family:var(--mono);padding:2px 6px;border-radius:20px}
+.mnm-status.ruled-in{background:var(--rdim);color:var(--red)}
+.mnm-status.ruled-out{background:var(--gdim);color:var(--green)}
+.mnm-status.not-excluded{background:var(--ydim);color:var(--yellow)}
 .mnm-findings{display:flex;flex-direction:column;gap:3px}
-.mnm-finding{display:flex;align-items:flex-start;gap:7px;font-size:.76rem;color:var(--muted);line-height:1.5}
-.mnm-finding-type{font-family:var(--mono);font-size:.63rem;font-weight:700;flex-shrink:0;padding:1px 6px;border-radius:4px;margin-top:1px}
-.mnm-finding-type.hx{background:var(--pdim);color:var(--purple)}
-.mnm-finding-type.ex{background:var(--tdim);color:var(--teal)}
-.mnm-finding-type.inv{background:var(--ydim);color:var(--yellow)}
-
-/* phase 1 coverage */
+.mnm-f{display:flex;align-items:flex-start;gap:7px;font-size:.75rem;color:var(--muted);line-height:1.5}
+.mnm-ft{font-family:var(--mono);font-size:.62rem;font-weight:700;flex-shrink:0;padding:1px 6px;border-radius:4px;margin-top:1px}
+.mnm-ft.hx{background:var(--pdim);color:var(--purple)}
+.mnm-ft.ex{background:var(--tdim);color:var(--teal)}
+.mnm-ft.inv{background:var(--ydim);color:var(--yellow)}
 .p1-cov{display:flex;flex-direction:column;gap:4px}
-.p1-row{display:flex;align-items:center;gap:8px;font-size:.79rem;padding:5px 8px;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r)}
-.p1-icon{font-size:.8rem;flex-shrink:0;width:18px;text-align:center}
-.p1-name{flex:1}
-.p1-note{font-size:.67rem;font-family:var(--mono);color:var(--muted2)}
-.p1-row.ok{border-color:var(--green)}.p1-row.ok .p1-name{color:var(--green)}
-.p1-row.reactive{border-color:var(--purple)}.p1-row.reactive .p1-name{color:var(--purple)}
-.p1-row.missed{border-color:var(--red);opacity:.7}
-
-/* ranking snapshots */
+.p1-row{display:flex;align-items:center;gap:8px;font-size:.78rem;padding:5px 8px;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r)}
+.p1-ico{font-size:.8rem;flex-shrink:0;width:18px;text-align:center}
+.p1-nm{flex:1}
+.p1-note{font-size:.65rem;font-family:var(--mono);color:var(--muted2)}
+.p1-row.ok{border-color:var(--green)}.p1-row.ok .p1-nm{color:var(--green)}
+.p1-row.rx{border-color:var(--purple)}.p1-row.rx .p1-nm{color:var(--purple)}
+.p1-row.missed{border-color:var(--red);opacity:.65}
+/* Ranking snapshots — properly structured */
 .snap-wrap{display:flex;flex-direction:column;gap:10px}
 .snap-item{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 12px}
-.snap-lbl{font-size:.72rem;font-weight:700;color:var(--muted);margin-bottom:7px;font-family:var(--mono)}
-.snap-table{display:flex;flex-direction:column;gap:3px}
-.snap-row{display:flex;align-items:center;gap:8px;font-size:.78rem;padding:3px 0;border-bottom:1px solid var(--bdr)}
+.snap-lbl{font-size:.71rem;font-weight:700;color:var(--muted);margin-bottom:8px;font-family:var(--mono);display:flex;align-items:center;gap:6px}
+.snap-skip{font-size:.62rem;background:var(--ydim);color:var(--yellow);padding:1px 6px;border-radius:4px}
+.snap-table{display:flex;flex-direction:column}
+.snap-row{display:flex;align-items:center;gap:8px;font-size:.77rem;padding:4px 0;border-bottom:1px solid var(--bdr)}
 .snap-row:last-child{border-bottom:none}
-.snap-pos{font-family:var(--mono);font-size:.65rem;color:var(--muted2);width:22px;flex-shrink:0;text-align:right}
-.snap-name{flex:1}
-.snap-badge{font-size:.63rem;font-family:var(--mono);padding:1px 5px;border-radius:4px;flex-shrink:0}
-.snap-badge.correct{background:var(--gdim);color:var(--green)}
-.snap-badge.high{background:var(--gdim);color:var(--green)}
-.snap-badge.low{background:var(--rdim);color:var(--red)}
-
-/* timeline */
+.snap-pos{font-family:var(--mono);font-size:.64rem;color:var(--muted2);width:22px;flex-shrink:0;text-align:right}
+.snap-nm{flex:1}
+.snap-badge{font-size:.62rem;font-family:var(--mono);padding:1px 6px;border-radius:4px;flex-shrink:0}
+.snap-badge.hi{background:var(--gdim);color:var(--green)}
+.snap-badge.lo{background:var(--rdim);color:var(--red)}
+/* FIX #6 — expert = study-aid */
+.tl-card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:14px 16px}
 .tl-step{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:9px 12px;margin-bottom:5px}
 .tl-hd{display:flex;align-items:center;gap:6px;margin-bottom:5px}
-.tl-num{font-family:var(--mono);font-size:.61rem;font-weight:700;width:18px;height:18px;border-radius:50%;background:var(--surf3);color:var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tl-type{font-family:var(--mono);font-size:.61rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;flex:1}
-.tl-cost{font-family:var(--mono);font-size:.59rem;padding:1px 5px;border-radius:4px}
+.tl-num{font-family:var(--mono);font-size:.6rem;font-weight:700;width:18px;height:18px;border-radius:50%;background:var(--surf3);color:var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tl-type{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;flex:1}
+.tl-cost{font-family:var(--mono);font-size:.58rem;padding:1px 5px;border-radius:4px}
 .tl-cost.free,.tl-cost.low{background:var(--gdim);color:var(--green)}.tl-cost.mid{background:var(--ydim);color:var(--yellow)}.tl-cost.high{background:var(--rdim);color:var(--red)}
-.tl-tag{font-size:.62rem;font-family:var(--mono);padding:1px 6px;border-radius:4px;margin-bottom:5px;display:inline-flex;align-items:center;gap:3px}
-.tl-tag.irrel{color:var(--yellow);background:var(--ydim)}.tl-tag.signeg{color:var(--green);background:var(--gdim)}.tl-tag.req{color:var(--accent);background:var(--adim)}.tl-tag.ice{color:var(--muted);background:var(--surf3)}
+.tl-tag{font-size:.61rem;font-family:var(--mono);padding:1px 6px;border-radius:4px;margin-bottom:5px;display:inline-flex;align-items:center;gap:3px}
+.tl-tag.irrel{color:var(--yellow);background:var(--ydim)}.tl-tag.sig{color:var(--green);background:var(--gdim)}.tl-tag.req{color:var(--accent);background:var(--adim)}.tl-tag.ice{color:var(--muted);background:var(--surf3)}
 .tl-finding{font-size:.79rem;line-height:1.55;margin-bottom:4px}
 .tl-expert{font-size:.74rem;color:var(--muted);line-height:1.58;border-top:1px solid var(--bdr);padding-top:5px;font-style:italic}
-
 .ss-row{display:flex;gap:6px;flex-wrap:wrap}
-.ssb{flex:1;min-width:120px;padding:9px 11px;border-radius:var(--r);background:var(--surf2);border:1px solid var(--bdr)}
-.ssb-title{font-size:.7rem;font-weight:700;margin-bottom:3px}
+.ssb{flex:1;min-width:115px;padding:9px 11px;border-radius:var(--r);background:var(--surf2);border:1px solid var(--bdr)}
+.ssb-title{font-size:.69rem;font-weight:700;margin-bottom:3px}
 .ssb-text{font-size:.72rem;color:var(--muted);line-height:1.5}
 .ssb.sens .ssb-title{color:var(--teal)}.ssb.spec .ssb-title{color:var(--purple)}.ssb.safe .ssb-title{color:var(--red)}
-
-/* approach card */
 .approach-card{background:var(--surf);border:1px solid var(--bdr);border-left:3px solid var(--accent);border-radius:var(--rl);padding:13px 15px}
-.approach-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-.approach-title{font-size:.9rem;font-weight:700;margin-bottom:5px}
-.approach-text{font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:9px}
+.approach-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.approach-title{font-size:.89rem;font-weight:700;margin-bottom:5px}
+.approach-text{font-size:.77rem;color:var(--muted);line-height:1.65;margin-bottom:9px}
 .approach-cats{display:flex;flex-direction:column;gap:4px;margin-bottom:9px}
-.acat{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:6px 9px;font-size:.76rem;display:flex;gap:9px}
+.acat{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:6px 9px;font-size:.75rem;display:flex;gap:9px}
 .acat.hl{border-color:var(--accent);background:var(--adim)}
-.acat-name{font-weight:700;min-width:145px;flex-shrink:0}
-.acat.hl .acat-name{color:var(--accent)}
+.acat-nm{font-weight:700;min-width:145px;flex-shrink:0}
+.acat.hl .acat-nm{color:var(--accent)}
 .acat-eg{color:var(--muted)}
-.approach-insight{background:var(--adim);border:1px solid var(--accent);border-radius:var(--r);padding:9px 11px;font-size:.78rem;color:var(--text);line-height:1.6}
-
+.approach-insight{background:var(--adim);border:1px solid var(--accent);border-radius:var(--r);padding:9px 11px;font-size:.77rem;line-height:1.6}
 /* utils */
 .tip{background:var(--surf2);border:1px solid var(--bdr);border-left:3px solid var(--accent);border-radius:var(--r);padding:7px 10px;font-size:.74rem;color:var(--muted);line-height:1.55;margin-bottom:11px}
 .tip strong{color:var(--accent)}
-.nudge{background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:7px 10px;margin-bottom:11px;font-size:.75rem;color:var(--yellow);line-height:1.55}
+.nudge{background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:7px 10px;margin-bottom:11px;font-size:.74rem;color:var(--yellow);line-height:1.55}
 .nav-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}
-.nb{padding:7px 15px;border-radius:var(--r);font-size:.81rem;font-weight:700;cursor:pointer;border:none;transition:opacity .12s}
+.nb{padding:7px 15px;border-radius:var(--r);font-size:.8rem;font-weight:700;cursor:pointer;border:none;transition:opacity .12s}
 .nb:hover{opacity:.85}
-.nb.go{background:var(--teal);color:#000}.nb.commit-go{background:var(--orange);color:#fff}.nb.start{background:var(--accent);color:#fff}
-.nb.skip{background:var(--surf2);color:var(--muted);border:1.5px solid var(--bdr2);font-size:.78rem;font-weight:600}
+.nb.go{background:var(--teal);color:#000}.nb.cmt{background:var(--orange);color:#fff}.nb.start{background:var(--accent);color:#fff}
+.nb.skip{background:var(--surf2);color:var(--muted);border:1.5px solid var(--bdr2);font-size:.76rem;font-weight:600}
 .nb.skip:hover{border-color:var(--muted);color:var(--text)}
-.abtn{padding:7px 13px;border-radius:var(--r);font-size:.79rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf);transition:all .12s}
+.abtn{padding:7px 13px;border-radius:var(--r);font-size:.78rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf);transition:all .12s}
 .abtn:hover{border-color:var(--accent);color:var(--accent);background:var(--adim)}
 .abtn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.abtn.primary:hover{opacity:.85}
+/* FIX #6 — prof hint = study-aid */
 .prof{display:inline-flex;align-items:center;gap:4px;font-size:.71rem;color:var(--muted);cursor:pointer;border:1px dashed var(--bdr2);border-radius:20px;padding:4px 10px;transition:all .12s}
 .prof:hover{border-color:var(--yellow);color:var(--yellow)}
-.prof-reveal{margin-top:7px;background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:8px 11px;font-size:.77rem;color:var(--yellow);line-height:1.5}
+.prof-reveal{margin-top:7px;background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:8px 11px;font-size:.76rem;color:var(--yellow);line-height:1.5}
 .welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;gap:7px}
 .wl{font-family:var(--mono);font-size:3rem;font-weight:700;letter-spacing:-4px}
 .wl span{color:var(--accent)}
 .ws{font-size:.9rem;color:var(--muted);max-width:300px;line-height:1.7;margin-top:3px}
-.wh{margin-top:20px;font-size:.73rem;color:var(--muted2);border:1px dashed var(--bdr2);border-radius:var(--r);padding:8px 14px;font-family:var(--mono)}
-@media(max-width:760px){#lib{position:fixed;top:0;left:0;bottom:0;z-index:400;transform:translateX(-100%);transition:transform .22s}#lib.mobile-open{transform:translateX(0)}.opts-grid{grid-template-columns:1fr 1fr}.score-trio{grid-template-columns:1fr}#content{padding:10px 12px}}
+.wh{margin-top:20px;font-size:.72rem;color:var(--muted2);border:1px dashed var(--bdr2);border-radius:var(--r);padding:8px 14px;font-family:var(--mono)}
+@media(max-width:760px){
+  #lib{position:fixed;top:0;left:0;bottom:0;z-index:400;transform:translateX(-100%);transition:transform .22s}
+  #lib.mobile-open{transform:translateX(0)}
+  .opts-grid{grid-template-columns:1fr 1fr}.score-trio{grid-template-columns:1fr}
+  #content{padding:10px 12px}
+}
 </style>
 </head>
 <body>
 
-<!-- TUTORIAL MODAL -->
-<div id="mover">
+<div id="loader">
+  <div class="ld-logo"><span>Dx</span>/</div>
+  <div class="ld-msg" id="ldMsg">Loading cases…</div>
+  <div id="ldErr" style="display:none;flex-direction:column;align-items:center;gap:8px">
+    <div class="ld-err">Could not load <code>cases.json</code>. On GitHub Pages this works automatically. Running locally, either use <code>python -m http.server</code> or upload the file below.</div>
+    <label class="ld-upload">
+      <div style="font-size:.82rem;font-weight:700;color:var(--accent);margin-bottom:4px">📂 Select cases.json</div>
+      <div style="font-size:.72rem;color:var(--muted)">Browse to your cases.json file</div>
+      <input type="file" accept=".json" onchange="handleUpload(event)">
+    </label>
+  </div>
+</div>
+
+<div id="mover" class="hide">
   <div class="modal">
     <div class="m-logo"><span>Dx</span>/</div>
     <div class="m-sub">Clinical reasoning trainer · NUS Medicine Year 2</div>
     <div class="m-phases">
       <div class="mp"><span class="mp-badge p1">Phase 1</span>
-        <div><div class="mp-title">Build Your Differential</div>
-          <div class="mp-desc">Read the vignette. Browse the diagnosis library on the left — it contains diagnoses from all body systems in your preclinical curriculum. Add everything you'd seriously consider. Tag each as <strong style="color:var(--red)">Must Not Miss</strong> (dangerous to overlook) or <strong style="color:var(--yellow)">Working Diagnosis</strong> (most likely). Think broadly — missing key diagnoses at this stage is the most penalised error in the game.</div>
+        <div><div class="mp-title">Build Your Differential Diagnosis</div>
+          <div class="mp-desc">Read the vignette. Browse the diagnosis library on the left — every diagnosis in your preclinical syllabus. Select your tag (Must Not Miss / Working Diagnosis) then click to add. Think broadly — missing key diagnoses here is the most penalised error.</div>
         </div></div>
       <div class="mp"><span class="mp-badge p2">Phase 2</span>
-        <div><div class="mp-title">History → Examination → Investigations (in order)</div>
-          <div class="mp-desc">Work through stages in sequence. You can skip any stage, but that will cost you marks. Within each stage, select what you want to do — irrelevant options return "No significant findings." After completing each stage, you'll rank your differential by likelihood. History is weighted most heavily.</div>
+        <div><div class="mp-title">History → Examination → Investigations (locked order)</div>
+          <div class="mp-desc">Work through stages sequentially. You can skip any stage but it costs marks. Irrelevant options return "No significant findings." After each stage, rank your differential by likelihood. You can also eliminate diagnoses at any point during Phase 2.</div>
         </div></div>
       <div class="mp"><span class="mp-badge p3">Phase 3</span>
         <div><div class="mp-title">Commit & Debrief</div>
-          <div class="mp-desc">Select your final diagnosis. If your umbrella is correct (e.g. "Myocardial Infarction"), specify the subtype for full marks. The debrief reveals what this case was teaching, which diagnoses were must-not-miss, and what ruled each one in or out.</div>
+          <div class="mp-desc">Select your final diagnosis and specify the subtype for full marks. The debrief reveals teaching points, must-not-miss rule-outs, and expert commentary on your pathway.</div>
         </div></div>
     </div>
-    <div class="m-rule"><strong>🔴 Hard rule:</strong> If you advance to History without all must-not-miss diagnoses on your list, the case stops and explains why each missed diagnosis matters clinically. Going back adds a −30 pt penalty; forcing through costs more. We train safe doctors first.</div>
+    <div class="m-rule"><strong>🔴 Hard rule:</strong> Advancing without all must-not-miss diagnoses on your list triggers a safety stop and a permanent −30 pt penalty. Forcing through costs −50 pts. Safe clinical reasoning is the primary skill this game trains.</div>
     <div class="m-scores">
-      <div class="mscore"><div class="mscore-lbl">🎯 Approach (30%)</div><div class="mscore-desc">Must-not-miss coverage, common DDx breadth, significant negatives</div></div>
-      <div class="mscore"><div class="mscore-lbl">⚙️ Process (40%)</div><div class="mscore-desc">History thoroughness, targeted PE, appropriate investigations</div></div>
-      <div class="mscore"><div class="mscore-lbl">✅ Diagnosis (30%)</div><div class="mscore-desc">Specific subtype > umbrella > wrong diagnosis</div></div>
+      <div class="mscore"><div class="mscore-lbl">🎯 Approach (30%)</div><div class="mscore-desc">MNM coverage + common DDx breadth + significant negatives</div></div>
+      <div class="mscore"><div class="mscore-lbl">⚙️ Process (40%)</div><div class="mscore-desc">History weighted most, then PE, then investigations</div></div>
+      <div class="mscore"><div class="mscore-lbl">✅ Diagnosis (30%)</div><div class="mscore-desc">Specific subtype &gt; umbrella &gt; wrong diagnosis</div></div>
     </div>
     <button class="m-start" onclick="closeModal()">Start →</button>
   </div>
 </div>
 
 <div id="app">
-  <!-- LIBRARY -->
   <div id="lib">
     <div class="lib-hd">
-      <div class="lib-top-row">
+      <div class="lib-top">
         <div class="lib-logo"><span>Dx</span>/</div>
-        <span class="lib-tag-hint">Select tag, then click to add →</span>
+        <span class="lib-hint">select tag → click to add</span>
       </div>
-      <div class="lib-tag-row">
+      <div class="lib-tags">
         <button class="ltag sel-mnm" id="btnMNM" onclick="setLibTag('mnm')">🔴 Must Not Miss</button>
         <button class="ltag" id="btnWD" onclick="setLibTag('wd')">🟡 Working Dx</button>
       </div>
@@ -405,396 +433,158 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
     <div class="lib-srch-wrap">
       <input class="lib-srch" id="libSrch" type="text" placeholder="Search all diagnoses…" autocomplete="off" oninput="renderLib()">
     </div>
-    <div class="lib-sys-row" id="libFilters"></div>
+    <div class="lib-sysrow" id="libFilters"></div>
     <div class="lib-body" id="libBody"></div>
   </div>
 
-  <!-- MAIN -->
   <div id="main">
     <div id="topbar">
       <div class="tb-left">
         <button class="tb-tog" onclick="toggleLib()">☰</button>
-        <div class="tb-cname" id="tbCname">Select a case</div>
+        <div class="tb-cname" id="tbCname">—</div>
       </div>
       <div class="tb-stages" id="tbStages"></div>
-      <div class="tb-scores" id="tbScores"></div>
+      <div class="tb-right">
+        <button class="mode-btn study" id="modeBtn" onclick="toggleMode()">📚 Study</button>
+        <div class="tb-scores" id="tbScores"></div>
+      </div>
     </div>
     <div id="content"></div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // DIAGNOSIS LIBRARY
-// desc field = plain-language clarification for complex names
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 const DIAG_LIB = {
   "Cardiovascular":{ico:"❤️",diags:[
     {n:"Myocardial Infarction",u:true,subs:["Inferior STEMI","Anterior STEMI","Lateral STEMI","Posterior MI","NSTEMI"],mnm:true},
-    {n:"Unstable Angina",mnm:true},
-    {n:"Stable Angina",mnm:false},
-    {n:"Aortic Dissection",u:true,subs:["Type A (involves heart end of aorta)","Type B (involves lower aorta)"],mnm:true,desc:"Tear in the inner wall of the main artery from the heart"},
-    {n:"Aortic Aneurysm / Ruptured AAA",u:true,subs:["Intact Aortic Aneurysm","Ruptured Aortic Aneurysm"],mnm:true,desc:"Ballooning and potential rupture of the aorta in the abdomen"},
+    {n:"Unstable Angina",mnm:true},{n:"Stable Angina",mnm:false},
+    {n:"Aortic Dissection",u:true,subs:["Type A (heart end)","Type B (lower aorta)"],mnm:true,desc:"Tear in the inner wall of the main artery from the heart"},
+    {n:"Aortic Aneurysm / Ruptured AAA",u:true,subs:["Intact Aortic Aneurysm","Ruptured Aortic Aneurysm"],mnm:true,desc:"Ballooning and potential rupture of the main abdominal artery"},
     {n:"Acute Pericarditis",mnm:false,desc:"Inflammation of the sac surrounding the heart"},
-    {n:"Viral Myocarditis",mnm:true,desc:"Viral infection of the heart muscle"},
-    {n:"Heart Failure",u:true,subs:["Left Heart Failure","Right Heart Failure","Cardiogenic Shock"],mnm:true,desc:"Heart unable to pump enough blood for the body's needs"},
-    {n:"Cardiac Tamponade",mnm:true,desc:"Fluid pressing on the heart from outside, stopping it pumping"},
+    {n:"Viral Myocarditis",mnm:true,desc:"Viral infection of the heart muscle itself"},
+    {n:"Heart Failure",u:true,subs:["Left Heart Failure","Right Heart Failure","Cardiogenic Shock"],mnm:true,desc:"Heart cannot pump enough blood for the body's needs"},
+    {n:"Cardiac Tamponade",mnm:true,desc:"Fluid compressing the heart from outside — stops it pumping"},
     {n:"Hypertensive Emergency",mnm:true,desc:"Dangerously high blood pressure causing organ damage"},
     {n:"Infective Endocarditis",mnm:true,desc:"Bacterial infection of the heart valves"},
-    {n:"Peripheral Arterial Disease",mnm:false,desc:"Narrowed arteries reducing blood flow to the limbs"},
-    {n:"Deep Vein Thrombosis",mnm:false,desc:"Blood clot in a deep vein, usually the leg"},
+    {n:"Deep Vein Thrombosis",mnm:false,desc:"Blood clot in a deep vein, usually in the leg"},
   ]},
   "Respiratory":{ico:"🫁",diags:[
-    {n:"Pulmonary Embolism",u:true,subs:["Massive PE (causes collapse)","Submassive PE","Small PE"],mnm:true,desc:"Blood clot blocking arteries in the lungs"},
+    {n:"Pulmonary Embolism",u:true,subs:["Massive PE (life-threatening)","Submassive PE","Small PE"],mnm:true,desc:"Blood clot blocking arteries in the lungs"},
     {n:"Pneumonia",u:true,subs:["Community-Acquired Pneumonia","Hospital-Acquired Pneumonia","Aspiration Pneumonia","Atypical Pneumonia"],mnm:false,desc:"Infection causing inflammation of the air sacs in the lungs"},
-    {n:"Pneumothorax",u:true,subs:["Spontaneous Pneumothorax","Tension Pneumothorax (emergency)"],mnm:true,desc:"Air trapped between the lung and chest wall"},
-    {n:"Pleural Effusion",mnm:false,desc:"Fluid collection in the space around the lungs"},
-    {n:"Pleurisy",mnm:false,desc:"Inflammation of the lining of the lungs — causes sharp pain with breathing"},
-    {n:"Pulmonary Oedema",mnm:true,desc:"Fluid in the lungs, often from heart failure"},
-    {n:"COPD Exacerbation",mnm:false,desc:"Worsening of chronic obstructive pulmonary disease (smoker's lung)"},
+    {n:"Pneumothorax",u:true,subs:["Spontaneous Pneumothorax","Tension Pneumothorax (emergency)"],mnm:true,desc:"Air trapped between lung and chest wall"},
+    {n:"Pleural Effusion",mnm:false,desc:"Fluid collection around the lungs"},
+    {n:"Pleurisy",mnm:false,desc:"Inflammation of the lung lining — sharp pain with breathing"},
+    {n:"Pulmonary Oedema",mnm:true,desc:"Fluid in the lungs, usually from heart failure"},
+    {n:"COPD Exacerbation",mnm:false,desc:"Worsening of chronic obstructive pulmonary disease"},
     {n:"Asthma Exacerbation",mnm:true,desc:"Acute worsening of airway narrowing in asthma"},
-    {n:"Lung Cancer",u:true,subs:["Adenocarcinoma","Squamous Cell Carcinoma of Lung","Small Cell Lung Cancer"],mnm:true},
-    {n:"Pulmonary Tuberculosis",u:true,subs:["Primary TB","Post-primary TB (reactivation)","Miliary TB (spread throughout body)"],mnm:true},
+    {n:"Lung Cancer",u:true,subs:["Adenocarcinoma","Squamous Cell Carcinoma of Lung","Small Cell Lung Cancer (SCLC)"],mnm:true},
+    {n:"Pulmonary Tuberculosis",u:true,subs:["Primary TB","Post-primary TB","Miliary TB"],mnm:true},
+    {n:"SIADH",mnm:false,desc:"Syndrome of Inappropriate ADH — kidneys retain too much water, diluting blood sodium; caused by lung disease, brain disorders, or medications"},
   ]},
   "Gastrointestinal":{ico:"🍃",diags:[
-    {n:"Peptic Ulcer Disease",u:true,subs:["Gastric Ulcer (stomach)","Duodenal Ulcer (first part of small bowel)","Perforated PUD (ulcer bursts — emergency)"],mnm:false,desc:"Sore/ulcer in the stomach or duodenum lining"},
-    {n:"GORD / Acid Reflux",mnm:false,desc:"Gastro-oesophageal reflux — stomach acid washing up into the throat"},
+    {n:"Peptic Ulcer Disease",u:true,subs:["Gastric Ulcer","Duodenal Ulcer","Perforated PUD (ulcer bursts)"],mnm:false,desc:"Sore/ulcer in the stomach or duodenum lining"},
+    {n:"GORD / Acid Reflux",mnm:false,desc:"Stomach acid washing back up into the food pipe"},
     {n:"Acute Gastritis",mnm:false,desc:"Inflammation of the stomach lining"},
-    {n:"Acute Pancreatitis",mnm:true,desc:"Sudden inflammation of the pancreas — causes severe upper abdominal pain"},
+    {n:"Acute Pancreatitis",mnm:true,desc:"Sudden inflammation of the pancreas — severe upper abdominal pain"},
     {n:"Acute Cholecystitis",mnm:false,desc:"Inflamed gallbladder, usually from gallstones"},
     {n:"Biliary Colic",mnm:false,desc:"Crampy pain from a gallstone temporarily blocking the bile duct"},
     {n:"Choledocholithiasis",mnm:false,desc:"Gallstone stuck in the main bile duct — can cause jaundice"},
-    {n:"Acute Appendicitis",mnm:true,desc:"Inflamed appendix — causes right lower abdominal pain"},
-    {n:"Bowel Obstruction",u:true,subs:["Small Bowel Obstruction","Large Bowel Obstruction"],mnm:true,desc:"Blockage preventing contents from passing through the bowel"},
+    {n:"Acute Appendicitis",mnm:true,desc:"Inflamed appendix — right lower abdominal pain"},
+    {n:"Bowel Obstruction",u:true,subs:["Small Bowel Obstruction","Large Bowel Obstruction"],mnm:true,desc:"Blockage preventing bowel contents from passing"},
     {n:"Mesenteric Ischaemia",mnm:true,desc:"Loss of blood supply to the bowel — life-threatening emergency"},
     {n:"Hepatitis",u:true,subs:["Viral Hepatitis A","Viral Hepatitis B","Viral Hepatitis C","Alcoholic Hepatitis","Drug-induced Liver Injury"],mnm:false,desc:"Inflammation of the liver"},
     {n:"Oesophageal Spasm",mnm:false,desc:"Abnormal painful contractions of the food pipe"},
-    {n:"Boerhaave Syndrome (Oesophageal Rupture)",mnm:true,desc:"Spontaneous tear of the food pipe — usually after severe vomiting"},
+    {n:"Boerhaave Syndrome (Oesophageal Rupture)",mnm:true,desc:"Spontaneous tear of the food pipe — usually from severe vomiting"},
     {n:"Gastroenteritis",mnm:false,desc:"Stomach bug — vomiting and diarrhoea from infection"},
     {n:"Colorectal Cancer",mnm:false,desc:"Cancer of the large bowel or rectum"},
-    {n:"Perforated Viscus",mnm:true,desc:"Any hollow organ (stomach, bowel) that has burst — causes peritonitis"},
+    {n:"Perforated Viscus",mnm:true,desc:"Any hollow organ that has burst — causes peritonitis"},
     {n:"Volvulus",mnm:true,desc:"Twisted bowel — cuts off blood supply and causes obstruction"},
-    {n:"Mallory-Weiss Tear",mnm:false,desc:"Tear at the junction of food pipe and stomach — usually from forceful vomiting"},
   ]},
   "Renal":{ico:"🫘",diags:[
-    {n:"Ureteric Colic / Kidney Stone",mnm:false,desc:"Kidney stone causing severe loin-to-groin pain as it passes down the ureter"},
-    {n:"Pyelonephritis",mnm:false,desc:"Bacterial infection of the kidney — fever, loin pain, dysuria"},
+    {n:"Ureteric Colic / Kidney Stone",mnm:false,desc:"Kidney stone causing severe loin-to-groin pain"},
+    {n:"Pyelonephritis",mnm:false,desc:"Bacterial infection of the kidney — fever and loin pain"},
     {n:"Acute Kidney Injury",mnm:false,desc:"Sudden loss of kidney function"},
     {n:"Urinary Tract Infection",mnm:false,desc:"Bacterial infection of the bladder or urethra"},
-    {n:"Urinary Retention",mnm:false,desc:"Unable to pass urine — can cause severe lower abdominal pain and distension"},
+    {n:"Urinary Retention",mnm:false,desc:"Unable to pass urine — causes severe lower abdominal pain"},
   ]},
   "Endocrine / Metabolic":{ico:"⚗️",diags:[
-    {n:"Diabetic Ketoacidosis (DKA)",mnm:true,desc:"Life-threatening complication of diabetes — high glucose, acid buildup, dehydration"},
-    {n:"Hyperosmolar Hyperglycaemic State (HHS)",mnm:true,desc:"Severe dehydration and very high glucose in diabetics without much acid buildup"},
-    {n:"Addisonian Crisis",mnm:true,desc:"Adrenal gland failure — cannot produce cortisol, causes collapse"},
-    {n:"Hypercalcaemia",mnm:false,desc:"Too much calcium in the blood — can cause abdominal pain, confusion, 'bones, stones, groans, psychic moans'"},
+    {n:"Diabetic Ketoacidosis (DKA)",mnm:true,desc:"Life-threatening complication of diabetes — high glucose, acid buildup"},
+    {n:"Hyperosmolar Hyperglycaemic State (HHS)",mnm:true,desc:"Severe dehydration with very high glucose in diabetics"},
+    {n:"Addisonian Crisis",mnm:true,desc:"Adrenal gland failure — cannot produce cortisol; causes collapse and low sodium"},
+    {n:"Hypercalcaemia",mnm:false,desc:"Too much calcium — 'bones, stones, groans, psychic moans'"},
     {n:"Hypoglycaemia",mnm:true,desc:"Dangerously low blood sugar"},
-    {n:"Thyroid Storm",mnm:true,desc:"Extreme overactivity of the thyroid — life-threatening emergency"},
-    {n:"Phaeochromocytoma",mnm:true,desc:"Tumour in the adrenal gland that releases bursts of adrenaline — causes hypertensive crises"},
+    {n:"Thyroid Storm",mnm:true,desc:"Extreme overactivity of the thyroid — life-threatening"},
+    {n:"Hypothyroidism",mnm:false,desc:"Underactive thyroid — can cause low sodium in severe cases"},
+    {n:"Phaeochromocytoma",mnm:true,desc:"Adrenal tumour releasing adrenaline bursts — causes hypertensive crises"},
   ]},
   "Haematology":{ico:"🩸",diags:[
-    {n:"Sickle Cell Vaso-occlusive Crisis",mnm:false,desc:"Sickle-shaped red blood cells blocking small vessels — severe pain"},
+    {n:"Severe Anaemia",mnm:false,desc:"Very low haemoglobin — can cause breathlessness and cardiac stress"},
+    {n:"Sickle Cell Crisis",mnm:false,desc:"Sickle-shaped red cells blocking small vessels — severe pain"},
     {n:"Acute Leukaemia",mnm:false,desc:"Rapidly progressing cancer of blood-forming cells"},
-    {n:"Severe Anaemia",mnm:false,desc:"Very low haemoglobin — can cause breathlessness, angina, and cardiac stress"},
-    {n:"DIC (Disseminated Intravascular Coagulation)",mnm:true,desc:"Runaway clotting consuming all clotting factors — bleeding and clotting simultaneously"},
+    {n:"DIC (Disseminated Intravascular Coagulation)",mnm:true,desc:"Runaway clotting consuming all clotting factors"},
+    {n:"Antiphospholipid Syndrome",mnm:false,desc:"Autoimmune condition causing increased clotting tendency — associated with CVST, DVT, PE"},
   ]},
   "Neurology":{ico:"🧠",diags:[
-    {n:"Spinal Nerve Root Pain (Radiculopathy)",mnm:false,desc:"Pinched nerve in the spine causing pain radiating to the chest or abdomen"},
-    {n:"Herpes Zoster (Shingles — pre-rash phase)",mnm:false,desc:"Reactivation of chickenpox virus — can cause dermatomal chest/abdominal pain before the rash appears"},
-    {n:"Spinal Cord Compression",mnm:true,desc:"Pressure on the spinal cord — can cause weakness, sensory loss, and bowel/bladder dysfunction"},
-    {n:"Subarachnoid Haemorrhage",mnm:true,desc:"Bleeding around the brain — thunderclap headache"},
-    {n:"Stroke",u:true,subs:["Ischaemic Stroke (clot)","Haemorrhagic Stroke (bleed)"],mnm:true,desc:"Sudden loss of blood supply to part of the brain"},
+    {n:"Subarachnoid Haemorrhage (SAH)",mnm:true,desc:"Bleeding around the brain — 'thunderclap headache' (worst of life, maximal at onset)"},
+    {n:"Ischaemic Stroke",u:true,subs:["Thrombotic Stroke","Embolic Stroke","Lacunar Infarct"],mnm:true,desc:"Sudden loss of blood supply to part of the brain — FAST symptoms"},
+    {n:"Haemorrhagic Stroke",mnm:true,desc:"Bleeding into the brain — severe headache, focal deficit"},
+    {n:"Cerebral Venous Sinus Thrombosis (CVST)",mnm:true,desc:"Blood clot in veins draining the brain — progressive headache; associated with OCP use"},
+    {n:"TIA (Transient Ischaemic Attack)",mnm:true,desc:"Mini-stroke — temporary FAST symptoms under 24h; high early stroke risk"},
+    {n:"Meningitis",u:true,subs:["Bacterial Meningitis (emergency)","Viral Meningitis","TB Meningitis"],mnm:true,desc:"Infection of the brain lining — headache, fever, neck stiffness"},
+    {n:"Viral Encephalitis / Herpes Encephalitis",mnm:true,desc:"Viral infection of the brain — confusion, seizures, fever"},
+    {n:"Brain Abscess",mnm:true,desc:"Collection of pus in the brain — headache, fever, focal deficit"},
+    {n:"Idiopathic Intracranial Hypertension (IIH)",mnm:false,desc:"Raised intracranial pressure without a mass — young overweight women; headache and visual disturbance"},
+    {n:"Migraine",u:true,subs:["Migraine with Aura","Migraine without Aura","Hemiplegic Migraine"],mnm:false,desc:"Recurrent severe headache — diagnosis of exclusion"},
+    {n:"Tension Headache",mnm:false,desc:"Most common headache — bilateral pressing sensation; diagnosis of exclusion"},
+    {n:"Cluster Headache",mnm:false,desc:"Severe unilateral headache around the eye — occurs in clusters"},
+    {n:"Raised Intracranial Pressure",mnm:true,desc:"Increased pressure inside the skull — headache, vomiting, papilloedema"},
+    {n:"Spinal Radiculopathy",mnm:false,desc:"Pinched nerve causing pain radiating to chest or abdomen"},
+    {n:"Herpes Zoster / Shingles (pre-rash)",mnm:false,desc:"Reactivation of chickenpox virus — dermatomal pain before the rash appears"},
   ]},
   "MSK / Rheumatology":{ico:"🦴",diags:[
-    {n:"Costochondritis",mnm:false,desc:"Inflammation of the cartilage joining ribs to the breastbone — reproducible chest wall tenderness"},
-    {n:"Rib Fracture / Chest Wall Injury",mnm:false,desc:"Broken rib causing localised pain worsened by breathing and movement"},
-    {n:"Abdominal Wall Muscle Strain",mnm:false,desc:"Pulled abdominal muscle — pain reproduced by contracting the abdominal muscles"},
-    {n:"Psoas Abscess",mnm:false,desc:"Abscess in the muscle running from the spine to the hip — causes hip/groin/abdominal pain"},
-    {n:"Reactive Arthritis / Systemic Inflammation",mnm:false,desc:"Joint and systemic inflammation triggered by infection"},
+    {n:"Costochondritis",mnm:false,desc:"Inflammation of rib cartilage — reproducible chest wall tenderness"},
+    {n:"Rib Fracture / Chest Wall Injury",mnm:false,desc:"Broken rib — pain worsened by breathing and palpation"},
+    {n:"Abdominal Wall Muscle Strain",mnm:false,desc:"Pulled abdominal muscle — reproduced by contracting muscles"},
+    {n:"Psoas Abscess",mnm:false,desc:"Abscess in the hip-flexor muscle — hip/groin/abdominal pain"},
+    {n:"SLE (Systemic Lupus Erythematosus)",mnm:false,desc:"Autoimmune disease affecting multiple organs"},
+    {n:"Reactive Arthritis",mnm:false},
   ]},
   "Reproductive":{ico:"🌸",diags:[
-    {n:"Ectopic Pregnancy",mnm:true,desc:"Pregnancy implanted outside the uterus — rupture is life-threatening"},
+    {n:"Ectopic Pregnancy",mnm:true,desc:"Pregnancy outside the uterus — rupture is life-threatening"},
     {n:"Ovarian Torsion",mnm:true,desc:"Ovary twisting and cutting off its own blood supply — severe pelvic pain"},
     {n:"Pelvic Inflammatory Disease",mnm:false,desc:"Infection of the uterus, fallopian tubes, or ovaries"},
-    {n:"Endometriosis",mnm:false,desc:"Uterine lining tissue growing outside the uterus — causes pelvic pain"},
+    {n:"Endometriosis",mnm:false,desc:"Uterine lining tissue growing outside the uterus"},
     {n:"Threatened Miscarriage",mnm:false},
+    {n:"Pre-eclampsia / Eclampsia",mnm:true,desc:"High blood pressure in pregnancy — can cause severe headache and seizures"},
   ]},
   "Microbiology / Infectious":{ico:"🦠",diags:[
     {n:"Sepsis",mnm:true,desc:"Life-threatening organ dysfunction from the body's response to infection"},
-    {n:"Spontaneous Bacterial Peritonitis",mnm:true,desc:"Infection of fluid in the abdomen — occurs in patients with liver cirrhosis and ascites"},
-    {n:"Typhoid Fever",mnm:false,desc:"Bacterial infection from contaminated food or water — fever, abdominal pain, 'rose spots'"},
-    {n:"Malaria",mnm:true,desc:"Parasitic infection from mosquito bite — fever, rigors, hepatosplenomegaly; must ask about travel"},
-    {n:"Dengue Fever",mnm:false,desc:"Viral infection from mosquito bite — fever, rash, bone pain; common in Singapore"},
+    {n:"Spontaneous Bacterial Peritonitis",mnm:true,desc:"Infection of abdominal fluid — in liver cirrhosis patients"},
+    {n:"Typhoid Fever",mnm:false,desc:"Bacterial infection from contaminated food/water — fever and abdominal pain"},
+    {n:"Malaria",mnm:true,desc:"Parasitic infection from mosquito bite — always ask about travel history"},
+    {n:"Dengue Fever",mnm:false,desc:"Viral infection from mosquito bite — common in Singapore"},
+    {n:"Sinusitis",mnm:false,desc:"Infection of the sinuses — facial pain and headache"},
   ]},
   "Psychiatry / Functional":{ico:"💭",diags:[
-    {n:"Panic Disorder / Acute Anxiety",mnm:false,desc:"Intense anxiety causing chest tightness, breathlessness, and palpitations — can mimic cardiac events"},
-    {n:"Functional Abdominal Pain / IBS",mnm:false,desc:"Abdominal pain without identifiable organic cause — diagnosis of exclusion"},
-    {n:"Somatic Symptom Disorder",mnm:false,desc:"Physical symptoms driven by psychological distress — requires careful exclusion of organic disease first"},
+    {n:"Panic Disorder / Acute Anxiety",mnm:false,desc:"Intense anxiety causing chest tightness and breathlessness — can mimic cardiac events"},
+    {n:"Functional Abdominal Pain / IBS",mnm:false,desc:"Abdominal pain without organic cause — diagnosis of exclusion"},
+    {n:"Somatic Symptom Disorder",mnm:false,desc:"Physical symptoms driven by psychological distress — requires exclusion of organic disease first"},
   ]},
 };
 
-// ═══════════════════════════════════════════════════════════
-// CASE DATA
-// ═══════════════════════════════════════════════════════════
-const CASES = [{
-  id:"case_001",
-  title:"Epigastric Pain & Nausea",
-  patient:"Mr Tan Wei Ming, 62M, Bus Driver",
-  snomedCode:"57054005",
-  vignette:"Mr Tan Wei Ming is a 62-year-old male bus driver who walks into the Emergency Department supported by his wife, looking pale and sweaty. He tells you he has had a heavy, squeezing discomfort in his upper abdomen for the past 2 hours. He has also been feeling nauseous and vomited once on the way to hospital.",
-
-  // Must-not-miss: hard locked — NOT shown to player until debrief
-  caseMNMs:["Myocardial Infarction","Aortic Dissection","Mesenteric Ischaemia","Aortic Aneurysm / Ruptured AAA"],
-
-  // Expected Phase 1 DDx — common/relevant diagnoses student should consider
-  // (beyond MNMs). Used for approach scoring.
-  expectedP1:["Peptic Ulcer Disease","Acute Pancreatitis","GORD / Acid Reflux","Acute Cholecystitis","Pulmonary Embolism","Acute Pericarditis","Acute Gastritis","Biliary Colic"],
-
-  finalDx:"Inferior STEMI",
-  finalUmbrella:"Myocardial Infarction",
-  diagnosisScore:{
-    "Inferior STEMI":100,"Inferior MI":100,
-    "STEMI":75,
-    "Myocardial Infarction":50,
-    "Anterior STEMI":50,"Anterior MI":50,"Lateral STEMI":50,"Lateral MI":50,"Posterior MI":50,
-    "NSTEMI":35,"Unstable Angina":20,
-  },
-
-  required:["pe02","bi01"], // must be done before commit (warning shown)
-
-  sigNegs:[
-    {id:"pe02",label:"Equal bilateral arm BPs → rules out Aortic Dissection",pts:10},
-    {id:"pe05",label:"No peritonism → rules out surgical emergency (peritonitis, ruptured viscus)",pts:10},
-    {id:"bi06",label:"Normal lipase/amylase → rules out Acute Pancreatitis",pts:10},
-  ],
-
-  // Educational debrief content
-  keyTeachingPoints:[
-    "Inferior MI frequently presents as epigastric pain — not chest pain. This happens because the inferior heart wall and the epigastrium share the same spinal nerve levels (T6-T10). Always think of MI when an older patient with risk factors has upper abdominal discomfort.",
-    "The 4 must-not-miss diagnoses for epigastric pain are Myocardial Infarction, Aortic Dissection, Mesenteric Ischaemia, and Ruptured AAA — all can be rapidly fatal. They must be on your differential from the start.",
-    "Checking bilateral arm blood pressures takes 60 seconds and rules out aortic dissection. A difference of more than 20 mmHg between arms suggests dissection — equal BPs largely exclude it.",
-    "Absence of peritonism (no guarding, no rebound tenderness) on abdominal examination effectively rules out a surgical emergency such as peritonitis from perforated ulcer or ruptured viscus.",
-    "The 12-lead ECG is the most important investigation in this case — it is free, fast, and gives you the diagnosis. In any patient over 40 with unexplained upper abdominal pain, an ECG should be one of the first things ordered.",
-    "ST elevation in leads II, III and aVF (inferior leads) with opposite (reciprocal) depression in leads I and aVL is the ECG pattern of Inferior STEMI. This is very specific (~95%) and triggers immediate cardiology referral for emergency heart procedure.",
-    "Time matters in heart attacks — every 10 minutes of delay means approximately 1,000 more heart muscle cells die. This is why all other diagnoses were secondary to getting the ECG quickly in this case.",
-  ],
-
-  mnmRuleOut:[
-    {
-      mnm:"Myocardial Infarction",
-      status:"ruled-in",
-      statusLbl:"Confirmed",
-      findings:[
-        {type:"hx",text:"Crushing epigastric pain radiating to jaw and left shoulder + diaphoresis + crescendo pattern over one week"},
-        {type:"hx",text:"Heavy cardiovascular risk burden: HTN, DM, 30 pack-year smoking, father died of MI at 58"},
-        {type:"inv",text:"ECG: ST elevation in leads II, III, aVF + reciprocal depression in I and aVL → Inferior STEMI"},
-        {type:"inv",text:"Troponin 10× elevated with rising delta-troponin at 3 hours → confirms myocardial necrosis"},
-      ],
-    },
-    {
-      mnm:"Aortic Dissection",
-      status:"ruled-out",
-      statusLbl:"Ruled out",
-      findings:[
-        {type:"hx",text:"No sudden 'tearing' onset, no radiation to the back between the shoulder blades"},
-        {type:"ex",text:"Equal bilateral arm BPs: Right 158/96, Left 156/94 mmHg — difference <10 mmHg"},
-        {type:"ex",text:"All peripheral pulses equal bilaterally — no evidence of vessel compression"},
-      ],
-    },
-    {
-      mnm:"Aortic Aneurysm / Ruptured AAA",
-      status:"ruled-out",
-      statusLbl:"Ruled out",
-      findings:[
-        {type:"ex",text:"No pulsatile abdominal mass on examination"},
-        {type:"ex",text:"Haemodynamically stable — no evidence of active haemorrhage"},
-        {type:"ex",text:"Equal bilateral pulses and BPs — no evidence of iliac artery compression from expanding aneurysm"},
-      ],
-    },
-    {
-      mnm:"Mesenteric Ischaemia",
-      status:"ruled-out",
-      statusLbl:"Largely excluded",
-      findings:[
-        {type:"ex",text:"Soft abdomen without peritonism — mesenteric ischaemia classically causes 'pain out of proportion to examination', but frank peritonism develops later"},
-        {type:"inv",text:"Normal lactate (1.9 mmol/L) — severe mesenteric ischaemia typically causes lactic acidosis (lactate >2.0)"},
-        {type:"hx",text:"No history of atrial fibrillation, recent MI, or known peripheral vascular disease (common risk factors for mesenteric ischaemia)"},
-      ],
-    },
-  ],
-
-  approachTitle:"An Approach to Abdominal Pain",
-  approachSub:"Reference: Nigel Fong, Algorithms in Differential Diagnosis",
-  approachText:"A systematic approach to abdominal pain organises causes by mechanism, ensuring you don't miss important diagnoses by only thinking about the most obvious ones:",
-  approachCats:[
-    {name:"Surgical Emergency",eg:"Appendicitis, perforated ulcer, bowel obstruction, mesenteric ischaemia, ruptured AAA",hl:false},
-    {name:"Upper GI",eg:"Peptic ulcer disease, GORD, gastritis, pancreatitis, oesophageal spasm",hl:false},
-    {name:"Hepatobiliary",eg:"Cholecystitis, biliary colic, gallstone in bile duct, hepatitis",hl:false},
-    {name:"Vascular / Referred ← THIS CASE",eg:"Myocardial infarction, aortic dissection — pain 'referred' from the chest via shared nerve levels",hl:true},
-    {name:"Metabolic / Systemic",eg:"Diabetic ketoacidosis, adrenal crisis, high calcium levels, sickle cell crisis",hl:false},
-    {name:"Lower GI",eg:"Bowel obstruction, colorectal cancer, twisted bowel",hl:false},
-    {name:"Genitourinary",eg:"Kidney stone, kidney infection, ovarian torsion, ectopic pregnancy",hl:false},
-    {name:"Functional / Other",eg:"Irritable bowel syndrome, functional pain, nerve root pain from spine",hl:false},
-  ],
-  approachInsight:"The VASCULAR/REFERRED category is the most commonly missed in clinical practice. Inferior MI belongs here — it causes epigastric pain not because anything is wrong with the stomach, but because the pain signals from the lower heart travel through the same spinal nerves (T6-T10) as the stomach. Using a systematic approach forces you to consider this category even when the symptom looks purely GI.",
-
-  history:[
-    {id:"h01",lbl:"Onset and character of pain",cost:"free",rel:true,
-     find:"Began 2 hours ago as a vague upper abdominal ache, gradually worsening to 7/10. Heavy and squeezing in quality. Gradual onset — no sudden 'tearing' start. He has had two similar but milder episodes over the past week, each lasting 20-30 minutes and going away on their own.",
-     exp:"The gradual, squeezing onset is typical of myocardial ischaemia. A sudden 'tearing' onset that radiates to the back would suggest aortic dissection. The crescendo pattern (episodes getting more frequent and severe) is a warning sign for escalating, unstable heart disease (unstable angina progressing to heart attack)."},
-    {id:"h02",lbl:"Where does the pain go? (radiation)",cost:"free",rel:true,
-     find:"Pain radiates up to his jaw and to his left shoulder. He also notices a heaviness in his left arm. No radiation to the back.",
-     exp:"Radiation to the jaw and left shoulder is a classic warning sign of a heart attack. It happens because the pain signals from the heart travel through the same nerve pathways as signals from the jaw and arm. Inferior MI (affecting the bottom of the heart) often radiates to the jaw. Absence of back radiation argues strongly against aortic dissection, which classically radiates between the shoulder blades."},
-    {id:"h03",lbl:"What makes it better or worse?",cost:"free",rel:true,
-     find:"No relief from antacids. No relationship to meals or swallowing. Not worsened by breathing, moving, or pressing on the abdomen. No relief from sitting forward.",
-     exp:"Failure to improve with antacids argues against acid reflux and gastritis. No worsening with breathing argues against pleurisy, PE, and pericarditis. No positional relief rules against pericarditis (which typically improves when leaning forward). Pain that is not reproduced by pressing on the abdomen argues against a musculoskeletal or peritonitic cause."},
-    {id:"h04",lbl:"Other symptoms (nausea, sweating, breathlessness)",cost:"free",rel:true,
-     find:"He has been sweating heavily since the pain started. Nauseous and vomited once. Mildly short of breath at rest. No palpitations, no fainting, no blood in vomit, no black stools.",
-     exp:"Heavy sweating and nausea are classic features of inferior heart attacks — the part of the heart affected (supplied by the right coronary artery) is connected to the vagus nerve, which causes these symptoms. Absence of blood in vomit reduces concern for GI bleeding. Mild breathlessness may mean the heart is not pumping as efficiently as usual."},
-    {id:"h05",lbl:"Past medical history",cost:"free",rel:true,
-     find:"Hypertension (10 years, on medication). Type 2 diabetes (8 years, on medication). No prior heart attacks, no stomach ulcers, no gallstones, no previous abdominal surgery.",
-     exp:"Hypertension and diabetes are two of the most important risk factors for heart disease. Having both significantly increases the probability that this is a cardiac cause. Absence of prior stomach problems reduces the likelihood of peptic ulcer disease as the primary cause."},
-    {id:"h06",lbl:"Medications and allergies",cost:"free",rel:true,
-     find:"Amlodipine 5mg (for blood pressure), Metformin 500mg twice daily (for diabetes). No NSAIDs, no aspirin, no blood thinners, no steroids. No known drug allergies.",
-     exp:"No NSAIDs — this significantly reduces the risk of NSAID-induced stomach ulcers. No blood thinners means standard heart attack treatment (aspirin loading, heparin) is safe to give. Importantly, metformin should be withheld before giving contrast dye for the heart procedure (PCI), as it can rarely cause a serious acid buildup."},
-    {id:"h07",lbl:"Family history",cost:"free",rel:true,
-     find:"His father had a heart attack at age 58 and died from it. Mother has high blood pressure. No family history of bowel cancer or inflammatory bowel disease.",
-     exp:"A first-degree relative (parent) who had a heart attack before age 60 is an independent risk factor for heart disease. This is personally significant — this patient may be having the same event his father had at a similar age."},
-    {id:"h08",lbl:"Social history (smoking, alcohol, work, lifestyle)",cost:"free",rel:true,
-     find:"Smokes 20 cigarettes/day for 30 years (30 pack-years — a heavy smoker). Drinks 1-2 units of alcohol per week. Works as a bus driver. Mostly sedentary. Lives with his wife.",
-     exp:"30 pack-years of smoking is a major and modifiable risk factor for heart disease. Light alcohol use makes alcoholic pancreatitis or hepatitis less likely. His job as a bus driver is medically relevant — cardiac events require notification to the transport authority and cardiological clearance before he can drive again."},
-    {id:"h09",lbl:"Cardiovascular symptom review",cost:"free",rel:true,
-     find:"Has been getting more short of breath than usual when walking for the past 2 months. No swollen ankles. No waking up at night breathless. No prior palpitations or blackouts.",
-     exp:"Progressive shortness of breath on exercise over 2 months suggests gradual worsening of heart function or slowly developing angina. Absence of ankle swelling and night breathlessness makes established heart failure less likely, though early heart failure could still be contributing."},
-    {id:"h10",lbl:"GI symptom review",cost:"free",rel:true,
-     find:"Normal bowel habits. No blood in stool, no black tarry stool. No difficulty swallowing. No significant recent weight loss. No yellowing of eyes or skin.",
-     exp:"This negative GI review provides important discriminating information: no rectal bleeding makes GI haemorrhage very unlikely; no dysphagia makes oesophageal pathology less likely; no jaundice makes liver and gallbladder disease less likely. This helps deprioritise the GI surgical causes on your differential."},
-    {id:"h11",lbl:"Respiratory symptom review",cost:"free",rel:false,
-     find:"No cough, no coughing up blood, no wheeze. No recent immobility, long-haul travel, or swollen leg to suggest PE risk factors.",
-     exp:"Absence of respiratory symptoms and PE risk factors reduces the probability of pulmonary embolism as the primary cause. This is still a reasonable review given the mild breathlessness, but the clinical picture strongly points to a cardiac cause."},
-    {id:"h12",lbl:"Urinary symptom review",cost:"free",rel:false,
-     find:"No pain on passing urine, no blood in urine, no pain in the flank or loin. Normal urine output.",
-     exp:"Negative urinary symptoms make kidney stones (ureteric colic) and kidney infection very unlikely. Ureteric colic typically causes severe cramping loin-to-groin pain — quite distinct from this presentation. These diagnoses can be deprioritised."},
-    {id:"h13",lbl:"Travel history",cost:"free",rel:false,
-     find:"Has not travelled outside Singapore. Born and raised here.",
-     exp:"Travel history is not discriminating for this presentation. It would be relevant if malaria, typhoid, or dengue were seriously being considered. This information doesn't change the differential here."},
-    {id:"h14",lbl:"ICE — Ideas, Concerns, Expectations",cost:"free",rel:false,ice:true,
-     find:"Patient thinks it's 'too much spicy food' or stomach acid. His main worry is missing work tomorrow — he has a bus route to drive. He wants some antacid tablets and to go home quickly.",
-     exp:"This is an important component of patient-centred care. His belief that it is a stomach problem is extremely common in patients having inferior heart attacks — this is exactly why the condition is so often misdiagnosed in primary care. His anxiety about work over his health may reflect denial, which is psychologically common in men experiencing heart attacks. Understanding his concerns allows you to communicate the seriousness of the situation effectively."},
-    {id:"h15",lbl:"Obstetric/gynaecological history",cost:"free",rel:false,
-     find:"Not applicable — patient is male.",
-     exp:"Not applicable in this male patient. This would be essential in a female patient with abdominal pain, where ectopic pregnancy and ovarian torsion are must-not-miss diagnoses requiring specific obstetric history."},
-  ],
-
-  pe:[
-    {id:"pe01",lbl:"General inspection (how does the patient look?)",cost:"free",rel:true,
-     find:"Visibly distressed and anxious. Pale skin. Profusely sweating. Slightly short of breath at rest. Sitting upright. No yellow tinge to skin or eyes. No signs of chronic liver disease.",
-     exp:"Pallor and heavy sweating (diaphoresis) reflect the body's stress response to a cardiac emergency. The combination of a pale, sweating, distressed 62-year-old with cardiovascular risk factors should immediately raise concern for a serious cardiac event. Absence of jaundice makes liver and gallbladder causes less likely."},
-    {id:"pe02",lbl:"Vital signs — including both arm blood pressures",cost:"free",rel:true,sigNeg:true,required:true,
-     find:"Blood pressure: Right arm 158/96 mmHg, Left arm 156/94 mmHg — EQUAL (difference only 2 mmHg). Heart rate: 56 beats/minute, regular. Breathing rate: 18/minute. Oxygen saturation: 96% on room air. Temperature: 37.1°C (no fever). Glasgow Coma Scale: 15 (fully alert).",
-     exp:"IMPORTANT NEGATIVE: Equal blood pressures in both arms (difference under 10 mmHg) makes aortic dissection very unlikely. Dissection usually causes a difference of more than 20 mmHg because it compresses the artery to one arm. The slow heart rate (56 bpm) is characteristic of inferior heart attacks — the artery supplying the lower heart wall (right coronary artery) also supplies the heart's natural pacemaker, so blockage slows the heart down. No fever argues against an infectious cause."},
-    {id:"pe03",lbl:"Heart examination",cost:"free",rel:true,
-     find:"Neck veins (JVP) not raised. Normal heart sounds, no abnormal murmurs. No rubbing sound (pericardial rub). All pulses equal in both arms and both legs.",
-     exp:"Absence of a pericardial rub reduces the likelihood of pericarditis. Equal pulses in all limbs, combined with equal arm blood pressures, effectively rules out aortic dissection. Normal heart sounds without murmurs makes valve problems less likely. Normal neck veins suggest the right side of the heart is not under severe pressure yet."},
-    {id:"pe04",lbl:"Lung examination",cost:"free",rel:true,
-     find:"Air entry equal on both sides. Lungs clear throughout — no crackling sounds, no wheeze, no pleural rub, no abnormal dullness.",
-     exp:"Clear lungs argue against pneumonia as the primary cause and against pulmonary oedema from severe heart failure (which would cause crackling sounds at the lung bases). No pleural rub argues against pleurisy and PE. This is a useful set of normal findings in a patient with upper abdominal pain and mild breathlessness."},
-    {id:"pe05",lbl:"Abdominal examination",cost:"free",rel:true,sigNeg:true,
-     find:"Abdomen soft and not distended. Mild tenderness to deep pressure only in the upper-middle abdomen — no tensing of abdominal muscles (guarding), no rigidity, no rebound tenderness. Murphy's sign negative (pressing under right rib cage does not cause sudden pain worsening on breathing in). Liver and spleen not enlarged. Normal bowel sounds. No abnormal masses. No visible aortic pulsation.",
-     exp:"CRITICAL NEGATIVE: Absence of peritonism — no guarding, rigidity, or rebound tenderness — effectively rules out peritonitis from a perforated organ. Negative Murphy's sign argues strongly against acute cholecystitis (inflamed gallbladder). The mild non-specific tenderness on deep pressure only is actually a recognised feature of inferior heart attacks — the pain signals from the lower heart refer to the upper abdomen. Absence of an aortic pulsatile mass makes ruptured aortic aneurysm less likely."},
-    {id:"pe06",lbl:"Peripheral vascular examination (pulses and circulation)",cost:"free",rel:true,
-     find:"All peripheral pulses felt equally in both wrists, elbows, groins, behind the knees, and at the feet. Capillary refill less than 2 seconds (normal). No evidence of poor circulation to any limb.",
-     exp:"Equal peripheral pulses throughout, combined with equal arm blood pressures, comprehensively excludes aortic dissection involving the main blood vessel branches. Good peripheral circulation suggests the heart is still pumping adequately despite the attack."},
-    {id:"pe07",lbl:"Chest wall examination",cost:"free",rel:false,
-     find:"No tender spots on the chest wall or rib cartilage. No rib deformity. Pressing on the chest wall does not reproduce the patient's pain.",
-     exp:"Absence of reproducible chest wall tenderness argues against costochondritis (inflamed cartilage) and rib fractures. This is a reasonable check — if pressing on the chest wall reproduced his pain exactly, a musculoskeletal cause would become more likely. Useful negative to document."},
-    {id:"pe08",lbl:"Rectal examination",cost:"free",rel:false,
-     find:"Not performed — no bowel symptoms reported and patient declined.",
-     exp:"Rectal examination would be a priority if GI bleeding (black tarry stools, rectal bleeding) were suspected. In this case with no bowel symptoms and a strongly cardiac picture, rectal examination is not the priority. It should not be performed before getting an ECG in this patient."},
-    {id:"pe09",lbl:"Neurological examination (upper limb)",cost:"free",rel:false,penalize:true,
-     find:"Strength, reflexes, and sensation normal in both arms.",
-     exp:"Not indicated in this presentation. There are no neurological symptoms. Performing a neurological examination before completing the cardiovascular and abdominal examination in a patient with cardiovascular risk factors and epigastric pain reflects poor clinical prioritisation — the time should be spent getting an ECG."},
-  ],
-
-  basic:[
-    {id:"bi01",lbl:"12-lead ECG (heart tracing)",cost:"low",rel:true,required:true,
-     find:"ST elevation of 2-3mm in leads II, III, and aVF (the 'inferior leads'). Reciprocal ST depression in leads I and aVL. Normal sinus rhythm at 56 beats/min. No bundle branch block.",
-     exp:"DIAGNOSTIC: ST elevation in the inferior leads (II, III, aVF) with reciprocal changes is the hallmark of an Inferior STEMI, showing that the right coronary artery is completely blocked. This single ECG finding triggers the emergency heart procedure (primary PCI) protocol immediately. All GI diagnoses are now effectively excluded. The ECG should have been ordered first — if you ordered other tests before this, that reflects a critical error in sequencing."},
-    {id:"bi02",lbl:"Troponin blood test",cost:"low",rel:true,
-     find:"Troponin (hs-TnI): 248 ng/L at arrival (normal is under 26 ng/L — about 10 times higher than normal). Repeat at 3 hours: 1,840 ng/L — rising significantly. This rising pattern is called a 'positive delta-troponin.'",
-     exp:"The rising troponin confirms that heart muscle cells are dying. Troponin is a protein released when heart cells are damaged. The pattern of a rising level (rather than a one-off elevation) is what tells us this is a new, ongoing event rather than old damage. Combined with the ECG, this confirms Inferior STEMI."},
-    {id:"bi03",lbl:"Full blood count (FBC)",cost:"low",rel:false,
-     find:"Haemoglobin 144 g/L (normal). White blood cells 11.8 (mildly elevated — a non-specific stress response). Platelets 228 (normal).",
-     exp:"A mildly elevated white count is a non-specific response to any physiological stress, including a heart attack. Normal haemoglobin makes anaemia as a contributing cause unlikely. FBC is useful as a baseline before the heart procedure but does not help diagnose this case."},
-    {id:"bi04",lbl:"Kidney function and electrolytes (UECr)",cost:"low",rel:false,
-     find:"Sodium 138 (normal), Potassium 4.2 (normal), Creatinine 102 µmol/L (mildly reduced kidney function — eGFR 65). All within acceptable range.",
-     exp:"Normal potassium is reassuring — low potassium increases the risk of dangerous heart rhythms during a heart attack. Mildly reduced kidney function is important to know before giving the contrast dye used in the heart procedure (PCI). Metformin must be withheld. These results are pre-procedural baselines, not diagnostic tools."},
-    {id:"bi05",lbl:"Liver function tests (LFTs)",cost:"low",rel:false,
-     find:"All liver enzymes (ALT, AST, ALP, bilirubin, albumin) within normal range.",
-     exp:"Normal liver function makes acute hepatitis and liver/gallbladder disease unlikely as primary causes. A useful negative for the GI differential, but this test was not the priority in this case."},
-    {id:"bi06",lbl:"Pancreatic enzymes (lipase and amylase)",cost:"low",rel:false,sigNeg:true,
-     find:"Lipase 36 U/L (normal — threshold for pancreatitis is above 180). Amylase 74 U/L (normal). No evidence of pancreatic inflammation.",
-     exp:"SIGNIFICANT NEGATIVE: Normal lipase effectively rules out acute pancreatitis (the test is very sensitive for pancreatitis — if the level were 3 times the upper limit of normal, it would strongly suggest pancreatitis). Pancreatitis was a reasonable initial differential given the epigastric pain and nausea. However, ordering this test before getting an ECG in someone with cardiovascular risk factors is poor prioritisation."},
-    {id:"bi07",lbl:"Blood sugar (glucose)",cost:"low",rel:false,
-     find:"Blood glucose: 11.2 mmol/L (elevated). Urine test: glucose in urine (expected in a diabetic), no ketones.",
-     exp:"Mildly elevated glucose is expected in a diabetic under the stress of a heart attack. Absence of ketones in urine makes diabetic ketoacidosis (DKA) very unlikely. Pre-procedural baseline but not a diagnostic investigation."},
-    {id:"bi08",lbl:"Chest X-ray",cost:"low",rel:false,
-     find:"Heart size normal. The space in the middle of the chest (mediastinum) is not widened. Lung fields clear. No collapsed lung. No fluid around the lung.",
-     exp:"A normal mediastinal width reduces (but doesn't exclude) aortic dissection — the equal bilateral BPs have already largely excluded this. Clear lungs argue against pneumonia and fluid in the lungs. Chest X-ray does not diagnose heart attacks. It is a useful baseline but not the priority — the ECG comes first."},
-    {id:"bi09",lbl:"Urine dipstick",cost:"low",rel:false,
-     find:"Glucose in urine (expected in his diabetes). No blood, no protein, no signs of infection.",
-     exp:"Absence of blood in urine makes kidney stones (ureteric colic) and kidney infection very unlikely. Glycosuria is expected with his diabetes and elevated blood glucose. Not a diagnostic investigation in this presentation."},
-    {id:"bi10",lbl:"Blood gas (ABG/VBG)",cost:"low",rel:false,
-     find:"pH 7.40 (normal). Oxygen level adequate. Carbon dioxide normal. Bicarbonate normal. Lactate 1.9 mmol/L (borderline but acceptable).",
-     exp:"Borderline lactate may reflect mildly reduced heart output. No metabolic acidosis. If the lactate were significantly elevated (above 2.5), it would raise concern for mesenteric ischaemia or cardiogenic shock. Blood gases add limited diagnostic value here but are useful if shock is suspected."},
-    {id:"bi11",lbl:"D-dimer (PE blood test)",cost:"low",rel:false,
-     find:"D-dimer: 0.45 mg/L (mildly elevated — non-specific, elevated in many conditions including heart attacks).",
-     exp:"The D-dimer test is only useful for ruling OUT pulmonary embolism when the clinical probability of PE is LOW. This patient's clinical picture does not have low PE probability, and more importantly, the ECG has already provided the diagnosis. A mildly elevated D-dimer is non-specific and very common in heart attacks, infections, and other acute illnesses. Ordering this test here reflects unclear reasoning."},
-    {id:"bi12",lbl:"CRP (inflammation blood test)",cost:"low",rel:false,
-     find:"CRP 14 mg/L (mildly elevated). ESR 22 mm/hr (normal).",
-     exp:"Mild CRP elevation is a non-specific response to any tissue injury or inflammation, including a heart attack. This test does not help diagnose MI or distinguish it from GI causes in this context. It would be more useful if pericarditis or endocarditis were being seriously considered."},
-  ],
-
-  advanced:[
-    {id:"ai01",lbl:"Coronary angiography + emergency PCI (heart procedure)",cost:"high",rel:true,
-     find:"Complete blockage of the mid right coronary artery (RCA) confirmed on angiogram. Drug-coated stent successfully placed. Blood flow restored (TIMI III flow). Time from door to balloon: 72 minutes (within the 90-minute target).",
-     exp:"DEFINITIVE INVESTIGATION AND TREATMENT: The coronary angiogram confirms total right coronary artery (RCA) blockage as the cause of this inferior STEMI. Emergency PCI (a procedure where a tiny balloon and stent open the blocked artery) restores blood flow and saves heart muscle. The RCA supplies the lower heart wall, the right ventricle, and the heart's natural pacemaker — explaining all the features of this presentation. This is the reason the ECG had to be done first — the angiogram/PCI cannot proceed without confirming STEMI on ECG."},
-    {id:"ai02",lbl:"Echocardiogram (heart ultrasound)",cost:"mid",rel:true,
-     find:"Lower (inferior) and side (inferolateral) walls of the left ventricle are moving poorly (hypokinesia). Mild involvement of the right ventricle. Estimated pumping function (ejection fraction): 48% (slightly below normal of 55%). No fluid around the heart.",
-     exp:"The echocardiogram confirms the inferior STEMI — the heart ultrasound shows that the part of the heart supplied by the blocked artery is not moving properly. This confirms which artery is blocked (RCA) and distinguishes it from viral myocarditis (which causes global poor movement everywhere). Right ventricle involvement is clinically important: these patients can collapse if given medications that lower blood pressure (like nitrates)."},
-    {id:"ai03",lbl:"CT aortogram (CT scan of the aorta)",cost:"high",rel:false,penalize:true,
-     find:"No tear in the aorta found. Normal aortic dimensions throughout. Mild hardening of the arteries (atherosclerosis) incidentally noted.",
-     exp:"NOT APPROPRIATE: Aortic dissection has already been excluded by equal bilateral blood pressures and equal peripheral pulses — checking these took 60 seconds. Ordering a CT aortogram in a confirmed STEMI patient delays the emergency heart procedure (time to balloon). Every minute of delay kills more heart muscle. This is a critical sequencing error — prioritising a test for an excluded diagnosis over definitive treatment of a confirmed one."},
-    {id:"ai04",lbl:"CT pulmonary angiography (CTPA — PE scan)",cost:"high",rel:false,penalize:true,
-     find:"No blood clots in the lung arteries found.",
-     exp:"NOT APPROPRIATE: This presentation is not consistent with PE — the heart tracing (ECG) has already established inferior STEMI, and PE typically presents with fast heart rate, sharp chest pain worsened by breathing, and risk factors like recent travel or immobility. Ordering a CTPA scan here delays emergency treatment and reflects a failure to integrate the ECG findings into the clinical picture."},
-    {id:"ai05",lbl:"CT scan of abdomen and pelvis",cost:"mid",rel:false,penalize:true,
-     find:"No free gas or fluid in the abdomen. No bowel obstruction or appendicitis. Aorta normal diameter. Fatty liver incidentally noted.",
-     exp:"NOT APPROPRIATE: The diagnosis of inferior STEMI has been established by the ECG and troponin. CT abdomen exposes the patient to radiation and contrast dye, delays the heart procedure, and reflects anchoring on the 'epigastric' symptom while ignoring the cardiovascular history and ECG. Ordering this represents a fundamental reasoning error."},
-    {id:"ai06",lbl:"Upper GI endoscopy (camera into stomach)",cost:"high",rel:false,penalize:true,
-     find:"Procedure deferred by the cardiology team — not appropriate in this setting.",
-     exp:"COMPLETELY INAPPROPRIATE: A camera into the stomach is an elective procedure that would never be done in an acute heart attack. Even if a stomach ulcer were being considered, endoscopy would be delayed until after the heart is stabilised. Selecting this option reflects anchoring entirely on the epigastric symptom and ignoring all the evidence pointing to a cardiac cause."},
-    {id:"ai07",lbl:"Abdominal ultrasound",cost:"mid",rel:false,
-     find:"No gallstones. Bile ducts and liver appear normal. Kidneys normal. Aorta normal diameter.",
-     exp:"Abdominal ultrasound would be appropriate as a first-line investigation if gallbladder disease (cholecystitis, biliary colic) or an aortic aneurysm were high on the differential. After the ECG has confirmed inferior STEMI, this scan is not indicated. The normal aortic diameter further supports against a ruptured AAA."},
-    {id:"ai08",lbl:"V/Q scan (alternative PE scan)",cost:"mid",rel:false,penalize:true,
-     find:"Not performed — not clinically indicated.",
-     exp:"NOT APPROPRIATE: A V/Q scan is used to look for pulmonary embolism in patients who cannot have contrast (e.g. due to allergy or severe kidney failure). In this case, the ECG has established the diagnosis. Selecting this investigation shows a misunderstanding of both the diagnosis and when V/Q scanning is appropriate."},
-  ],
-
-  expertNarrative:"Inferior STEMI presenting as epigastric pain is the most classic dangerous diagnostic pitfall in emergency medicine. The right coronary artery (RCA) supplies the lower (inferior) wall of the left ventricle, the right ventricle, and the heart's natural pacemaker (the SA and AV nodes). Blockage of this artery explains all the features: epigastric pain (the inferior heart and the upper abdomen share the same nerve supply at T6-T10), sweating and nausea (the blocked artery activates the vagus nerve), and slow heart rate (the pacemaker is ischaemic). The key lesson: never let the location of pain determine what organ you think about first. In any patient over 40 with cardiovascular risk factors and unexplained upper abdominal discomfort, an ECG should be obtained immediately — it is free, takes 5 minutes, and in this case provides the complete diagnosis.",
-  sensitivityNote:"Inferior MI is poorly sensitive for 'classic' central chest pain — only about 40-50% of inferior MIs present this way. The rest present as epigastric pain, nausea, jaw pain, or arm pain. This means you must use a highly sensitive screening test (the ECG) broadly for any patient over 40 with unexplained upper abdominal symptoms.",
-  specificityNote:"ST elevation in leads II, III, and aVF with reciprocal changes in I and aVL is highly SPECIFIC for inferior STEMI (~95%). Once this ECG pattern is seen, the diagnosis is confirmed with high confidence — competing diagnoses do not need further investigation before starting treatment.",
-}];
-
-// ═══════════════════════════════════════════════════════════
-// GAME STATE
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let CASES = [];
 let G = null;
 let libOpen = true;
 let libTag = 'mnm';
 let libFilter = '';
 let libSysOpen = {};
+let studyMode = true;
 let dragSrc = null;
 let rdragSrc = null;
 
@@ -802,87 +592,119 @@ const STAGES = ['setup','history','pe','basic','advanced','commit','debrief'];
 const STAGE_LBL = {setup:'Differential',history:'History',pe:'Examination',basic:'Basic Inv',advanced:'Advanced Inv',commit:'Commit',debrief:'Debrief'};
 const COST_LBL = {free:'Free',low:'Low cost',mid:'Moderate cost',high:'High cost'};
 const COST_PEN = {free:0,low:0,mid:5,high:10};
-const CAT_CSS = {history:'h-f',pe:'pe-f',basic:'bi-f',advanced:'ai-f'};
+const CAT_CSS = {history:'hf',pe:'pef',basic:'bif',advanced:'aif'};
+const CAT_LBL = {history:'History',pe:'Examination',basic:'Basic Inv',advanced:'Advanced Inv'};
 
 function freshG(idx){
   return{
-    caseIdx:idx, stage:'setup',
+    caseIdx:idx,stage:'setup',
     diff:[],
-    phase1Names:null, // set of names when Phase 1 completes
-    done:{h:new Set(),pe:new Set(),b:new Set(),a:new Set()},
-    rankSnaps:[],
-    pendingRank:null,
-    libTag:'mnm',
-    nudge:null,
-    profOpen:false,
-    commitSel:null,
-    commitSub:null,
+    phase1Names:null,
+    // FIX #1: arrays (not Sets) — push() preserves selection order
+    done:{h:[],pe:[],b:[],a:[]},
+    rankSnaps:[],pendingRank:null,
+    nudge:null,profOpen:false,
+    commitSel:null,commitSub:null,
     hardPenalty:0,
     skipped:new Set(),
-    processBreakdown:{hRel:0,hTotal:0,peRel:0,peTotal:0,biRel:0,biTotal:0,aiPen:0},
+    pb:{hRel:0,hTotal:0,peRel:0,peTotal:0,biRel:0,biTotal:0,aiPen:0},
     sigNegsEarned:new Set(),
     finalScore:null,
-    liveScore:{a:0,p:0,d:0},
+    liveScore:{a:0,p:0,d:0,_mnmOk:0,_expOk:0,_rx:0},
   };
 }
 
-// ═══════════════════════════════════════════════════════════
-// MODAL
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// BOOT / LOAD
+// ═══════════════════════════════════════════
+async function loadCases(){
+  try{
+    const r=await fetch('cases.json');
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    initCases(await r.json());
+  }catch(e){
+    document.getElementById('ldMsg').style.display='none';
+    document.getElementById('ldErr').style.display='flex';
+  }
+}
+function handleUpload(e){
+  const f=e.target.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=ev=>{
+    try{initCases(JSON.parse(ev.target.result));}
+    catch{document.getElementById('ldMsg').textContent='❌ Invalid JSON file.';}
+  };
+  rd.readAsText(f);
+}
+function initCases(data){
+  CASES=data.cases||[];
+  document.getElementById('loader').classList.add('hide');
+  document.getElementById('mover').classList.remove('hide');
+  buildLibFilters();render();
+}
+
+// FIX #6 — mode
+function toggleMode(){
+  studyMode=!studyMode;
+  document.body.classList.toggle('exam',!studyMode);
+  const b=document.getElementById('modeBtn');
+  b.className='mode-btn '+(studyMode?'study':'exam');
+  b.textContent=studyMode?'📚 Study':'🎓 Exam';
+}
 function closeModal(){document.getElementById('mover').classList.add('hide');}
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // LIBRARY
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function setLibTag(t){
-  libTag = t;
-  document.getElementById('btnMNM').className = 'ltag'+(t==='mnm'?' sel-mnm':'');
-  document.getElementById('btnWD').className = 'ltag'+(t==='wd'?' sel-wd':'');
+  libTag=t;
+  document.getElementById('btnMNM').className='ltag'+(t==='mnm'?' sel-mnm':'');
+  document.getElementById('btnWD').className='ltag'+(t==='wd'?' sel-wd':'');
 }
-
 function toggleLib(){libOpen=!libOpen;document.getElementById('lib').classList.toggle('hide',!libOpen);}
-
 function buildLibFilters(){
-  const f = document.getElementById('libFilters');
-  f.innerHTML = `<div class="lsf on" onclick="setLibFilt('')">All</div>`+
+  document.getElementById('libFilters').innerHTML=
+    `<div class="lsf on" onclick="setLibFilt('')">All</div>`+
     Object.keys(DIAG_LIB).map(s=>`<div class="lsf" onclick="setLibFilt('${escJs(s)}')">${DIAG_LIB[s].ico} ${s.split('/')[0].trim()}</div>`).join('');
 }
-
 function setLibFilt(f){
   libFilter=f;
-  document.querySelectorAll('.lsf').forEach((c,i)=>{c.classList.toggle('on',i===0&&!f||(i>0&&c.textContent.includes(f.split('/')[0].trim())));});
+  document.querySelectorAll('.lsf').forEach((c,i)=>{
+    c.classList.remove('on');
+    if(!f&&i===0)c.classList.add('on');
+    else if(f&&i>0&&c.textContent.includes(f.split('/')[0].trim()))c.classList.add('on');
+  });
   renderLib();
 }
-
 function renderLib(){
   const q=(document.getElementById('libSrch')?.value||'').toLowerCase().trim();
-  const added = G ? new Set(G.diff.map(d=>d.n)) : new Set();
-  const sysKeys = libFilter ? [libFilter] : Object.keys(DIAG_LIB);
+  const added=G?new Set(G.diff.map(d=>d.n)):new Set();
+  const keys=libFilter?[libFilter]:Object.keys(DIAG_LIB);
   let html='';
-  sysKeys.forEach(sys=>{
+  keys.forEach(sys=>{
     const data=DIAG_LIB[sys];if(!data)return;
     let dhtml='';let any=false;
     data.diags.forEach(d=>{
       const nm=!q||d.n.toLowerCase().includes(q);
       const sm=d.subs&&d.subs.some(s=>s.toLowerCase().includes(q));
       if(!nm&&!sm)return;any=true;
-      const added_=added.has(d.n);
+      const ad=added.has(d.n);
       const hasSubs=d.subs&&d.subs.length;
       const subOpen=libSysOpen[d.n];
-      dhtml+=`<div class="lrow${added_?' ':''}" onclick="addToDiff('${escJs(d.n)}')">
+      dhtml+=`<div class="lrow" onclick="addToDiff('${escJs(d.n)}')">
         <div class="lrow-txt">
-          <div class="lrow-name${added_?' added':''}">${hlQ(d.n,q)}</div>
+          <div class="lrow-nm${ad?' added':''}">${hlQ(d.n,q)}</div>
           ${d.desc?`<div class="lrow-desc">${d.desc}</div>`:''}
         </div>
         ${hasSubs?`<div class="lrow-exp${subOpen?' open':''}" onclick="event.stopPropagation();toggleLibSub('${escJs(d.n)}')">▶</div>`:''}
-        <div class="lrow-add${added_?' done':''}">${added_?'✓':'+'}</div>
+        <div class="lrow-add${ad?' done':''}">${ad?'✓':'+'}</div>
       </div>`;
       if(hasSubs&&(subOpen||q)){
         d.subs.forEach(st=>{
           if(q&&!st.toLowerCase().includes(q))return;
           const sa=added.has(st);
           dhtml+=`<div class="lrow sub" onclick="addToDiff('${escJs(st)}')">
-            <div class="lrow-txt"><div class="lrow-name${sa?' added':''}">${hlQ(st,q)}</div></div>
+            <div class="lrow-txt"><div class="lrow-nm${sa?' added':''}">${hlQ(st,q)}</div></div>
             <div class="lrow-add${sa?' done':''}">${sa?'✓':'+'}</div>
           </div>`;
         });
@@ -893,25 +715,24 @@ function renderLib(){
     html+=`<div class="lsys">
       <div class="lsys-hd" onclick="toggleLibSys('${escJs(sys)}')">
         <div class="lsys-ico">${data.ico}</div>
-        <div class="lsys-name">${sys}</div>
+        <div class="lsys-nm">${sys}</div>
         <div class="lsys-arr${sOpen?' open':''}">▶</div>
       </div>
       <div class="ldiags${sOpen?' open':''}">${dhtml}</div>
     </div>`;
   });
-  document.getElementById('libBody').innerHTML=html||`<div style="padding:12px;font-size:.75rem;color:var(--muted2);text-align:center;font-style:italic">No matches</div>`;
+  document.getElementById('libBody').innerHTML=html||`<div style="padding:12px;font-size:.74rem;color:var(--muted2);text-align:center;font-style:italic">No matches</div>`;
 }
-
 function toggleLibSys(s){libSysOpen[s]=!libSysOpen[s];renderLib();}
 function toggleLibSub(n){libSysOpen[n]=!libSysOpen[n];renderLib();}
 function hlQ(s,q){if(!q)return s;return s.replace(new RegExp(`(${escRe(q)})`,'gi'),'<strong>$1</strong>');}
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // TOPBAR
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function buildTopbar(){
   const cas=G?CASES[G.caseIdx]:null;
-  document.getElementById('tbCname').textContent=cas?cas.title:'Select a case';
+  document.getElementById('tbCname').textContent=cas?cas.title:'—';
   const si=G?STAGES.indexOf(G.stage):-1;
   document.getElementById('tbStages').innerHTML=STAGES.map((s,i)=>{
     let c='tbs';
@@ -919,7 +740,7 @@ function buildTopbar(){
     else if(i===si)c+=' active';
     else if(i<si)c+=' done';
     else c+=' locked';
-    return`<div class="${c}">${STAGE_LBL[s]}${i<si?' ✓':''}</div>`;
+    return`<div class="${c}">${STAGE_LBL[s]}</div>`;
   }).join('');
   const sc=document.getElementById('tbScores');
   if(!G||G.stage==='setup'){sc.innerHTML='';return;}
@@ -931,24 +752,19 @@ function buildTopbar(){
 }
 function scol(v){return v>=75?'var(--green)':v>=50?'var(--yellow)':'var(--red)';}
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // RENDER ROUTER
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function render(){
   buildTopbar();renderLib();
   if(!G){renderWelcome();return;}
   calcLiveScore();
-  switch(G.stage){
-    case'setup':renderSetup();break;
-    case'history':renderStage('history');break;
-    case'pe':renderStage('pe');break;
-    case'basic':renderStage('basic');break;
-    case'advanced':renderStage('advanced');break;
-    case'commit':renderCommit();break;
-    case'debrief':renderDebrief();break;
-  }
+  const s=G.stage;
+  if(s==='setup')renderSetup();
+  else if(s==='history'||s==='pe'||s==='basic'||s==='advanced')renderStage(s);
+  else if(s==='commit')renderCommit();
+  else if(s==='debrief')renderDebrief();
 }
-
 function renderWelcome(){
   document.getElementById('content').innerHTML=`
     <div class="welcome">
@@ -956,31 +772,34 @@ function renderWelcome(){
       <div class="ws">Build your differential. Investigate systematically. Commit to a diagnosis. Learn from every decision.</div>
       <div class="wh">Select a case to begin</div>
       <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
-        ${CASES.map((_,i)=>`<button class="nb start" onclick="startCase(${i})">Case ${i+1}: ${CASES[i].title}</button>`).join('')}
+        ${CASES.map((c,i)=>`<button class="nb start" style="line-height:1.5" onclick="startCase(${i})">
+          Case ${i+1}: ${c.title}<br>
+          <span style="font-size:.64rem;font-weight:400;opacity:.7">${c.approach} · ${c.difficulty==='challenging'?'⚡ Challenging':'📗 Straightforward'}</span>
+        </button>`).join('')}
       </div>
     </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// SETUP — Phase 1
-// ═══════════════════════════════════════════════════════════
-function startCase(idx){G=freshG(idx);buildLibFilters();render();}
+// ═══════════════════════════════════════════
+// PHASE 1
+// ═══════════════════════════════════════════
+function startCase(idx){G=freshG(idx);render();}
 
 function renderSetup(){
   const cas=CASES[G.caseIdx];
   document.getElementById('content').innerHTML=`
     <div class="ph-hd"><div class="ph-badge setup">Phase 1</div>
       <div><div class="ph-title">Build Your Differential Diagnosis</div>
-        <div class="ph-sub">Think broadly — what could cause this presentation? Add diagnoses from the library on the left.</div>
+        <div class="ph-sub">Think broadly — what could cause this presentation?</div>
       </div>
     </div>
     <div class="vig"><div class="vig-lbl">📋 Clinical Presentation</div><div class="vig-txt">${cas.vignette}</div></div>
     <div class="tip">
-      <strong>How to use the library:</strong> Select your tag (Must Not Miss / Working Diagnosis) in the top-left panel, then click any diagnosis to add it. Browse systematically through different body systems — don't just focus on the most obvious ones. Adding an umbrella diagnosis (e.g. "Myocardial Infarction") includes all its subtypes, which you can narrow down later.<br><br>
-      <strong>Think about:</strong> What are the dangerous diagnoses that must not be missed? What are the common diagnoses that are most likely? Consider all body systems that could explain this presentation.
+      <strong>How to use the library:</strong> Select your tag (Must Not Miss / Working Diagnosis) on the left, then click any diagnosis to add it. Browse all body systems systematically. An umbrella diagnosis (e.g. "Myocardial Infarction") includes all subtypes — you can eliminate specific subtypes later.<br><br>
+      <strong>Think broadly:</strong> Which diagnoses are dangerous and must not be missed? Which are most likely? Consider every system that could explain this presentation.
     </div>
-    <div class="diff-section">
-      <div class="ds-hd">Your Differential Diagnosis (${G.diff.length} added)<span class="ds-hint">⠿ drag to reorder by likelihood</span></div>
+    <div class="diff-box">
+      <div class="diff-hd">Your Differential (${G.diff.length} added)<span class="diff-hint">⠿ drag to reorder</span></div>
       <div class="dlist" id="dlist">${renderDiff()}</div>
     </div>
     ${G.nudge?`<div class="nudge">⚠️ ${G.nudge}</div>`:''}
@@ -990,214 +809,202 @@ function renderSetup(){
 }
 
 function toHistory(){
-  if(G.diff.filter(d=>!d.elim).length<2){G.nudge='Please add at least 2 diagnoses to your differential before proceeding.';render();return;}
+  if(G.diff.filter(d=>!d.elim).length<2){G.nudge='Add at least 2 diagnoses before proceeding.';render();return;}
   const cas=CASES[G.caseIdx];
   const missed=cas.caseMNMs.filter(m=>!G.diff.some(d=>normMatch(d.n,m)));
-  if(missed.length>0){renderCritMiss(missed);return;}
-  // Snapshot Phase 1
+  if(missed.length){renderCritMiss(missed);return;}
   G.phase1Names=new Set(G.diff.map(d=>d.n));
   G.stage='history';G.nudge=null;render();
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // CRITICAL MISS
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function renderCritMiss(missed){
-  const cas=CASES[G.caseIdx];
   const explHtml=missed.map(m=>`<p><strong>${m}:</strong> ${getMNMExpl(m)}</p>`).join('');
   document.getElementById('content').innerHTML=`
     <div class="crit">
       <div class="crit-ico">🚨</div>
       <div class="crit-title">Safety Stop — Critical Miss</div>
-      <div class="crit-body">Before you can start taking a history, your differential must include the most dangerous possible diagnoses for this presentation. You cannot investigate for a condition you haven't considered.</div>
+      <div class="crit-body">Before taking any history, your differential must include the most dangerous possible diagnoses. You cannot investigate for a condition you have not considered.</div>
       <div class="crit-missed">Missing from your differential:<br><strong>${missed.join('  ·  ')}</strong></div>
-      <div class="crit-expl">${explHtml}</div>
-      <div class="crit-penalty">⚠️ Going back and adding these diagnoses will apply a permanent <strong>−30 point penalty</strong> to your Approach score. This reflects a real patient safety failure — in clinical practice, not thinking of these diagnoses means not ordering the right tests, potentially with fatal consequences.</div>
+      <div class="crit-expl study-aid">${explHtml}</div>
+      <div class="crit-penalty">⚠️ Going back applies a permanent <strong>−30 pt Approach penalty</strong>. Forcing through costs −50 pts.</div>
       <div class="crit-acts">
         <button class="abtn primary" onclick="critBack()">← Go Back and Add Them (−30 pts)</button>
-        <button class="abtn" onclick="critForce()">Continue Without Adding Them (−50 pts)</button>
+        <button class="abtn" onclick="critForce()">Continue Without Them (−50 pts)</button>
       </div>
     </div>`;
 }
 function getMNMExpl(n){
-  const nl=(n||'').toLowerCase();
-  if(nl.includes('myocard')||nl.includes('infarct'))return'Inferior heart attacks frequently present as epigastric pain — not chest pain. Without this on your differential, you will not order an ECG. Every 10-minute delay means approximately 1,000 more heart muscle cells die.';
-  if(nl.includes('dissection'))return'Aortic dissection (a tear in the main artery) carries a 1-2% per hour death rate without treatment. Without it on your differential, you will not check both arm blood pressures — the key examination finding that rules it out.';
-  if(nl.includes('mesenteric'))return'Mesenteric ischaemia (blocked blood supply to the bowel) has over 50% death rate when diagnosed late. Its hallmark is "pain out of proportion to examination findings" — you can only notice this if you are looking for it.';
-  if(nl.includes('aortic aneurysm')||nl.includes('ruptured'))return'A ruptured aortic aneurysm (burst main abdominal blood vessel) is rapidly fatal. In an older patient with abdominal pain, this must always be considered before it can be excluded.';
-  return`${n} is a must-not-miss diagnosis because missing it can lead directly to the patient\'s death or permanent serious harm.`;
+  const l=(n||'').toLowerCase();
+  if(l.includes('myocard')||l.includes('infarct'))return'Inferior heart attacks frequently present as epigastric pain. Without MI on your list, you will not order an ECG — every 10-minute delay costs ~1,000 heart muscle cells.';
+  if(l.includes('dissection'))return'Aortic dissection carries 1-2% per hour death rate untreated. Without it on your list, you will not check both arm blood pressures — the 60-second examination that excludes it.';
+  if(l.includes('mesenteric'))return'Mesenteric ischaemia has >50% mortality when diagnosed late. Its hallmark is "pain out of proportion to examination" — you can only recognise this if you are looking for it.';
+  if(l.includes('ruptured')||l.includes('aaa'))return'Ruptured aortic aneurysm is rapidly fatal. In older patients with abdominal pain, this must always be considered before it can be excluded.';
+  if(l.includes('subarachnoid')||l.includes('sah'))return'Subarachnoid haemorrhage has significant mortality if missed. CT head and lumbar puncture are required to exclude it.';
+  if(l.includes('meningitis'))return'Bacterial meningitis is rapidly fatal without treatment. Any combination of headache/fever/neck stiffness requires consideration.';
+  if(l.includes('stroke')||l.includes('ischaemic'))return'Acute stroke is time-critical — treatment within hours dramatically improves outcomes.';
+  if(l.includes('hypertensive'))return'Hypertensive emergency with end-organ damage requires immediate management.';
+  if(l.includes('embolism')||l.includes('pe'))return'Massive PE is rapidly fatal. Without PE on your list, you will not consider appropriate investigation.';
+  if(l.includes('tamponade'))return'Cardiac tamponade causes cardiac arrest if untreated — signs only noticed if you are looking for them.';
+  if(l.includes('addison'))return'Addisonian crisis causes life-threatening electrolyte imbalance — immediately reversible with steroid replacement.';
+  if(l.includes('tension'))return'Tension pneumothorax is rapidly fatal without immediate needle decompression — diagnosed clinically.';
+  return`${n} is a must-not-miss because missing it leads directly to irreversible harm or death.`;
 }
 function critBack(){G.hardPenalty=30;G.stage='setup';render();}
 function critForce(){G.hardPenalty=50;G.phase1Names=new Set(G.diff.map(d=>d.n));G.stage='history';render();}
 
-// ═══════════════════════════════════════════════════════════
-// STAGE RENDERER
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// PHASE 2 STAGES
+// ═══════════════════════════════════════════
 const SCFG={
-  history:{key:'h',items:'history',label:'History Taking',badge:'history',catCss:'h-f',catLbl:'History',
-    instr:'Select what you would like to ask the patient. You can take as much or as little history as you like — but a thorough history is rewarded most heavily in this game.',
-    profHint:'Think about the history systematically: character of pain (SOCRATES), associated symptoms, past medical history and risk factors, medications, family history, social history, and a systems review. In this presentation, cardiovascular risk factors and the character and radiation of pain are particularly important.'},
-  pe:{key:'pe',items:'pe',label:'Physical Examination',badge:'pe',catCss:'pe-f',catLbl:'Examination',
-    instr:'Select what you would like to examine. A focused examination based on your history findings is expected. You may skip any exam component, but missing key findings will reduce your score.',
-    profHint:'Based on your history, which body systems need examining? For a patient with epigastric pain and cardiovascular risk factors, vital signs (especially both arm blood pressures) and cardiovascular examination are essential. Abdominal examination is needed to look for surgical causes.'},
-  basic:{key:'b',items:'basic',label:'Basic Investigations',badge:'basic',catCss:'bi-f',catLbl:'Basic Inv',
-    instr:'Order the basic investigations you think are needed. Think carefully — what single investigation is most likely to give you the diagnosis? Order that first.',
-    profHint:'One basic investigation in this case is more important than all others combined. Think about what the most time-sensitive, high-yield, free bedside investigation would be for a patient with epigastric pain and cardiovascular risk factors.'},
-  advanced:{key:'a',items:'advanced',label:'Advanced Investigations',badge:'advanced',catCss:'ai-f',catLbl:'Advanced Inv',
-    instr:'Advanced investigations should only be ordered when you have a clear reason. They are expensive, time-consuming, and carry risks. Based on your basic investigation results, what (if anything) do you still need to confirm?',
-    profHint:'At this stage, your basic investigations should have largely established the diagnosis. Advanced investigations should only be used to confirm, localise, or definitively treat — not to fish for a diagnosis. Unnecessary advanced investigations carry significant penalties.'},
+  history:{arr:'h',src:'history',label:'History Taking',badge:'history',cat:'hf',catLbl:'History',grid:'opts-grid',
+    instr:'Select what you would like to ask the patient. A thorough history is rewarded most heavily.',
+    hint:'Think systematically: character of complaint (SOCRATES for pain), associated symptoms, past medical history, medications, family history, social history, systems review.'},
+  pe:{arr:'pe',src:'pe',label:'Physical Examination',badge:'pe',cat:'pef',catLbl:'Examination',grid:'opts-grid',
+    instr:'Select what you would like to examine. Focus on what your history has suggested.',
+    hint:'Which examinations rule out your must-not-miss diagnoses? Which would support or refute your leading working diagnosis?'},
+  basic:{arr:'b',src:'basic',label:'Basic Investigations',badge:'basic',cat:'bif',catLbl:'Basic Inv',grid:'opts-grid two-col',
+    instr:'Order the basic investigations you need. What is the single most important investigation for this case?',
+    hint:'One investigation in most cases is more important than all others. Think about the most time-sensitive, high-yield test for this specific presentation.'},
+  advanced:{arr:'a',src:'advanced',label:'Advanced Investigations',badge:'advanced',cat:'aif',catLbl:'Advanced Inv',grid:'opts-grid two-col',
+    instr:'Only order investigations with a clear clinical indication. They are expensive and carry risks.',
+    hint:'By now, basic investigations should have largely established the diagnosis. Advanced investigations confirm, localise, or enable definitive treatment.'},
 };
 const NEXT={history:'pe',pe:'basic',basic:'advanced',advanced:'commit'};
 const DONE_BTN={history:'Done with History →',pe:'Done with Examination →',basic:'Done with Basic Investigations →',advanced:'Proceed to Commit →'};
 const SKIP_BTN={history:'Skip History',pe:'Skip Examination',basic:'Skip Basic Investigations',advanced:'Skip Advanced Investigations'};
 
-function stageSet(stage){return{history:G.done.h,pe:G.done.pe,basic:G.done.b,advanced:G.done.a}[stage]||G.done.h;}
-function stageItems(stage){return CASES[G.caseIdx][SCFG[stage].items]||[];}
+function getDoneArr(stage){return{history:G.done.h,pe:G.done.pe,basic:G.done.b,advanced:G.done.a}[stage]||G.done.h;}
+function getSrcItems(stage){return(CASES[G.caseIdx]||{})[SCFG[stage].src]||[];}
 
 function renderStage(stage){
   const cas=CASES[G.caseIdx];
   const cfg=SCFG[stage];
-  const done=stageSet(stage);
-  const allItems=stageItems(stage);
-  const doneItems=allItems.filter(i=>done.has(i.id));
-  const pendItems=allItems.filter(i=>!done.has(i.id));
+  const doneArr=getDoneArr(stage);
+  const allItems=getSrcItems(stage);
+  // FIX #1: map IDs in order they were added to the array
+  const doneItems=doneArr.map(id=>allItems.find(i=>i.id===id)).filter(Boolean);
+  const pendItems=allItems.filter(i=>!doneArr.includes(i.id));
   const isRanking=G.pendingRank===stage;
 
   let html=`
     <div class="ph-hd"><div class="ph-badge ${stage}">Phase 2 — ${cfg.label}</div>
-      <div><div class="ph-title">${cfg.label}</div>
-        <div class="ph-sub">${cfg.instr}</div>
-      </div>
+      <div><div class="ph-title">${cfg.label}</div><div class="ph-sub">${cfg.instr}</div></div>
     </div>
     <div class="vig"><div class="vig-lbl">📋 Patient</div><div class="vig-txt">${cas.vignette}</div></div>`;
 
   if(doneItems.length){
-    html+=`<div class="findings">${doneItems.map(i=>renderFinding(i,stage)).join('')}</div>`;
+    // FIX #1: findings in selection order
+    html+=`<div class="findings">${doneItems.map(i=>mkFinding(i,cfg.cat,cfg.catLbl)).join('')}</div>`;
   }
 
   if(isRanking){
-    html+=renderRankPanel(stage);
+    html+=mkRankPanel(stage,doneItems);
   } else {
     if(pendItems.length){
-      const gridCls=stage==='basic'||stage==='advanced'?'opts-grid two-col':'opts-grid';
-      html+=`<div class="stage-box">
-        <div class="stage-box-hd">Available ${stage==='history'?'History Topics':'Options'}</div>
-        <div class="${gridCls}">${pendItems.map(i=>`
+      html+=`<div class="stage-box"><div class="stage-hd">Available ${stage==='history'?'History Topics':'Options'}</div>
+        <div class="${cfg.grid}">${pendItems.map(i=>`
           <div class="opt" onclick="doItem('${stage}','${escJs(i.id)}')">
-            <div class="opt-name">${i.lbl}</div>
+            <div class="opt-nm">${i.lbl}</div>
             <div class="opt-cost ${i.cost}"><span class="cpip"></span>${COST_LBL[i.cost]}</div>
-          </div>`).join('')}
-        </div>
+          </div>`).join('')}</div>
       </div>`;
     } else {
-      html+=`<div class="stage-box"><div class="stage-box-hd" style="color:var(--green)">✓ All ${cfg.label} options completed</div></div>`;
+      html+=`<div class="stage-box"><div class="stage-hd" style="color:var(--green)">✓ All ${cfg.label} options completed</div></div>`;
     }
-    html+=`<div class="diff-section">
-      <div class="ds-hd">Your Differential (${G.diff.filter(d=>!d.elim).length} active)<span class="ds-hint">⠿ drag to reorder</span></div>
+    // FIX #5: diff box always present in Phase 2
+    html+=`<div class="diff-box">
+      <div class="diff-hd">Your Differential (${G.diff.filter(d=>!d.elim).length} active)<span class="diff-hint">⠿ drag to reorder · Eliminate to remove</span></div>
       <div class="dlist" id="dlist">${renderDiff()}</div>
     </div>`;
-    if(G.nudge) html+=`<div class="nudge">💬 ${G.nudge}</div>`;
+    if(G.nudge)html+=`<div class="nudge">💬 ${G.nudge}</div>`;
     html+=`<div class="nav-row">
-      ${doneItems.length>0?`<button class="nb go" onclick="doneStage('${stage}')">${DONE_BTN[stage]}</button>`:''}
-      <button class="nb skip" onclick="skipStage('${stage}')">${SKIP_BTN[stage]} and continue →</button>
-      <span class="prof" onclick="toggleProf()">🎓 Hint</span>
+      ${doneItems.length?`<button class="nb go" onclick="doneStage('${stage}')">${DONE_BTN[stage]}</button>`:''}
+      <button class="nb skip" onclick="skipStage('${stage}')">${SKIP_BTN[stage]}</button>
+      <span class="prof study-aid" onclick="toggleProf()">🎓 Hint</span>
     </div>
-    ${G.profOpen?`<div class="prof-reveal">💡 ${cfg.profHint}</div>`:''}`;
+    ${G.profOpen?`<div class="prof-reveal study-aid">💡 ${cfg.hint}</div>`:''}`;
   }
   document.getElementById('content').innerHTML=html;
 }
 
-function renderFinding(item,stage){
+function mkFinding(item,cat,catLbl){
   const cas=CASES[G.caseIdx];
-  const cfg=SCFG[stage];
-  const catCss=cfg.catCss;
-  const sn=cas.sigNegs.find(s=>s.id===item.id);
+  const sn=(cas.sigNegs||[]).find(s=>s.id===item.id);
   const isReq=(cas.required||[]).includes(item.id);
   const isIce=item.ice;
   const irrel=!item.rel&&!isIce;
-  return`<div class="fc ${isIce?'ice-f':catCss}">
-    <div class="fc-lbl ${isIce?'ice-f':catCss}">${cfg.catLbl} — ${item.lbl}</div>
+  return`<div class="fc ${isIce?'icef':cat}">
+    <div class="fc-lbl ${isIce?'icef':cat}">${catLbl} — ${item.lbl}</div>
     <div class="fc-txt">${item.find}</div>
-    ${isReq?`<div class="fc-note req">⭐ Key investigation for this case</div>`:''}
-    ${sn?`<div class="fc-note signeg">✓ Significant negative: ${sn.label}</div>`:''}
-    ${irrel?`<div class="fc-note irrel">○ Did not significantly change the differential</div>`:''}
-    ${isIce?`<div class="fc-note ice">💬 ICE — good practice</div>`:''}
+    ${isReq?`<div class="fc-note req study-aid">⭐ Key investigation for this case</div>`:''}
+    ${sn?`<div class="fc-note sig study-aid">✓ Significant negative: ${sn.label}</div>`:''}
+    ${irrel?`<div class="fc-note irrel study-aid">○ Did not significantly change the differential</div>`:''}
+    ${isIce?`<div class="fc-note ice study-aid">💬 ICE — good practice</div>`:''}
   </div>`;
 }
 
 function doItem(stage,id){
-  const cas=CASES[G.caseIdx];
-  const s=stageSet(stage);if(s.has(id))return;
-  s.add(id);
-  const items=stageItems(stage);
-  const item=items.find(i=>i.id===id);if(!item)return;
+  const arr=getDoneArr(stage);
+  if(arr.includes(id))return;
+  arr.push(id); // FIX #1: push maintains selection order
+  const item=getSrcItems(stage).find(i=>i.id===id);if(!item)return;
   G.nudge=null;G.profOpen=false;
-  // process scoring
-  if(stage==='history'){G.processBreakdown.hTotal++;if(item.rel)G.processBreakdown.hRel++;}
-  if(stage==='pe'){G.processBreakdown.peTotal++;if(item.rel)G.processBreakdown.peRel++;}
-  if(stage==='basic'){G.processBreakdown.biTotal++;if(item.rel)G.processBreakdown.biRel++;}
-  if(stage==='advanced'){
-    if(!item.rel&&item.penalize){const pen=COST_PEN[item.cost]||8;G.processBreakdown.aiPen=(G.processBreakdown.aiPen||0)+pen;G.nudge=`"${item.lbl}" was not appropriate at this stage and has cost ${pen} process points.`;}
+  if(stage==='history'){G.pb.hTotal++;if(item.rel)G.pb.hRel++;}
+  else if(stage==='pe'){G.pb.peTotal++;if(item.rel)G.pb.peRel++;}
+  else if(stage==='basic'){G.pb.biTotal++;if(item.rel)G.pb.biRel++;}
+  else if(stage==='advanced'&&!item.rel&&item.penalize){
+    const pen=COST_PEN[item.cost]||8;
+    G.pb.aiPen=(G.pb.aiPen||0)+pen;
+    G.nudge=`"${item.lbl}" was not appropriate here — efficiency −${pen} pts.`;
   }
-  // sig negs
-  const sn=cas.sigNegs.find(n=>n.id===id);if(sn)G.sigNegsEarned.add(id);
-  // check if reactive (added after Phase 1)
-  if(G.phase1Names){
-    // Items are investigation choices, not DDx — reactive DDx tracking is separate
-  }
+  const sn=(CASES[G.caseIdx].sigNegs||[]).find(n=>n.id===id);
+  if(sn)G.sigNegsEarned.add(id);
   calcLiveScore();render();
 }
 
-function doneStage(stage){G.pendingRank=stage;render();}
+function doneStage(stage){G.pendingRank=stage;G.profOpen=false;render();}
+function skipStage(stage){G.skipped.add(stage);G.pendingRank=stage;G.profOpen=false;render();}
+function toggleProf(){G.profOpen=!G.profOpen;render();}
 
-function skipStage(stage){
-  G.skipped.add(stage);
-  G.pendingRank=stage;
-  G.profOpen=false;
-  render();
-}
-
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // RANKING PANEL
-// ═══════════════════════════════════════════════════════════
-function renderRankPanel(stage){
+// ═══════════════════════════════════════════
+function mkRankPanel(stage,doneItems){
   const active=G.diff.filter(d=>!d.elim);
-  const cas=CASES[G.caseIdx];
-  const doneItems=stageItems(stage).filter(i=>stageSet(stage).has(i.id));
   const skipped=G.skipped.has(stage);
-  const summaryLines=doneItems.slice(-5).map(i=>`• ${i.lbl}: ${i.find.slice(0,90)}${i.find.length>90?'…':''}`).join('<br>');
+  const lines=doneItems.slice(-4).map(i=>`• ${i.lbl}: ${i.find.slice(0,90)}${i.find.length>90?'…':''}`).join('<br>');
   return`<div class="rp">
     <div class="rp-lbl">📊 Update Your Ranking — After ${STAGE_LBL[stage]}</div>
-    <div class="rp-sub">${skipped?'You skipped this stage. Based on what you knew before, how would you rank your differential?':'Based on what you just found, drag your differential into order — <strong>most likely at the top</strong>. This is Bayesian updating: new evidence should change your probability estimates.'}</div>
-    ${!skipped&&doneItems.length?`<div class="rp-summary"><div class="rp-summary-lbl">Key findings from ${STAGE_LBL[stage]}</div>${summaryLines}</div>`:''}
-    ${active.length?`<div class="rlist" id="rlist">${buildRItems(active)}</div>`:`<div style="font-size:.78rem;color:var(--muted);font-style:italic;padding:8px 0">No active diagnoses to rank — add diagnoses to your differential first.</div>`}
+    <div class="rp-sub">${skipped?'You skipped this stage. Based on what you knew before, rank your differential.':'Drag your differential into order — <strong>most likely at the top</strong>. Each new piece of evidence should shift your probability estimates.'}</div>
+    ${!skipped&&doneItems.length?`<div class="rp-findings"><div class="rp-findings-lbl">Key findings from ${STAGE_LBL[stage]}</div><div class="rp-findings-body">${lines}</div></div>`:''}
+    ${active.length?`<div class="rlist" id="rlist">${buildRItems(active)}</div>`:
+      `<div style="font-size:.77rem;color:var(--muted);font-style:italic;padding:8px 0">No active diagnoses to rank. Add some to your differential first.</div>`}
     <button class="rp-btn" onclick="confirmRank('${stage}')">Confirm Ranking and Continue →</button>
   </div>`;
 }
-
 function buildRItems(active){
   return active.map((d,i)=>{
-    const isReactive=G.phase1Names&&!G.phase1Names.has(d.n);
+    const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
     return`<div class="ri" id="ri-${i}" draggable="true"
       ondragstart="rDS(event,${i})" ondragover="rDO(event,${i})" ondrop="rDrop(event,${i})"
       ondragleave="rDL(event,${i})" ondragend="rDE()">
       <span class="ri-num">${i+1}</span>
-      <span class="ri-name">${d.n}</span>
-      <span class="ri-tag ${d.tag==='mnm'?'mnm':isReactive?'reactive':'wd'}">${d.tag==='mnm'?'🔴 MNM':isReactive?'➕ Added later':'🟡 WD'}</span>
+      <span class="ri-nm">${d.n}</span>
+      <span class="ri-tag ${d.tag==='mnm'?'mnm':isRx?'rx':'wd'}">${d.tag==='mnm'?'🔴':isRx?'➕':'🟡'}</span>
       <span class="ri-ico">⠿</span>
     </div>`;
   }).join('');
 }
 function reRenderRList(){const el=document.getElementById('rlist');if(el)el.innerHTML=buildRItems(G.diff.filter(d=>!d.elim));}
-
 function confirmRank(stage){
   G.rankSnaps.push({stage:STAGE_LBL[stage],ranks:G.diff.filter(d=>!d.elim).map(d=>d.n),skipped:G.skipped.has(stage)});
   G.pendingRank=null;
-  const next=NEXT[stage];
-  if(next){G.stage=next;}
+  const next=NEXT[stage];if(next)G.stage=next;
   calcLiveScore();render();
 }
-
 function rDS(e,i){rdragSrc=i;e.dataTransfer.effectAllowed='move';setTimeout(()=>document.getElementById('ri-'+i)?.classList.add('dragging'),0);}
 function rDO(e,i){e.preventDefault();if(i!==rdragSrc)document.getElementById('ri-'+i)?.classList.add('drag-over');}
 function rDL(e,i){document.getElementById('ri-'+i)?.classList.remove('drag-over');}
@@ -1210,38 +1017,34 @@ function rDrop(e,i){
 }
 function rDE(){rdragSrc=null;document.querySelectorAll('.ri').forEach(e=>e.classList.remove('dragging','drag-over'));}
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // COMMIT
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function renderCommit(){
   const cas=CASES[G.caseIdx];
-  const missingReq=(cas.required||[]).filter(r=>{
-    return !G.done.b.has(r)&&!G.done.pe.has(r);
-  });
+  const missingReq=(cas.required||[]).filter(r=>!G.done.b.includes(r)&&!G.done.pe.includes(r));
   const pool=Object.values(DIAG_LIB).flatMap(s=>s.diags);
   const subs=G.commitSel?(()=>{const e=pool.find(d=>d.n===G.commitSel);return e?.subs||[];})():[];
   document.getElementById('content').innerHTML=`
     <div class="ph-hd"><div class="ph-badge commit">Phase 3</div>
       <div><div class="ph-title">Commit to Your Diagnosis</div>
-        <div class="ph-sub">Select your single most likely diagnosis. If you added an umbrella, select the specific subtype for full marks.</div>
+        <div class="ph-sub">Select your single most likely diagnosis. Specify the subtype for full marks.</div>
       </div>
     </div>
-    ${missingReq.length?`<div class="commit-warn">⚠️ You haven't performed: <strong>${missingReq.map(r=>{const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);return it?it.lbl:r;}).join(', ')}</strong>. Missing these key steps will significantly reduce your Process and Diagnosis scores.</div>`:''}
+    ${missingReq.length?`<div class="commit-warn">⚠️ You have not performed: <strong>${missingReq.map(r=>{const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);return it?it.lbl:r;}).join(', ')}</strong>. Missing these will significantly reduce your scores.</div>`:''}
     <div class="commit-box">
       <div class="commit-lbl">Select Your Final Diagnosis</div>
-      <div class="cdx-list">
-        ${G.diff.map((d,i)=>{
-          const isReactive=G.phase1Names&&!G.phase1Names.has(d.n);
-          return`<div class="cdx ${d.elim?'elim-f':''} ${G.commitSel===d.n&&!d.elim?'sel':''}" onclick="${d.elim?'':'selectCommit(\''+escJs(d.n)+'\')'}">
-            <div class="cdx-radio"></div>
-            <div class="cdx-nm">${d.n}${d.elim?' (eliminated)':''}</div>
-            <div class="cdx-rank">#${i+1}</div>
-            ${isReactive?`<div class="cdx-reactive">added in Phase 2</div>`:''}
-          </div>`;
-        }).join('')}
-      </div>
+      <div class="cdx-list">${G.diff.map((d,i)=>{
+        const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
+        return`<div class="cdx ${d.elim?'elimf':''} ${G.commitSel===d.n&&!d.elim?'sel':''}" onclick="${d.elim?'':'selectCommit(\''+escJs(d.n)+'\')'}">
+          <div class="cdx-radio"></div>
+          <div class="cdx-nm">${d.n}${d.elim?' (eliminated)':''}</div>
+          <div class="cdx-rank">#${i+1}</div>
+          ${isRx?`<div class="cdx-rx">added Phase 2</div>`:''}
+        </div>`;
+      }).join('')}</div>
       ${G.commitSel&&subs.length?`<div class="sub-sel">
-        <div class="sub-sel-lbl">Specify the exact subtype for full marks (optional — umbrella gives partial credit):</div>
+        <div class="sub-sel-lbl">Specify subtype for full marks (umbrella = partial credit):</div>
         <div class="sub-opts">${subs.map(s=>`<div class="sopt ${G.commitSub===s?'sel':''}" onclick="selectSub('${escJs(s)}')">${s}</div>`).join('')}</div>
       </div>`:''}
       <div style="height:10px"></div>
@@ -1249,173 +1052,166 @@ function renderCommit(){
         ${G.commitSel?(G.commitSub?`Commit: "${G.commitSub}" →`:`Commit: "${G.commitSel}" (umbrella) →`):'Select a diagnosis above'}
       </button>
     </div>
-    <div class="tip"><strong>Specificity:</strong> You have gathered your clinical information. Which single diagnosis — at the most specific level you can confidently state — best explains everything you found?</div>`;
+    <div class="tip"><strong>Specificity:</strong> Which single diagnosis — at the most specific level you can confidently state — best explains all your findings?</div>`;
 }
 function selectCommit(n){G.commitSel=n;G.commitSub=null;render();}
 function selectSub(s){G.commitSub=s;render();}
 function submitCommit(){if(!G.commitSel)return;calcFinalScore();G.stage='debrief';render();}
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // SCORING
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function calcLiveScore(){
-  const cas=CASES[G.caseIdx];
-  const pb=G.processBreakdown;
-  // APPROACH
-  const mnmOk=cas.caseMNMs.filter(m=>G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,m))).length;
-  const mnmPts=(mnmOk/cas.caseMNMs.length)*40;
-  const expOk=cas.expectedP1.filter(e=>G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,e))).length;
-  const expPct=expOk/cas.expectedP1.length;
-  const expPts=expPct>=0.6?30:expPct>=0.4?20:expPct>=0.2?10:0;
-  const snPts=Math.min(20,[...G.sigNegsEarned].reduce((s,id)=>{const sn=cas.sigNegs.find(n=>n.id===id);return s+(sn?sn.pts:0);},0));
-  // Reactive DDx penalty (added after phase1)
-  const reactiveExpected=G.phase1Names?cas.expectedP1.filter(e=>!([...G.phase1Names].some(n=>normMatch(n,e)))&&G.diff.some(d=>normMatch(d.n,e))).length:0;
-  const reactivePen=reactiveExpected*3;
-  const approachRaw=Math.max(0,mnmPts+expPts+snPts-reactivePen-G.hardPenalty);
-  // PROCESS
-  const hRel=cas.history.filter(i=>i.rel).length;
-  const peRel=cas.pe.filter(i=>i.rel).length;
-  const biRel=cas.basic.filter(i=>i.rel).length;
-  const hPts=hRel>0?(pb.hRel||0)/hRel*50:G.skipped.has('history')?0:0;
-  const pePts=peRel>0?(pb.peRel||0)/peRel*30:0;
-  const biPts=biRel>0?(pb.biRel||0)/biRel*20:0;
+  const cas=CASES[G.caseIdx];const pb=G.pb;
+  const mn=cas.caseMNMs||[];
+  const mnmOk=mn.filter(m=>G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,m))).length;
+  const mnmPts=mn.length?(mnmOk/mn.length)*40:0;
+  const exp=cas.expectedP1||[];
+  const expOk=exp.filter(e=>G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,e))).length;
+  const expPct=exp.length?expOk/exp.length:0;
+  const expPts=expPct>=.6?30:expPct>=.4?20:expPct>=.2?10:0;
+  const snPts=Math.min(20,[...G.sigNegsEarned].reduce((s,id)=>{const sn=(cas.sigNegs||[]).find(n=>n.id===id);return s+(sn?sn.pts:0);},0));
+  const rxCount=G.phase1Names?exp.filter(e=>![...G.phase1Names].some(n=>normMatch(n,e))&&G.diff.some(d=>normMatch(d.n,e))).length:0;
+  const approachRaw=Math.max(0,mnmPts+expPts+snPts-rxCount*3-G.hardPenalty);
+  const hRel=(cas.history||[]).filter(i=>i.rel).length;
+  const peRel=(cas.pe||[]).filter(i=>i.rel).length;
+  const biRel=(cas.basic||[]).filter(i=>i.rel).length;
+  const hPts=hRel?(pb.hRel||0)/hRel*50:0;
+  const pePts=peRel?(pb.peRel||0)/peRel*30:0;
+  const biPts=biRel?(pb.biRel||0)/biRel*20:0;
   const processRaw=Math.max(0,hPts+pePts+biPts-(pb.aiPen||0));
-  G.liveScore={a:Math.min(100,approachRaw),p:Math.min(100,processRaw),d:0,
-    _mnmOk:mnmOk,_expOk:expOk,_reactiveExpected:reactiveExpected};
+  G.liveScore={a:Math.min(100,approachRaw),p:Math.min(100,processRaw),d:0,_mnmOk:mnmOk,_expOk:expOk,_rx:rxCount};
 }
-
 function calcFinalScore(){
   calcLiveScore();
   const cas=CASES[G.caseIdx];
   const committed=G.commitSub||G.commitSel||'';
-  const dxPts=cas.diagnosisScore[committed]||cas.diagnosisScore[G.commitSel]||0;
+  const dxPts=(cas.diagnosisScore||{})[committed]||(cas.diagnosisScore||{})[G.commitSel]||0;
   G.liveScore.d=dxPts;
-  const a=G.liveScore.a,p=G.liveScore.p,d=dxPts;
-  const pb=G.processBreakdown;
-  const hRel=cas.history.filter(i=>i.rel).length;
-  const peRel=cas.pe.filter(i=>i.rel).length;
+  const{a,p}=G.liveScore;const d=dxPts;
+  const pb=G.pb;const mn=cas.caseMNMs||[];
+  const hRel=(cas.history||[]).filter(i=>i.rel).length;
+  const peRel=(cas.pe||[]).filter(i=>i.rel).length;
   G.finalScore={
     approach:Math.round(a),process:Math.round(p),diagnosis:Math.round(d),
-    total:Math.round(a*0.3+p*0.4+d*0.3),
-    approachExpl:`Must-not-miss coverage: ${G.liveScore._mnmOk}/${cas.caseMNMs.length} (${Math.round((G.liveScore._mnmOk/cas.caseMNMs.length)*40)} pts). Common DDx breadth: ${G.liveScore._expOk}/${cas.expectedP1.length} expected diagnoses in Phase 1. Significant negatives earned: ${G.sigNegsEarned.size}. Reactive additions (added during Phase 2): ${G.liveScore._reactiveExpected} expected DDx. Hard lock penalty: ${G.hardPenalty > 0 ? '−'+G.hardPenalty+' pts' : 'none'}.`,
-    processExpl:`History: ${pb.hRel||0} of ${hRel} relevant topics covered${G.skipped.has('history')?' (stage skipped)':''}. PE: ${pb.peRel||0} of ${peRel} relevant examinations performed. Basic investigations: ${pb.biRel||0} relevant tests ordered. Advanced investigation penalties: ${pb.aiPen||0} pts.`,
-    dxExpl:`You committed to: "${committed||'nothing'}". ${dxPts===100?'Correct — specific subtype identified correctly.':dxPts>=75?'Correct general category but not fully localised to the specific subtype.':dxPts>=50?'Correct umbrella diagnosis but subtype not specified or incorrect.':dxPts>0?'Partially correct — related to the right territory but not the final diagnosis.':'Incorrect diagnosis.'}`
+    total:Math.round(a*.3+p*.4+d*.3),
+    approachExpl:`MNM coverage: ${G.liveScore._mnmOk}/${mn.length} (${Math.round(G.liveScore._mnmOk/Math.max(1,mn.length)*40)} pts). Common DDx breadth: ${G.liveScore._expOk}/${(cas.expectedP1||[]).length}. Significant negatives: ${G.sigNegsEarned.size}. Reactive additions (Phase 2 only): ${G.liveScore._rx}. Hard-lock penalty: ${G.hardPenalty>0?'−'+G.hardPenalty+' pts':'none'}.`,
+    processExpl:`History: ${pb.hRel||0}/${hRel} relevant topics${G.skipped.has('history')?' (skipped)':''}. PE: ${pb.peRel||0}/${peRel} relevant examinations. Basic investigations: ${pb.biRel||0} relevant tests. Advanced investigation penalties: ${pb.aiPen||0} pts.`,
+    dxExpl:`Committed to: "${committed||'nothing'}". ${dxPts===100?'Correct — specific subtype identified.':dxPts>=75?'Correct category, not fully localised.':dxPts>=50?'Correct umbrella, subtype missing or wrong.':dxPts>0?'Related territory, not the final diagnosis.':'Incorrect diagnosis.'}`
   };
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // DEBRIEF
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function renderDebrief(){
-  const cas=CASES[G.caseIdx];
-  const fs=G.finalScore;
+  const cas=CASES[G.caseIdx];const fs=G.finalScore;
   const committed=G.commitSub||G.commitSel||'—';
   const correct=fs.diagnosis>=75;
 
-  // Build investigation timeline
+  // FIX #1: timeline in selection order (iterate done arrays directly)
   const allDone=[];
-  [{set:G.done.h,items:cas.history,cat:'history'},{set:G.done.pe,items:cas.pe,cat:'pe'},
-   {set:G.done.b,items:cas.basic,cat:'basic'},{set:G.done.a,items:cas.advanced,cat:'advanced'}]
-  .forEach(({set,items,cat})=>items.filter(i=>set.has(i.id)).forEach(i=>allDone.push({...i,cat})));
+  [{arr:G.done.h,src:'history'},{arr:G.done.pe,src:'pe'},{arr:G.done.b,src:'basic'},{arr:G.done.a,src:'advanced'}]
+  .forEach(({arr,src})=>{
+    const items=(cas[src]||[]);
+    arr.map(id=>items.find(i=>i.id===id)).filter(Boolean)
+      .forEach(i=>allDone.push({...i,cat:src==='pe'?'pe':src==='basic'?'basic':src==='advanced'?'advanced':'history'}));
+  });
 
-  const tl=allDone.map((i,n)=>{
-    const sn=cas.sigNegs.find(s=>s.id===i.id);
-    const isReq=(cas.required||[]).includes(i.id);
-    const isIce=i.ice;
-    const catCss=CAT_CSS[i.cat]||'h-f';
-    const irrel=!i.rel&&!isIce;
+  const tl=allDone.map((item,n)=>{
+    const sn=(cas.sigNegs||[]).find(s=>s.id===item.id);
+    const isReq=(cas.required||[]).includes(item.id);
+    const isIce=item.ice;
+    const irrel=!item.rel&&!isIce;
+    const catLbl=CAT_LBL[item.cat]||item.cat;
     return`<div class="tl-step">
       <div class="tl-hd">
         <div class="tl-num">${n+1}</div>
-        <div class="tl-type">${STAGE_LBL[i.cat]||i.cat} — ${i.lbl}</div>
-        <div class="tl-cost ${i.cost}">${COST_LBL[i.cost]}</div>
+        <div class="tl-type">${catLbl} — ${item.lbl}</div>
+        <div class="tl-cost ${item.cost}">${COST_LBL[item.cost]}</div>
       </div>
       ${isReq?`<div class="tl-tag req">⭐ Key investigation</div>`:''}
-      ${sn?`<div class="tl-tag signeg">✓ ${sn.label}</div>`:''}
+      ${sn?`<div class="tl-tag sig">✓ ${sn.label}</div>`:''}
       ${irrel?`<div class="tl-tag irrel">○ Did not change differential</div>`:''}
-      ${isIce?`<div class="tl-tag ice">💬 ICE — good practice</div>`:''}
-      <div class="tl-finding">${i.find}</div>
-      <div class="tl-expert">💡 ${i.exp}</div>
+      ${isIce?`<div class="tl-tag ice">💬 ICE</div>`:''}
+      <div class="tl-finding">${item.find}</div>
+      <div class="tl-expert">${item.exp}</div>
     </div>`;
   }).join('');
 
   // Phase 1 coverage
-  const allExpected=[...cas.caseMNMs,...cas.expectedP1];
-  const p1CovHtml=allExpected.map(e=>{
+  const allExp=[...cas.caseMNMs,...(cas.expectedP1||[])];
+  const p1Cov=allExp.map(e=>{
     const inP1=G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,e));
     const inLater=!inP1&&G.diff.some(d=>normMatch(d.n,e));
-    const never=!inP1&&!inLater;
     const isMNM=cas.caseMNMs.some(m=>normMatch(m,e));
-    if(inP1) return`<div class="p1-row ok"><span class="p1-icon">✓</span><span class="p1-name">${e}</span><span class="p1-note">${isMNM?'🔴 MNM':''} Added in Phase 1</span></div>`;
-    if(inLater) return`<div class="p1-row reactive"><span class="p1-icon">↓</span><span class="p1-name">${e}</span><span class="p1-note">${isMNM?'🔴 MNM':''} Added reactively in Phase 2</span></div>`;
-    return`<div class="p1-row missed"><span class="p1-icon">✗</span><span class="p1-name">${e}</span><span class="p1-note">${isMNM?'🔴 MNM':''} Never considered</span></div>`;
+    if(inP1)return`<div class="p1-row ok"><span class="p1-ico">✓</span><span class="p1-nm">${e}</span><span class="p1-note">${isMNM?'🔴 MNM · ':''}Phase 1</span></div>`;
+    if(inLater)return`<div class="p1-row rx"><span class="p1-ico">↓</span><span class="p1-nm">${e}</span><span class="p1-note">${isMNM?'🔴 MNM · ':''}Added reactively</span></div>`;
+    return`<div class="p1-row missed"><span class="p1-ico">✗</span><span class="p1-nm">${e}</span><span class="p1-note">${isMNM?'🔴 MNM · ':''}Never considered</span></div>`;
   }).join('');
 
-  // Ranking snapshots
-  const snapHtml=G.rankSnaps.length?G.rankSnaps.map(s=>{
-    const fxName=cas.finalDx;
-    return`<div class="snap-item">
-      <div class="snap-lbl">${s.skipped?'⚠️ Stage skipped — ':''}After ${s.stage}</div>
+  // Ranking snapshots — fixed formatting
+  const snapHtml=G.rankSnaps.length?G.rankSnaps.map(s=>`
+    <div class="snap-item">
+      <div class="snap-lbl">After ${s.stage} ${s.skipped?`<span class="snap-skip">⚠️ skipped</span>`:''}</div>
       <div class="snap-table">
         ${s.ranks.map((n,i)=>{
-          const isFx=normMatch(n,fxName)||normMatch(n,cas.finalUmbrella);
-          const total=s.ranks.length;
-          const topHalf=i<Math.ceil(total/2);
+          const isFx=normMatch(n,cas.finalDx)||normMatch(n,cas.finalUmbrella);
+          const topHalf=i<Math.ceil(s.ranks.length/2);
           return`<div class="snap-row">
-            <span class="snap-pos">${i+1}</span>
-            <span class="snap-name">${n}</span>
-            ${isFx?`<span class="snap-badge ${topHalf?'high':'low'}">${topHalf?'✓ Top half':'↓ Should rank higher'}</span>`:''}
+            <span class="snap-pos">${i+1}.</span>
+            <span class="snap-nm">${n}</span>
+            ${isFx?`<span class="snap-badge ${topHalf?'hi':'lo'}">${topHalf?'✓ correct dx here':'↓ should rank higher'}</span>`:''}
           </div>`;
         }).join('')}
       </div>
-    </div>`;
-  }).join(''):`<p style="font-size:.78rem;color:var(--muted);font-style:italic;padding:4px 0">No ranking snapshots recorded — complete the ranking prompts after each stage for Bayesian reasoning practice.</p>`;
+    </div>`).join(''):`<p style="font-size:.78rem;color:var(--muted);font-style:italic;padding:4px 0">No ranking snapshots recorded — complete the ranking prompts after each stage for Bayesian reasoning practice.</p>`;
 
   // MNM rule-out
-  const mnmHtml=cas.mnmRuleOut.map(m=>`
+  const mnmHtml=(cas.mnmRuleOut||[]).map(m=>`
     <div class="mnm-row">
       <div class="mnm-row-hd">
-        <div class="mnm-row-name">${m.mnm}</div>
-        <div class="mnm-row-status ${m.status}">${m.statusLbl}</div>
+        <div class="mnm-row-nm">${m.mnm}</div>
+        <div class="mnm-status ${m.status}">${m.statusLbl}</div>
       </div>
       <div class="mnm-findings">
-        ${m.findings.map(f=>`<div class="mnm-finding">
-          <span class="mnm-finding-type ${f.type==='hx'?'hx':f.type==='ex'?'ex':'inv'}">${f.type==='hx'?'History':f.type==='ex'?'Examination':'Investigation'}</span>
+        ${m.findings.map(f=>`<div class="mnm-f">
+          <span class="mnm-ft ${f.type==='hx'?'hx':f.type==='ex'?'ex':'inv'}">${f.type==='hx'?'History':f.type==='ex'?'Examination':'Investigation'}</span>
           <span>${f.text}</span>
         </div>`).join('')}
       </div>
     </div>`).join('');
 
-  const acats=cas.approachCats.map(c=>`
+  const acats=(cas.approachCats||[]).map(c=>`
     <div class="acat${c.hl?' hl':''}">
-      <div class="acat-name">${c.name}</div>
+      <div class="acat-nm">${c.name}</div>
       <div class="acat-eg">${c.eg}</div>
     </div>`).join('');
 
   document.getElementById('content').innerHTML=`
   <div class="db">
     <div class="db-outcome">
-      <div class="db-out-lbl">${correct?'✅ Correct diagnosis':'❌ Incorrect or incomplete diagnosis'}</div>
+      <div class="db-res-lbl">${correct?'✅ Correct diagnosis':'❌ Incorrect or incomplete'}</div>
       <div class="db-dx">${cas.finalDx}</div>
-      <div class="db-sub">SNOMED: ${cas.snomedCode} · Your answer: ${committed}</div>
+      <div class="db-sub">SNOMED: ${cas.snomedCode||'—'} · Your answer: ${committed} · Diagnosis score: ${fs.diagnosis}/100</div>
     </div>
 
     <div class="score-trio">
-      <div class="sc-card approach">
-        <div class="sc-card-lbl">🎯 Approach Score (30%)</div>
-        <div class="sc-val" style="color:${scol(fs.approach)}">${fs.approach} / 100</div>
+      <div class="sc approach">
+        <div class="sc-lbl">🎯 Approach (30%)</div>
+        <div class="sc-val" style="color:${scol(fs.approach)}">${fs.approach}</div>
         <div class="sc-bar-w"><div class="sc-bar-f ${fs.approach>=75?'g':fs.approach>=50?'y':'r'}" style="width:${fs.approach}%"></div></div>
         <div class="sc-expl">${fs.approachExpl}</div>
       </div>
-      <div class="sc-card process">
-        <div class="sc-card-lbl">⚙️ Process Score (40%)</div>
-        <div class="sc-val" style="color:${scol(fs.process)}">${fs.process} / 100</div>
+      <div class="sc process">
+        <div class="sc-lbl">⚙️ Process (40%)</div>
+        <div class="sc-val" style="color:${scol(fs.process)}">${fs.process}</div>
         <div class="sc-bar-w"><div class="sc-bar-f ${fs.process>=75?'g':fs.process>=50?'y':'r'}" style="width:${fs.process}%"></div></div>
         <div class="sc-expl">${fs.processExpl}</div>
       </div>
-      <div class="sc-card diagnosis">
-        <div class="sc-card-lbl">✅ Diagnosis Score (30%)</div>
-        <div class="sc-val" style="color:${scol(fs.diagnosis)}">${fs.diagnosis} / 100</div>
+      <div class="sc diagnosis">
+        <div class="sc-lbl">✅ Diagnosis (30%)</div>
+        <div class="sc-val" style="color:${scol(fs.diagnosis)}">${fs.diagnosis}</div>
         <div class="sc-bar-w"><div class="sc-bar-f ${fs.diagnosis>=75?'g':fs.diagnosis>=50?'y':'r'}" style="width:${fs.diagnosis}%"></div></div>
         <div class="sc-expl">${fs.dxExpl}</div>
       </div>
@@ -1428,53 +1224,51 @@ function renderDebrief(){
 
     <div class="db-card">
       <div class="db-card-lbl">📖 What This Case Was Teaching</div>
-      <div class="ktp-list">
-        ${cas.keyTeachingPoints.map((t,i)=>`<div class="ktp"><span class="ktp-num">${i+1}</span><span>${t}</span></div>`).join('')}
-      </div>
+      <div class="ktp-list">${(cas.keyTeachingPoints||[]).map((t,i)=>`<div class="ktp"><span class="ktp-n">${i+1}</span><span>${t}</span></div>`).join('')}</div>
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">🔴 Must-Not-Miss Diagnoses — What Ruled Each One In or Out</div>
-      <div class="mnm-table">${mnmHtml}</div>
+      <div class="db-card-lbl">🔴 Must-Not-Miss Diagnoses — Ruled In or Out</div>
+      ${mnmHtml||`<p style="font-size:.78rem;color:var(--muted);font-style:italic">No MNM rule-out data for this case.</p>`}
     </div>
 
     <div class="db-card">
       <div class="db-card-lbl">📋 Your Phase 1 Differential Coverage</div>
-      <p style="font-size:.76rem;color:var(--muted);margin-bottom:8px">These are the diagnoses you were expected to consider from the start. Green = added in Phase 1. Purple = added reactively in Phase 2 (counts against Approach score). Red = never considered.</p>
-      <div class="p1-cov">${p1CovHtml}</div>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Green = added in Phase 1 · Purple = added reactively in Phase 2 (penalised) · Red = never considered</p>
+      <div class="p1-cov">${p1Cov}</div>
     </div>
 
     <div class="db-card">
       <div class="db-card-lbl">📊 Your Ranking Progression (Bayesian Updating)</div>
-      <p style="font-size:.76rem;color:var(--muted);margin-bottom:9px">After each stage, your ranking should have shifted toward the correct diagnosis. Green = correct diagnosis in top half of your ranking.</p>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">After each stage, the correct diagnosis should move toward the top. Green = correct dx in the top half of your ranking.</p>
       <div class="snap-wrap">${snapHtml}</div>
     </div>
 
-    <div class="db-card">
+    <div class="tl-card">
       <div class="db-card-lbl">🧪 Your Investigation Pathway — Expert Commentary</div>
-      ${tl||`<p style="font-size:.78rem;color:var(--muted);font-style:italic">No investigations were performed.</p>`}
+      ${tl||`<p style="font-size:.78rem;color:var(--muted);font-style:italic">No investigations performed.</p>`}
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">🔍 Sensitivity and Specificity — Key Learning Points</div>
+      <div class="db-card-lbl">🔍 Sensitivity &amp; Specificity</div>
       <div class="ss-row">
-        <div class="ssb sens"><div class="ssb-title">Sensitivity</div><div class="ssb-text">${cas.sensitivityNote}</div></div>
-        <div class="ssb spec"><div class="ssb-title">Specificity</div><div class="ssb-text">${cas.specificityNote}</div></div>
-        <div class="ssb safe"><div class="ssb-title">Safety Net</div><div class="ssb-text">Must-not-miss diagnoses require high-sensitivity screening — apply the relevant test broadly even when you think it's unlikely, because missing them is catastrophic.</div></div>
+        <div class="ssb sens"><div class="ssb-title">Sensitivity</div><div class="ssb-text">${cas.sensitivityNote||''}</div></div>
+        <div class="ssb spec"><div class="ssb-title">Specificity</div><div class="ssb-text">${cas.specificityNote||''}</div></div>
+        <div class="ssb safe"><div class="ssb-title">Safety Net</div><div class="ssb-text">Must-not-miss diagnoses require high-sensitivity screening — the cost of missing them is catastrophic and irreversible.</div></div>
       </div>
     </div>
 
     <div class="approach-card">
       <div class="approach-lbl">📚 The Clinical Framework — Revealed</div>
-      <div class="approach-title">${cas.approachTitle}</div>
-      <div class="approach-text">${cas.approachText}</div>
+      <div class="approach-title">${cas.approachTitle||''}</div>
+      <div class="approach-text">${cas.approachText||''}</div>
       <div class="approach-cats">${acats}</div>
-      <div class="approach-insight">💡 ${cas.approachInsight}</div>
+      <div class="approach-insight">💡 ${cas.approachInsight||''}</div>
     </div>
 
     <div class="db-card">
       <div class="db-card-lbl">Expert Summary</div>
-      <p style="font-size:.82rem;line-height:1.72;color:var(--muted)">${cas.expertNarrative}</p>
+      <p style="font-size:.82rem;line-height:1.72;color:var(--muted)">${cas.expertNarrative||''}</p>
     </div>
 
     <div class="nav-row" style="justify-content:center;padding-bottom:20px">
@@ -1484,75 +1278,110 @@ function renderDebrief(){
   </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // DIFFERENTIAL MANAGEMENT
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function addToDiff(name){
-  if(!G)return;
-  if(G.diff.find(d=>d.n===name))return;
+  if(!G||G.diff.find(d=>d.n===name))return;
   const pool=Object.values(DIAG_LIB).flatMap(s=>s.diags);
   const entry=pool.find(d=>d.n===name||(d.subs&&d.subs.includes(name)));
   const subs=entry&&entry.n===name&&entry.subs?entry.subs:[];
-  const isMNM=entry?entry.mnm:false;
-  G.diff.push({n:name,tag:libTag,elim:false,elimSubs:[],mnm:isMNM,subs});
-  G.nudge=null;
-  renderLib();
-  reRenderDiff();
+  G.diff.push({n:name,tag:libTag,elim:false,elimSubs:[],mnm:entry?.mnm||false,subs});
+  G.nudge=null;renderLib();reRenderDiff();
 }
 
 function renderDiff(){
   if(!G.diff.length)return`<div class="dempty">Add diagnoses from the library on the left</div>`;
-  return G.diff.map((d,i)=>{
-    const isReactive=G.phase1Names&&!G.phase1Names.has(d.n);
-    return`<div class="de ${isReactive?'reactive':d.tag==='mnm'?'mnm-e':'wd-e'} ${d.elim?'elim':''}" id="de-${i}"
+  // FIX #3: active first, eliminated at bottom
+  const active=G.diff.filter(d=>!d.elim);
+  const elim=G.diff.filter(d=>d.elim);
+  return[...active,...elim].map((d,visIdx)=>{
+    const origIdx=G.diff.indexOf(d);
+    const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
+    const leftBorder=isRx?'rx-e':d.tag==='mnm'?'mnm-e':'wd-e';
+    return`<div class="de ${leftBorder} ${d.elim?'elim':''}" id="de-${origIdx}"
       draggable="true"
-      ondragstart="dDS(event,${i})" ondragover="dDO(event,${i})" ondrop="dDrop(event,${i})"
-      ondragleave="dDL(event,${i})" ondragend="dDE()">
+      ondragstart="dDS(event,${origIdx})" ondragover="dDO(event,${origIdx})" ondrop="dDrop(event,${origIdx})"
+      ondragleave="dDL(event,${origIdx})" ondragend="dDE()">
       <div class="de-top">
         <span class="de-drag">⠿</span>
-        <span class="de-rank">${i+1}</span>
+        <span class="de-rank">${visIdx+1}</span>
         <div class="de-main">
-          <div class="de-nm ${d.elim?'elim-nm':''}">
+          <div class="de-nm ${d.elim?'crossed':''}">
             ${d.n}
-            <span class="de-tag ${isReactive?'t-reactive':d.tag==='mnm'?'t-mnm':'t-wd'}">${isReactive?'➕ Phase 2':d.tag==='mnm'?'🔴 MNM':'🟡 WD'}</span>
+            <span class="de-tag ${isRx?'t-rx':d.tag==='mnm'?'t-mnm':'t-wd'}">${isRx?'➕ Phase 2':d.tag==='mnm'?'🔴 MNM':'🟡 WD'}</span>
           </div>
-          ${d.mnm&&d.elim?`<div class="de-lock">🔒 MNM — deprioritised only, not fully removed</div>`:''}
         </div>
         <div class="de-acts">
-          ${d.elim?`<button class="de-btn restore" onclick="restoreD(${i})">Restore</button>`
-                  :`<button class="de-btn" onclick="elimD(${i})">${d.mnm?'Deprioritise':'Eliminate'}</button>`}
+          ${d.elim
+            ?`<button class="de-btn restore" onclick="restoreD(${origIdx})">Restore</button>`
+            // FIX #2: single "Eliminate" label for ALL entries (no "Deprioritise")
+            :`<button class="de-btn" onclick="elimD(${origIdx})">Eliminate</button>`
+          }
         </div>
       </div>
-      ${d.subs.length?`<div class="de-subs">${d.subs.map(s=>{const el=d.elimSubs.includes(s);return`<span class="de-sub ${el?'sub-elim':''}" onclick="toggleSubElim(${i},'${escJs(s)}')">${el?'✕ ':''} ${s}</span>`;}).join('')}</div>`:''}
+      ${d.subs.length?`<div class="de-subs">${d.subs.map(s=>{
+        const x=d.elimSubs.includes(s);
+        return`<span class="de-sub ${x?'sub-x':''}" onclick="toggleSubElim(${origIdx},'${escJs(s)}')">${x?'✕ ':''} ${s}</span>`;
+      }).join('')}</div>`:''}
     </div>`;
   }).join('');
 }
-
 function reRenderDiff(){const el=document.getElementById('dlist');if(el)el.innerHTML=renderDiff();}
-function elimD(i){if(G.diff[i].mnm){G.diff[i].elim=true;G.diff[i].tag='wd';}else{G.diff[i].elim=true;}reRenderDiff();}
-function restoreD(i){G.diff[i].elim=false;reRenderDiff();}
-function toggleSubElim(i,s){const d=G.diff[i];if(!d)return;const idx=d.elimSubs.indexOf(s);if(idx>=0)d.elimSubs.splice(idx,1);else d.elimSubs.push(s);reRenderDiff();}
+
+function elimD(i){
+  // FIX #3: move to bottom of array when eliminated
+  const d=G.diff.splice(i,1)[0];
+  d.elim=true;
+  G.diff.push(d);
+  reRenderDiff();
+}
+function restoreD(i){
+  // FIX #3: move back before first eliminated entry
+  const d=G.diff.splice(i,1)[0];
+  d.elim=false;
+  const firstElim=G.diff.findIndex(x=>x.elim);
+  if(firstElim===-1)G.diff.push(d);
+  else G.diff.splice(firstElim,0,d);
+  reRenderDiff();
+}
+function toggleSubElim(i,sub){
+  const d=G.diff[i];if(!d)return;
+  const idx=d.elimSubs.indexOf(sub);
+  if(idx>=0)d.elimSubs.splice(idx,1);else d.elimSubs.push(sub);
+  reRenderDiff();
+}
 
 function dDS(e,i){dragSrc=i;e.dataTransfer.effectAllowed='move';setTimeout(()=>document.getElementById('de-'+i)?.classList.add('dragging'),0);}
 function dDO(e,i){e.preventDefault();if(i!==dragSrc)document.getElementById('de-'+i)?.classList.add('drag-over');}
 function dDL(e,i){document.getElementById('de-'+i)?.classList.remove('drag-over');}
-function dDrop(e,i){e.preventDefault();document.getElementById('de-'+i)?.classList.remove('drag-over');if(dragSrc===null||dragSrc===i)return;const mv=G.diff.splice(dragSrc,1)[0];G.diff.splice(i,0,mv);reRenderDiff();dragSrc=null;}
+function dDrop(e,i){
+  e.preventDefault();document.getElementById('de-'+i)?.classList.remove('drag-over');
+  if(dragSrc===null||dragSrc===i)return;
+  const src=G.diff[dragSrc];const tgt=G.diff[i];
+  // Only drag between active (non-eliminated) items
+  if(src&&tgt&&!src.elim&&!tgt.elim){
+    G.diff.splice(dragSrc,1);G.diff.splice(i,0,src);
+  }
+  reRenderDiff();dragSrc=null;
+}
 function dDE(){dragSrc=null;document.querySelectorAll('.de').forEach(el=>el.classList.remove('dragging','drag-over'));}
 
-function toggleProf(){G.profOpen=!G.profOpen;render();}
-
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // UTILS
-// ═══════════════════════════════════════════════════════════
-function normMatch(a,b){if(!a||!b)return false;const al=a.toLowerCase(),bl=b.toLowerCase();return al===bl||al.includes(bl)||bl.includes(al);}
+// ═══════════════════════════════════════════
+function normMatch(a,b){
+  if(!a||!b)return false;
+  const al=a.toLowerCase(),bl=b.toLowerCase();
+  return al===bl||al.includes(bl)||bl.includes(al);
+}
 function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
 function escJs(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"');}
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // BOOT
-// ═══════════════════════════════════════════════════════════
-buildLibFilters();
-render();
+// ═══════════════════════════════════════════
+loadCases();
 </script>
 </body>
 </html>
