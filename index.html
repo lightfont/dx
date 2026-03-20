@@ -300,6 +300,39 @@ body.exam .lrow-desc{display:none!important}
 .mnm-f.not-done{opacity:.48}
 .mnm-f.not-done .mnm-ft{background:var(--surf3);color:var(--muted2)}
 .mnm-not-done-badge{font-size:.59rem;font-family:var(--mono);color:var(--muted2);background:var(--surf3);border:1px dashed var(--bdr2);padding:1px 5px;border-radius:4px;flex-shrink:0;margin-top:1px;white-space:nowrap}
+/* linked-pair tag in ranking */
+.ri-tag.lp{background:var(--tdim);color:var(--teal)}
+/* MNM demotion reasoning section */
+.dmtn-table{display:flex;flex-direction:column;gap:5px}
+.dmtn-row{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:8px 11px;display:flex;align-items:flex-start;gap:9px}
+.dmtn-mnm{font-size:.76rem;font-weight:700;flex:1}
+.dmtn-checks{display:flex;flex-direction:column;gap:3px;font-size:.73rem;color:var(--muted)}
+.dmtn-chk{display:flex;align-items:flex-start;gap:6px;line-height:1.45}
+.dmtn-chk.pass{color:var(--green)}.dmtn-chk.fail{color:var(--red)}.dmtn-chk.skip{color:var(--muted2)}
+.dmtn-chk-ico{flex-shrink:0;font-family:var(--mono);font-size:.62rem;margin-top:2px}
+/* collapsible timeline */
+.tl-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:2px 0;margin-bottom:8px;user-select:none}
+.tl-toggle-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tl-toggle-arr{font-size:.7rem;color:var(--muted2);transition:transform .18s}
+.tl-toggle-arr.open{transform:rotate(90deg)}
+.tl-body{display:none}.tl-body.open{display:block}
+/* key pivots section */
+.kp-grid{display:flex;flex-direction:column;gap:6px}
+.kp-item{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:9px 12px;border-left:3px solid var(--bdr2)}
+.kp-item.req{border-left-color:var(--accent)}.kp-item.sig{border-left-color:var(--green)}.kp-item.conf{border-left-color:var(--orange)}
+.kp-hd{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.kp-badge{font-size:.6rem;font-family:var(--mono);font-weight:700;padding:1px 6px;border-radius:4px}
+.kp-badge.req{background:var(--adim);color:var(--accent)}.kp-badge.sig{background:var(--gdim);color:var(--green)}.kp-badge.conf{background:var(--odim);color:var(--orange)}
+.kp-lbl{font-size:.79rem;font-weight:600}
+.kp-find{font-size:.77rem;color:var(--muted);line-height:1.5;margin-top:3px}
+/* secondary commit */
+.sec-commit{background:var(--surf3);border:1px solid var(--bdr2);border-radius:var(--r);padding:9px 11px;margin-top:6px}
+.sec-commit-lbl{font-size:.65rem;font-family:var(--mono);color:var(--teal);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.sec-commit-hint{font-size:.72rem;color:var(--muted);margin-bottom:7px;line-height:1.5}
+.sec-opts{display:flex;flex-wrap:wrap;gap:4px}
+.scopt{padding:4px 10px;border-radius:20px;font-size:.71rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf2);transition:all .11s;font-family:var(--mono)}
+.scopt:hover{border-color:var(--teal);color:var(--teal);background:var(--tdim)}
+.scopt.sel{background:var(--teal);border-color:var(--teal);color:#000}
 .p1-cov{display:flex;flex-direction:column;gap:4px}
 .p1-row{display:flex;align-items:center;gap:8px;font-size:.78rem;padding:5px 8px;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r)}
 .p1-ico{font-size:.8rem;flex-shrink:0;width:18px;text-align:center}
@@ -604,17 +637,17 @@ function freshG(idx){
     caseIdx:idx,stage:'setup',
     diff:[],
     phase1Names:null,
-    // FIX #1: arrays (not Sets) — push() preserves selection order
     done:{h:[],pe:[],b:[],a:[]},
     rankSnaps:[],pendingRank:null,
     nudge:null,profOpen:false,
     commitSel:null,commitSub:null,
+    secondaryCommit:null,  // compound diagnosis (e.g. SIADH alongside SCLC)
     hardPenalty:0,
     skipped:new Set(),
     pb:{hRel:0,hTotal:0,peRel:0,peTotal:0,biRel:0,biTotal:0,aiPen:0},
     sigNegsEarned:new Set(),
     finalScore:null,
-    liveScore:{a:0,p:0,d:0,_mnmOk:0,_expOk:0,_rx:0},
+    liveScore:{a:0,p:0,d:0,_mnmOk:0,_expOk:0,_rx:0,_demote:0},
   };
 }
 
@@ -990,14 +1023,19 @@ function mkRankPanel(stage,doneItems){
   </div>`;
 }
 function buildRItems(active){
+  const cas=CASES[G.caseIdx];
+  const pairs=cas.linkedPairs||[];
   return active.map((d,i)=>{
     const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
+    const isLP=pairs.some(p=>normMatch(p.secondary,d.n));
+    const tagCls=d.tag==='mnm'?'mnm':isLP?'lp':isRx?'rx':'wd';
+    const tagLbl=d.tag==='mnm'?'🔴':isLP?'🔗':isRx?'➕':'🟡';
     return`<div class="ri" id="ri-${i}" draggable="true"
       ondragstart="rDS(event,${i})" ondragover="rDO(event,${i})" ondrop="rDrop(event,${i})"
       ondragleave="rDL(event,${i})" ondragend="rDE()">
       <span class="ri-num">${i+1}</span>
       <span class="ri-nm">${d.n}</span>
-      <span class="ri-tag ${d.tag==='mnm'?'mnm':isRx?'rx':'wd'}">${d.tag==='mnm'?'🔴':isRx?'➕':'🟡'}</span>
+      <span class="ri-tag ${tagCls}">${tagLbl}</span>
       <span class="ri-ico">⠿</span>
     </div>`;
   }).join('');
@@ -1029,54 +1067,110 @@ function renderCommit(){
   const missingReq=(cas.required||[]).filter(r=>!G.done.b.includes(r)&&!G.done.pe.includes(r));
   const pool=Object.values(DIAG_LIB).flatMap(s=>s.diags);
   const subs=G.commitSel?(()=>{const e=pool.find(d=>d.n===G.commitSel);return e?.subs||[];})():[];
+  const showSec=cas.hasSecondaryDx&&(G.done.b.includes(cas.secondaryDxTriggerInv)||G.done.pe.includes(cas.secondaryDxTriggerInv));
+  const pairs=cas.linkedPairs||[];
   document.getElementById('content').innerHTML=`
     <div class="ph-hd"><div class="ph-badge commit">Phase 3</div>
       <div><div class="ph-title">Commit to Your Diagnosis</div>
-        <div class="ph-sub">Select your single most likely diagnosis. Specify the subtype for full marks.</div>
+        <div class="ph-sub">Select your most likely diagnosis. Specify the subtype for full marks.</div>
       </div>
     </div>
     ${missingReq.length?`<div class="commit-warn">⚠️ You have not performed: <strong>${missingReq.map(r=>{const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);return it?it.lbl:r;}).join(', ')}</strong>. Missing these will significantly reduce your scores.</div>`:''}
     <div class="commit-box">
-      <div class="commit-lbl">Select Your Final Diagnosis</div>
+      <div class="commit-lbl">Primary Diagnosis</div>
       <div class="cdx-list">${G.diff.map((d,i)=>{
         const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
-        return`<div class="cdx ${d.elim?'elimf':''} ${G.commitSel===d.n&&!d.elim?'sel':''}" onclick="${d.elim?'':'selectCommit(\''+escJs(d.n)+'\')'}">
-          <div class="cdx-radio"></div>
-          <div class="cdx-nm">${d.n}${d.elim?' (eliminated)':''}</div>
-          <div class="cdx-rank">#${i+1}</div>
-          ${isRx?`<div class="cdx-rx">added Phase 2</div>`:''}
-        </div>`;
+        const isLP=pairs.some(p=>normMatch(p.secondary,d.n));
+        if(isLP&&!d.elim) return('<div class="cdx" style="cursor:default;opacity:.55;border-style:dashed"><div class="cdx-radio" style="border-color:var(--teal)"></div><div class="cdx-nm">'+d.n+' <span style="font-size:.65rem;font-family:var(--mono);color:var(--teal)">🔗 complication — select below</span></div><div class="cdx-rank">#'+(i+1)+'</div></div>');
+        return('<div class="cdx '+(d.elim?'elimf':'')+' '+(G.commitSel===d.n&&!d.elim?'sel':'')+'" onclick="'+(d.elim?'':'selectCommit(\''+escJs(d.n)+'\')')+'"><div class="cdx-radio"></div><div class="cdx-nm">'+d.n+(d.elim?' (eliminated)':'')+'</div><div class="cdx-rank">#'+(i+1)+'</div>'+(isRx?'<div class="cdx-rx">added Phase 2</div>':'')+'</div>');
       }).join('')}</div>
-      ${G.commitSel&&subs.length?`<div class="sub-sel">
-        <div class="sub-sel-lbl">Specify subtype for full marks (umbrella = partial credit):</div>
-        <div class="sub-opts">${subs.map(s=>`<div class="sopt ${G.commitSub===s?'sel':''}" onclick="selectSub('${escJs(s)}')">${s}</div>`).join('')}</div>
-      </div>`:''}
+      ${G.commitSel&&subs.length?('<div class="sub-sel"><div class="sub-sel-lbl">Specify subtype for full marks (umbrella = partial credit):</div><div class="sub-opts">'+subs.map(s=>'<div class="sopt '+(G.commitSub===s?'sel':'')+'" onclick="selectSub(\''+escJs(s)+'\')">'+s+'</div>').join('')+'</div></div>'):''}
+      ${showSec?('<div class="sec-commit"><div class="sec-commit-lbl">🔗 Complicating Syndrome</div><div class="sec-commit-hint">Your investigations suggest a complicating syndrome alongside the primary diagnosis. Did you identify one?</div><div class="sec-opts"><div class="scopt '+(G.secondaryCommit===cas.secondaryDx?'sel':'')+'" onclick="selectSecondaryCmt(\''+escJs(cas.secondaryDx)+'\')">'+( cas.secondaryDxLabel||cas.secondaryDx)+'</div><div class="scopt '+(G.secondaryCommit==='none'?'sel':'')+'" onclick="selectSecondaryCmt(\'none\')">None / not identified</div></div></div>'):''}
       <div style="height:10px"></div>
       <button class="commit-btn" onclick="submitCommit()" ${!G.commitSel?'disabled':''}>
-        ${G.commitSel?(G.commitSub?`Commit: "${G.commitSub}" →`:`Commit: "${G.commitSel}" (umbrella) →`):'Select a diagnosis above'}
+        ${(()=>{if(!G.commitSel)return 'Select a diagnosis above';const p=G.commitSub||G.commitSel;const s=(showSec&&G.secondaryCommit&&G.secondaryCommit!=='none')?' + '+cas.secondaryDx:'';return 'Commit: "'+p+'"'+s+' →';})()}
       </button>
     </div>
-    <div class="tip"><strong>Specificity:</strong> Which single diagnosis — at the most specific level you can confidently state — best explains all your findings?</div>`;
+    <div class="tip"><strong>Specificity:</strong> Which diagnosis — at the most specific level you can confidently state — best explains all your findings?</div>`;
 }
 function selectCommit(n){G.commitSel=n;G.commitSub=null;render();}
 function selectSub(s){G.commitSub=s;render();}
+function selectSecondaryCmt(v){G.secondaryCommit=v;render();}
 function submitCommit(){if(!G.commitSel)return;calcFinalScore();G.stage='debrief';render();}
 
 // ═══════════════════════════════════════════
 // SCORING
 // ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
+// SCORING
+// ═══════════════════════════════════════════
+function calcMNMDemotionScore(){
+  // Score: did player move each MNM to bottom half AFTER the demoting evidence?
+  const cas=CASES[G.caseIdx];
+  const demotions=cas.mnmExpectedDemotion||[];
+  if(!demotions.length) return {pts:0,total:0,detail:[]};
+  const pairs=cas.linkedPairs||[];
+  const active=G.diff.filter(d=>!d.elim);
+  const n=active.length;
+  let earned=0,detail=[];
+  // For each unique MNM+snapshot combo, find most recent snapshot after that item was done
+  const uniqueKeys=[];
+  demotions.forEach(de=>{
+    const key=de.mnm+'|'+de.snapshot;
+    if(!uniqueKeys.includes(key)) uniqueKeys.push(key);
+  });
+  uniqueKeys.forEach(key=>{
+    const [mnmName,snapStage]=key.split('|');
+    // Was the triggering item performed?
+    const relevantDemotions=demotions.filter(d=>d.mnm===mnmName&&d.snapshot===snapStage);
+    const anyTriggerDone=relevantDemotions.some(d=>
+      G.done.h.includes(d.after_item)||G.done.pe.includes(d.after_item)||
+      G.done.b.includes(d.after_item)||G.done.a.includes(d.after_item));
+    if(!anyTriggerDone){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'Trigger not performed'});return;}
+    // Find the snapshot taken after this stage
+    const snap=G.rankSnaps.find(s=>s.stage===snapStage);
+    if(!snap){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'No ranking snapshot taken'});return;}
+    // Is this MNM in the snapshot at all?
+    const pos=snap.ranks.findIndex(r=>normMatch(r,mnmName));
+    if(pos<0){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'MNM not in differential at this point'});return;}
+    const snapN=snap.ranks.length;
+    const inBottomHalf=pos>=Math.floor(snapN/2);
+    // Check if it's a linked-pair secondary (shouldn't apply demotion logic)
+    const isLP=pairs.some(p=>normMatch(p.secondary,mnmName));
+    if(isLP){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'Linked complication — not evaluated'});return;}
+    // Special case: if MNM is "ruled in" (confirmed diagnosis), being #1 is correct
+    const mnmRuleOutEntry=(cas.mnmRuleOut||[]).find(m=>normMatch(m.mnm,mnmName));
+    if(mnmRuleOutEntry&&mnmRuleOutEntry.status==='ruled-in'){
+      const inTopHalf=pos<Math.ceil(snapN/2);
+      if(inTopHalf){earned++;detail.push({mnm:mnmName,stage:snapStage,result:'pass',note:'Correctly ranked high after confirming'});}
+      else{detail.push({mnm:mnmName,stage:snapStage,result:'fail',note:'Should be ranked #1 after confirmation'});}
+      return;
+    }
+    if(inBottomHalf){earned++;detail.push({mnm:mnmName,stage:snapStage,result:'pass',note:'Correctly moved to bottom half after exclusionary evidence'});}
+    else{detail.push({mnm:mnmName,stage:snapStage,result:'fail',note:relevantDemotions[0]?.note||'Should be ranked lower after exclusionary evidence'});}
+  });
+  const total=uniqueKeys.filter(k=>{
+    const [mn,st]=k.split('|');
+    const d=demotions.filter(x=>x.mnm===mn&&x.snapshot===st);
+    return d.some(x=>G.done.h.includes(x.after_item)||G.done.pe.includes(x.after_item)||G.done.b.includes(x.after_item)||G.done.a.includes(x.after_item));
+  }).length;
+  return {pts:total?Math.round(earned/Math.max(1,total)*20):0,total,earned,detail};
+}
+
 function calcLiveScore(){
   const cas=CASES[G.caseIdx];const pb=G.pb;
   const mn=cas.caseMNMs||[];
   const mnmOk=mn.filter(m=>G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,m))).length;
-  const mnmPts=mn.length?(mnmOk/mn.length)*40:0;
+  const mnmPts=mn.length?(mnmOk/mn.length)*30:0;
   const exp=cas.expectedP1||[];
   const expOk=exp.filter(e=>G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,e))).length;
   const expPct=exp.length?expOk/exp.length:0;
-  const expPts=expPct>=.6?30:expPct>=.4?20:expPct>=.2?10:0;
+  const expPts=expPct>=.6?20:expPct>=.4?13:expPct>=.2?7:0;
   const snPts=Math.min(20,[...G.sigNegsEarned].reduce((s,id)=>{const sn=(cas.sigNegs||[]).find(n=>n.id===id);return s+(sn?sn.pts:0);},0));
   const rxCount=G.phase1Names?exp.filter(e=>![...G.phase1Names].some(n=>normMatch(n,e))&&G.diff.some(d=>normMatch(d.n,e))).length:0;
-  const approachRaw=Math.max(0,mnmPts+expPts+snPts-rxCount*3-G.hardPenalty);
+  const demote=calcMNMDemotionScore();
+  // Approach = MNM coverage (30) + breadth (20) + sig negs (20) + demotion (20) + 10 base
+  const approachRaw=Math.max(0,10+mnmPts+expPts+snPts+demote.pts-rxCount*3-G.hardPenalty);
   const hRel=(cas.history||[]).filter(i=>i.rel).length;
   const peRel=(cas.pe||[]).filter(i=>i.rel).length;
   const biRel=(cas.basic||[]).filter(i=>i.rel).length;
@@ -1084,36 +1178,74 @@ function calcLiveScore(){
   const pePts=peRel?(pb.peRel||0)/peRel*30:0;
   const biPts=biRel?(pb.biRel||0)/biRel*20:0;
   const processRaw=Math.max(0,hPts+pePts+biPts-(pb.aiPen||0));
-  G.liveScore={a:Math.min(100,approachRaw),p:Math.min(100,processRaw),d:0,_mnmOk:mnmOk,_expOk:expOk,_rx:rxCount};
+  G.liveScore={a:Math.min(100,approachRaw),p:Math.min(100,processRaw),d:0,
+    _mnmOk:mnmOk,_expOk:expOk,_rx:rxCount,_demote:demote};
 }
+
 function calcFinalScore(){
   calcLiveScore();
   const cas=CASES[G.caseIdx];
   const committed=G.commitSub||G.commitSel||'';
-  const dxPts=(cas.diagnosisScore||{})[committed]||(cas.diagnosisScore||{})[G.commitSel]||0;
+  // Primary diagnosis score
+  let dxPts=(cas.diagnosisScore||{})[committed]||(cas.diagnosisScore||{})[G.commitSel]||0;
+  // Secondary / compound bonus
+  let secBonus=0,secNote='';
+  if(cas.hasSecondaryDx){
+    const secFound=G.secondaryCommit===cas.secondaryDx;
+    const secInDiff=G.diff.some(d=>normMatch(d.n,cas.secondaryDx));
+    const secInvDone=(cas.secondaryDxConfirmInvs||[]).every(id=>G.done.b.includes(id)||G.done.pe.includes(id));
+    if(secFound&&secInvDone){secBonus=25;secNote='Complicating syndrome identified and confirmed (+25 pts).';}
+    else if(secFound&&!secInvDone){secBonus=10;secNote='Complicating syndrome identified but not confirmed with investigations (+10 pts).';}
+    else if(secInDiff&&!secFound){secBonus=5;secNote='Complicating syndrome was in your differential but not committed (+5 pts).';}
+    else{secNote='Complicating syndrome ('+cas.secondaryDx+') was not identified. The full diagnosis is: '+cas.finalDx+'.';}
+    dxPts=Math.min(100,dxPts+secBonus);
+  }
   G.liveScore.d=dxPts;
   const{a,p}=G.liveScore;const d=dxPts;
   const pb=G.pb;const mn=cas.caseMNMs||[];
   const hRel=(cas.history||[]).filter(i=>i.rel).length;
   const peRel=(cas.pe||[]).filter(i=>i.rel).length;
+  const demote=G.liveScore._demote;
   G.finalScore={
     approach:Math.round(a),process:Math.round(p),diagnosis:Math.round(d),
     total:Math.round(a*.3+p*.4+d*.3),
-    approachExpl:`MNM coverage: ${G.liveScore._mnmOk}/${mn.length} (${Math.round(G.liveScore._mnmOk/Math.max(1,mn.length)*40)} pts). Common DDx breadth: ${G.liveScore._expOk}/${(cas.expectedP1||[]).length}. Significant negatives: ${G.sigNegsEarned.size}. Reactive additions (Phase 2 only): ${G.liveScore._rx}. Hard-lock penalty: ${G.hardPenalty>0?'−'+G.hardPenalty+' pts':'none'}.`,
-    processExpl:`History: ${pb.hRel||0}/${hRel} relevant topics${G.skipped.has('history')?' (skipped)':''}. PE: ${pb.peRel||0}/${peRel} relevant examinations. Basic investigations: ${pb.biRel||0} relevant tests. Advanced investigation penalties: ${pb.aiPen||0} pts.`,
-    dxExpl:`Committed to: "${committed||'nothing'}". ${dxPts===100?'Correct — specific subtype identified.':dxPts>=75?'Correct category, not fully localised.':dxPts>=50?'Correct umbrella, subtype missing or wrong.':dxPts>0?'Related territory, not the final diagnosis.':'Incorrect diagnosis.'}`
+    approachExpl:'MNM coverage: '+G.liveScore._mnmOk+'/'+mn.length+' ('+Math.round(G.liveScore._mnmOk/Math.max(1,mn.length)*30)+' pts). '
+      +'Common DDx breadth: '+G.liveScore._expOk+'/'+(cas.expectedP1||[]).length+'. '
+      +'Significant negatives earned: '+G.sigNegsEarned.size+'. '
+      +'MNM ranking/demotion: '+demote.earned+'/'+demote.total+' correctly handled. '
+      +'Reactive additions (Phase 2 only): '+G.liveScore._rx+'. '
+      +'Hard-lock penalty: '+(G.hardPenalty>0?'−'+G.hardPenalty+' pts':'none')+'.',
+    processExpl:'History: '+(pb.hRel||0)+'/'+hRel+' relevant topics'+(G.skipped.has('history')?' (skipped)':'')+'. '
+      +'PE: '+(pb.peRel||0)+'/'+peRel+' relevant examinations. '
+      +'Basic investigations: '+(pb.biRel||0)+' relevant tests. '
+      +'Advanced investigation penalties: '+(pb.aiPen||0)+' pts.',
+    dxExpl:'Committed to: "'+(committed||'nothing')+'". '
+      +(secNote?secNote+' ':'')
+      +(dxPts===100?'Correct — full diagnosis identified.':dxPts>=75?'Correct, not fully specified.':dxPts>=50?'Correct umbrella, subtype or complication missing.':dxPts>0?'Related territory, not the final diagnosis.':'Incorrect diagnosis.')
   };
 }
 
 // ═══════════════════════════════════════════
 // DEBRIEF
 // ═══════════════════════════════════════════
+function toggleTL(){
+  const b=document.getElementById('tl-body');
+  const a=document.getElementById('tl-arr');
+  if(!b||!a)return;
+  b.classList.toggle('open');
+  a.classList.toggle('open');
+}
+
 function renderDebrief(){
   const cas=CASES[G.caseIdx];const fs=G.finalScore;
-  const committed=G.commitSub||G.commitSel||'—';
+  const committed=(()=>{
+    const p=G.commitSub||G.commitSel||'—';
+    const s=(cas.hasSecondaryDx&&G.secondaryCommit&&G.secondaryCommit!=='none')?' + '+G.secondaryCommit:'';
+    return p+s;
+  })();
   const correct=fs.diagnosis>=75;
 
-  // FIX #1: timeline in selection order (iterate done arrays directly)
+  // Build timeline (selection order)
   const allDone=[];
   [{arr:G.done.h,src:'history'},{arr:G.done.pe,src:'pe'},{arr:G.done.b,src:'basic'},{arr:G.done.a,src:'advanced'}]
   .forEach(({arr,src})=>{
@@ -1122,25 +1254,43 @@ function renderDebrief(){
       .forEach(i=>allDone.push({...i,cat:src==='pe'?'pe':src==='basic'?'basic':src==='advanced'?'advanced':'history'}));
   });
 
-  const tl=allDone.map((item,n)=>{
+  // Key Pivots: required items + significant negatives that player DID perform
+  const pivotItems=allDone.filter(item=>{
+    const isReq=(cas.required||[]).includes(item.id);
+    const isSig=(cas.sigNegs||[]).some(s=>s.id===item.id);
+    return isReq||isSig;
+  });
+  // Also flag missed required items
+  const missedReq=(cas.required||[]).filter(r=>!allDone.some(i=>i.id===r)).map(r=>{
+    const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);
+    return it?it.lbl:r;
+  });
+
+  const pivotHtml=pivotItems.length?pivotItems.map(item=>{
+    const sn=(cas.sigNegs||[]).find(s=>s.id===item.id);
+    const isReq=(cas.required||[]).includes(item.id);
+    const kind=isReq?'req':sn?'sig':'conf';
+    const badge=isReq?'⭐ Key investigation':sn?'✓ Significant negative':'Confirmatory';
+    return '<div class="kp-item '+kind+'"><div class="kp-hd"><span class="kp-badge '+kind+'">'+badge+'</span><span class="kp-lbl">'+item.lbl+'</span></div><div class="kp-find">'+item.find+'</div></div>';
+  }).join('')+(missedReq.length?'<div class="kp-item" style="border-left-color:var(--red)"><div class="kp-hd"><span class="kp-badge" style="background:var(--rdim);color:var(--red)">⚠️ Not performed</span><span class="kp-lbl" style="color:var(--red)">'+missedReq.join(', ')+'</span></div><div class="kp-find" style="color:var(--red)">These key investigations were not performed — they would have significantly shaped the diagnosis or safety net.</div></div>':'')
+  :'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No key investigations were performed.</p>';
+
+  // Full timeline
+  const tlItems=allDone.map((item,n)=>{
     const sn=(cas.sigNegs||[]).find(s=>s.id===item.id);
     const isReq=(cas.required||[]).includes(item.id);
     const isIce=item.ice;
     const irrel=!item.rel&&!isIce;
     const catLbl=CAT_LBL[item.cat]||item.cat;
-    return`<div class="tl-step">
-      <div class="tl-hd">
-        <div class="tl-num">${n+1}</div>
-        <div class="tl-type">${catLbl} — ${item.lbl}</div>
-        <div class="tl-cost ${item.cost}">${COST_LBL[item.cost]}</div>
-      </div>
-      ${isReq?`<div class="tl-tag req">⭐ Key investigation</div>`:''}
-      ${sn?`<div class="tl-tag sig">✓ ${sn.label}</div>`:''}
-      ${irrel?`<div class="tl-tag irrel">○ Did not change differential</div>`:''}
-      ${isIce?`<div class="tl-tag ice">💬 ICE</div>`:''}
-      <div class="tl-finding">${item.find}</div>
-      <div class="tl-expert">${item.exp}</div>
-    </div>`;
+    return '<div class="tl-step">'
+      +'<div class="tl-hd"><div class="tl-num">'+(n+1)+'</div><div class="tl-type">'+catLbl+' — '+item.lbl+'</div><div class="tl-cost '+item.cost+'">'+COST_LBL[item.cost]+'</div></div>'
+      +(isReq?'<div class="tl-tag req">⭐ Key investigation</div>':'')
+      +(sn?'<div class="tl-tag sig">✓ '+sn.label+'</div>':'')
+      +(irrel?'<div class="tl-tag irrel">○ Did not change differential</div>':'')
+      +(isIce?'<div class="tl-tag ice">💬 ICE</div>':'')
+      +'<div class="tl-finding">'+item.find+'</div>'
+      +'<div class="tl-expert">'+item.exp+'</div>'
+      +'</div>';
   }).join('');
 
   // Phase 1 coverage
@@ -1149,70 +1299,86 @@ function renderDebrief(){
     const inP1=G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,e));
     const inLater=!inP1&&G.diff.some(d=>normMatch(d.n,e));
     const isMNM=cas.caseMNMs.some(m=>normMatch(m,e));
-    if(inP1)return`<div class="p1-row ok"><span class="p1-ico">✓</span><span class="p1-nm">${e}</span><span class="p1-note">${isMNM?'🔴 MNM · ':''}Phase 1</span></div>`;
-    if(inLater)return`<div class="p1-row rx"><span class="p1-ico">↓</span><span class="p1-nm">${e}</span><span class="p1-note">${isMNM?'🔴 MNM · ':''}Added reactively</span></div>`;
-    return`<div class="p1-row missed"><span class="p1-ico">✗</span><span class="p1-nm">${e}</span><span class="p1-note">${isMNM?'🔴 MNM · ':''}Never considered</span></div>`;
+    if(inP1) return '<div class="p1-row ok"><span class="p1-ico">✓</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'🔴 MNM · ':'')+'Phase 1</span></div>';
+    if(inLater) return '<div class="p1-row rx"><span class="p1-ico">↓</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'🔴 MNM · ':'')+'Added reactively in Phase 2</span></div>';
+    return '<div class="p1-row missed"><span class="p1-ico">✗</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'🔴 MNM · ':'')+'Never considered</span></div>';
   }).join('');
 
-  // Ranking snapshots — fixed formatting
-  const snapHtml=G.rankSnaps.length?G.rankSnaps.map(s=>`
-    <div class="snap-item">
-      <div class="snap-lbl">After ${s.stage} ${s.skipped?`<span class="snap-skip">⚠️ skipped</span>`:''}</div>
-      <div class="snap-table">
-        ${s.ranks.map((n,i)=>{
-          const isFx=normMatch(n,cas.finalDx)||normMatch(n,cas.finalUmbrella);
-          const topHalf=i<Math.ceil(s.ranks.length/2);
-          return`<div class="snap-row">
-            <span class="snap-pos">${i+1}.</span>
-            <span class="snap-nm">${n}</span>
-            ${isFx?`<span class="snap-badge ${topHalf?'hi':'lo'}">${topHalf?'✓ correct dx here':'↓ should rank higher'}</span>`:''}
-          </div>`;
-        }).join('')}
-      </div>
-    </div>`).join(''):`<p style="font-size:.78rem;color:var(--muted);font-style:italic;padding:4px 0">No ranking snapshots recorded — complete the ranking prompts after each stage for Bayesian reasoning practice.</p>`;
+  // Ranking snapshots — linked-pair aware
+  const pairs=cas.linkedPairs||[];
+  const snapHtml=G.rankSnaps.length?G.rankSnaps.map(s=>{
+    const rows=s.ranks.map((nm,i)=>{
+      const isFx=normMatch(nm,cas.finalDx)||normMatch(nm,cas.finalUmbrella);
+      const topHalf=i<Math.ceil(s.ranks.length/2);
+      const isLP=pairs.some(p=>normMatch(p.secondary,nm));
+      // For linked-pair secondary: being directly below primary = correct; don't penalise
+      let badge='';
+      if(isFx){badge='<span class="snap-badge '+(topHalf?'hi':'lo')+'">'+(topHalf?'✓ correct dx here':'↓ should rank higher')+'</span>';}
+      else if(isLP){
+        const primaryIdx=s.ranks.findIndex(r=>pairs.some(p=>normMatch(p.primary,r)));
+        const justBelowPrimary=primaryIdx>=0&&i===primaryIdx+1;
+        badge=justBelowPrimary?'<span class="snap-badge hi">✓ correctly below primary</span>':'';
+      }
+      return '<div class="snap-row"><span class="snap-pos">'+(i+1)+'.</span><span class="snap-nm">'+nm+'</span>'+badge+'</div>';
+    }).join('');
+    return '<div class="snap-item"><div class="snap-lbl">After '+s.stage+(s.skipped?' <span class="snap-skip">⚠️ skipped</span>':'')+'</div><div class="snap-table">'+rows+'</div></div>';
+  }).join(''):'<p style="font-size:.78rem;color:var(--muted);font-style:italic;padding:4px 0">No ranking snapshots recorded — complete ranking prompts after each stage for Bayesian reasoning practice.</p>';
 
-  // Helper: did player perform an item with this id?
+  // MNM demotion detail
+  const demote=G.liveScore._demote||{detail:[],earned:0,total:0};
+  const dmtnHtml=(cas.mnmExpectedDemotion||[]).length?('<div class="dmtn-table">'+(()=>{
+    const pairs2=cas.linkedPairs||[];
+    const grouped={};
+    (cas.mnmExpectedDemotion||[]).forEach(de=>{
+      if(!grouped[de.mnm]) grouped[de.mnm]=[];
+      grouped[de.mnm].push(de);
+    });
+    return Object.entries(grouped).map(([mnmName,des])=>{
+      const checks=des.map(de=>{
+        const triggerDone=G.done.h.includes(de.after_item)||G.done.pe.includes(de.after_item)||G.done.b.includes(de.after_item)||G.done.a.includes(de.after_item);
+        if(!triggerDone) return '<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>'+de.note+' <em>(trigger investigation not performed)</em></span></div>';
+        const snap=G.rankSnaps.find(s=>s.stage===de.snapshot);
+        if(!snap) return '<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>'+de.note+' <em>(no ranking snapshot taken at '+de.snapshot+')</em></span></div>';
+        const pos=snap.ranks.findIndex(r=>normMatch(r,mnmName));
+        if(pos<0) return '<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>'+de.note+' <em>(not in differential at this point)</em></span></div>';
+        const isLP=pairs2.some(p=>normMatch(p.secondary,mnmName));
+        if(isLP) return '<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>Linked complication — ordering evaluated separately</span></div>';
+        const mnmEntry=(cas.mnmRuleOut||[]).find(m=>normMatch(m.mnm,mnmName));
+        const topHalf=pos<Math.ceil(snap.ranks.length/2);
+        if(mnmEntry&&mnmEntry.status==='ruled-in'){
+          return topHalf?'<div class="dmtn-chk pass"><span class="dmtn-chk-ico">✓</span><span>'+de.note+'</span></div>':'<div class="dmtn-chk fail"><span class="dmtn-chk-ico">✗</span><span>Should be ranked #1 — this was the confirmed diagnosis</span></div>';
+        }
+        const inBottom=pos>=Math.floor(snap.ranks.length/2);
+        return inBottom?'<div class="dmtn-chk pass"><span class="dmtn-chk-ico">✓</span><span>'+de.note+'</span></div>':'<div class="dmtn-chk fail"><span class="dmtn-chk-ico">✗</span><span>'+de.note+' — was still ranked in top half at '+de.snapshot+'</span></div>';
+      }).join('');
+      return '<div class="dmtn-row"><div><div class="dmtn-mnm">'+mnmName+'</div></div><div class="dmtn-checks">'+checks+'</div></div>';
+    }).join('');
+  })()+' </div>'):'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No demotion tracking data for this case.</p>';
+
+  // MNM rule-out (done vs not-done)
   function playerDid(itemId){
-    if(!itemId) return true; // no item_id = always show (narrative finding)
-    return G.done.h.includes(itemId)||G.done.pe.includes(itemId)||
-           G.done.b.includes(itemId)||G.done.a.includes(itemId);
+    if(!itemId) return true;
+    return G.done.h.includes(itemId)||G.done.pe.includes(itemId)||G.done.b.includes(itemId)||G.done.a.includes(itemId);
   }
+  const mnmHtml=(cas.mnmRuleOut||[]).map(m=>{
+    const findings=m.findings.map(f=>{
+      const done=playerDid(f.item_id);
+      const typeLbl=f.type==='hx'?'History':f.type==='ex'?'Examination':'Investigation';
+      const typeCls=f.type==='hx'?'hx':f.type==='ex'?'ex':'inv';
+      const showAsDone=done||f.type==='hx';
+      return '<div class="mnm-f'+(showAsDone?'':' not-done')+'"><span class="mnm-ft '+(showAsDone?typeCls:'')+'">'+typeLbl+'</span><span>'+f.text+'</span>'+(showAsDone?'':'<span class="mnm-not-done-badge">not performed</span>')+'</div>';
+    }).join('');
+    return '<div class="mnm-row"><div class="mnm-row-hd"><div class="mnm-row-nm">'+m.mnm+'</div><div class="mnm-status '+m.status+'">'+m.statusLbl+'</div></div><div class="mnm-findings">'+findings+'</div></div>';
+  }).join('');
 
-  // MNM rule-out — shows done vs not-done for each finding
-  const mnmHtml=(cas.mnmRuleOut||[]).map(m=>`
-    <div class="mnm-row">
-      <div class="mnm-row-hd">
-        <div class="mnm-row-nm">${m.mnm}</div>
-        <div class="mnm-status ${m.status}">${m.statusLbl}</div>
-      </div>
-      <div class="mnm-findings">
-        ${m.findings.map(f=>{
-          const done=playerDid(f.item_id);
-          const typeLbl=f.type==='hx'?'History':f.type==='ex'?'Examination':'Investigation';
-          const typeCls=f.type==='hx'?'hx':f.type==='ex'?'ex':'inv';
-          // hx findings always show as "done" — history is a property of the patient
-          const showAsDone = done || f.type==='hx';
-          return `<div class="mnm-f${showAsDone?'':' not-done'}">
-            <span class="mnm-ft ${showAsDone?typeCls:''}">${typeLbl}</span>
-            <span>${f.text}</span>
-            ${!showAsDone?`<span class="mnm-not-done-badge">not performed</span>`:''}
-          </div>`;
-        }).join('')}
-      </div>
-    </div>`).join('');
-
-  const acats=(cas.approachCats||[]).map(c=>`
-    <div class="acat${c.hl?' hl':''}">
-      <div class="acat-nm">${c.name}</div>
-      <div class="acat-eg">${c.eg}</div>
-    </div>`).join('');
+  const acats=(cas.approachCats||[]).map(c=>'<div class="acat'+(c.hl?' hl':'')+'"><div class="acat-nm">'+c.name+'</div><div class="acat-eg">'+c.eg+'</div></div>').join('');
 
   document.getElementById('content').innerHTML=`
   <div class="db">
     <div class="db-outcome">
-      <div class="db-res-lbl">${correct?'✅ Correct diagnosis':'❌ Incorrect or incomplete'}</div>
+      <div class="db-res-lbl">${correct?'✅ Correct':'❌ Incorrect or incomplete'}</div>
       <div class="db-dx">${cas.finalDx}</div>
-      <div class="db-sub">SNOMED: ${cas.snomedCode||'—'} · Your answer: ${committed} · Diagnosis score: ${fs.diagnosis}/100</div>
+      <div class="db-sub">Your answer: ${committed} · Diagnosis score: ${fs.diagnosis}/100</div>
     </div>
 
     <div class="score-trio">
@@ -1243,30 +1409,47 @@ function renderDebrief(){
 
     <div class="db-card">
       <div class="db-card-lbl">📖 What This Case Was Teaching</div>
-      <div class="ktp-list">${(cas.keyTeachingPoints||[]).map((t,i)=>`<div class="ktp"><span class="ktp-n">${i+1}</span><span>${t}</span></div>`).join('')}</div>
+      <div class="ktp-list">${(cas.keyTeachingPoints||[]).map((t,i)=>'<div class="ktp"><span class="ktp-n">'+(i+1)+'</span><span>'+t+'</span></div>').join('')}</div>
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">🔴 Must-Not-Miss Diagnoses — How Each Was Ruled In or Out</div>
-      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">Findings in full colour = you performed this. <span style="opacity:.5;font-style:italic">Faded / "not performed"</span> = available but not done — the expert would have.</p>
-      ${mnmHtml||`<p style="font-size:.78rem;color:var(--muted);font-style:italic">No MNM rule-out data for this case.</p>`}
+      <div class="db-card-lbl">🔑 Key Clinical Pivots</div>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">The investigations and findings that matter most in this case — required steps and significant negatives that rule out dangerous diagnoses.</p>
+      <div class="kp-grid">${pivotHtml}</div>
+    </div>
+
+    <div class="db-card">
+      <div class="db-card-lbl">🔴 Must-Not-Miss — How Each Was Ruled In or Out</div>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">Full colour = you performed this step. <span style="opacity:.5;font-style:italic">Faded / "not performed"</span> = available but not done.</p>
+      ${mnmHtml||'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No MNM data for this case.</p>'}
     </div>
 
     <div class="db-card">
       <div class="db-card-lbl">📋 Your Phase 1 Differential Coverage</div>
-      <p style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Green = added in Phase 1 · Purple = added reactively in Phase 2 (penalised) · Red = never considered</p>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Green = Phase 1 · Purple = reactively added in Phase 2 (penalised) · Red = never considered</p>
       <div class="p1-cov">${p1Cov}</div>
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">📊 Your Ranking Progression (Bayesian Updating)</div>
-      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">After each stage, the correct diagnosis should move toward the top. Green = correct dx in the top half of your ranking.</p>
+      <div class="db-card-lbl">📊 Your Ranking Progression</div>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">The correct diagnosis should move toward the top as evidence accumulates. 🔗 = complicating syndrome (should be directly below its primary diagnosis, not above it).</p>
       <div class="snap-wrap">${snapHtml}</div>
     </div>
 
+    <div class="db-card">
+      <div class="db-card-lbl">🧠 MNM Reasoning — Did You Demote Must-Not-Miss Diagnoses Appropriately?</div>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">After each piece of exclusionary evidence, must-not-miss diagnoses should move to the bottom half of your ranking. ✓ = you did. ✗ = it stayed too high. ○ = you didn't perform the relevant investigation.</p>
+      ${dmtnHtml}
+    </div>
+
     <div class="tl-card">
-      <div class="db-card-lbl">🧪 Your Investigation Pathway — Expert Commentary</div>
-      ${tl||`<p style="font-size:.78rem;color:var(--muted);font-style:italic">No investigations performed.</p>`}
+      <div class="tl-toggle" onclick="toggleTL()">
+        <span class="tl-toggle-lbl">🧪 Full Investigation Pathway — Expert Commentary</span>
+        <span class="tl-toggle-arr" id="tl-arr">▶</span>
+      </div>
+      <div class="tl-body" id="tl-body">
+        ${tlItems||'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No investigations performed.</p>'}
+      </div>
     </div>
 
     <div class="db-card">
@@ -1274,7 +1457,7 @@ function renderDebrief(){
       <div class="ss-row">
         <div class="ssb sens"><div class="ssb-title">Sensitivity</div><div class="ssb-text">${cas.sensitivityNote||''}</div></div>
         <div class="ssb spec"><div class="ssb-title">Specificity</div><div class="ssb-text">${cas.specificityNote||''}</div></div>
-        <div class="ssb safe"><div class="ssb-title">Safety Net</div><div class="ssb-text">Must-not-miss diagnoses require high-sensitivity screening — the cost of missing them is catastrophic and irreversible.</div></div>
+        <div class="ssb safe"><div class="ssb-title">Safety Net</div><div class="ssb-text">Must-not-miss diagnoses require high-sensitivity screening — missing them is catastrophic and irreversible.</div></div>
       </div>
     </div>
 

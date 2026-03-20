@@ -8,7 +8,7 @@
       "system": "Cardiovascular",
       "difficulty": "challenging",
       "patient": "Mr Tan Wei Ming, 62M, Bus Driver",
-      "snomedCode": "57054005",
+      "snomedCode": "703164000",
       "vignette": "Mr Tan Wei Ming is a 62-year-old male bus driver who walks into the Emergency Department supported by his wife, looking pale and sweaty. He tells you he has had a heavy, squeezing discomfort in his upper abdomen for the past 2 hours. He has also been feeling nauseous and vomited once on the way to hospital.",
       "caseMNMs": [
         "Myocardial Infarction",
@@ -580,6 +580,33 @@
           "find": "Not performed — not clinically indicated.",
           "exp": "NOT APPROPRIATE: A V/Q scan is an alternative way to look for pulmonary embolism, used in patients who cannot have contrast dye. In this case, the ECG has established the diagnosis. Selecting this shows a misunderstanding of both the diagnosis and when this scan is used."
         }
+      ],
+      "linkedPairs": [],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Aortic Dissection",
+          "after_item": "pe02",
+          "snapshot": "Examination",
+          "note": "Equal bilateral arm BPs (difference <10 mmHg) effectively excludes aortic dissection — dissection typically causes >20 mmHg difference"
+        },
+        {
+          "mnm": "Aortic Aneurysm / Ruptured AAA",
+          "after_item": "pe05",
+          "snapshot": "Examination",
+          "note": "No peritonism, soft abdomen, no pulsatile mass — ruptured AAA presents with haemodynamic instability and peritonism"
+        },
+        {
+          "mnm": "Mesenteric Ischaemia",
+          "after_item": "pe05",
+          "snapshot": "Examination",
+          "note": "Soft abdomen without peritonism argues against mesenteric ischaemia — bowel ischaemia classically causes 'pain out of proportion to exam', but frank peritonism develops as bowel dies"
+        },
+        {
+          "mnm": "Myocardial Infarction",
+          "after_item": "bi01",
+          "snapshot": "Basic Inv",
+          "note": "ECG: ST elevation in II, III, aVF — this RULES IN MI (confirmed diagnosis, should be #1)"
+        }
       ]
     },
     {
@@ -590,7 +617,7 @@
       "system": "Respiratory",
       "difficulty": "challenging",
       "patient": "Mr Lim Ah Kow, 58M, Retired Factory Worker",
-      "snomedCode": "254637007",
+      "snomedCode": "1259239003",
       "vignette": "Mr Lim Ah Kow, a 58-year-old retired factory worker, is brought into the Emergency Department by his son. His son reports that his father has been getting progressively more breathless over the past 6 weeks, and has lost a lot of weight. Today, he seems more confused and unsteady than usual.",
       "caseMNMs": [
         "Pulmonary Embolism",
@@ -611,13 +638,13 @@
       "finalUmbrella": "Lung Cancer",
       "diagnosisScore": {
         "Small Cell Lung Cancer (SCLC) with Paraneoplastic SIADH": 100,
-        "Small Cell Lung Cancer": 100,
-        "Small Cell Lung Cancer (SCLC)": 100,
-        "SCLC": 100,
+        "Small Cell Lung Cancer": 75,
+        "Small Cell Lung Cancer (SCLC)": 75,
+        "SCLC": 75,
         "Lung Cancer": 50,
         "Adenocarcinoma": 30,
         "Squamous Cell Carcinoma of Lung": 30,
-        "SIADH": 20,
+        "SIADH": 15,
         "Pulmonary Tuberculosis": 10
       },
       "required": [
@@ -1092,6 +1119,48 @@
           "find": "Not performed — CT staging and MRI brain completed; extensive stage SCLC confirmed without PET-CT.",
           "exp": "PET-CT uses radioactive glucose tracer to identify metabolically active tissue including cancer spread. For SCLC, the staging system is simpler than non-SCLC (limited stage vs extensive stage), and CT plus MRI brain is generally sufficient for staging. PET-CT may assist in limited-stage SCLC to define the radiotherapy field, but is not routinely required in obvious extensive stage disease where hepatic and brain metastases are already confirmed."
         }
+      ],
+      "hasSecondaryDx": true,
+      "secondaryDx": "SIADH",
+      "secondaryDxLabel": "Paraneoplastic SIADH (from SCLC producing ectopic ADH)",
+      "secondaryDxTriggerInv": "bi04",
+      "secondaryDxConfirmInvs": [
+        "bi04",
+        "bi05"
+      ],
+      "linkedPairs": [
+        {
+          "primary": "Lung Cancer",
+          "secondary": "SIADH",
+          "relationship": "complication",
+          "note": "SIADH is a paraneoplastic complication of SCLC — it cannot be ranked above the cancer causing it"
+        }
+      ],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Cardiac Tamponade",
+          "after_item": "pe03",
+          "snapshot": "Examination",
+          "note": "No raised JVP, no muffled heart sounds, BP maintained — Beck's triad absent, tamponade unlikely"
+        },
+        {
+          "mnm": "Pulmonary Embolism",
+          "after_item": "bi02",
+          "snapshot": "Basic Inv",
+          "note": "Normal D-dimer with subacute 6-week course and no acute PE risk factors — PE effectively excluded"
+        },
+        {
+          "mnm": "Addisonian Crisis",
+          "after_item": "bi07",
+          "snapshot": "Basic Inv",
+          "note": "Normal Synacthen test — adrenal function confirmed intact, Addison's excluded"
+        },
+        {
+          "mnm": "Pulmonary Tuberculosis",
+          "after_item": "bi09",
+          "snapshot": "Basic Inv",
+          "note": "Sputum cytology: malignant SCLC cells, no AFB seen — primary diagnosis is SCLC. TB culture pending but SCLC is confirmed"
+        }
       ]
     },
     {
@@ -1102,7 +1171,7 @@
       "system": "Neurology",
       "difficulty": "challenging",
       "patient": "Miss Chen Mei Ling, 28F, Primary School Teacher",
-      "snomedCode": "34842006",
+      "snomedCode": "195229007",
       "vignette": "Miss Chen Mei Ling is a 28-year-old primary school teacher who presents to the Emergency Department with a 5-day history of progressively worsening headache. The headache has not responded to paracetamol. This morning, she noticed weakness in her left arm while writing on the whiteboard.",
       "caseMNMs": [
         "Subarachnoid Haemorrhage (SAH)",
@@ -1560,6 +1629,45 @@
           "rel": false,
           "find": "Slowing of electrical activity over the right hemisphere — consistent with focal brain dysfunction. No epileptiform discharges at the time of recording.",
           "exp": "EEG measures brain electrical activity and is primarily useful for diagnosing epilepsy. CVST can cause seizures (in 20-40% of patients), and EEG would be important if the patient had a seizure or if subclinical seizures were suspected. However, ordering EEG as a first-line investigation before confirming the diagnosis with venography is not the priority. It would be used to monitor for seizure activity after the diagnosis is established."
+        }
+      ],
+      "linkedPairs": [],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Meningitis",
+          "after_item": "pe04",
+          "snapshot": "Examination",
+          "note": "No neck stiffness, no meningism, no fever — meningitis significantly less likely"
+        },
+        {
+          "mnm": "Hypertensive Emergency",
+          "after_item": "pe02",
+          "snapshot": "Examination",
+          "note": "BP 134/86 mmHg — elevated but well below hypertensive emergency threshold of >180/120 mmHg with end-organ damage"
+        },
+        {
+          "mnm": "Subarachnoid Haemorrhage (SAH)",
+          "after_item": "bi02",
+          "snapshot": "Basic Inv",
+          "note": "CT head: no subarachnoid blood — SAH excluded on imaging (sensitivity ~95% within 6 hours)"
+        },
+        {
+          "mnm": "Subarachnoid Haemorrhage (SAH)",
+          "after_item": "bi07",
+          "snapshot": "Basic Inv",
+          "note": "LP: no xanthochromia, no red blood cells — SAH definitively excluded"
+        },
+        {
+          "mnm": "Meningitis",
+          "after_item": "bi01",
+          "snapshot": "Basic Inv",
+          "note": "Normal WBC and CRP — bacterial meningitis causes marked systemic inflammatory response; normal markers effectively exclude it"
+        },
+        {
+          "mnm": "Ischaemic Stroke",
+          "after_item": "ai01",
+          "snapshot": "Advanced Inv",
+          "note": "MR venography confirms CVST (venous thrombosis) — this is venous, not arterial; arterial ischaemic stroke excluded by MRI DWI"
         }
       ]
     }
