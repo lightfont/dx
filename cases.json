@@ -595,17 +595,16 @@
       "caseMNMs": [
         "Pulmonary Embolism",
         "Cardiac Tamponade",
-        "Tension Pneumothorax",
+        "Pulmonary Tuberculosis",
         "Addisonian Crisis"
       ],
       "expectedP1": [
         "Lung Cancer",
         "COPD Exacerbation",
         "Pneumonia",
-        "Pulmonary Tuberculosis",
         "Pleural Effusion",
         "Heart Failure",
-        "Pulmonary Embolism",
+        "Severe Anaemia",
         "SIADH"
       ],
       "finalDx": "Small Cell Lung Cancer (SCLC) with Paraneoplastic SIADH",
@@ -613,6 +612,7 @@
       "diagnosisScore": {
         "Small Cell Lung Cancer (SCLC) with Paraneoplastic SIADH": 100,
         "Small Cell Lung Cancer": 100,
+        "Small Cell Lung Cancer (SCLC)": 100,
         "SCLC": 100,
         "Lung Cancer": 50,
         "Adenocarcinoma": 30,
@@ -627,34 +627,34 @@
       "sigNegs": [
         {
           "id": "pe03",
-          "label": "No raised JVP, no ankle oedema → cardiac cause of dyspnoea less likely",
+          "label": "No raised JVP, no muffled heart sounds → cardiac tamponade less likely",
           "pts": 8
-        },
-        {
-          "id": "bi02",
-          "label": "Normal D-dimer → PE effectively excluded given low pre-test probability",
-          "pts": 8
-        },
-        {
-          "id": "bi04",
-          "label": "Serum sodium 122 mmol/L (euvolaemic) → confirms SIADH pattern",
-          "pts": 12
         },
         {
           "id": "pe07",
           "label": "Euvolaemia confirmed clinically → consistent with SIADH, not dehydration or fluid overload",
+          "pts": 10
+        },
+        {
+          "id": "bi02",
+          "label": "Normal D-dimer → effectively excludes PE given subacute course and low pre-test probability",
           "pts": 8
+        },
+        {
+          "id": "bi04",
+          "label": "Sodium 122 mmol/L (euvolaemic) → confirms SIADH pattern; triggers Addison's/hypothyroid exclusion workup",
+          "pts": 12
         }
       ],
       "keyTeachingPoints": [
-        "Small cell lung cancer (SCLC) is an aggressive lung cancer strongly associated with heavy smoking. It commonly presents late with weeks to months of symptoms, and is often already widespread at diagnosis.",
-        "Paraneoplastic syndromes occur when tumour cells produce substances that affect other organs — without the cancer having spread there. SCLC is the cancer most commonly associated with paraneoplastic syndromes.",
-        "SIADH (Syndrome of Inappropriate ADH secretion) occurs in 5-10% of SCLC patients clinically, though up to 45% may produce ADH without symptoms. The cancer cells themselves produce ADH, causing the kidneys to retain excess water and diluting the blood sodium.",
-        "Euvolaemic hyponatraemia (low sodium with normal body fluid volume — not dehydrated, not fluid overloaded) is the hallmark clinical pattern of SIADH. Confirming euvolaemia on examination is essential to distinguish SIADH from other causes of low sodium.",
-        "The diagnostic criteria for SIADH require: low blood sodium, low serum osmolality (<275 mOsm/kg), inappropriately concentrated urine (osmolality >100, typically >300 mOsm/kg), urine sodium >40 mmol/L, and euvolaemia — with exclusion of adrenal insufficiency, hypothyroidism, and diuretic use.",
-        "When you find one abnormality (e.g. low sodium causing confusion), always ask: what is the underlying cause? In this case, the hyponatraemia is a clue pointing to the lungs — the cancer is causing SIADH. Do not treat the sodium in isolation without finding its cause.",
-        "A heavy smoker with progressive breathlessness, significant unintentional weight loss, haemoptysis, and constitutional symptoms has lung cancer until proven otherwise. The combination of these features demands urgent chest imaging.",
-        "Addisonian crisis (adrenal insufficiency) must always be actively excluded in euvolaemic hyponatraemia — it is life-threatening and immediately treatable with steroid replacement."
+        "Small cell lung cancer (SCLC) is an aggressive lung cancer strongly associated with heavy smoking. It arises centrally, near the main airways, and is typically already widespread at diagnosis. It is the lung cancer most strongly associated with paraneoplastic syndromes.",
+        "Paraneoplastic syndromes occur when tumour cells produce substances that affect other organs — without cancer having directly spread there. SCLC cells produce ectopic ADH, causing SIADH in 5–10% of patients clinically (though up to 45% produce ADH without symptoms).",
+        "SIADH causes euvolaemic hyponatraemia. The kidneys retain excess water, diluting the blood sodium. When sodium falls below approximately 125 mmol/L, brain swelling causes confusion. The diagnostic criteria for SIADH are: low serum sodium + low serum osmolality + inappropriately concentrated urine (osmolality >100 mOsm/kg) + high urine sodium (>40 mmol/L) + euvolaemia + exclusion of adrenal insufficiency, hypothyroidism, and diuretics.",
+        "The diagnostic approach to euvolaemic hyponatraemia must always exclude Addisonian crisis (adrenal insufficiency) first — it is life-threatening, immediately reversible with steroid replacement, and can mimic SIADH biochemically. A Synacthen test is mandatory before attributing hyponatraemia to SIADH.",
+        "Pulmonary TB must always be considered in any patient with 6+ weeks of progressive cough, haemoptysis, weight loss, night sweats, and anorexia — this is TB until proven otherwise. Missing TB has public health consequences: the patient needs isolation, and contacts need tracing.",
+        "Cardiac tamponade is a must-not-miss in any patient with lung cancer and progressive dyspnoea — lung cancer extends to the pericardium more commonly than any other primary cancer. Beck's triad (raised JVP, muffled heart sounds, hypotension) with pulsus paradoxus identifies it clinically; echocardiogram confirms.",
+        "When a patient presents with two seemingly unrelated problems (breathlessness AND confusion), always ask whether one diagnosis can explain both. In SCLC, the cancer explains breathlessness (tumour mass, pleural effusion) AND confusion (paraneoplastic SIADH → hyponatraemia). The hyponatraemia is a clue pointing to the lungs, not the diagnosis itself.",
+        "Paraneoplastic SIADH in SCLC is usually reversible — approximately 80% of patients achieve normal sodium within 3 weeks of starting chemotherapy. Importantly, profound hyponatraemia can paradoxically worsen in the first 1–5 days after chemotherapy starts due to tumour lysis releasing more ADH."
       ],
       "mnmRuleOut": [
         {
@@ -664,53 +664,73 @@
           "findings": [
             {
               "type": "hx",
-              "text": "No recent immobility, long-haul travel, or leg swelling — classic PE risk factors absent"
+              "text": "No recent immobility, long-haul travel, or leg swelling — classic acute PE risk factors absent"
             },
             {
               "type": "hx",
-              "text": "Gradual onset of breathlessness over 6 weeks — PE typically presents acutely, not with weeks of progressive dyspnoea"
+              "text": "Gradual progressive onset over 6 weeks — acute massive or submassive PE would cause sudden haemodynamic deterioration, not a 6-week subacute course"
             },
             {
               "type": "inv",
-              "text": "Normal D-dimer — in this context (low pre-test probability for PE), a normal D-dimer effectively excludes it"
+              "item_id": "bi02",
+              "text": "Normal D-dimer (0.38 mg/L) — in this context (subacute course, no classic risk factors), a normal D-dimer effectively excludes clinically significant PE"
+            },
+            {
+              "type": "inv",
+              "item_id": "pe02",
+              "text": "Heart rate 96 bpm, SpO2 91% — while consistent with hypoxaemia, haemodynamic compromise from PE (tachycardia >100, hypotension, raised JVP) is not clearly present"
             }
           ]
         },
         {
           "mnm": "Cardiac Tamponade",
           "status": "ruled-out",
-          "statusLbl": "Ruled out",
+          "statusLbl": "Ruled out clinically",
           "findings": [
             {
               "type": "ex",
-              "text": "JVP not elevated — tamponade classically causes markedly raised JVP (Beck's triad: raised JVP, hypotension, muffled heart sounds)"
+              "item_id": "pe03",
+              "text": "JVP not elevated — tamponade causes markedly raised JVP as one of Beck's triad; absent here"
             },
             {
               "type": "ex",
-              "text": "Blood pressure maintained without pulsus paradoxus — tamponade causes circulatory compromise and pulsus paradoxus >10 mmHg"
+              "item_id": "pe03",
+              "text": "Heart sounds normal, not muffled — tamponade causes muffled heart sounds from surrounding fluid"
             },
             {
               "type": "ex",
-              "text": "Heart sounds normal — tamponade causes muffled heart sounds from surrounding fluid"
+              "item_id": "pe02",
+              "text": "Blood pressure 108/70 mmHg maintained — tamponade causes progressive hypotension and circulatory compromise"
+            },
+            {
+              "type": "hx",
+              "text": "Note: tamponade remains possible in cancer patients without classic Beck's triad — echocardiogram would definitively exclude it if clinical concern persists"
             }
           ]
         },
         {
-          "mnm": "Tension Pneumothorax",
+          "mnm": "Pulmonary Tuberculosis",
           "status": "ruled-out",
-          "statusLbl": "Ruled out",
+          "statusLbl": "Excluded by investigations",
           "findings": [
             {
               "type": "hx",
-              "text": "Progressive onset over 6 weeks — tension pneumothorax is an acute emergency, presenting suddenly with rapid deterioration"
+              "text": "45 pack-years of smoking and central hilar mass on CXR are more consistent with SCLC than TB, which typically causes upper lobe consolidation/cavitation"
             },
             {
-              "type": "ex",
-              "text": "Trachea deviated toward the left (not away from midline as in tension pneumothorax — here it is pulled toward the effusion)"
+              "type": "inv",
+              "item_id": "bi01",
+              "text": "CXR: large right hilar mass with pleural effusion — not the typical upper lobe consolidation, cavitation, or military pattern of TB"
             },
             {
-              "type": "ex",
-              "text": "Haemodynamically stable — tension pneumothorax causes rapid cardiovascular collapse if not immediately decompressed"
+              "type": "inv",
+              "item_id": "bi09",
+              "text": "Sputum cytology: malignant cells (small cell carcinoma morphology), no acid-fast bacilli seen; sputum culture negative for TB at 8 weeks"
+            },
+            {
+              "type": "inv",
+              "item_id": "ai01",
+              "text": "CT chest: large central endobronchial mass with mediastinal nodes and liver lesions — staging pattern consistent with SCLC, not TB. Note: TB and SCLC can co-exist — sputum AFB and culture remain the definitive exclusion"
             }
           ]
         },
@@ -721,36 +741,39 @@
           "findings": [
             {
               "type": "ex",
-              "text": "Haemodynamically stable with maintained blood pressure — Addisonian crisis typically causes severe hypotension and shock"
+              "item_id": "pe02",
+              "text": "Blood pressure 108/70 mmHg maintained — Addisonian crisis typically causes profound hypotension and haemodynamic collapse"
             },
             {
               "type": "inv",
-              "text": "Morning cortisol adequate; short ACTH stimulation test (Synacthen test): cortisol rises to >550 nmol/L at 30 minutes — adrenal function confirmed intact"
+              "item_id": "bi04",
+              "text": "Potassium 3.9 mmol/L (normal) — Addison's typically causes hyperkalaemia alongside hyponatraemia from mineralocorticoid deficiency; normal potassium makes it less likely but does not exclude it"
             },
             {
               "type": "inv",
-              "text": "Potassium 3.9 mmol/L (normal) — Addison's typically causes hyperkalaemia alongside hyponatraemia; normal potassium makes it less likely"
+              "item_id": "bi07",
+              "text": "Morning cortisol adequate; Synacthen test: cortisol rises to >550 nmol/L at 30 minutes — adrenal function confirmed intact. This investigation is MANDATORY before attributing hyponatraemia to SIADH"
             }
           ]
         }
       ],
       "approachTitle": "An Approach to Dyspnoea",
       "approachSub": "Reference: Nigel Fong, Algorithms in Differential Diagnosis",
-      "approachText": "Shortness of breath is caused by conditions affecting the lungs, heart, blood, or the body's ability to use oxygen. A systematic approach organises causes to ensure dangerous ones are not missed:",
+      "approachText": "Shortness of breath arises from conditions affecting the lungs, heart, blood, airways, or the body's ability to use oxygen. A systematic approach ensures dangerous causes are not missed:",
       "approachCats": [
         {
           "name": "Immediately Life-Threatening",
-          "eg": "Tension pneumothorax, cardiac tamponade, massive PE, flash pulmonary oedema",
+          "eg": "Tension pneumothorax, cardiac tamponade, massive PE, flash pulmonary oedema — present acutely, not over weeks",
           "hl": false
         },
         {
-          "name": "Upper Airway / Anaphylaxis",
+          "name": "Airway / Anaphylaxis",
           "eg": "Foreign body, anaphylaxis, angioedema, epiglottitis",
           "hl": false
         },
         {
           "name": "Lower Respiratory — Parenchymal",
-          "eg": "Pneumonia, COPD exacerbation, asthma, pulmonary fibrosis, TB",
+          "eg": "Pneumonia, COPD, asthma, pulmonary fibrosis, TB ← must not miss",
           "hl": false
         },
         {
@@ -765,121 +788,113 @@
         },
         {
           "name": "Cardiac",
-          "eg": "Heart failure, pericardial effusion, arrhythmia, cardiac tamponade",
+          "eg": "Heart failure, pericardial effusion, cardiac tamponade ← must not miss in malignancy",
           "hl": false
         },
         {
           "name": "Malignancy ← THIS CASE",
-          "eg": "SCLC causing direct compression, pleural effusion, AND paraneoplastic SIADH — explains both dyspnoea AND confusion",
+          "eg": "SCLC causing direct mass effect, pleural effusion, AND paraneoplastic SIADH → explains both dyspnoea AND confusion via one diagnosis",
           "hl": true
         },
         {
           "name": "Neuromuscular / Metabolic",
-          "eg": "Severe anaemia, metabolic acidosis, diaphragm weakness, hyponatraemia causing confusion",
+          "eg": "Severe anaemia, metabolic acidosis, hyponatraemia causing confusion alongside dyspnoea",
           "hl": false
         }
       ],
-      "approachInsight": "This case illustrates a key clinical principle: when a patient presents with two seemingly unrelated problems (breathlessness AND confusion), always ask whether one underlying diagnosis can explain both. In SCLC, the cancer explains the breathlessness directly (tumour mass, pleural effusion) AND the confusion indirectly (paraneoplastic SIADH causing hyponatraemia → brain dysfunction). Treating the low sodium without finding its cause would miss the cancer entirely — the sodium is a clue, not the diagnosis.",
-      "expertNarrative": "SCLC presenting with paraneoplastic SIADH is a classic challenging case. SCLC cells produce ectopic ADH, causing kidneys to inappropriately retain water. This dilutes the blood sodium (hyponatraemia). When sodium falls below 125 mmol/L, brain swelling occurs — explaining the confusion. The key clinical reasoning: (1) A heavy smoker with progressive dyspnoea, haemoptysis, and weight loss has lung cancer until proven otherwise. (2) When you find euvolaemic hyponatraemia, always think SIADH — and always ask what is causing the SIADH. (3) SCLC is the malignancy most strongly associated with SIADH. (4) Paraneoplastic SIADH is usually reversible with successful anti-tumour therapy — 80% resolve within 3 weeks of starting chemotherapy. (5) Addisonian crisis must always be actively excluded in euvolaemic hyponatraemia, as it is immediately treatable and life-threatening.",
-      "sensitivityNote": "SCLC has low sensitivity for 'classic' respiratory symptoms — it can present with weight loss, hyponatraemia, confusion, or neurological symptoms before obvious breathlessness develops. Paraneoplastic syndromes may precede the primary diagnosis. A high index of suspicion is needed in any heavy smoker with constitutional symptoms.",
-      "specificityNote": "Tissue biopsy (bronchoscopy, CT-guided, or EBUS) with characteristic SCLC histology (small cells with neuroendocrine features, high nuclear-to-cytoplasmic ratio) combined with a central lung mass on CT is highly specific. SIADH diagnosis requires the combination of hypoosmolar hyponatraemia + inappropriately concentrated urine (urine osmolality >100 mOsm/kg) + urine sodium >40 mmol/L + euvolaemia + exclusion of other causes.",
+      "approachInsight": "This case illustrates the principle of 'one diagnosis explaining two problems.' The SCLC explains both the breathlessness (tumour mass + pleural effusion) AND the confusion (paraneoplastic SIADH → hyponatraemia → cerebral oedema). The confusion is the diagnostic clue — it should prompt the question 'why is this patient confused?' which leads to serum electrolytes, which reveals the hyponatraemia, which triggers the SIADH workup, which points back to the lung. The sodium level is not the diagnosis; it is the pointer.",
+      "expertNarrative": "SCLC presenting with paraneoplastic SIADH is a classic advanced presentation. The central reasoning: (1) A heavy smoker with 6 weeks of progressive cough, haemoptysis, weight loss, night sweats, and new confusion has SCLC with paraneoplastic SIADH until proven otherwise. (2) The confusion triggers electrolyte testing, which reveals severe hyponatraemia. (3) Euvolaemia on examination localises this to SIADH (not dehydration, not cardiac or hepatic failure). (4) Addison's and hypothyroidism must be actively excluded before diagnosing SIADH — they are life-threatening and immediately reversible. (5) The CXR confirms a central hilar mass, and bronchoscopy biopsy provides histological diagnosis. (6) Treatment of the underlying SCLC is the primary treatment for the SIADH — approximately 80% of patients normalise their sodium within 3 weeks of starting chemotherapy.",
+      "sensitivityNote": "SCLC has poor sensitivity for 'classic' respiratory symptoms — it frequently presents with weight loss, hyponatraemia, confusion, or neurological symptoms before obvious breathlessness develops. Paraneoplastic syndromes may precede diagnosis. Any heavy smoker with constitutional symptoms and unexplained confusion warrants urgent chest imaging and electrolyte testing.",
+      "specificityNote": "Tissue biopsy (bronchoscopy or CT-guided) with SCLC histology (small cells with high nuclear-to-cytoplasmic ratio, neuroendocrine immunohistochemistry — TTF-1, synaptophysin, CD56 positive) combined with a central lung mass on CT is highly specific. SIADH diagnosis requires: hypo-osmolar hyponatraemia + inappropriately concentrated urine (osmolality >100 mOsm/kg) + urine sodium >40 mmol/L + euvolaemia + exclusion of Addison's, hypothyroidism, and diuretic use.",
       "history": [
         {
           "id": "h01",
-          "lbl": "Breathlessness — onset and progression",
+          "lbl": "Breathlessness — onset, progression, and character",
           "cost": "free",
           "rel": true,
-          "find": "Progressively worsening breathlessness over 6 weeks. Initially only on climbing stairs; now present on walking short distances and occasionally at rest. No sudden onset. No wheeze. Not worsened by lying flat.",
-          "exp": "Progressive onset over weeks argues against an acute emergency (tension pneumothorax, massive PE — which present suddenly). The subacute course over 6 weeks raises concern for a growing structural cause: tumour, pleural effusion, or progressive heart failure. Absence of orthopnoea (worsening lying flat) makes heart failure less likely as the primary driver."
+          "find": "Progressive breathlessness over 6 weeks. Initially only on climbing stairs; now present on walking 50 metres and at rest. No sudden onset. No wheeze. Not worse lying flat. Son confirms it has been worsening gradually week by week.",
+          "exp": "Progressive onset over 6 weeks argues against an acute life-threatening emergency as the primary cause — tension pneumothorax and massive PE present suddenly over minutes. The subacute course over weeks raises concern for a growing structural cause: tumour, pleural effusion, or progressive heart failure. Absence of orthopnoea (worse lying flat) makes heart failure a less likely primary driver."
         },
         {
           "id": "h02",
-          "lbl": "Cough and sputum",
+          "lbl": "Cough and haemoptysis",
           "cost": "free",
           "rel": true,
-          "find": "Persistent dry cough for 3 months. Over the past 3 weeks, occasionally coughing up small amounts of blood-streaked phlegm (haemoptysis). No foul-smelling purulent phlegm.",
-          "exp": "Haemoptysis in a heavy smoker is a red flag for lung cancer until proven otherwise. The 3-month duration argues against acute pneumonia (which typically peaks within days). Absence of purulent phlegm makes bacterial pneumonia less likely as the primary cause. The combination of progressive dyspnoea + haemoptysis + weight loss in a smoker is a highly suspicious triad for malignancy."
+          "find": "Persistent dry cough for approximately 3 months. Over the past 3 weeks, occasionally coughing up small amounts of blood-streaked phlegm (haemoptysis). No foul-smelling purulent phlegm.",
+          "exp": "Haemoptysis in a heavy smoker is a red flag for lung cancer until proven otherwise, but TB must also be seriously considered — both cause haemoptysis in the context of a 6-week progressive respiratory illness. The 3-month duration argues against acute pneumonia. Absence of purulent phlegm makes bacterial pneumonia a less likely primary diagnosis. The triad of progressive dyspnoea + haemoptysis + weight loss in a smoker demands urgent chest imaging."
         },
         {
           "id": "h03",
-          "lbl": "Weight loss and appetite",
+          "lbl": "Weight loss and constitutional symptoms",
           "cost": "free",
           "rel": true,
-          "find": "Significant unintentional weight loss — son estimates approximately 8-10 kg over 3 months. Very poor appetite. Low-grade fevers on and off. Night sweats.",
-          "exp": "Significant unintentional weight loss (>5% body weight over 3 months) with anorexia, night sweats, and low-grade fevers constitutes 'B-symptoms' — a highly concerning pattern for malignancy or chronic infection (TB). In a heavy smoker with respiratory symptoms, this combination demands urgent investigation for lung cancer."
+          "find": "Significant unintentional weight loss — son estimates approximately 8–10 kg over 3 months. Very poor appetite for the same period. Low-grade fevers on and off. Night sweats.",
+          "exp": "Significant unintentional weight loss (>5% body weight over 3 months) with anorexia, night sweats, and low-grade fevers constitutes a classic 'B-symptom' pattern raising concern for malignancy or chronic infection. Studies show that weight loss of >5% with breathlessness in this age group carries a 3–4% risk of cancer diagnosis within 6 months, with lung cancer being the most common in a smoker. Pulmonary TB presents with identical constitutional symptoms — both diagnoses must be actively pursued."
         },
         {
           "id": "h04",
           "lbl": "Confusion and cognitive change",
           "cost": "free",
           "rel": true,
-          "find": "Son reports father has been 'not himself' for about 2 weeks — increasingly confused, forgetful, and unsteady on his feet. No fever. No headache. No limb weakness. No prior diagnosis of dementia.",
-          "exp": "New-onset confusion in a patient with a likely malignancy should immediately trigger consideration of metabolic causes (hyponatraemia, hypercalcaemia), CNS metastases, and infection. The gradual onset over 2 weeks, without fever or focal deficits, is more consistent with a metabolic cause than an acute vascular or infectious event. This is the key clinical clue that should prompt ordering serum electrolytes."
+          "find": "Son reports father has been 'not himself' for about 2 weeks — increasingly confused, forgetful, and unsteady on his feet. No fever. No headache. No limb weakness. No history of dementia. Son says he is 'not himself at all'.",
+          "exp": "New-onset confusion in a patient with probable malignancy should immediately trigger a search for metabolic causes: hyponatraemia (SIADH from lung cancer), hypercalcaemia (from bone metastases), and hypoxaemia. It also raises concern for CNS metastases (common in SCLC) and infectious causes. The gradual onset over 2 weeks without fever or focal deficits favours a metabolic cause over acute infection or vascular event. This is the clinical clue that should prompt ordering serum electrolytes urgently."
         },
         {
           "id": "h05",
-          "lbl": "Smoking and occupational history",
+          "lbl": "Smoking history and occupational exposures",
           "cost": "free",
           "rel": true,
-          "find": "Smokes 30 cigarettes per day for 30 years (45 pack-years — very heavy smoker). Retired 3 years ago from factory work involving insulation materials (possible asbestos exposure). Drinks minimal alcohol.",
-          "exp": "45 pack-years of smoking is the single strongest risk factor for lung cancer — particularly SCLC (small cell) and squamous cell types, which arise centrally. Possible occupational asbestos exposure is an additional risk factor for mesothelioma and lung cancer. Low alcohol use makes alcoholic liver disease and its associated hyponatraemia (from portal hypertension/cirrhosis) less likely."
+          "find": "Smokes 30 cigarettes per day for 30 years (45 pack-years — very heavy smoker). Retired 3 years ago from factory work involving assembly of insulation panels (possible asbestos exposure over 15 years). Drinks minimal alcohol (1–2 units per week).",
+          "exp": "45 pack-years of smoking is the single strongest risk factor for lung cancer, particularly SCLC (which arises centrally near the main airways) and squamous cell carcinoma. Possible occupational asbestos exposure adds risk for mesothelioma and non-SCLC lung cancers. Low alcohol intake makes alcoholic liver disease and its associated dilutional hyponatraemia less likely. In the context of possible TB, it is also worth noting that he does not have clear TB risk factors such as recent travel to endemic areas, immunosuppression, or known TB contacts — though occupational exposure in a factory setting cannot be fully excluded."
         },
         {
           "id": "h06",
           "lbl": "Past medical history",
           "cost": "free",
           "rel": true,
-          "find": "No prior lung conditions or prior cancer diagnosis. No known heart disease. No prior adrenal or thyroid problems. No diabetes. No prior psychiatric diagnoses.",
-          "exp": "Absence of prior lung disease means a new diagnosis is needed to explain the progressive breathlessness. No known adrenal disease reduces (but does not exclude) Addisonian crisis as a cause of the hyponatraemia — adrenal insufficiency must still be actively excluded with a Synacthen test, as it is life-threatening and immediately reversible. No hypothyroidism noted — hypothyroidism is another cause of euvolaemic hyponatraemia that must be excluded."
+          "find": "No prior lung conditions. No prior cancer. No known heart disease. No prior adrenal or thyroid problems. No diabetes. No HIV or immunosuppression. No recent TB contacts known.",
+          "exp": "Absence of prior lung conditions means a new diagnosis is needed. No known adrenal disease reduces (but does not exclude) Addisonian crisis as a cause of the hyponatraemia — adrenal insufficiency must still be actively excluded with a Synacthen test, as it is immediately life-threatening and reversible. No hypothyroidism — hypothyroidism is another cause of euvolaemic hyponatraemia requiring exclusion. No immunosuppression reduces the likelihood of PCP or atypical opportunistic infection."
         },
         {
           "id": "h07",
           "lbl": "Medications and allergies",
           "cost": "free",
           "rel": true,
-          "find": "No regular medications. No recent new prescriptions. No diuretics, no SSRIs, no anticonvulsants, no chemotherapy agents. No known drug allergies.",
-          "exp": "Many medications cause SIADH and hyponatraemia — especially thiazide diuretics, SSRIs, and certain anticonvulsants. The absence of these drugs is important: it removes medications as a cause of the low sodium and shifts probability toward an underlying pathological cause (malignancy, adrenal insufficiency, pulmonary disease). This is a crucial exclusion for the SIADH diagnosis."
+          "find": "No regular medications. No recent new prescriptions. Specifically: no diuretics (thiazides, loop), no SSRIs, no anticonvulsants, no opiates, no NSAIDs. No known drug allergies.",
+          "exp": "This is a critical exclusion for the SIADH diagnosis: many common drugs cause SIADH and hyponatraemia — especially thiazide diuretics (most common cause of SIADH in the community), SSRIs, anticonvulsants (carbamazepine), and certain chemotherapy agents (cyclophosphamide, vincristine). Absence of all these drugs removes medications as the cause of the hyponatraemia and shifts probability toward a pathological cause. This exclusion is one of the formal diagnostic criteria for SIADH."
         },
         {
           "id": "h08",
           "lbl": "Cardiovascular symptom review",
           "cost": "free",
           "rel": true,
-          "find": "No chest pain, no palpitations. No ankle swelling. No waking up at night breathless (PND). No orthopnoea.",
-          "exp": "Absence of orthopnoea, PND, and ankle oedema makes heart failure as the primary cause of breathlessness less likely. This helps shift the differential toward a respiratory or malignant cause. No chest pain argues against pericarditis and pleurisy (though these are lower priority in this presentation)."
+          "find": "No chest pain. No palpitations. No ankle swelling. No waking up breathless at night (PND). No orthopnoea. No prior heart attacks or known heart disease.",
+          "exp": "Absence of orthopnoea, paroxysmal nocturnal dyspnoea (PND), and ankle oedema makes heart failure a less likely primary cause of breathlessness, though heart failure can coexist with malignancy. No chest pain argues against pericarditis and pleurisy as primary causes. These cardiovascular negatives help shift the differential toward respiratory and malignant causes."
         },
         {
           "id": "h09",
-          "lbl": "DVT / PE risk factors",
+          "lbl": "DVT and PE risk factors",
           "cost": "free",
           "rel": false,
-          "find": "No recent immobility, no long-haul travel, no leg swelling or calf pain. No prior DVT or PE.",
-          "exp": "Absence of classic PE risk factors reduces its probability. However, malignancy itself is prothrombotic — lung cancer significantly increases PE risk. PE cannot be fully excluded without investigation. The gradual 6-week onset of dyspnoea is atypical for PE, but a small or subacute PE contributing to symptoms is possible."
+          "find": "No recent immobility or prolonged bed rest. No recent long-haul travel. No leg swelling or calf pain. No prior DVT or PE.",
+          "exp": "Absence of classic acute PE risk factors (immobility, recent surgery, recent long travel) significantly reduces PE probability in the acute setting. However, occult malignancy is itself a major chronic prothrombotic risk factor — cancer increases VTE risk 4–7 times. Chronic or recurrent submassive PE could contribute to 6 weeks of progressive dyspnoea even without acute symptoms. D-dimer and clinical probability assessment remain worthwhile."
         },
         {
           "id": "h10",
-          "lbl": "Urinary symptoms review",
+          "lbl": "TB risk factor review",
           "cost": "free",
-          "rel": false,
-          "find": "Urine output appears normal to son's observation — not obviously reduced. No visible blood in urine.",
-          "exp": "Normal urine output is relevant for assessing hyponatraemia cause. In SIADH, the kidneys produce inappropriately concentrated urine despite low blood sodium — the kidneys retain water when they should excrete it. This preserved urine output argues against severe dehydration as the cause of hyponatraemia."
+          "rel": true,
+          "find": "No known TB contacts. No recent travel to TB-endemic regions. No prior TB diagnosis or treatment. No HIV or other immunosuppression. Has lived in Singapore throughout adulthood.",
+          "exp": "This is a targeted history to risk-stratify TB. Absence of known TB contacts and recent travel to high-prevalence regions reduces TB probability somewhat. However, TB remains common in Singapore among older adults and cannot be excluded on history alone — particularly given the classic constitutional symptom pattern (6 weeks cough, haemoptysis, weight loss, night sweats). Definitive exclusion requires sputum AFB smear and culture, which must be obtained before discharge."
         },
         {
           "id": "h11",
-          "lbl": "Neurological symptom review",
-          "cost": "free",
-          "rel": true,
-          "find": "No specific limb weakness (just unsteady from confusion). No visual changes. No severe headache. No history of seizures. No speech difficulty.",
-          "exp": "Absence of focal neurological symptoms (one-sided weakness, speech problems, visual changes) makes an acute stroke less likely as the cause of confusion. The confusion here appears metabolic (likely from low sodium) rather than structural (brain lesion). However, SCLC commonly spreads to the brain — brain metastases are present in over 10% of SCLC patients at initial diagnosis and should be looked for on imaging."
-        },
-        {
-          "id": "h12",
           "lbl": "ICE — Ideas, Concerns, Expectations",
           "cost": "free",
           "rel": false,
           "ice": true,
-          "find": "Son says father attributed the breathlessness to 'getting old and smoking too much' and did not seek help for months. Son is very worried it is cancer. Patient, when lucid, says he mainly wants the confusion explained — he finds it frightening.",
-          "exp": "The patient's attribution of symptoms to ageing and smoking led to months of delayed presentation — a very common pattern in lung cancer. The son's suspicion of cancer is clinically astute. The patient's primary concern about his confusion is important: addressing it directly builds trust and allows you to explain that the confusion is likely from a low blood sodium, which itself is caused by the lung condition. ICE is important here for communication planning."
+          "find": "Son says father attributed the breathlessness to 'getting old and too much smoking' and delayed seeking help for months. Son is worried it might be cancer. Patient, when lucid, says he mainly wants to understand why he has been so confused — it frightens him.",
+          "exp": "The patient's attribution to ageing and smoking is extremely common in lung cancer — this is why presentations are so delayed. The son's concern about cancer is clinically astute. The patient's primary worry about his confusion is important — addressing it directly builds trust and creates an opportunity to explain that the confusion is likely from a low blood sodium caused by the lung condition. ICE is useful here for structuring the explanation of what further testing is needed and why."
         }
       ],
       "pe": [
@@ -888,16 +903,16 @@
           "lbl": "General inspection and nutritional status",
           "cost": "free",
           "rel": true,
-          "find": "Looks unwell and confused — disoriented to time and place. Visibly thin and malnourished. Clothes appear loose. Pale. No jaundice. Finger clubbing present bilaterally. No peripheral lymphadenopathy visible.",
-          "exp": "Finger clubbing (bulbous rounding of the fingertips) is associated with lung cancer, chronic suppurative lung disease, and inflammatory bowel disease. Its presence in a heavy smoker with progressive breathlessness and weight loss is a significant clinical pointer toward malignancy. Malnourishment is consistent with chronic illness, particularly malignancy. Confusion confirms the central nervous system is being affected — the most likely cause in this context is metabolic (hyponatraemia from SIADH)."
+          "find": "Looks unwell. Confused — disoriented to time and place. Visibly thin and malnourished; clothing appears loose. Pale. No jaundice. BILATERAL FINGER CLUBBING present. No peripheral lymphadenopathy visible. No stigmata of chronic liver disease.",
+          "exp": "Finger clubbing (bulbous enlargement of the distal finger pads) is associated with lung cancer, chronic pulmonary suppuration, and inflammatory bowel disease. Its presence in a heavy smoker with 3 months of haemoptysis and weight loss is a significant pointer toward malignancy. Confusion confirms central nervous system involvement — in this context, the most likely cause is metabolic (hyponatraemia from SIADH) or CNS metastases. Absence of liver disease stigmata reduces hepatic cirrhosis as a cause of dilutional hyponatraemia."
         },
         {
           "id": "pe02",
           "lbl": "Vital signs",
           "cost": "free",
           "rel": true,
-          "find": "Temperature 37.4°C (no significant fever). Heart rate 96 bpm (slightly elevated). Blood pressure 108/70 mmHg (slightly low-normal). Breathing rate 22/min (elevated). Oxygen saturation 91% on room air. BMI estimated 17 (underweight).",
-          "exp": "Elevated breathing rate and low oxygen saturation confirm significant respiratory compromise. Mildly elevated heart rate and slightly low blood pressure may reflect reduced cardiac output, dehydration (unlikely given euvolaemia), or early physiological stress. Blood pressure is maintained — this argues against Addisonian crisis, which typically causes profound hypotension. SpO2 of 91% requires immediate supplemental oxygen."
+          "find": "Temperature 37.4°C (no significant fever). Heart rate 96 bpm. Blood pressure 108/70 mmHg. Respiratory rate 22/min (elevated). SpO₂ 91% on room air. BMI estimated 17 (underweight). No postural drop in blood pressure.",
+          "exp": "Elevated respiratory rate and SpO₂ 91% confirm significant respiratory compromise requiring supplemental oxygen. Blood pressure is maintained at 108/70 — this argues against Addisonian crisis (which causes profound hypotension) and cardiac tamponade (which causes hypotension with pulsus paradoxus). No postural hypotension further argues against adrenal insufficiency. Temperature of 37.4°C is not significant — a higher fever would raise the concern for active TB or bacterial pneumonia."
         },
         {
           "id": "pe03",
@@ -905,49 +920,49 @@
           "cost": "free",
           "rel": true,
           "sigNeg": true,
-          "find": "JVP not elevated. Heart sounds normal — no murmurs, no muffled sounds, no pericardial rub. No pedal oedema. Capillary refill 2 seconds.",
-          "exp": "SIGNIFICANT NEGATIVE: Absence of raised JVP and pedal oedema makes heart failure as the primary cause of breathlessness significantly less likely. Normal heart sounds without muffled quality reduce cardiac tamponade. Combined with maintained blood pressure, this shifts the differential strongly toward a respiratory or malignant cause. Normal JVP also argues against cardiac tamponade (which causes markedly elevated JVP as a cardinal feature)."
+          "find": "JVP not elevated. Heart sounds: S1 and S2 present, not muffled, no murmurs, no pericardial rub. No pedal or ankle oedema. Capillary refill 2 seconds. No pulsus paradoxus detectable.",
+          "exp": "SIGNIFICANT NEGATIVE for cardiac tamponade: Beck's triad requires raised JVP + muffled heart sounds + hypotension — all three are absent here. Absence of pulsus paradoxus (a fall in systolic BP >10 mmHg on inspiration) further argues against tamponade. Normal heart sounds without muffling or rub also reduces pericarditis. Absence of pedal oedema and raised JVP makes heart failure a less likely primary cause of the dyspnoea."
         },
         {
           "id": "pe04",
           "lbl": "Respiratory examination",
           "cost": "free",
           "rel": true,
-          "find": "Trachea deviated slightly to the LEFT. Percussion dull in the right lower and mid zones. Breath sounds reduced in the right lower zone. Bronchial breathing heard at right mid zone. No wheeze. Left lung clear.",
-          "exp": "Tracheal deviation to the left with right-sided dullness and reduced breath sounds is the classic pattern of a large right-sided pleural effusion (fluid pulling the trachea toward the same side — this is different from pneumothorax or collapse where trachea is pulled away from normal lung). Bronchial breathing at the right mid zone may represent a large central mass causing partial bronchial obstruction. A large pleural effusion in a smoker with weight loss and haemoptysis is highly suspicious for malignancy."
+          "find": "Trachea deviated slightly to the LEFT. Percussion DULL in the right lower and mid zones. Breath sounds REDUCED in the right lower zone. Bronchial breathing audible at right mid zone. Left lung: normal resonance and vesicular breath sounds. No wheeze.",
+          "exp": "Tracheal deviation to the LEFT with right-sided dullness and reduced breath sounds is the classic pattern of a large right-sided pleural effusion — the fluid bulk pushes the trachea ipsilaterally (the same side as the effusion). Note: this is the opposite of collapse or pneumothorax where the trachea deviates toward the abnormal side. Bronchial breathing at the right mid zone suggests a large central mass partially occluding the bronchus. A large pleural effusion with a central mass in a heavy smoker is highly characteristic of lung cancer."
         },
         {
           "id": "pe05",
           "lbl": "Abdominal examination",
           "cost": "free",
           "rel": true,
-          "find": "Abdomen soft. Liver edge palpable 2 cm below the right costal margin (mildly enlarged — hepatomegaly). Spleen not palpable. No ascites. No abdominal masses.",
-          "exp": "Mild hepatomegaly in the context of suspected lung cancer raises concern for liver metastases, which are common with SCLC. This finding warrants assessment with liver function tests and CT imaging. Absence of ascites and splenomegaly reduces portal hypertension from liver cirrhosis as a contributing cause of hyponatraemia."
+          "find": "Abdomen soft. Liver palpable 2 cm below the right costal margin (mild hepatomegaly). Spleen not palpable. No ascites. No abdominal masses. No tenderness.",
+          "exp": "Mild hepatomegaly raises concern for liver metastases, which are common with SCLC and would upstage the disease to 'extensive stage.' This finding warrants LFT assessment and CT staging. Absence of ascites and splenomegaly makes portal hypertension from liver cirrhosis an unlikely cause of hyponatraemia. Absence of adrenal enlargement on examination is not clinically reliable — CT adrenal assessment is needed."
         },
         {
           "id": "pe06",
           "lbl": "Lymph node examination",
           "cost": "free",
           "rel": true,
-          "find": "Right supraclavicular lymph node palpable — approximately 1.5 cm, firm, non-tender, fixed. No axillary lymphadenopathy.",
-          "exp": "A firm, non-tender, fixed right supraclavicular lymph node in the context of a right-sided lung mass is highly suspicious for nodal spread (metastasis) of lung cancer. Right supraclavicular lymphadenopathy indicates thoracic or cervical drainage pathway involvement. This finding strongly supports a diagnosis of lung cancer with locoregional spread and would guide staging workup."
+          "find": "RIGHT supraclavicular lymph node: approximately 1.5 cm, firm, non-tender, fixed. No axillary or inguinal lymphadenopathy. No cervical lymphadenopathy.",
+          "exp": "A firm, non-tender, fixed supraclavicular lymph node on the right — in the context of a right-sided lung mass — is highly suspicious for locoregional lymph node metastasis of lung cancer. The right supraclavicular fossa receives drainage from the right thorax and right neck. Involvement of this node suggests at minimum N3 disease (contralateral or supraclavicular nodal involvement), which is a poor prognostic factor. This finding should prompt CT staging to fully characterise nodal involvement."
         },
         {
           "id": "pe07",
-          "lbl": "Fluid status assessment",
+          "lbl": "Fluid status assessment (for hyponatraemia workup)",
           "cost": "free",
           "rel": true,
           "sigNeg": true,
-          "find": "Skin turgor normal. Mucous membranes moist. No peripheral oedema. No raised JVP. Clinical assessment: EUVOLAEMIC — fluid balance appears normal, neither dehydrated nor fluid overloaded.",
-          "exp": "CRITICAL FINDING for interpreting the hyponatraemia: euvolaemia (normal fluid status) with a low serum sodium is the hallmark of SIADH. In contrast, hypovolaemic hyponatraemia (dry mucous membranes, reduced skin turgor) suggests sodium loss (vomiting, diarrhoea, Addison's); hypervolaemic hyponatraemia (oedema, raised JVP) suggests dilutional causes (heart failure, cirrhosis, nephrotic syndrome). Euvolaemic hyponatraemia significantly narrows the differential to SIADH, hypothyroidism, or Addison's — and the first thing to exclude is Addison's."
+          "find": "Skin turgor normal. Mucous membranes moist. No peripheral oedema (no ankle or sacral oedema). JVP not elevated. No orthostatic hypotension. Clinical assessment: EUVOLAEMIC — neither dehydrated nor fluid overloaded.",
+          "exp": "CRITICAL EXAMINATION FINDING: Euvolaemia (normal body fluid volume) with hyponatraemia is the defining clinical pattern of SIADH. Compare: hypovolaemic hyponatraemia (dry mucous membranes, reduced skin turgor, orthostatic hypotension) indicates sodium loss (vomiting, diarrhoea, Addison's); hypervolaemic hyponatraemia (oedema, raised JVP, ascites) indicates dilutional causes (heart failure, cirrhosis, nephrotic syndrome). Euvolaemic hyponatraemia narrows the differential significantly to SIADH, hypothyroidism, or Addison's disease. Of these, Addison's is the most dangerous and must be excluded first."
         },
         {
           "id": "pe08",
           "lbl": "Neurological examination",
           "cost": "free",
           "rel": true,
-          "find": "Disoriented to time and place (GCS 13). No focal limb weakness — power 5/5 throughout. Reflexes normal and symmetric. No cranial nerve abnormalities. Gait unsteady but no cerebellar signs. No neck stiffness.",
-          "exp": "Confusion without focal neurological deficits is consistent with a metabolic cause affecting brain function globally — most likely hyponatraemia causing cerebral oedema. Absence of neck stiffness reduces meningitis. No focal limb weakness makes an acute stroke less likely. However, SCLC commonly spreads to the brain — brain metastases can also cause confusion and should be excluded with MRI brain once the patient is stabilised."
+          "find": "Disoriented to time and place (GCS 13/15). No focal limb weakness — power 5/5 throughout. Reflexes normal and symmetric. No cranial nerve abnormalities. Gait unsteady but no cerebellar signs. No neck stiffness.",
+          "exp": "Confusion without focal neurological deficits is consistent with a diffuse metabolic cause affecting the brain globally — most likely hyponatraemia causing cerebral oedema. Absence of neck stiffness and fever reduces meningitis. No focal limb weakness makes an acute stroke less likely. However, SCLC frequently spreads to the brain — brain metastases are found in >10% of SCLC patients at diagnosis and can also cause confusion without focal deficits (if they are small or frontal). MRI brain should be performed once the patient is stabilised."
         }
       ],
       "basic": [
@@ -957,83 +972,83 @@
           "cost": "low",
           "rel": true,
           "required": true,
-          "find": "Large right hilar mass (approximately 5 cm) adjacent to the right main bronchus. Right-sided pleural effusion causing opacification of the right lower zone. Left lung clear. No pneumothorax. No rib lesions.",
-          "exp": "A large central hilar mass with an ipsilateral pleural effusion in a heavy smoker with haemoptysis, weight loss, and 6 weeks of progressive breathlessness is the classic chest X-ray presentation of central lung cancer. SCLC typically arises centrally near the main airways (in contrast to adenocarcinoma which is usually peripheral). This finding immediately makes lung cancer the leading diagnosis and triggers urgent further investigation — CT chest and oncology referral."
+          "find": "Large RIGHT HILAR MASS (approximately 5 cm) at the right main bronchus. RIGHT-SIDED PLEURAL EFFUSION causing opacification of the right lower zone. Left lung clear. Trachea deviated slightly left. No pneumothorax. No rib lesions. No upper lobe consolidation or cavitation.",
+          "exp": "A large central hilar mass with an ipsilateral pleural effusion in a heavy smoker with haemoptysis, weight loss, and 6 weeks of progressive breathlessness is the classic CXR presentation of central lung cancer. SCLC typically arises centrally near the main airways (unlike adenocarcinoma, which is usually peripheral). Crucially, the absence of upper lobe consolidation, cavitation, or miliary shadowing makes TB less likely — though sputum AFB smear and culture are still required for definitive exclusion. This finding immediately makes lung cancer the leading diagnosis and triggers urgent CT and oncology referral."
         },
         {
           "id": "bi02",
-          "lbl": "D-dimer blood test",
+          "lbl": "D-dimer",
           "cost": "low",
           "rel": false,
           "sigNeg": true,
-          "find": "D-dimer: 0.38 mg/L (within normal range for this laboratory).",
-          "exp": "SIGNIFICANT NEGATIVE: A normal D-dimer in this clinical context effectively reduces the probability of pulmonary embolism as a major contributor to the breathlessness. PE was a reasonable consideration given that malignancy is prothrombotic. A normal D-dimer combined with the subacute 6-week history and positive chest X-ray findings reduces this concern considerably."
+          "find": "D-dimer: 0.41 mg/L (within normal range for this laboratory).",
+          "exp": "SIGNIFICANT NEGATIVE: A normal D-dimer in this clinical context (subacute 6-week course, no classic acute PE risk factors) effectively excludes clinically significant pulmonary embolism as a major contributor to the breathlessness. Note: D-dimer has high sensitivity but very low specificity — it is elevated in malignancy, infection, and inflammation. Its role here is to RULE OUT PE when pre-test probability is low, not to rule it in. A positive D-dimer in a cancer patient is almost universally non-specific."
         },
         {
           "id": "bi03",
           "lbl": "Full blood count (FBC)",
           "cost": "low",
           "rel": true,
-          "find": "Haemoglobin 95 g/L (low — anaemia). White blood cells 12.8 × 10⁹/L (mildly elevated — non-specific). Platelets 390 × 10⁹/L (normal).",
-          "exp": "Anaemia is common in malignancy — cancer causes anaemia of chronic disease by suppressing red blood cell production and consuming iron. This anaemia also contributes to the breathlessness and worsens physiological reserve. Mildly elevated white count is a non-specific stress response."
+          "find": "Haemoglobin 94 g/L (low — anaemia; normal >130 g/L in men). White blood cells 12.4 × 10⁹/L (mildly elevated — non-specific). Platelets 392 × 10⁹/L (normal).",
+          "exp": "Anaemia (haemoglobin 94 g/L) is common in malignancy — cancer causes anaemia of chronic disease by suppressing erythropoiesis and sequestering iron. This anaemia directly worsens breathlessness by reducing oxygen-carrying capacity. Mildly elevated white count is a non-specific stress response. Normal platelets argue against haematological malignancy. The degree of anaemia here warrants consideration of IV iron or transfusion alongside cancer treatment."
         },
         {
           "id": "bi04",
-          "lbl": "Serum electrolytes and sodium",
+          "lbl": "Serum electrolytes",
           "cost": "low",
           "rel": true,
           "required": true,
           "sigNeg": true,
-          "find": "Sodium 122 mmol/L (severely low — normal 135-145 mmol/L). Potassium 3.9 mmol/L (normal). Chloride 88 mmol/L (low, mirrors the hyponatraemia). Urea 2.8 mmol/L (low-normal). Creatinine 78 µmol/L (normal).",
-          "exp": "CRITICAL FINDING: Severely low sodium (122 mmol/L) confirms hyponatraemia — this is the cause of the confusion. In combination with euvolaemia confirmed on examination, this is the classic pattern of SIADH. Normal potassium argues against Addison's disease (which typically causes hyperkalaemia alongside hyponatraemia). Low urea reflects dilution from water retention, consistent with SIADH. Sodium at 122 mmol/L is in the range where neurological symptoms (confusion, unsteadiness) are expected. This investigation was the key test to order after noting confusion in a patient with suspected malignancy."
+          "find": "Sodium 122 mmol/L (critically low — normal 135–145 mmol/L). Potassium 3.9 mmol/L (normal). Chloride 88 mmol/L (low — mirrors hyponatraemia). Urea 2.8 mmol/L (low-normal — consistent with water retention). Creatinine 78 µmol/L (normal).",
+          "exp": "CRITICAL FINDING: Sodium of 122 mmol/L confirms severe hyponatraemia — this is the direct cause of the confusion (cerebral oedema begins when sodium falls below approximately 125 mmol/L). In combination with euvolaemia confirmed on examination, this is the SIADH pattern. Normal potassium is important: Addison's disease characteristically causes hyperkalaemia alongside hyponatraemia (from lack of mineralocorticoid aldosterone); normal potassium makes Addison's less likely, but it does NOT exclude it — the Synacthen test is still mandatory. Low urea reflects dilution from water retention, consistent with SIADH. This result should immediately trigger thyroid function tests, Synacthen test, and SIADH confirmation tests."
         },
         {
           "id": "bi05",
-          "lbl": "Urine osmolality and urine sodium (SIADH diagnostic test)",
+          "lbl": "Urine osmolality and urine sodium",
           "cost": "low",
           "rel": true,
-          "find": "Serum osmolality: 258 mOsm/kg (low — normal 275-295). Urine osmolality: 512 mOsm/kg (inappropriately HIGH — should be low if kidneys are working properly to excrete excess water). Urine sodium: 58 mmol/L (inappropriately HIGH — kidneys should be retaining sodium).",
-          "exp": "DIAGNOSTIC FOR SIADH: This is the combination that confirms SIADH: (1) Low serum osmolality (the blood is dilute), (2) Inappropriately high urine osmolality (the kidneys are concentrating urine when they should be diluting it to excrete the excess water), (3) High urine sodium (the kidneys are excreting sodium when they should be retaining it). This paradox — concentrated urine despite a low blood sodium — is the defining biochemical feature of SIADH. The cause in this case is ectopic ADH secretion by the SCLC tumour cells."
+          "find": "Serum osmolality: 258 mOsm/kg (low — normal 275–295 mOsm/kg). Urine osmolality: 498 mOsm/kg (inappropriately HIGH — normal response to low serum osmolality would be very dilute urine below 100 mOsm/kg). Urine sodium: 62 mmol/L (inappropriately HIGH — should be low as kidneys try to retain sodium).",
+          "exp": "DIAGNOSTIC FOR SIADH: This is the confirmatory biochemical test. The paradox is: the blood is dilute (serum osmolality 258) but the urine is concentrated (498 mOsm/kg). Normally, low serum osmolality triggers the kidneys to produce maximally dilute urine to get rid of the excess water — but in SIADH, the ectopic ADH produced by the tumour overrides this response. The formal SIADH diagnostic criteria are met: hypo-osmolar hyponatraemia + urine osmolality >100 mOsm/kg + urine sodium >40 mmol/L + euvolaemia + exclusion of adrenal/thyroid causes."
         },
         {
           "id": "bi06",
           "lbl": "Thyroid function tests",
           "cost": "low",
           "rel": true,
-          "find": "TSH: 1.8 mU/L (normal). Free T4: 14.6 pmol/L (normal). Thyroid function is normal.",
-          "exp": "Hypothyroidism (underactive thyroid) is a reversible cause of euvolaemic hyponatraemia that must be excluded before diagnosing SIADH. Normal thyroid function rules this out. This is a standard exclusion test in the workup of euvolaemic hyponatraemia."
+          "find": "TSH 1.9 mU/L (normal). Free T4 14.8 pmol/L (normal). Thyroid function is normal.",
+          "exp": "Hypothyroidism (underactive thyroid) is a reversible cause of euvolaemic hyponatraemia that must be excluded before diagnosing SIADH — hypothyroidism reduces free water clearance by a mechanism similar to SIADH. Normal TSH and free T4 here rule this out definitively. This is a mandatory exclusion test in the workup of euvolaemic hyponatraemia."
         },
         {
           "id": "bi07",
-          "lbl": "Morning cortisol and ACTH stimulation test",
+          "lbl": "Morning cortisol + Synacthen test",
           "cost": "low",
           "rel": true,
-          "find": "Morning cortisol: 318 nmol/L (adequate baseline). Short ACTH stimulation test (Synacthen): cortisol rises to 642 nmol/L at 30 minutes — NORMAL response (>550 nmol/L required). Adrenal function intact.",
-          "exp": "Addisonian crisis (adrenal insufficiency) must be actively excluded in any patient with euvolaemic hyponatraemia — it is immediately life-threatening and treatable with steroid replacement. A normal cortisol response to ACTH stimulation confirms the adrenal glands are working normally. This exclusion is mandatory before attributing hyponatraemia to SIADH from malignancy."
+          "find": "Morning cortisol: 302 nmol/L (adequate baseline). Short ACTH stimulation test (Synacthen 250 µg IV): cortisol rises to 638 nmol/L at 30 minutes — NORMAL RESPONSE (threshold >550 nmol/L at 30 minutes). Adrenal function intact.",
+          "exp": "MANDATORY TEST: Addisonian crisis (adrenal insufficiency) must be actively excluded in any patient with euvolaemic hyponatraemia — it is immediately life-threatening and reversible with hydrocortisone replacement. An adrenal crisis can present identically to SIADH biochemically (low sodium, euvolaemia) but requires completely different and urgent treatment. A normal Synacthen test confirms the adrenal glands are working correctly and allows SIADH to be diagnosed with confidence. This test should never be omitted in the hyponatraemia workup."
         },
         {
           "id": "bi08",
           "lbl": "Liver function tests and albumin",
           "cost": "low",
           "rel": true,
-          "find": "ALT 62 U/L (mildly elevated). AST 55 U/L (mildly elevated). ALP 168 U/L (elevated). Albumin 26 g/L (low — normal >35 g/L). Bilirubin 14 µmol/L (normal).",
-          "exp": "Mildly elevated transaminases and ALP with low albumin suggest hepatic involvement — consistent with liver metastases in the context of suspected lung cancer. Low albumin also reflects nutritional deficiency from malignancy. These findings support advanced disease with possible hepatic spread and warrant CT imaging for staging."
+          "find": "ALT 58 U/L (mildly elevated). AST 52 U/L (mildly elevated). ALP 162 U/L (elevated). Albumin 25 g/L (low — normal >35 g/L). Bilirubin 13 µmol/L (normal).",
+          "exp": "Mildly elevated transaminases and ALP suggest hepatic involvement — consistent with liver metastases given the hepatomegaly on examination. Low albumin reflects malnutrition from malignancy (cancer cachexia). These findings support advanced disease and warrant CT staging. Note: hepatic cirrhosis causes dilutional hypervolaemic hyponatraemia (with oedema and ascites) — not the euvolaemic pattern seen here; these LFT abnormalities are from metastatic disease, not cirrhosis."
         },
         {
           "id": "bi09",
-          "lbl": "Sputum cytology and culture",
+          "lbl": "Sputum AFB smear, culture, and cytology",
           "cost": "low",
           "rel": true,
-          "find": "Culture: no bacterial pathogens isolated. Cytology: MALIGNANT CELLS identified — small cells with scant cytoplasm and high nuclear-to-cytoplasmic ratio. Morphology consistent with small cell carcinoma.",
-          "exp": "Sputum cytology can detect malignant cells in central lung tumours. The description of 'small cells with high nuclear-to-cytoplasmic ratio' is the classic microscopic appearance of SCLC — the same neuroendocrine cells that produce ectopic ADH. This finding significantly supports the diagnosis and may avoid more invasive biopsy in some patients, though bronchoscopy biopsy provides more definitive tissue."
+          "find": "AFB smear: NEGATIVE (no acid-fast bacilli seen). Sputum culture: no bacterial growth at 48 hours; TB culture pending (8 weeks). Sputum cytology: MALIGNANT CELLS identified — small cells with scant cytoplasm, high nuclear-to-cytoplasmic ratio, and stippled chromatin. Morphology consistent with small cell carcinoma.",
+          "exp": "Sputum testing serves two purposes simultaneously: (1) AFB smear and culture to exclude TB — the negative smear reduces infectious TB probability, though culture (8 weeks) is the gold standard. Patients with suspected TB should be isolated pending results. (2) Cytology — finding malignant SCLC cells in sputum confirms the diagnosis non-invasively. The classic description of 'small cells with high nuclear-to-cytoplasmic ratio and stippled chromatin' is the morphological hallmark of SCLC."
         },
         {
           "id": "bi10",
           "lbl": "ABG (blood gas)",
           "cost": "low",
           "rel": true,
-          "find": "pH 7.38 (normal). PaO₂ 8.0 kPa (low — normal >10 kPa on room air). PaCO₂ 5.1 kPa (borderline). Type 1 respiratory failure (low oxygen without CO₂ retention). Lactate 1.8 mmol/L (normal).",
-          "exp": "Type 1 respiratory failure (low PaO₂ without elevated PaCO₂) is the pattern seen with conditions that impair gas exchange in the lungs — including pneumonia, pleural effusion, and lung cancer. This confirms the respiratory compromise is from impaired oxygenation rather than ventilatory failure (which would show elevated CO₂). Normal lactate argues against cardiogenic shock or severe sepsis."
+          "find": "pH 7.38 (normal). PaO₂ 8.1 kPa (low — normal >10 kPa on room air = Type 1 respiratory failure). PaCO₂ 5.0 kPa (normal). HCO₃ 22 mmol/L (normal). Lactate 1.7 mmol/L (normal).",
+          "exp": "Type 1 respiratory failure (low PaO₂ without CO₂ retention) indicates impaired gas exchange at the alveolar level, consistent with pleural effusion, malignant consolidation, and tumour mass reducing functional lung volume. Type 2 failure (elevated PaCO₂) would suggest ventilatory failure as in severe COPD exacerbation — absent here. Normal lactate argues against cardiogenic shock or severe sepsis. Supplemental oxygen is required and should be titrated to SpO₂ 94–98%."
         }
       ],
       "advanced": [
@@ -1042,40 +1057,40 @@
           "lbl": "CT chest, abdomen and pelvis (staging CT)",
           "cost": "mid",
           "rel": true,
-          "find": "Right hilar mass (5.4 × 4.9 cm) at the right main bronchus with mediastinal lymphadenopathy. Right-sided pleural effusion (moderate). Multiple hepatic lesions consistent with metastases (largest 2.1 cm). Adrenal glands appear normal. No obvious bone metastases on this scan.",
-          "exp": "The CT confirms a large central right-sided lung mass with mediastinal nodal involvement and liver metastases — the typical advanced presentation of SCLC. SCLC spreads rapidly and is frequently already widely disseminated at diagnosis ('extensive stage' SCLC). CT also characterises the pleural effusion and confirms hepatic involvement suggested by the abnormal LFTs. Adrenal glands appear normal on CT, consistent with the normal Synacthen test. Brain metastases require separate MRI."
+          "find": "Right hilar mass (5.3 × 5.1 cm) at the right main bronchus with mediastinal lymphadenopathy (N2/N3 nodes). Moderate right pleural effusion. Multiple hepatic hypodense lesions consistent with metastases (largest 1.9 cm). Adrenal glands appear normal. No bony metastases identified on this scan. No upper lobe cavitation or miliary pattern (TB unlikely but not excluded).",
+          "exp": "CT confirms extensive disease: large central lung mass, mediastinal nodal involvement, hepatic metastases, and pleural effusion. In SCLC staging, this is 'extensive stage' disease (beyond one hemithorax), which occurs in 60–70% of SCLC patients at diagnosis. Hepatic metastases explain the elevated ALP and hepatomegaly. Normal adrenals are consistent with the normal Synacthen test. Absence of upper lobe cavitation or miliary pattern reduces TB probability, though sputum culture remains the definitive exclusion. Brain MRI is required separately for SCLC staging."
         },
         {
           "id": "ai02",
           "lbl": "Bronchoscopy and biopsy",
           "cost": "high",
           "rel": true,
-          "find": "Bronchoscopy: right upper lobe bronchus almost completely obstructed by an endobronchial mass. Biopsy: SMALL CELL LUNG CANCER (SCLC) — dense sheets of small cells with scant cytoplasm, stippled chromatin. Immunohistochemistry: TTF-1 positive, synaptophysin positive, CD56 positive. Ki-67 >80% (very high proliferative rate).",
-          "exp": "Bronchoscopy with tissue biopsy is the gold standard for diagnosis of central lung tumours. The histology confirms SCLC — the characteristic neuroendocrine features (synaptophysin, CD56, TTF-1 positivity) and extremely high Ki-67 (proliferative index) are diagnostic. These same neuroendocrine cells produce ectopic ADH causing the paraneoplastic SIADH. SCLC is staged as 'limited' (one hemithorax, radiotherapy-targetable) or 'extensive' (beyond this) — this patient has extensive stage disease given hepatic metastases."
+          "find": "Bronchoscopy: right main bronchus almost completely obstructed by an endobronchial tumour. Biopsy: SMALL CELL LUNG CANCER (SCLC). Histology: dense sheets of small cells with scant cytoplasm and stippled chromatin. Immunohistochemistry: TTF-1 positive, synaptophysin positive, CD56 positive, Ki-67 >80% (very high proliferative rate — characteristic of SCLC).",
+          "exp": "Bronchoscopy with tissue biopsy is the gold standard for central lung tumour diagnosis. The histological features confirm SCLC: small cells with neuroendocrine markers (synaptophysin, CD56, TTF-1) and an extremely high Ki-67 proliferative index (>80% is typical for SCLC — one of the fastest-dividing cancers). These same neuroendocrine cells produce ectopic ADH, causing the paraneoplastic SIADH. Bronchoalveolar lavage fluid sent for TB culture provides an additional sample alongside sputum."
         },
         {
           "id": "ai03",
           "lbl": "MRI brain",
           "cost": "mid",
           "rel": true,
-          "find": "Two small enhancing lesions: right frontal lobe (1.1 cm) and right cerebellar hemisphere (0.7 cm). Findings consistent with brain metastases. No significant surrounding oedema or midline shift. No leptomeningeal enhancement.",
-          "exp": "Brain metastases are present in >10% of SCLC patients at diagnosis and ultimately develop in up to 80% over the course of the disease. MRI brain is more sensitive than CT for brain metastases and should be performed in all SCLC patients at staging. Finding brain metastases classifies this as extensive stage disease and may warrant whole-brain prophylactic radiotherapy. These metastases may also contribute to the confusion alongside the hyponatraemia."
+          "find": "Two small enhancing lesions: right frontal lobe (1.0 cm) and right cerebellar hemisphere (0.8 cm). Consistent with brain metastases. No significant oedema or midline shift.",
+          "exp": "Brain metastases are found in >10% of SCLC patients at initial diagnosis and ultimately develop in up to 80% of patients over the disease course. MRI brain is more sensitive than CT for detecting small brain metastases and is recommended in all SCLC patients at staging. Finding brain metastases confirms extensive stage disease. They may also contribute to the confusion alongside the hyponatraemia. Prophylactic cranial irradiation (PCI) is considered in patients achieving complete remission."
         },
         {
           "id": "ai04",
-          "lbl": "PET-CT scan",
-          "cost": "high",
-          "rel": false,
-          "find": "Not performed at this stage — histological confirmation and CT staging being completed first.",
-          "exp": "PET-CT uses radioactive glucose tracer to identify metabolically active tissue (including cancer). For SCLC, the staging system is simpler than other lung cancers (limited vs extensive stage) and CT + MRI brain is generally sufficient. PET-CT may be used in selected cases for limited-stage SCLC to determine radiotherapy field planning, but is not the priority at initial diagnosis with obvious extensive disease."
-        },
-        {
-          "id": "ai05",
           "lbl": "Pleural fluid aspiration (thoracocentesis)",
           "cost": "mid",
           "rel": true,
-          "find": "450 mL of straw-coloured fluid aspirated. Analysis: exudate (protein-rich, meets Light's criteria). Cytology: malignant cells consistent with SCLC. Culture: negative.",
-          "exp": "Pleural fluid aspiration confirms malignant pleural effusion — cytology showing SCLC cells confirms pleural spread of the cancer. This both confirms the diagnosis and has therapeutic value (removing the fluid improves breathing and oxygen levels). Malignant pleural effusion classifies the disease as extensive stage and changes management toward systemic chemotherapy."
+          "find": "450 mL straw-coloured fluid aspirated. Exudate (protein elevated, meets Light's criteria). Cytology: malignant cells consistent with SCLC. Culture: negative. AFB smear: negative.",
+          "exp": "Pleural fluid aspiration serves two purposes: (1) diagnostic — malignant cells confirm pleural spread of SCLC (upstages to extensive disease), and negative AFB smear further reduces pleural TB; (2) therapeutic — removing 450 mL of fluid immediately improves breathing and oxygen saturation. Malignant pleural effusion indicates systemic chemotherapy is the primary treatment. Note: even a negative pleural cytology does not exclude malignant effusion — sensitivity is approximately 60% for a single sample."
+        },
+        {
+          "id": "ai05",
+          "lbl": "PET-CT scan",
+          "cost": "high",
+          "rel": false,
+          "find": "Not performed — CT staging and MRI brain completed; extensive stage SCLC confirmed without PET-CT.",
+          "exp": "PET-CT uses radioactive glucose tracer to identify metabolically active tissue including cancer spread. For SCLC, the staging system is simpler than non-SCLC (limited stage vs extensive stage), and CT plus MRI brain is generally sufficient for staging. PET-CT may assist in limited-stage SCLC to define the radiotherapy field, but is not routinely required in obvious extensive stage disease where hepatic and brain metastases are already confirmed."
         }
       ]
     },

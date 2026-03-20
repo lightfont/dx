@@ -296,6 +296,10 @@ body.exam .lrow-desc{display:none!important}
 .mnm-ft.hx{background:var(--pdim);color:var(--purple)}
 .mnm-ft.ex{background:var(--tdim);color:var(--teal)}
 .mnm-ft.inv{background:var(--ydim);color:var(--yellow)}
+/* finding not done by player */
+.mnm-f.not-done{opacity:.48}
+.mnm-f.not-done .mnm-ft{background:var(--surf3);color:var(--muted2)}
+.mnm-not-done-badge{font-size:.59rem;font-family:var(--mono);color:var(--muted2);background:var(--surf3);border:1px dashed var(--bdr2);padding:1px 5px;border-radius:4px;flex-shrink:0;margin-top:1px;white-space:nowrap}
 .p1-cov{display:flex;flex-direction:column;gap:4px}
 .p1-row{display:flex;align-items:center;gap:8px;font-size:.78rem;padding:5px 8px;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r)}
 .p1-ico{font-size:.8rem;flex-shrink:0;width:18px;text-align:center}
@@ -1167,7 +1171,14 @@ function renderDebrief(){
       </div>
     </div>`).join(''):`<p style="font-size:.78rem;color:var(--muted);font-style:italic;padding:4px 0">No ranking snapshots recorded — complete the ranking prompts after each stage for Bayesian reasoning practice.</p>`;
 
-  // MNM rule-out
+  // Helper: did player perform an item with this id?
+  function playerDid(itemId){
+    if(!itemId) return true; // no item_id = always show (narrative finding)
+    return G.done.h.includes(itemId)||G.done.pe.includes(itemId)||
+           G.done.b.includes(itemId)||G.done.a.includes(itemId);
+  }
+
+  // MNM rule-out — shows done vs not-done for each finding
   const mnmHtml=(cas.mnmRuleOut||[]).map(m=>`
     <div class="mnm-row">
       <div class="mnm-row-hd">
@@ -1175,10 +1186,18 @@ function renderDebrief(){
         <div class="mnm-status ${m.status}">${m.statusLbl}</div>
       </div>
       <div class="mnm-findings">
-        ${m.findings.map(f=>`<div class="mnm-f">
-          <span class="mnm-ft ${f.type==='hx'?'hx':f.type==='ex'?'ex':'inv'}">${f.type==='hx'?'History':f.type==='ex'?'Examination':'Investigation'}</span>
-          <span>${f.text}</span>
-        </div>`).join('')}
+        ${m.findings.map(f=>{
+          const done=playerDid(f.item_id);
+          const typeLbl=f.type==='hx'?'History':f.type==='ex'?'Examination':'Investigation';
+          const typeCls=f.type==='hx'?'hx':f.type==='ex'?'ex':'inv';
+          // hx findings always show as "done" — history is a property of the patient
+          const showAsDone = done || f.type==='hx';
+          return `<div class="mnm-f${showAsDone?'':' not-done'}">
+            <span class="mnm-ft ${showAsDone?typeCls:''}">${typeLbl}</span>
+            <span>${f.text}</span>
+            ${!showAsDone?`<span class="mnm-not-done-badge">not performed</span>`:''}
+          </div>`;
+        }).join('')}
       </div>
     </div>`).join('');
 
@@ -1228,7 +1247,8 @@ function renderDebrief(){
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">🔴 Must-Not-Miss Diagnoses — Ruled In or Out</div>
+      <div class="db-card-lbl">🔴 Must-Not-Miss Diagnoses — How Each Was Ruled In or Out</div>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">Findings in full colour = you performed this. <span style="opacity:.5;font-style:italic">Faded / "not performed"</span> = available but not done — the expert would have.</p>
       ${mnmHtml||`<p style="font-size:.78rem;color:var(--muted);font-style:italic">No MNM rule-out data for this case.</p>`}
     </div>
 
