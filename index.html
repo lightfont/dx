@@ -987,7 +987,7 @@ function renderSoftWarn(tier1Missed,tier2Missed){
         +'<div class="mnm-add-info"><div class="mnm-add-name">'+name+'</div>'
         +'<div class="mnm-add-expl study-aid">'+getMNMExpl(name)+'</div></div>'
         +'<button class="mnm-add-btn '+(already||wasAdded?'added':'add')+'" '
-        +(already||wasAdded?'disabled':'onclick="swAdd(''+escJs(name)+'')"')+'>'
+        +(already||wasAdded?'disabled':'data-n="'+escJs(name)+'" onclick="swAdd(this.dataset.n)"')+'>'
         +(already||wasAdded?'✓ Added':'+ Add')
         +'</button></div>';
     }).join('');
@@ -1138,17 +1138,17 @@ function mkFinding(item,cat,catLbl){
     <div class="fc-exp" id="${uid}">${item.exp}</div>`:'';
   // Note: irrel label is context-specific — different wording to avoid overgeneralising
   const irrelNote=irrel?`<div class="fc-note irrel-ctx study-aid">○ Not discriminating in <em>this</em> presentation — this test is valuable in other contexts</div>`:'';
-  return\`<div class="fc \${isIce?'icef':cat}">
-    <div class="fc-lbl \${isIce?'icef':cat}">\${catLbl} — \${item.lbl}</div>
-    \${lookingForHtml}
-    <div class="fc-txt">\${item.find}</div>
-    \${imgHtml}
-    \${isReq?'<div class="fc-note req study-aid">⭐ Key investigation for this case</div>':''}
-    \${sn?'<div class="fc-note sig study-aid">✓ Significant negative: '+sn.label+'</div>':''}
-    \${irrelNote}
-    \${isIce?'<div class="fc-note ice study-aid">💬 ICE — good practice</div>':''}
-    \${expHtml}
-  </div>\`;
+  return '<div class="fc '+(isIce?'icef':cat)+'">'
+    +'<div class="fc-lbl '+(isIce?'icef':cat)+'">'+catLbl+' — '+item.lbl+'</div>'
+    +lookingForHtml
+    +'<div class="fc-txt">'+item.find+'</div>'
+    +imgHtml
+    +(isReq?'<div class="fc-note req study-aid">⭐ Key investigation for this case</div>':'')
+    +(sn?'<div class="fc-note sig study-aid">✓ Significant negative: '+sn.label+'</div>':'')
+    +irrelNote
+    +(isIce?'<div class="fc-note ice study-aid">💬 ICE — good practice</div>':'')
+    +expHtml
+    +'</div>';
 }
 function toggleFcExp(uid){
   const el=document.getElementById(uid);
