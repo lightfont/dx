@@ -300,6 +300,52 @@ body.exam .lrow-desc{display:none!important}
 .mnm-f.not-done{opacity:.48}
 .mnm-f.not-done .mnm-ft{background:var(--surf3);color:var(--muted2)}
 .mnm-not-done-badge{font-size:.59rem;font-family:var(--mono);color:var(--muted2);background:var(--surf3);border:1px dashed var(--bdr2);padding:1px 5px;border-radius:4px;flex-shrink:0;margin-top:1px;white-space:nowrap}
+/* ── YEAR LEVEL modal ── */
+.yr-modal{background:var(--surf);border:1px solid var(--bdr2);border-radius:var(--rl);max-width:480px;width:100%;padding:26px 28px}
+.yr-title{font-family:var(--mono);font-size:1.2rem;font-weight:700;letter-spacing:-1px;margin-bottom:4px}
+.yr-title span{color:var(--accent)}
+.yr-sub{font-size:.79rem;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.yr-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.yr-opt{background:var(--surf2);border:2px solid var(--bdr2);border-radius:var(--rl);padding:14px 16px;cursor:pointer;transition:all .15s;text-align:left;width:100%;font-family:var(--sans)}
+.yr-opt:hover{border-color:var(--accent);background:var(--adim)}
+.yr-opt.sel{border-color:var(--accent);background:var(--adim)}
+.yr-opt-title{font-size:.9rem;font-weight:700;margin-bottom:4px;color:var(--text)}
+.yr-opt-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
+.yr-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:.61rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-bottom:6px}
+.yr-badge.m2{background:var(--gdim);color:var(--green)}.yr-badge.m3{background:var(--odim);color:var(--orange)}
+/* level indicator in topbar */
+.tb-level{font-family:var(--mono);font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:20px;cursor:pointer;transition:all .12s;white-space:nowrap}
+.tb-level.m2{background:var(--gdim);color:var(--green);border:1px solid var(--green)}
+.tb-level.m3{background:var(--odim);color:var(--orange);border:1px solid var(--orange)}
+/* soft-warning (replaces hard-lock) */
+.softwarn{background:var(--surf);border:2px solid var(--yellow);border-radius:var(--rl);padding:18px 20px}
+.softwarn-ico{font-size:1.6rem;margin-bottom:6px}
+.softwarn-title{font-size:1rem;font-weight:700;color:var(--yellow);font-family:var(--mono);margin-bottom:6px}
+.softwarn-body{font-size:.81rem;line-height:1.7;margin-bottom:10px}
+.softwarn-missed{background:rgba(245,200,66,.08);border:1px solid var(--yellow);border-radius:var(--r);padding:8px 11px;margin-bottom:9px}
+.mnm-add-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.mnm-add-row{display:flex;align-items:flex-start;gap:10px;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:9px 11px}
+.mnm-add-info{flex:1;min-width:0}
+.mnm-add-name{font-size:.82rem;font-weight:700;margin-bottom:2px}
+.mnm-add-expl{font-size:.73rem;color:var(--muted);line-height:1.45}
+.mnm-add-btn{padding:4px 10px;border-radius:var(--r);font-size:.72rem;font-weight:700;cursor:pointer;border:none;white-space:nowrap;font-family:var(--sans);transition:all .13s}
+.mnm-add-btn.added{background:var(--gdim);color:var(--green);border:1px solid var(--green);cursor:default}
+.mnm-add-btn.add{background:var(--yellow);color:#000}
+.mnm-add-btn.add:hover{opacity:.85}
+.softwarn-tier2{background:var(--surf2);border:1px dashed var(--bdr2);border-radius:var(--r);padding:8px 11px;margin-bottom:9px;font-size:.75rem;color:var(--muted2);line-height:1.5}
+.softwarn-acts{display:flex;gap:7px;flex-wrap:wrap}
+/* progressive disclosure on finding cards */
+.fc-exp-toggle{display:inline-flex;align-items:center;gap:4px;font-size:.67rem;font-family:var(--mono);color:var(--accent);cursor:pointer;padding:2px 6px;border-radius:4px;background:var(--adim);border:1px solid var(--accent);margin-top:5px;transition:opacity .12s;user-select:none}
+.fc-exp-toggle:hover{opacity:.8}
+.fc-exp{font-size:.77rem;color:var(--muted);line-height:1.58;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:8px 10px;margin-top:5px;font-style:italic;display:none}
+.fc-exp.open{display:block}
+/* image in finding card */
+.fc-img{width:100%;max-width:480px;border-radius:var(--r);border:1px solid var(--bdr);margin-top:8px;margin-bottom:2px;display:block}
+/* lookingFor line (M3+ only, hidden in M2) */
+.fc-looking{font-size:.74rem;color:var(--teal);font-style:italic;margin-bottom:5px;padding:4px 8px;background:var(--tdim);border-radius:4px;border-left:2px solid var(--teal)}
+body:not(.m3) .fc-looking{display:none}
+/* irrel label context-specific wording */
+.fc-note.irrel-ctx{color:var(--yellow);background:var(--ydim)}
 /* linked-pair tag in ranking */
 .ri-tag.lp{background:var(--tdim);color:var(--teal)}
 /* MNM demotion reasoning section */
@@ -455,6 +501,27 @@ body.exam .lrow-desc{display:none!important}
   </div>
 </div>
 
+
+<!-- YEAR LEVEL MODAL -->
+<div id="yrmover" style="position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:700;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div class="yr-modal">
+    <div class="yr-title"><span>Dx</span>/ — What year are you?</div>
+    <div class="yr-sub">This sets your experience level. M2 shows more guidance and study aids. M3+ hides them by default to simulate clinical reasoning under exam conditions. You can toggle at any time using the mode button.</div>
+    <div class="yr-opts">
+      <button class="yr-opt" onclick="setLevel('m2')">
+        <span class="yr-badge m2">M2 Preclinical</span>
+        <div class="yr-opt-title">Year 2 — Guided Mode</div>
+        <div class="yr-opt-desc">Study aids visible: condition descriptions in the library, significant negative labels, expert commentary on findings, professor hints. Recommended for early learners building their differential reasoning.</div>
+      </button>
+      <button class="yr-opt" onclick="setLevel('m3')">
+        <span class="yr-badge m3">M3+ Clinical</span>
+        <div class="yr-opt-title">Year 3 and above — Independent Mode</div>
+        <div class="yr-opt-desc">Study aids hidden by default. Library descriptions hidden. "Looking for" prompts shown before PE findings. Closer to clinical reasoning under exam conditions. You can still reveal aids via the Study toggle.</div>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div id="app">
   <div id="lib">
     <div class="lib-hd">
@@ -482,6 +549,7 @@ body.exam .lrow-desc{display:none!important}
       </div>
       <div class="tb-stages" id="tbStages"></div>
       <div class="tb-right">
+        <span class="tb-level m2" id="levelBadge" onclick="resetLevel()" title="Click to change year level">M2</span>
         <button class="mode-btn study" id="modeBtn" onclick="toggleMode()">📚 Study</button>
         <div class="tb-scores" id="tbScores"></div>
       </div>
@@ -615,6 +683,10 @@ const DIAG_LIB = {
 // ═══════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════
+// ─ MNM helpers (support both string and {name,tier} formats in caseMNMs)
+function getMNMName(m){return typeof m==='string'?m:(m.name||m);}
+function getMNMTier(m){return typeof m==='string'?1:(m.tier||1);}
+
 let CASES = [];
 let G = null;
 let libOpen = true;
@@ -622,6 +694,7 @@ let libTag = 'mnm';
 let libFilter = '';
 let libSysOpen = {};
 let studyMode = true;
+let playerLevel = null; // 'm2' | 'm3' — set once per session
 let dragSrc = null;
 let rdragSrc = null;
 
@@ -643,6 +716,7 @@ function freshG(idx){
     commitSel:null,commitSub:null,
     secondaryCommit:null,  // compound diagnosis (e.g. SIADH alongside SCLC)
     hardPenalty:0,
+    softMissPenalty:0,  // penalty from MNM soft-warning handling
     skipped:new Set(),
     pb:{hRel:0,hTotal:0,peRel:0,peTotal:0,biRel:0,biTotal:0,aiPen:0},
     sigNegsEarned:new Set(),
@@ -687,6 +761,26 @@ function toggleMode(){
   const b=document.getElementById('modeBtn');
   b.className='mode-btn '+(studyMode?'study':'exam');
   b.textContent=studyMode?'📚 Study':'🎓 Exam';
+}
+function applyLevelMode(){
+  // M2 = study (aids shown), M3 = exam (aids hidden) — can still toggle
+  if(playerLevel==='m3'){
+    studyMode=false;
+    document.body.classList.add('exam','m3');
+    document.body.classList.remove('m2');
+    // M3: library systems start collapsed
+    libSysOpen={};
+  } else {
+    studyMode=true;
+    document.body.classList.remove('exam','m3');
+    document.body.classList.add('m2');
+    // M2: expand all library systems
+    Object.keys(DIAG_LIB).forEach(s=>{libSysOpen[s]=true;});
+  }
+  const b=document.getElementById('modeBtn');
+  if(b){b.className='mode-btn '+(studyMode?'study':'exam');b.textContent=studyMode?'📚 Study':'🎓 Exam';}
+  const lv=document.getElementById('levelBadge');
+  if(lv){lv.className='tb-level '+(playerLevel||'m2');lv.textContent=playerLevel==='m3'?'M3+':'M2';}
 }
 function closeModal(){document.getElementById('mover').classList.add('hide');}
 
@@ -820,7 +914,19 @@ function renderWelcome(){
 // ═══════════════════════════════════════════
 // PHASE 1
 // ═══════════════════════════════════════════
-function startCase(idx){G=freshG(idx);render();}
+function startCase(idx){
+  if(!playerLevel){pendingCaseIdx=idx;document.getElementById('yrmover').style.display='flex';return;}
+  G=freshG(idx);render();
+}
+let pendingCaseIdx=null;
+function setLevel(lv){
+  playerLevel=lv;
+  document.getElementById('yrmover').style.display='none';
+  applyLevelMode();
+  if(pendingCaseIdx!==null){G=freshG(pendingCaseIdx);pendingCaseIdx=null;}
+  render();
+}
+function resetLevel(){playerLevel=null;pendingCaseIdx=null;document.getElementById('yrmover').style.display='flex';}
 
 function renderSetup(){
   const cas=CASES[G.caseIdx];
@@ -848,30 +954,79 @@ function renderSetup(){
 function toHistory(){
   if(G.diff.filter(d=>!d.elim).length<2){G.nudge='Add at least 2 diagnoses before proceeding.';render();return;}
   const cas=CASES[G.caseIdx];
-  const missed=cas.caseMNMs.filter(m=>!G.diff.some(d=>normMatch(d.n,m)));
-  if(missed.length){renderCritMiss(missed);return;}
+  const allMNMs=cas.caseMNMs||[];
+  // Tier 1 = must consider (soft warned); Tier 2 = important but rare (debrief only)
+  const tier1Missed=allMNMs.filter(m=>getMNMTier(m)===1&&!G.diff.some(d=>normMatch(d.n,getMNMName(m))));
+  const tier2Missed=allMNMs.filter(m=>getMNMTier(m)===2&&!G.diff.some(d=>normMatch(d.n,getMNMName(m))));
+  G._tier2Missed=tier2Missed.map(getMNMName); // store for debrief
+  if(tier1Missed.length){
+    renderSoftWarn(tier1Missed,tier2Missed);
+    return;
+  }
+  if(tier2Missed.length&&!G._tier2WarnSeen){
+    // Gentle one-line nudge for tier 2, non-blocking
+    G._tier2WarnSeen=true;
+    G.nudge='💡 Consider also: '+tier2Missed.map(getMNMName).join(', ')+' — less common but worth having in your differential.';
+  }
   G.phase1Names=new Set(G.diff.map(d=>d.n));
   G.stage='history';G.nudge=null;render();
 }
 
 // ═══════════════════════════════════════════
-// CRITICAL MISS
+// SOFT WARNING (replaces hard-lock)
 // ═══════════════════════════════════════════
-function renderCritMiss(missed){
-  const explHtml=missed.map(m=>`<p><strong>${m}:</strong> ${getMNMExpl(m)}</p>`).join('');
-  document.getElementById('content').innerHTML=`
-    <div class="crit">
-      <div class="crit-ico">🚨</div>
-      <div class="crit-title">Safety Stop — Critical Miss</div>
-      <div class="crit-body">Before taking any history, your differential must include the most dangerous possible diagnoses. You cannot investigate for a condition you have not considered.</div>
-      <div class="crit-missed">Missing from your differential:<br><strong>${missed.join('  ·  ')}</strong></div>
-      <div class="crit-expl study-aid">${explHtml}</div>
-      <div class="crit-penalty">⚠️ Going back applies a permanent <strong>−30 pt Approach penalty</strong>. Forcing through costs −50 pts.</div>
-      <div class="crit-acts">
-        <button class="abtn primary" onclick="critBack()">← Go Back and Add Them (−30 pts)</button>
-        <button class="abtn" onclick="critForce()">Continue Without Them (−50 pts)</button>
-      </div>
-    </div>`;
+function renderSoftWarn(tier1Missed,tier2Missed){
+  // Track which MNMs have been added during this warning
+  const addedNow=new Set();
+  function swRefresh(){
+    const rows=tier1Missed.map(m=>{
+      const name=getMNMName(m);
+      const already=G.diff.some(d=>normMatch(d.n,name));
+      const wasAdded=addedNow.has(name);
+      return '<div class="mnm-add-row">'
+        +'<div class="mnm-add-info"><div class="mnm-add-name">'+name+'</div>'
+        +'<div class="mnm-add-expl study-aid">'+getMNMExpl(name)+'</div></div>'
+        +'<button class="mnm-add-btn '+(already||wasAdded?'added':'add')+'" '
+        +(already||wasAdded?'disabled':'onclick="swAdd(''+escJs(name)+'')"')+'>'
+        +(already||wasAdded?'✓ Added':'+ Add')
+        +'</button></div>';
+    }).join('');
+    const t2Sec=tier2Missed.length?'<div class="softwarn-tier2">Also worth considering (less common, not required to proceed): <strong>'+tier2Missed.map(getMNMName).join(', ')+'</strong></div>':'';
+    const allAdded=tier1Missed.every(m=>G.diff.some(d=>normMatch(d.n,getMNMName(m))));
+    document.getElementById('content').innerHTML=`
+      <div class="softwarn">
+        <div class="softwarn-ico">⚠️</div>
+        <div class="softwarn-title">Check Your Safety Net</div>
+        <div class="softwarn-body">Before you start taking a history, check that you have considered the most dangerous diagnoses for this presentation. You can add them now — or proceed and accept a smaller penalty.</div>
+        <div class="softwarn-missed">Missing from your differential: <strong>`+tier1Missed.map(getMNMName).join('  ·  ')+`</strong></div>
+        <div class="mnm-add-list">`+rows+`</div>
+        `+t2Sec+`
+        <div class="softwarn-acts">
+          <button class="abtn primary" onclick="swProceed()">`+(allAdded?'Proceed to History →':'Proceed Anyway (−15 pts)')+`</button>
+          <button class="abtn" onclick="G.stage='setup';render()">← Back to Differential</button>
+        </div>
+      </div>`;
+  }
+  window.swAdd=function(name){
+    if(!G.diff.some(d=>normMatch(d.n,name))){
+      const pool=Object.values(DIAG_LIB).flatMap(s=>s.diags);
+      const entry=pool.find(d=>d.n===name||(d.subs&&d.subs.includes(name)));
+      const subs=entry&&entry.n===name&&entry.subs?entry.subs:[];
+      G.diff.push({n:name,tag:'mnm',elim:false,elimSubs:[],mnm:true,subs});
+      addedNow.add(name);
+    }
+    swRefresh();
+  };
+  window.swProceed=function(){
+    const stillMissed=tier1Missed.filter(m=>!G.diff.some(d=>normMatch(d.n,getMNMName(m))));
+    if(stillMissed.length) G.softMissPenalty=(G.softMissPenalty||0)+15;
+    // If some were added via the prompt, small penalty
+    if(addedNow.size>0&&stillMissed.length===0) G.softMissPenalty=(G.softMissPenalty||0)+5;
+    G.hardPenalty=(G.softMissPenalty||0); // reuse hardPenalty field for scoring
+    G.phase1Names=new Set(G.diff.map(d=>d.n));
+    G.stage='history';G.nudge=null;render();
+  };
+  swRefresh();
 }
 function getMNMExpl(n){
   const l=(n||'').toLowerCase();
@@ -889,8 +1044,7 @@ function getMNMExpl(n){
   if(l.includes('tension'))return'Tension pneumothorax is rapidly fatal without immediate needle decompression — diagnosed clinically.';
   return`${n} is a must-not-miss because missing it leads directly to irreversible harm or death.`;
 }
-function critBack(){G.hardPenalty=30;G.stage='setup';render();}
-function critForce(){G.hardPenalty=50;G.phase1Names=new Set(G.diff.map(d=>d.n));G.stage='history';render();}
+// critBack / critForce removed — replaced by swProceed in soft-warning system
 
 // ═══════════════════════════════════════════
 // PHASE 2 STAGES
@@ -973,14 +1127,38 @@ function mkFinding(item,cat,catLbl){
   const isReq=(cas.required||[]).includes(item.id);
   const isIce=item.ice;
   const irrel=!item.rel&&!isIce;
-  return`<div class="fc ${isIce?'icef':cat}">
-    <div class="fc-lbl ${isIce?'icef':cat}">${catLbl} — ${item.lbl}</div>
-    <div class="fc-txt">${item.find}</div>
-    ${isReq?`<div class="fc-note req study-aid">⭐ Key investigation for this case</div>`:''}
-    ${sn?`<div class="fc-note sig study-aid">✓ Significant negative: ${sn.label}</div>`:''}
-    ${irrel?`<div class="fc-note irrel study-aid">○ Did not significantly change the differential</div>`:''}
-    ${isIce?`<div class="fc-note ice study-aid">💬 ICE — good practice</div>`:''}
-  </div>`;
+  const uid='fc-'+item.id;
+  // lookingFor: only shown in M3+ mode (body.m3) — pe items only
+  const lookingForHtml=item.lookingFor&&cat==='pef'?`<div class="fc-looking">🔍 Looking for: ${item.lookingFor}</div>`:'';
+  // image support
+  const imgHtml=item.imageUrl?`<img class="fc-img" src="images/${item.imageUrl}" alt="${item.lbl}" loading="lazy">`:'';
+  // expert commentary — hidden by default in M3, shown in M2; toggleable per card
+  const expHtml=item.exp?`
+    <button class="fc-exp-toggle" onclick="toggleFcExp('${uid}')">💡 Why does this matter?</button>
+    <div class="fc-exp" id="${uid}">${item.exp}</div>`:'';
+  // Note: irrel label is context-specific — different wording to avoid overgeneralising
+  const irrelNote=irrel?`<div class="fc-note irrel-ctx study-aid">○ Not discriminating in <em>this</em> presentation — this test is valuable in other contexts</div>`:'';
+  return\`<div class="fc \${isIce?'icef':cat}">
+    <div class="fc-lbl \${isIce?'icef':cat}">\${catLbl} — \${item.lbl}</div>
+    \${lookingForHtml}
+    <div class="fc-txt">\${item.find}</div>
+    \${imgHtml}
+    \${isReq?'<div class="fc-note req study-aid">⭐ Key investigation for this case</div>':''}
+    \${sn?'<div class="fc-note sig study-aid">✓ Significant negative: '+sn.label+'</div>':''}
+    \${irrelNote}
+    \${isIce?'<div class="fc-note ice study-aid">💬 ICE — good practice</div>':''}
+    \${expHtml}
+  </div>\`;
+}
+function toggleFcExp(uid){
+  const el=document.getElementById(uid);
+  if(!el)return;
+  el.classList.toggle('open');
+  // flip button text
+  const btn=el.previousElementSibling;
+  if(btn&&btn.classList.contains('fc-exp-toggle')){
+    btn.textContent=el.classList.contains('open')?'💡 Hide explanation':'💡 Why does this matter?';
+  }
 }
 
 function doItem(stage,id){
@@ -1160,7 +1338,7 @@ function calcMNMDemotionScore(){
 function calcLiveScore(){
   const cas=CASES[G.caseIdx];const pb=G.pb;
   const mn=cas.caseMNMs||[];
-  const mnmOk=mn.filter(m=>G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,m))).length;
+  const mnmOk=mn.filter(m=>G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,getMNMName(m)))).length;
   const mnmPts=mn.length?(mnmOk/mn.length)*30:0;
   const exp=cas.expectedP1||[];
   const expOk=exp.filter(e=>G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,e))).length;
@@ -1214,7 +1392,7 @@ function calcFinalScore(){
       +'Significant negatives earned: '+G.sigNegsEarned.size+'. '
       +'MNM ranking/demotion: '+demote.earned+'/'+demote.total+' correctly handled. '
       +'Reactive additions (Phase 2 only): '+G.liveScore._rx+'. '
-      +'Hard-lock penalty: '+(G.hardPenalty>0?'−'+G.hardPenalty+' pts':'none')+'.',
+      +'MNM handling penalty: '+(G.hardPenalty>0?'−'+G.hardPenalty+' pts ('+(G.softMissPenalty>0?'soft-miss':'hard block')+')':'none')+'.',
     processExpl:'History: '+(pb.hRel||0)+'/'+hRel+' relevant topics'+(G.skipped.has('history')?' (skipped)':'')+'. '
       +'PE: '+(pb.peRel||0)+'/'+peRel+' relevant examinations. '
       +'Basic investigations: '+(pb.biRel||0)+' relevant tests. '
@@ -1234,6 +1412,13 @@ function toggleTL(){
   if(!b||!a)return;
   b.classList.toggle('open');
   a.classList.toggle('open');
+}
+function toggleSection(id){
+  const b=document.getElementById(id+'-body');
+  const a=document.getElementById(id+'-arr');
+  if(!b)return;
+  b.classList.toggle('open');
+  if(a)a.classList.toggle('open');
 }
 
 function renderDebrief(){
@@ -1294,11 +1479,11 @@ function renderDebrief(){
   }).join('');
 
   // Phase 1 coverage
-  const allExp=[...cas.caseMNMs,...(cas.expectedP1||[])];
+  const allExp=[...cas.caseMNMs.map(getMNMName),...(cas.expectedP1||[])];
   const p1Cov=allExp.map(e=>{
     const inP1=G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,e));
     const inLater=!inP1&&G.diff.some(d=>normMatch(d.n,e));
-    const isMNM=cas.caseMNMs.some(m=>normMatch(m,e));
+    const isMNM=cas.caseMNMs.some(m=>normMatch(getMNMName(m),e));
     if(inP1) return '<div class="p1-row ok"><span class="p1-ico">✓</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'🔴 MNM · ':'')+'Phase 1</span></div>';
     if(inLater) return '<div class="p1-row rx"><span class="p1-ico">↓</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'🔴 MNM · ':'')+'Added reactively in Phase 2</span></div>';
     return '<div class="p1-row missed"><span class="p1-ico">✗</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'🔴 MNM · ':'')+'Never considered</span></div>';
@@ -1419,27 +1604,47 @@ function renderDebrief(){
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">🔴 Must-Not-Miss — How Each Was Ruled In or Out</div>
-      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">Full colour = you performed this step. <span style="opacity:.5;font-style:italic">Faded / "not performed"</span> = available but not done.</p>
-      ${mnmHtml||'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No MNM data for this case.</p>'}
+      <div class="tl-toggle" onclick="toggleSection('mnm')">
+        <span class="tl-toggle-lbl">🔴 Must-Not-Miss — How Each Was Ruled In or Out</span>
+        <span class="tl-toggle-arr" id="mnm-arr">▶</span>
+      </div>
+      <div class="tl-body" id="mnm-body">
+        <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">Full colour = you performed this step. <span style="opacity:.5;font-style:italic">Faded / "not performed"</span> = available but not done.</p>
+        ${mnmHtml||'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No MNM data for this case.</p>'}
+      </div>
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">📋 Your Phase 1 Differential Coverage</div>
-      <p style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Green = Phase 1 · Purple = reactively added in Phase 2 (penalised) · Red = never considered</p>
-      <div class="p1-cov">${p1Cov}</div>
+      <div class="tl-toggle" onclick="toggleSection('p1')">
+        <span class="tl-toggle-lbl">📋 Your Phase 1 Differential Coverage</span>
+        <span class="tl-toggle-arr" id="p1-arr">▶</span>
+      </div>
+      <div class="tl-body" id="p1-body">
+        <p style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Green = Phase 1 · Purple = reactively added in Phase 2 (penalised) · Red = never considered</p>
+        <div class="p1-cov">${p1Cov}</div>
+      </div>
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">📊 Your Ranking Progression</div>
-      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">The correct diagnosis should move toward the top as evidence accumulates. 🔗 = complicating syndrome (should be directly below its primary diagnosis, not above it).</p>
-      <div class="snap-wrap">${snapHtml}</div>
+      <div class="tl-toggle" onclick="toggleSection('snap')">
+        <span class="tl-toggle-lbl">📊 Your Ranking Progression</span>
+        <span class="tl-toggle-arr" id="snap-arr">▶</span>
+      </div>
+      <div class="tl-body" id="snap-body">
+        <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">The correct diagnosis should move toward the top as evidence accumulates. 🔗 = complicating syndrome (should be directly below its primary diagnosis).</p>
+        <div class="snap-wrap">${snapHtml}</div>
+      </div>
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">🧠 MNM Reasoning — Did You Demote Must-Not-Miss Diagnoses Appropriately?</div>
-      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">After each piece of exclusionary evidence, must-not-miss diagnoses should move to the bottom half of your ranking. ✓ = you did. ✗ = it stayed too high. ○ = you didn't perform the relevant investigation.</p>
-      ${dmtnHtml}
+      <div class="tl-toggle" onclick="toggleSection('dmtn')">
+        <span class="tl-toggle-lbl">🧠 MNM Reasoning — Demotion Tracking</span>
+        <span class="tl-toggle-arr" id="dmtn-arr">▶</span>
+      </div>
+      <div class="tl-body" id="dmtn-body">
+        <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">After each piece of exclusionary evidence, must-not-miss diagnoses should move to the bottom half of your ranking. ✓ = you did. ✗ = it stayed too high. ○ = trigger investigation not performed.</p>
+        ${dmtnHtml}
+      </div>
     </div>
 
     <div class="tl-card">
@@ -1453,25 +1658,39 @@ function renderDebrief(){
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">🔍 Sensitivity &amp; Specificity</div>
-      <div class="ss-row">
+      <div class="tl-toggle" onclick="toggleSection('ss')">
+        <span class="tl-toggle-lbl">🔍 Sensitivity &amp; Specificity</span>
+        <span class="tl-toggle-arr" id="ss-arr">▶</span>
+      </div>
+      <div class="tl-body" id="ss-body"><div class="ss-row">
         <div class="ssb sens"><div class="ssb-title">Sensitivity</div><div class="ssb-text">${cas.sensitivityNote||''}</div></div>
         <div class="ssb spec"><div class="ssb-title">Specificity</div><div class="ssb-text">${cas.specificityNote||''}</div></div>
         <div class="ssb safe"><div class="ssb-title">Safety Net</div><div class="ssb-text">Must-not-miss diagnoses require high-sensitivity screening — missing them is catastrophic and irreversible.</div></div>
-      </div>
+      </div></div>
     </div>
 
     <div class="approach-card">
-      <div class="approach-lbl">📚 The Clinical Framework — Revealed</div>
+      <div class="tl-toggle" onclick="toggleSection('approach')" style="margin-bottom:8px">
+        <span style="font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">📚 The Clinical Framework — Revealed</span>
+        <span class="tl-toggle-arr" id="approach-arr">▶</span>
+      </div>
+      <div class="tl-body" id="approach-body">
+      <div class="approach-lbl" style="display:none"></div>
       <div class="approach-title">${cas.approachTitle||''}</div>
       <div class="approach-text">${cas.approachText||''}</div>
       <div class="approach-cats">${acats}</div>
       <div class="approach-insight">💡 ${cas.approachInsight||''}</div>
+      </div>
     </div>
 
     <div class="db-card">
-      <div class="db-card-lbl">Expert Summary</div>
-      <p style="font-size:.82rem;line-height:1.72;color:var(--muted)">${cas.expertNarrative||''}</p>
+      <div class="tl-toggle" onclick="toggleSection('expert')">
+        <span class="tl-toggle-lbl">📝 Expert Summary</span>
+        <span class="tl-toggle-arr" id="expert-arr">▶</span>
+      </div>
+      <div class="tl-body" id="expert-body">
+        <p style="font-size:.82rem;line-height:1.72;color:var(--muted)">${cas.expertNarrative||''}</p>
+      </div>
     </div>
 
     <div class="nav-row" style="justify-content:center;padding-bottom:20px">
@@ -1573,6 +1792,7 @@ function dDE(){dragSrc=null;document.querySelectorAll('.de').forEach(el=>el.clas
 // ═══════════════════════════════════════════
 // UTILS
 // ═══════════════════════════════════════════
+// ─ MNM helpers (support both string and {name,tier} formats in caseMNMs)
 function normMatch(a,b){
   if(!a||!b)return false;
   const al=a.toLowerCase(),bl=b.toLowerCase();

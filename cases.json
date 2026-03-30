@@ -11,10 +11,22 @@
       "snomedCode": "703164000",
       "vignette": "Mr Tan Wei Ming is a 62-year-old male bus driver who walks into the Emergency Department supported by his wife, looking pale and sweaty. He tells you he has had a heavy, squeezing discomfort in his upper abdomen for the past 2 hours. He has also been feeling nauseous and vomited once on the way to hospital.",
       "caseMNMs": [
-        "Myocardial Infarction",
-        "Aortic Dissection",
-        "Mesenteric Ischaemia",
-        "Aortic Aneurysm / Ruptured AAA"
+        {
+          "name": "Myocardial Infarction",
+          "tier": 1
+        },
+        {
+          "name": "Aortic Dissection",
+          "tier": 1
+        },
+        {
+          "name": "Mesenteric Ischaemia",
+          "tier": 2
+        },
+        {
+          "name": "Aortic Aneurysm / Ruptured AAA",
+          "tier": 2
+        }
       ],
       "expectedP1": [
         "Peptic Ulcer Disease",
@@ -339,7 +351,8 @@
           "cost": "free",
           "rel": true,
           "find": "Visibly distressed and anxious. Pale skin. Profusely sweating (diaphoretic). Slightly short of breath at rest. Sitting upright. No yellow skin or eyes. No signs of chronic liver disease.",
-          "exp": "Pallor and heavy sweating reflect the body's stress response to a cardiac emergency. The combination of a pale, sweating, distressed 62-year-old with cardiovascular risk factors should immediately raise concern for a serious cardiac event. Absence of jaundice makes liver and gallbladder causes less likely."
+          "exp": "Pallor and heavy sweating reflect the body's stress response to a cardiac emergency. The combination of a pale, sweating, distressed 62-year-old with cardiovascular risk factors should immediately raise concern for a serious cardiac event. Absence of jaundice makes liver and gallbladder causes less likely.",
+          "lookingFor": "Pallor, diaphoresis (sweating), distress — autonomic features of MI; jaundice for hepatobiliary cause"
         },
         {
           "id": "pe02",
@@ -349,7 +362,8 @@
           "sigNeg": true,
           "required": true,
           "find": "Blood pressure: Right arm 158/96 mmHg, Left arm 156/94 mmHg — EQUAL (difference only 2 mmHg). Heart rate: 56 beats/minute, regular. Breathing rate: 18/min. Oxygen level: 96% on room air. Temperature: 37.1°C. Fully alert.",
-          "exp": "CRITICAL NEGATIVE: Equal blood pressures in both arms (difference under 10 mmHg) makes aortic dissection very unlikely — dissection typically causes a difference of more than 20 mmHg because it compresses the artery to one arm. The slow heart rate (56 bpm) is characteristic of inferior MI — the right coronary artery also supplies the heart's pacemaker, so blockage slows it down. No fever argues against an infectious cause."
+          "exp": "CRITICAL NEGATIVE: Equal blood pressures in both arms (difference under 10 mmHg) makes aortic dissection very unlikely — dissection typically causes a difference of more than 20 mmHg because it compresses the artery to one arm. The slow heart rate (56 bpm) is characteristic of inferior MI — the right coronary artery also supplies the heart's pacemaker, so blockage slows it down. No fever argues against an infectious cause.",
+          "lookingFor": "Both arm BPs (difference >20 mmHg → dissection); HR (bradycardia in inferior MI); SpO₂"
         },
         {
           "id": "pe03",
@@ -357,7 +371,8 @@
           "cost": "free",
           "rel": true,
           "find": "Neck veins not raised. Normal heart sounds, no abnormal sounds or murmurs. No rubbing sound (pericardial rub). All pulses equal in both arms and legs.",
-          "exp": "Absence of a pericardial rub reduces likelihood of pericarditis. Equal pulses throughout, combined with equal arm BPs, effectively rules out aortic dissection. Normal neck veins suggest the right heart is not under severe strain yet."
+          "exp": "Absence of a pericardial rub reduces likelihood of pericarditis. Equal pulses throughout, combined with equal arm BPs, effectively rules out aortic dissection. Normal neck veins suggest the right heart is not under severe strain yet.",
+          "lookingFor": "JVP elevation; pericardial rub; muffled heart sounds; murmurs suggesting valvular cause; all peripheral pulses"
         },
         {
           "id": "pe04",
@@ -365,7 +380,8 @@
           "cost": "free",
           "rel": true,
           "find": "Air entry equal both sides. Lungs completely clear — no crackling sounds, no wheeze, no pleural rub.",
-          "exp": "Clear lungs argue against pneumonia and against fluid in the lungs from heart failure (which would cause crackling sounds at the lung bases). No pleural rub argues against pleurisy and PE."
+          "exp": "Clear lungs argue against pneumonia and against fluid in the lungs from heart failure (which would cause crackling sounds at the lung bases). No pleural rub argues against pleurisy and PE.",
+          "lookingFor": "Pleural rub (pleurisy/PE); basal crackles (pulmonary oedema); unilateral dullness"
         },
         {
           "id": "pe05",
@@ -374,7 +390,8 @@
           "rel": true,
           "sigNeg": true,
           "find": "Abdomen soft and not distended. Mild tenderness to deep pressure only in the upper-middle abdomen — no muscle tensing (guarding), no rigidity, no rebound tenderness. Murphy's sign negative (pressing under right rib cage does not cause sudden pain worsening). Liver and spleen not enlarged. Normal bowel sounds. No pulsatile mass.",
-          "exp": "CRITICAL NEGATIVE: No peritonism (no guarding, rigidity, or rebound tenderness) effectively rules out peritonitis from a perforated organ. Negative Murphy's sign argues strongly against acute cholecystitis. The mild non-specific tenderness on deep pressure is actually a recognised feature of inferior MI — the heart pain refers to the upper abdomen via shared nerve supply. No pulsatile abdominal mass makes ruptured aortic aneurysm less likely."
+          "exp": "CRITICAL NEGATIVE: No peritonism (no guarding, rigidity, or rebound tenderness) effectively rules out peritonitis from a perforated organ. Negative Murphy's sign argues strongly against acute cholecystitis. The mild non-specific tenderness on deep pressure is actually a recognised feature of inferior MI — the heart pain refers to the upper abdomen via shared nerve supply. No pulsatile abdominal mass makes ruptured aortic aneurysm less likely.",
+          "lookingFor": "Peritonism (guarding, rebound, rigidity) → surgical emergency; Murphy's sign → cholecystitis; pulsatile mass → AAA; bowel sounds"
         },
         {
           "id": "pe06",
@@ -382,7 +399,8 @@
           "cost": "free",
           "rel": true,
           "find": "All pulses present and equal in both wrists, elbows, groins, behind knees, and at feet. Capillary refill under 2 seconds. No evidence of poor circulation to any limb.",
-          "exp": "Equal peripheral pulses throughout, combined with equal arm BPs, comprehensively excludes aortic dissection. Good peripheral circulation confirms adequate heart output despite the slow heart rate."
+          "exp": "Equal peripheral pulses throughout, combined with equal arm BPs, comprehensively excludes aortic dissection. Good peripheral circulation confirms adequate heart output despite the slow heart rate.",
+          "lookingFor": "Equal pulses bilaterally (unequal → dissection/AAA); capillary refill time"
         },
         {
           "id": "pe07",
@@ -390,7 +408,8 @@
           "cost": "free",
           "rel": false,
           "find": "No tender spots on chest wall. No rib deformity. Pressing on the chest wall does not reproduce the patient's pain.",
-          "exp": "Absence of reproducible chest wall tenderness argues against costochondritis and rib fractures. A useful negative — if pressing on the chest exactly reproduced the pain, a musculoskeletal cause would become more likely."
+          "exp": "Absence of reproducible chest wall tenderness argues against costochondritis and rib fractures. A useful negative — if pressing on the chest exactly reproduced the pain, a musculoskeletal cause would become more likely.",
+          "lookingFor": "Reproducible tenderness on pressing chest wall → musculoskeletal; no reproduction → not musculoskeletal"
         },
         {
           "id": "pe08",
@@ -398,7 +417,8 @@
           "cost": "free",
           "rel": false,
           "find": "Not performed — no bowel symptoms reported.",
-          "exp": "Rectal examination is a priority if GI bleeding is suspected. In this case with no bowel symptoms and a strongly cardiac picture, this should not be performed before getting an ECG."
+          "exp": "Rectal examination is a priority if GI bleeding is suspected. In this case with no bowel symptoms and a strongly cardiac picture, this should not be performed before getting an ECG.",
+          "lookingFor": "Blood on rectal examination → GI bleed (if suspected)"
         },
         {
           "id": "pe09",
@@ -407,7 +427,8 @@
           "rel": false,
           "penalize": true,
           "find": "Strength, reflexes, and sensation normal in both arms.",
-          "exp": "Not indicated in this presentation. There are no neurological symptoms. Performing this before completing the cardiovascular examination in a patient with cardiovascular risk factors and epigastric pain reflects poor clinical prioritisation."
+          "exp": "Not indicated in this presentation. There are no neurological symptoms. Performing this before completing the cardiovascular examination in a patient with cardiovascular risk factors and epigastric pain reflects poor clinical prioritisation.",
+          "lookingFor": "Not indicated — no neurological symptoms; perform only if neurological cause suspected"
         }
       ],
       "basic": [
@@ -418,7 +439,8 @@
           "rel": true,
           "required": true,
           "find": "ST elevation 2-3mm in leads II, III, and aVF (the 'inferior' leads). Reciprocal ST depression in leads I and aVL. Normal sinus rhythm at 56 beats/min. No bundle branch block.",
-          "exp": "DIAGNOSTIC: ST elevation in the inferior leads with reciprocal changes is the hallmark of an Inferior STEMI — the right coronary artery is completely blocked. This single finding triggers the emergency heart procedure (primary PCI) protocol immediately. All GI diagnoses are now effectively excluded. This should have been the FIRST test ordered."
+          "exp": "DIAGNOSTIC: ST elevation in the inferior leads with reciprocal changes is the hallmark of an Inferior STEMI — the right coronary artery is completely blocked. This single finding triggers the emergency heart procedure (primary PCI) protocol immediately. All GI diagnoses are now effectively excluded. This should have been the FIRST test ordered.",
+          "imageUrl": "case001_ecg_inferior_stemi.jpg"
         },
         {
           "id": "bi02",
@@ -475,7 +497,8 @@
           "cost": "low",
           "rel": false,
           "find": "Heart size normal. Mediastinum (space in middle of chest) not widened. Lung fields clear. No collapsed lung, no fluid around the lung.",
-          "exp": "A normal mediastinal width reduces (but does not exclude) aortic dissection — the equal bilateral BPs have already largely excluded this. Clear lungs argue against pneumonia and pulmonary oedema. Chest X-ray does not diagnose heart attacks. Useful baseline but the ECG comes first."
+          "exp": "A normal mediastinal width reduces (but does not exclude) aortic dissection — the equal bilateral BPs have already largely excluded this. Clear lungs argue against pneumonia and pulmonary oedema. Chest X-ray does not diagnose heart attacks. Useful baseline but the ECG comes first.",
+          "imageUrl": "case001_cxr_normal.jpg"
         },
         {
           "id": "bi09",
@@ -517,7 +540,8 @@
           "cost": "high",
           "rel": true,
           "find": "Complete blockage of the mid right coronary artery (RCA) confirmed. Drug-coated stent successfully placed to open the artery. Blood flow restored. Time from arrival to balloon: 72 minutes (within the 90-minute target).",
-          "exp": "DEFINITIVE INVESTIGATION AND TREATMENT: The coronary angiogram confirms total right coronary artery (RCA) blockage as the cause of this inferior STEMI. Emergency PCI restores blood flow and saves heart muscle. The RCA supplies the lower heart wall, the right ventricle, and the heart's pacemaker — explaining all features of this presentation. This is why the ECG had to be done first."
+          "exp": "DEFINITIVE INVESTIGATION AND TREATMENT: The coronary angiogram confirms total right coronary artery (RCA) blockage as the cause of this inferior STEMI. Emergency PCI restores blood flow and saves heart muscle. The RCA supplies the lower heart wall, the right ventricle, and the heart's pacemaker — explaining all features of this presentation. This is why the ECG had to be done first.",
+          "imageUrl": "case001_angio_rca_occlusion.jpg"
         },
         {
           "id": "ai02",
@@ -525,7 +549,8 @@
           "cost": "mid",
           "rel": true,
           "find": "The lower (inferior) and side (inferolateral) heart walls are moving poorly. Mild right ventricular involvement. Pumping function approximately 48% (slightly below normal 55%). No fluid around the heart.",
-          "exp": "Confirms inferior STEMI — the walls supplied by the blocked right coronary artery are not moving properly. This distinguishes it from viral myocarditis, which causes global (all-over) poor movement. Right ventricular involvement is clinically important: these patients can collapse if given blood pressure-lowering medications like nitrates."
+          "exp": "Confirms inferior STEMI — the walls supplied by the blocked right coronary artery are not moving properly. This distinguishes it from viral myocarditis, which causes global (all-over) poor movement. Right ventricular involvement is clinically important: these patients can collapse if given blood pressure-lowering medications like nitrates.",
+          "imageUrl": "case001_echo_inferior_wall_motion.jpg"
         },
         {
           "id": "ai03",
@@ -620,10 +645,22 @@
       "snomedCode": "1259239003",
       "vignette": "Mr Lim Ah Kow, a 58-year-old retired factory worker, is brought into the Emergency Department by his son. His son reports that his father has been getting progressively more breathless over the past 6 weeks, and has lost a lot of weight. Today, he seems more confused and unsteady than usual.",
       "caseMNMs": [
-        "Pulmonary Embolism",
-        "Cardiac Tamponade",
-        "Pulmonary Tuberculosis",
-        "Addisonian Crisis"
+        {
+          "name": "Pulmonary Embolism",
+          "tier": 1
+        },
+        {
+          "name": "Cardiac Tamponade",
+          "tier": 1
+        },
+        {
+          "name": "Pulmonary Tuberculosis",
+          "tier": 1
+        },
+        {
+          "name": "Addisonian Crisis",
+          "tier": 1
+        }
       ],
       "expectedP1": [
         "Lung Cancer",
@@ -931,7 +968,8 @@
           "cost": "free",
           "rel": true,
           "find": "Looks unwell. Confused — disoriented to time and place. Visibly thin and malnourished; clothing appears loose. Pale. No jaundice. BILATERAL FINGER CLUBBING present. No peripheral lymphadenopathy visible. No stigmata of chronic liver disease.",
-          "exp": "Finger clubbing (bulbous enlargement of the distal finger pads) is associated with lung cancer, chronic pulmonary suppuration, and inflammatory bowel disease. Its presence in a heavy smoker with 3 months of haemoptysis and weight loss is a significant pointer toward malignancy. Confusion confirms central nervous system involvement — in this context, the most likely cause is metabolic (hyponatraemia from SIADH) or CNS metastases. Absence of liver disease stigmata reduces hepatic cirrhosis as a cause of dilutional hyponatraemia."
+          "exp": "Finger clubbing (bulbous enlargement of the distal finger pads) is associated with lung cancer, chronic pulmonary suppuration, and inflammatory bowel disease. Its presence in a heavy smoker with 3 months of haemoptysis and weight loss is a significant pointer toward malignancy. Confusion confirms central nervous system involvement — in this context, the most likely cause is metabolic (hyponatraemia from SIADH) or CNS metastases. Absence of liver disease stigmata reduces hepatic cirrhosis as a cause of dilutional hyponatraemia.",
+          "lookingFor": "Cachexia/malnourishment (malignancy, TB); finger clubbing (lung Ca, chronic lung disease); pallor (anaemia worsening dyspnoea); lymphadenopathy"
         },
         {
           "id": "pe02",
@@ -939,7 +977,8 @@
           "cost": "free",
           "rel": true,
           "find": "Temperature 37.4°C (no significant fever). Heart rate 96 bpm. Blood pressure 108/70 mmHg. Respiratory rate 22/min (elevated). SpO₂ 91% on room air. BMI estimated 17 (underweight). No postural drop in blood pressure.",
-          "exp": "Elevated respiratory rate and SpO₂ 91% confirm significant respiratory compromise requiring supplemental oxygen. Blood pressure is maintained at 108/70 — this argues against Addisonian crisis (which causes profound hypotension) and cardiac tamponade (which causes hypotension with pulsus paradoxus). No postural hypotension further argues against adrenal insufficiency. Temperature of 37.4°C is not significant — a higher fever would raise the concern for active TB or bacterial pneumonia."
+          "exp": "Elevated respiratory rate and SpO₂ 91% confirm significant respiratory compromise requiring supplemental oxygen. Blood pressure is maintained at 108/70 — this argues against Addisonian crisis (which causes profound hypotension) and cardiac tamponade (which causes hypotension with pulsus paradoxus). No postural hypotension further argues against adrenal insufficiency. Temperature of 37.4°C is not significant — a higher fever would raise the concern for active TB or bacterial pneumonia.",
+          "lookingFor": "SpO₂ (severity of hypoxia); RR (respiratory distress); BP (tamponade → hypotension, Addison's → hypotension); HR; temperature (fever → TB, infection)"
         },
         {
           "id": "pe03",
@@ -948,7 +987,8 @@
           "rel": true,
           "sigNeg": true,
           "find": "JVP not elevated. Heart sounds: S1 and S2 present, not muffled, no murmurs, no pericardial rub. No pedal or ankle oedema. Capillary refill 2 seconds. No pulsus paradoxus detectable.",
-          "exp": "SIGNIFICANT NEGATIVE for cardiac tamponade: Beck's triad requires raised JVP + muffled heart sounds + hypotension — all three are absent here. Absence of pulsus paradoxus (a fall in systolic BP >10 mmHg on inspiration) further argues against tamponade. Normal heart sounds without muffling or rub also reduces pericarditis. Absence of pedal oedema and raised JVP makes heart failure a less likely primary cause of the dyspnoea."
+          "exp": "SIGNIFICANT NEGATIVE for cardiac tamponade: Beck's triad requires raised JVP + muffled heart sounds + hypotension — all three are absent here. Absence of pulsus paradoxus (a fall in systolic BP >10 mmHg on inspiration) further argues against tamponade. Normal heart sounds without muffling or rub also reduces pericarditis. Absence of pedal oedema and raised JVP makes heart failure a less likely primary cause of the dyspnoea.",
+          "lookingFor": "JVP elevation (tamponade, heart failure); muffled heart sounds (tamponade); pulsus paradoxus (>10 mmHg drop on inspiration → tamponade); ankle oedema"
         },
         {
           "id": "pe04",
@@ -956,7 +996,8 @@
           "cost": "free",
           "rel": true,
           "find": "Trachea deviated slightly to the LEFT. Percussion DULL in the right lower and mid zones. Breath sounds REDUCED in the right lower zone. Bronchial breathing audible at right mid zone. Left lung: normal resonance and vesicular breath sounds. No wheeze.",
-          "exp": "Tracheal deviation to the LEFT with right-sided dullness and reduced breath sounds is the classic pattern of a large right-sided pleural effusion — the fluid bulk pushes the trachea ipsilaterally (the same side as the effusion). Note: this is the opposite of collapse or pneumothorax where the trachea deviates toward the abnormal side. Bronchial breathing at the right mid zone suggests a large central mass partially occluding the bronchus. A large pleural effusion with a central mass in a heavy smoker is highly characteristic of lung cancer."
+          "exp": "Tracheal deviation to the LEFT with right-sided dullness and reduced breath sounds is the classic pattern of a large right-sided pleural effusion — the fluid bulk pushes the trachea ipsilaterally (the same side as the effusion). Note: this is the opposite of collapse or pneumothorax where the trachea deviates toward the abnormal side. Bronchial breathing at the right mid zone suggests a large central mass partially occluding the bronchus. A large pleural effusion with a central mass in a heavy smoker is highly characteristic of lung cancer.",
+          "lookingFor": "Tracheal deviation; dullness (effusion), stony-dull; reduced breath sounds; bronchial breathing (consolidation/mass); wheeze"
         },
         {
           "id": "pe05",
@@ -964,7 +1005,8 @@
           "cost": "free",
           "rel": true,
           "find": "Abdomen soft. Liver palpable 2 cm below the right costal margin (mild hepatomegaly). Spleen not palpable. No ascites. No abdominal masses. No tenderness.",
-          "exp": "Mild hepatomegaly raises concern for liver metastases, which are common with SCLC and would upstage the disease to 'extensive stage.' This finding warrants LFT assessment and CT staging. Absence of ascites and splenomegaly makes portal hypertension from liver cirrhosis an unlikely cause of hyponatraemia. Absence of adrenal enlargement on examination is not clinically reliable — CT adrenal assessment is needed."
+          "exp": "Mild hepatomegaly raises concern for liver metastases, which are common with SCLC and would upstage the disease to 'extensive stage.' This finding warrants LFT assessment and CT staging. Absence of ascites and splenomegaly makes portal hypertension from liver cirrhosis an unlikely cause of hyponatraemia. Absence of adrenal enlargement on examination is not clinically reliable — CT adrenal assessment is needed.",
+          "lookingFor": "Hepatomegaly (metastases); splenomegaly; ascites (cirrhosis causing dilutional hyponatraemia)"
         },
         {
           "id": "pe06",
@@ -972,7 +1014,8 @@
           "cost": "free",
           "rel": true,
           "find": "RIGHT supraclavicular lymph node: approximately 1.5 cm, firm, non-tender, fixed. No axillary or inguinal lymphadenopathy. No cervical lymphadenopathy.",
-          "exp": "A firm, non-tender, fixed supraclavicular lymph node on the right — in the context of a right-sided lung mass — is highly suspicious for locoregional lymph node metastasis of lung cancer. The right supraclavicular fossa receives drainage from the right thorax and right neck. Involvement of this node suggests at minimum N3 disease (contralateral or supraclavicular nodal involvement), which is a poor prognostic factor. This finding should prompt CT staging to fully characterise nodal involvement."
+          "exp": "A firm, non-tender, fixed supraclavicular lymph node on the right — in the context of a right-sided lung mass — is highly suspicious for locoregional lymph node metastasis of lung cancer. The right supraclavicular fossa receives drainage from the right thorax and right neck. Involvement of this node suggests at minimum N3 disease (contralateral or supraclavicular nodal involvement), which is a poor prognostic factor. This finding should prompt CT staging to fully characterise nodal involvement.",
+          "lookingFor": "Supraclavicular lymph nodes (lung cancer spread); axillary nodes; cervical nodes"
         },
         {
           "id": "pe07",
@@ -981,7 +1024,8 @@
           "rel": true,
           "sigNeg": true,
           "find": "Skin turgor normal. Mucous membranes moist. No peripheral oedema (no ankle or sacral oedema). JVP not elevated. No orthostatic hypotension. Clinical assessment: EUVOLAEMIC — neither dehydrated nor fluid overloaded.",
-          "exp": "CRITICAL EXAMINATION FINDING: Euvolaemia (normal body fluid volume) with hyponatraemia is the defining clinical pattern of SIADH. Compare: hypovolaemic hyponatraemia (dry mucous membranes, reduced skin turgor, orthostatic hypotension) indicates sodium loss (vomiting, diarrhoea, Addison's); hypervolaemic hyponatraemia (oedema, raised JVP, ascites) indicates dilutional causes (heart failure, cirrhosis, nephrotic syndrome). Euvolaemic hyponatraemia narrows the differential significantly to SIADH, hypothyroidism, or Addison's disease. Of these, Addison's is the most dangerous and must be excluded first."
+          "exp": "CRITICAL EXAMINATION FINDING: Euvolaemia (normal body fluid volume) with hyponatraemia is the defining clinical pattern of SIADH. Compare: hypovolaemic hyponatraemia (dry mucous membranes, reduced skin turgor, orthostatic hypotension) indicates sodium loss (vomiting, diarrhoea, Addison's); hypervolaemic hyponatraemia (oedema, raised JVP, ascites) indicates dilutional causes (heart failure, cirrhosis, nephrotic syndrome). Euvolaemic hyponatraemia narrows the differential significantly to SIADH, hypothyroidism, or Addison's disease. Of these, Addison's is the most dangerous and must be excluded first.",
+          "lookingFor": "Skin turgor; mucous membrane moisture; JVP; ankle oedema — determine volume status (euvolaemic → SIADH; hypovolaemic → sodium loss; hypervolaemic → HF/cirrhosis)"
         },
         {
           "id": "pe08",
@@ -989,7 +1033,8 @@
           "cost": "free",
           "rel": true,
           "find": "Disoriented to time and place (GCS 13/15). No focal limb weakness — power 5/5 throughout. Reflexes normal and symmetric. No cranial nerve abnormalities. Gait unsteady but no cerebellar signs. No neck stiffness.",
-          "exp": "Confusion without focal neurological deficits is consistent with a diffuse metabolic cause affecting the brain globally — most likely hyponatraemia causing cerebral oedema. Absence of neck stiffness and fever reduces meningitis. No focal limb weakness makes an acute stroke less likely. However, SCLC frequently spreads to the brain — brain metastases are found in >10% of SCLC patients at diagnosis and can also cause confusion without focal deficits (if they are small or frontal). MRI brain should be performed once the patient is stabilised."
+          "exp": "Confusion without focal neurological deficits is consistent with a diffuse metabolic cause affecting the brain globally — most likely hyponatraemia causing cerebral oedema. Absence of neck stiffness and fever reduces meningitis. No focal limb weakness makes an acute stroke less likely. However, SCLC frequently spreads to the brain — brain metastases are found in >10% of SCLC patients at diagnosis and can also cause confusion without focal deficits (if they are small or frontal). MRI brain should be performed once the patient is stabilised.",
+          "lookingFor": "GCS and orientation (confusion from hyponatraemia vs focal lesion vs metabolic); focal deficits (brain mets); neck stiffness (meningitis)"
         }
       ],
       "basic": [
@@ -1000,7 +1045,8 @@
           "rel": true,
           "required": true,
           "find": "Large RIGHT HILAR MASS (approximately 5 cm) at the right main bronchus. RIGHT-SIDED PLEURAL EFFUSION causing opacification of the right lower zone. Left lung clear. Trachea deviated slightly left. No pneumothorax. No rib lesions. No upper lobe consolidation or cavitation.",
-          "exp": "A large central hilar mass with an ipsilateral pleural effusion in a heavy smoker with haemoptysis, weight loss, and 6 weeks of progressive breathlessness is the classic CXR presentation of central lung cancer. SCLC typically arises centrally near the main airways (unlike adenocarcinoma, which is usually peripheral). Crucially, the absence of upper lobe consolidation, cavitation, or miliary shadowing makes TB less likely — though sputum AFB smear and culture are still required for definitive exclusion. This finding immediately makes lung cancer the leading diagnosis and triggers urgent CT and oncology referral."
+          "exp": "A large central hilar mass with an ipsilateral pleural effusion in a heavy smoker with haemoptysis, weight loss, and 6 weeks of progressive breathlessness is the classic CXR presentation of central lung cancer. SCLC typically arises centrally near the main airways (unlike adenocarcinoma, which is usually peripheral). Crucially, the absence of upper lobe consolidation, cavitation, or miliary shadowing makes TB less likely — though sputum AFB smear and culture are still required for definitive exclusion. This finding immediately makes lung cancer the leading diagnosis and triggers urgent CT and oncology referral.",
+          "imageUrl": "case002_cxr_hilar_mass_effusion.jpg"
         },
         {
           "id": "bi02",
@@ -1067,7 +1113,8 @@
           "cost": "low",
           "rel": true,
           "find": "AFB smear: NEGATIVE (no acid-fast bacilli seen). Sputum culture: no bacterial growth at 48 hours; TB culture pending (8 weeks). Sputum cytology: MALIGNANT CELLS identified — small cells with scant cytoplasm, high nuclear-to-cytoplasmic ratio, and stippled chromatin. Morphology consistent with small cell carcinoma.",
-          "exp": "Sputum testing serves two purposes simultaneously: (1) AFB smear and culture to exclude TB — the negative smear reduces infectious TB probability, though culture (8 weeks) is the gold standard. Patients with suspected TB should be isolated pending results. (2) Cytology — finding malignant SCLC cells in sputum confirms the diagnosis non-invasively. The classic description of 'small cells with high nuclear-to-cytoplasmic ratio and stippled chromatin' is the morphological hallmark of SCLC."
+          "exp": "Sputum testing serves two purposes simultaneously: (1) AFB smear and culture to exclude TB — the negative smear reduces infectious TB probability, though culture (8 weeks) is the gold standard. Patients with suspected TB should be isolated pending results. (2) Cytology — finding malignant SCLC cells in sputum confirms the diagnosis non-invasively. The classic description of 'small cells with high nuclear-to-cytoplasmic ratio and stippled chromatin' is the morphological hallmark of SCLC.",
+          "imageUrl": "case002_sputum_cytology_sclc.jpg"
         },
         {
           "id": "bi10",
@@ -1085,7 +1132,8 @@
           "cost": "mid",
           "rel": true,
           "find": "Right hilar mass (5.3 × 5.1 cm) at the right main bronchus with mediastinal lymphadenopathy (N2/N3 nodes). Moderate right pleural effusion. Multiple hepatic hypodense lesions consistent with metastases (largest 1.9 cm). Adrenal glands appear normal. No bony metastases identified on this scan. No upper lobe cavitation or miliary pattern (TB unlikely but not excluded).",
-          "exp": "CT confirms extensive disease: large central lung mass, mediastinal nodal involvement, hepatic metastases, and pleural effusion. In SCLC staging, this is 'extensive stage' disease (beyond one hemithorax), which occurs in 60–70% of SCLC patients at diagnosis. Hepatic metastases explain the elevated ALP and hepatomegaly. Normal adrenals are consistent with the normal Synacthen test. Absence of upper lobe cavitation or miliary pattern reduces TB probability, though sputum culture remains the definitive exclusion. Brain MRI is required separately for SCLC staging."
+          "exp": "CT confirms extensive disease: large central lung mass, mediastinal nodal involvement, hepatic metastases, and pleural effusion. In SCLC staging, this is 'extensive stage' disease (beyond one hemithorax), which occurs in 60–70% of SCLC patients at diagnosis. Hepatic metastases explain the elevated ALP and hepatomegaly. Normal adrenals are consistent with the normal Synacthen test. Absence of upper lobe cavitation or miliary pattern reduces TB probability, though sputum culture remains the definitive exclusion. Brain MRI is required separately for SCLC staging.",
+          "imageUrl": "case002_ct_chest_sclc_staging.jpg"
         },
         {
           "id": "ai02",
@@ -1093,7 +1141,8 @@
           "cost": "high",
           "rel": true,
           "find": "Bronchoscopy: right main bronchus almost completely obstructed by an endobronchial tumour. Biopsy: SMALL CELL LUNG CANCER (SCLC). Histology: dense sheets of small cells with scant cytoplasm and stippled chromatin. Immunohistochemistry: TTF-1 positive, synaptophysin positive, CD56 positive, Ki-67 >80% (very high proliferative rate — characteristic of SCLC).",
-          "exp": "Bronchoscopy with tissue biopsy is the gold standard for central lung tumour diagnosis. The histological features confirm SCLC: small cells with neuroendocrine markers (synaptophysin, CD56, TTF-1) and an extremely high Ki-67 proliferative index (>80% is typical for SCLC — one of the fastest-dividing cancers). These same neuroendocrine cells produce ectopic ADH, causing the paraneoplastic SIADH. Bronchoalveolar lavage fluid sent for TB culture provides an additional sample alongside sputum."
+          "exp": "Bronchoscopy with tissue biopsy is the gold standard for central lung tumour diagnosis. The histological features confirm SCLC: small cells with neuroendocrine markers (synaptophysin, CD56, TTF-1) and an extremely high Ki-67 proliferative index (>80% is typical for SCLC — one of the fastest-dividing cancers). These same neuroendocrine cells produce ectopic ADH, causing the paraneoplastic SIADH. Bronchoalveolar lavage fluid sent for TB culture provides an additional sample alongside sputum.",
+          "imageUrl": "case002_bronch_biopsy_sclc_histo.jpg"
         },
         {
           "id": "ai03",
@@ -1101,7 +1150,8 @@
           "cost": "mid",
           "rel": true,
           "find": "Two small enhancing lesions: right frontal lobe (1.0 cm) and right cerebellar hemisphere (0.8 cm). Consistent with brain metastases. No significant oedema or midline shift.",
-          "exp": "Brain metastases are found in >10% of SCLC patients at initial diagnosis and ultimately develop in up to 80% of patients over the disease course. MRI brain is more sensitive than CT for detecting small brain metastases and is recommended in all SCLC patients at staging. Finding brain metastases confirms extensive stage disease. They may also contribute to the confusion alongside the hyponatraemia. Prophylactic cranial irradiation (PCI) is considered in patients achieving complete remission."
+          "exp": "Brain metastases are found in >10% of SCLC patients at initial diagnosis and ultimately develop in up to 80% of patients over the disease course. MRI brain is more sensitive than CT for detecting small brain metastases and is recommended in all SCLC patients at staging. Finding brain metastases confirms extensive stage disease. They may also contribute to the confusion alongside the hyponatraemia. Prophylactic cranial irradiation (PCI) is considered in patients achieving complete remission.",
+          "imageUrl": "case002_mri_brain_mets.jpg"
         },
         {
           "id": "ai04",
@@ -1174,10 +1224,22 @@
       "snomedCode": "195229007",
       "vignette": "Miss Chen Mei Ling is a 28-year-old primary school teacher who presents to the Emergency Department with a 5-day history of progressively worsening headache. The headache has not responded to paracetamol. This morning, she noticed weakness in her left arm while writing on the whiteboard.",
       "caseMNMs": [
-        "Subarachnoid Haemorrhage (SAH)",
-        "Meningitis",
-        "Ischaemic Stroke",
-        "Hypertensive Emergency"
+        {
+          "name": "Subarachnoid Haemorrhage (SAH)",
+          "tier": 1
+        },
+        {
+          "name": "Meningitis",
+          "tier": 1
+        },
+        {
+          "name": "Ischaemic Stroke",
+          "tier": 1
+        },
+        {
+          "name": "Hypertensive Emergency",
+          "tier": 2
+        }
       ],
       "expectedP1": [
         "Migraine",
@@ -1457,7 +1519,8 @@
           "cost": "free",
           "rel": true,
           "find": "Looks distressed and in pain, holding her head. Alert and oriented to person, place, and time (GCS 15). No rash anywhere on the body — no petechiae, no purpura. No facial asymmetry at rest.",
-          "exp": "Preserved consciousness (GCS 15) is reassuring against rapidly rising intracranial pressure causing imminent herniation. Actively inspecting for a non-blanching purpuric rash is essential in anyone with headache — the rash of meningococcal septicaemia is a dermatological emergency: if found, IV benzylpenicillin should be given immediately before any other investigation. Absence of rash is an important negative finding."
+          "exp": "Preserved consciousness (GCS 15) is reassuring against rapidly rising intracranial pressure causing imminent herniation. Actively inspecting for a non-blanching purpuric rash is essential in anyone with headache — the rash of meningococcal septicaemia is a dermatological emergency: if found, IV benzylpenicillin should be given immediately before any other investigation. Absence of rash is an important negative finding.",
+          "lookingFor": "GCS level; non-blanching purpuric rash anywhere on body (meningococcal septicaemia → immediate IV penicillin); photophobia"
         },
         {
           "id": "pe02",
@@ -1466,7 +1529,8 @@
           "rel": true,
           "required": true,
           "find": "Temperature 37.2°C (no fever). Blood pressure 134/86 mmHg (mildly elevated). Heart rate 88 bpm. Breathing rate 16/min. Oxygen saturation 99% on room air.",
-          "exp": "No fever — important negative against infectious meningitis and encephalitis. Mildly elevated blood pressure may be reactive (pain, anxiety) or represent Cushing's reflex (raised BP + bradycardia) from raised intracranial pressure — though true Cushing's reflex indicates imminent herniation. Not in hypertensive emergency range (>180/120 mmHg with end-organ damage). Normal oxygen saturation is reassuring."
+          "exp": "No fever — important negative against infectious meningitis and encephalitis. Mildly elevated blood pressure may be reactive (pain, anxiety) or represent Cushing's reflex (raised BP + bradycardia) from raised intracranial pressure — though true Cushing's reflex indicates imminent herniation. Not in hypertensive emergency range (>180/120 mmHg with end-organ damage). Normal oxygen saturation is reassuring.",
+          "lookingFor": "BP (>180/120 with symptoms → hypertensive emergency; Cushing's reflex = raised BP + bradycardia → impending herniation); temperature (fever → meningitis/encephalitis)"
         },
         {
           "id": "pe03",
@@ -1474,7 +1538,8 @@
           "cost": "free",
           "rel": true,
           "find": "BILATERAL PAPILLOEDEMA — blurring and elevation of both optic disc margins, with loss of spontaneous venous pulsations. No retinal haemorrhages.",
-          "exp": "Papilloedema (swelling of the optic nerve head visible at the back of the eye) is caused by raised intracranial pressure — the increased pressure inside the skull is transmitted along the optic nerve sheath. Bilateral papilloedema in a young woman with progressive headache, visual changes, and focal neurological deficit is a critical clinical finding that demands urgent brain imaging. It confirms genuinely raised intracranial pressure from any cause (venous thrombosis, tumour, IIH, etc.)."
+          "exp": "Papilloedema (swelling of the optic nerve head visible at the back of the eye) is caused by raised intracranial pressure — the increased pressure inside the skull is transmitted along the optic nerve sheath. Bilateral papilloedema in a young woman with progressive headache, visual changes, and focal neurological deficit is a critical clinical finding that demands urgent brain imaging. It confirms genuinely raised intracranial pressure from any cause (venous thrombosis, tumour, IIH, etc.).",
+          "lookingFor": "Optic disc margins — blurring and elevation = papilloedema = raised ICP; loss of venous pulsations (earliest sign); haemorrhages"
         },
         {
           "id": "pe04",
@@ -1483,7 +1548,8 @@
           "rel": true,
           "sigNeg": true,
           "find": "Neck stiffness: ABSENT — full range of neck movement without pain. Kernig's sign: NEGATIVE (can straighten the knee with hip flexed to 90°). Brudzinski's sign: NEGATIVE. No photophobia on direct examination. No phonophobia.",
-          "exp": "SIGNIFICANT NEGATIVE: Absence of meningism (neck stiffness, positive Kernig's/Brudzinski's) significantly reduces bacterial meningitis probability. These signs result from irritation of the meningeal lining by infection or blood. However, meningism can be absent in early meningitis — if clinical suspicion remains, CSF examination is still required. In this case, normal inflammatory markers (CRP, WBC) provide further reassurance against bacterial meningitis."
+          "exp": "SIGNIFICANT NEGATIVE: Absence of meningism (neck stiffness, positive Kernig's/Brudzinski's) significantly reduces bacterial meningitis probability. These signs result from irritation of the meningeal lining by infection or blood. However, meningism can be absent in early meningitis — if clinical suspicion remains, CSF examination is still required. In this case, normal inflammatory markers (CRP, WBC) provide further reassurance against bacterial meningitis.",
+          "lookingFor": "Neck stiffness (meningism); Kernig's sign (pain on knee extension with hip at 90°); Brudzinski's (neck flexion causes hip flexion); photophobia; phonophobia"
         },
         {
           "id": "pe05",
@@ -1491,7 +1557,8 @@
           "cost": "free",
           "rel": true,
           "find": "LEFT arm: power 3/5 (moderately weak — cannot overcome gravity fully). Left arm reflexes brisk. Left-sided coordination impaired (finger-nose test). RIGHT arm: power 5/5 (normal). Both legs: power 5/5. LEFT plantar reflex: UPGOING (Babinski sign positive — indicates upper motor neuron dysfunction). Sensation intact bilaterally.",
-          "exp": "Left-sided upper limb weakness with brisk reflexes and an upgoing Babinski sign indicates an UPPER MOTOR NEURON (UMN) lesion in the RIGHT cerebral hemisphere (the right brain controls the left side of the body). This localises the injury to the right cortex or right corticospinal tract. In CVST, this occurs because thrombosis of the superior sagittal sinus causes venous hypertension and ischaemia in the right parietal cortex — the area controlling left arm movement. This pattern distinguishes cerebral pathology from a peripheral nerve lesion."
+          "exp": "Left-sided upper limb weakness with brisk reflexes and an upgoing Babinski sign indicates an UPPER MOTOR NEURON (UMN) lesion in the RIGHT cerebral hemisphere (the right brain controls the left side of the body). This localises the injury to the right cortex or right corticospinal tract. In CVST, this occurs because thrombosis of the superior sagittal sinus causes venous hypertension and ischaemia in the right parietal cortex — the area controlling left arm movement. This pattern distinguishes cerebral pathology from a peripheral nerve lesion.",
+          "lookingFor": "Power, tone, reflexes in all 4 limbs; plantar response (upgoing = UMN lesion); coordination; distinguish focal (cortical lesion) from global (metabolic)"
         },
         {
           "id": "pe06",
@@ -1499,7 +1566,8 @@
           "cost": "free",
           "rel": true,
           "find": "Visual fields: full to confrontation in both eyes. Visual acuity: 6/6 bilaterally. Colour vision normal.",
-          "exp": "Full visual fields argue against homonymous hemianopia (loss of half the visual field on one side), which would suggest a posterior cerebral lesion (occipital lobe or optic radiation involvement). Normal visual acuity despite papilloedema is expected in early raised ICP — sustained high pressure eventually damages the optic nerves, but this is a late complication. The bilateral blurred vision the patient described is more consistent with papilloedema-related optical distortion than a field cut."
+          "exp": "Full visual fields argue against homonymous hemianopia (loss of half the visual field on one side), which would suggest a posterior cerebral lesion (occipital lobe or optic radiation involvement). Normal visual acuity despite papilloedema is expected in early raised ICP — sustained high pressure eventually damages the optic nerves, but this is a late complication. The bilateral blurred vision the patient described is more consistent with papilloedema-related optical distortion than a field cut.",
+          "lookingFor": "Visual field confrontation testing (hemianopia → posterior cerebral lesion); visual acuity (papilloedema-related blurring); colour vision"
         },
         {
           "id": "pe07",
@@ -1507,7 +1575,8 @@
           "cost": "free",
           "rel": true,
           "find": "No rash on any body surface — no petechiae (tiny red dots), no purpura (larger purple spots). Normal skin turgor. No oral ulcers or mucosal lesions.",
-          "exp": "A thorough skin examination for non-blanching purpuric rash is mandatory in any patient presenting with headache. The rash of meningococcal septicaemia requires immediate IV penicillin before any investigation — the rash is the trigger to act, not CT or blood tests. Absence of rash is reassuring. Absence of oral ulcers reduces Behçet's disease (a vasculitis that causes both oral ulcers and CVST)."
+          "exp": "A thorough skin examination for non-blanching purpuric rash is mandatory in any patient presenting with headache. The rash of meningococcal septicaemia requires immediate IV penicillin before any investigation — the rash is the trigger to act, not CT or blood tests. Absence of rash is reassuring. Absence of oral ulcers reduces Behçet's disease (a vasculitis that causes both oral ulcers and CVST).",
+          "lookingFor": "Active search for non-blanching purpuric rash on all skin surfaces; oral ulcers (Behçet's disease → CVST); petechiae"
         },
         {
           "id": "pe08",
@@ -1515,7 +1584,8 @@
           "cost": "free",
           "rel": false,
           "find": "Heart sounds normal, no murmurs. Lungs clear. No signs of heart failure. Regular rhythm.",
-          "exp": "A baseline cardiovascular examination is reasonable in any neurological presentation. Absence of murmurs reduces the risk of infective endocarditis with septic emboli as a cause of the neurological signs — an uncommon but important cause of stroke in young people. Not a discriminating examination in this specific case."
+          "exp": "A baseline cardiovascular examination is reasonable in any neurological presentation. Absence of murmurs reduces the risk of infective endocarditis with septic emboli as a cause of the neurological signs — an uncommon but important cause of stroke in young people. Not a discriminating examination in this specific case.",
+          "lookingFor": "Murmurs (infective endocarditis → septic emboli → stroke in young); cardiac rhythm; evidence of heart failure"
         }
       ],
       "basic": [
@@ -1536,7 +1606,8 @@
           "required": true,
           "sigNeg": true,
           "find": "No subarachnoid blood. No intracerebral haemorrhage. No midline shift. No obvious hypodense infarct. Subtle HYPERDENSITY (whiteness) noted in the superior sagittal sinus — possible 'dense sinus sign', suggesting the sinus contains thrombosed (clotted) rather than flowing blood. No evidence of raised ICP on CT.",
-          "exp": "CT head is essential to exclude subarachnoid haemorrhage (which appears as bright white blood in the subarachnoid space) and intracranial haemorrhage. Absence of subarachnoid blood effectively excludes SAH (sensitivity ~95% within 6 hours of onset). The subtle 'dense sinus sign' — the venous sinus appearing whiter than usual on non-contrast CT — is an indirect CT sign of venous sinus thrombosis, but it is subtle and easily missed on CT alone. CT head alone is INSUFFICIENT to confirm or exclude CVST — MR venography is required."
+          "exp": "CT head is essential to exclude subarachnoid haemorrhage (which appears as bright white blood in the subarachnoid space) and intracranial haemorrhage. Absence of subarachnoid blood effectively excludes SAH (sensitivity ~95% within 6 hours of onset). The subtle 'dense sinus sign' — the venous sinus appearing whiter than usual on non-contrast CT — is an indirect CT sign of venous sinus thrombosis, but it is subtle and easily missed on CT alone. CT head alone is INSUFFICIENT to confirm or exclude CVST — MR venography is required.",
+          "imageUrl": "case003_ct_head_dense_sinus.jpg"
         },
         {
           "id": "bi03",
@@ -1577,7 +1648,8 @@
           "rel": true,
           "sigNeg": true,
           "find": "Opening pressure: 28 cmH₂O (ELEVATED — normal under 20 cmH₂O). CSF appearance: clear, colourless fluid. No red blood cells. No white blood cells. Protein: normal. Glucose ratio: >0.6 (normal). No organisms on Gram stain. Xanthochromia: NEGATIVE.",
-          "exp": "LP is essential to exclude SAH when CT head is negative but suspicion remains (LP should always be done AFTER CT to exclude a mass lesion that would make LP dangerous). The ELEVATED opening pressure (28 cmH₂O) confirms raised intracranial pressure — consistent with CVST obstructing venous drainage from the brain. Clear, colourless CSF with no blood and NEGATIVE xanthochromia definitively excludes SAH. Normal glucose, no white cells, and no organisms exclude both bacterial and viral meningitis. The raised opening pressure is the key LP finding here."
+          "exp": "LP is essential to exclude SAH when CT head is negative but suspicion remains (LP should always be done AFTER CT to exclude a mass lesion that would make LP dangerous). The ELEVATED opening pressure (28 cmH₂O) confirms raised intracranial pressure — consistent with CVST obstructing venous drainage from the brain. Clear, colourless CSF with no blood and NEGATIVE xanthochromia definitively excludes SAH. Normal glucose, no white cells, and no organisms exclude both bacterial and viral meningitis. The raised opening pressure is the key LP finding here.",
+          "imageUrl": "case003_lp_opening_pressure.jpg"
         },
         {
           "id": "bi08",
@@ -1596,7 +1668,8 @@
           "rel": true,
           "required": true,
           "find": "MRI brain: area of T2 signal change (oedema/early venous infarction) in the right parietal lobe — consistent with venous congestion from obstructed drainage. MR venography: ABSENT FLOW SIGNAL in the superior sagittal sinus (SSS) and right transverse sinus. All other sinuses show normal flow. CONFIRMS CEREBRAL VENOUS SINUS THROMBOSIS involving the SSS and right transverse sinus.",
-          "exp": "MRI with MR venography (MRV) is the GOLD STANDARD investigation for CVST. MRV specifically examines blood flow in the large venous sinuses — absent flow signal confirms thrombosis. The superior sagittal sinus (SSS) is the most commonly affected sinus in CVST. The right parietal lobe signal change explains the left arm weakness (right hemisphere controls left body movement). This investigation clinches the diagnosis and guides treatment. MRV should be performed in any patient with suspected CVST after CT head has excluded haemorrhage."
+          "exp": "MRI with MR venography (MRV) is the GOLD STANDARD investigation for CVST. MRV specifically examines blood flow in the large venous sinuses — absent flow signal confirms thrombosis. The superior sagittal sinus (SSS) is the most commonly affected sinus in CVST. The right parietal lobe signal change explains the left arm weakness (right hemisphere controls left body movement). This investigation clinches the diagnosis and guides treatment. MRV should be performed in any patient with suspected CVST after CT head has excluded haemorrhage.",
+          "imageUrl": "case003_mrv_ssinus_thrombosis.jpg"
         },
         {
           "id": "ai02",
@@ -1604,7 +1677,8 @@
           "cost": "mid",
           "rel": true,
           "find": "CT venography: 'Empty delta sign' present in the superior sagittal sinus — triangular filling defect (non-enhancing clot) surrounded by enhancing sinus walls. Confirms superior sagittal sinus thrombosis. Findings correlate with MR venography.",
-          "exp": "CT venography is an alternative to MR venography when MRI is contraindicated. The 'empty delta sign' (a triangular filling defect in the posterior SSS on contrast CT) is a classic finding of CVST — though it is seen in only ~30% of cases and absence does not exclude CVST. When present, it is highly specific. Combined with MRV, this provides high-confidence confirmation. CT venography is faster than MRI and may be preferred in unstable patients."
+          "exp": "CT venography is an alternative to MR venography when MRI is contraindicated. The 'empty delta sign' (a triangular filling defect in the posterior SSS on contrast CT) is a classic finding of CVST — though it is seen in only ~30% of cases and absence does not exclude CVST. When present, it is highly specific. Combined with MRV, this provides high-confidence confirmation. CT venography is faster than MRI and may be preferred in unstable patients.",
+          "imageUrl": "case003_ctv_empty_delta.jpg"
         },
         {
           "id": "ai03",
@@ -1612,7 +1686,8 @@
           "cost": "mid",
           "rel": true,
           "find": "Right parietal lobe: T2/FLAIR signal change and mild restricted diffusion (early venous infarction/oedema). No ring-enhancing lesions (excludes brain abscess). No leptomeningeal enhancement (argues against meningitis). Findings are in the right parietal cortex in the drainage territory of the superior sagittal sinus.",
-          "exp": "MRI with contrast adds information about the extent of brain injury from the CVST. The right parietal signal change — in the SSS drainage territory — explains the left arm weakness (right parietal lobe controls left arm). Absence of ring-enhancing lesions excludes brain abscess. Absence of leptomeningeal enhancement argues against meningitis. Understanding which drainage territory is affected helps predict the clinical deficits."
+          "exp": "MRI with contrast adds information about the extent of brain injury from the CVST. The right parietal signal change — in the SSS drainage territory — explains the left arm weakness (right parietal lobe controls left arm). Absence of ring-enhancing lesions excludes brain abscess. Absence of leptomeningeal enhancement argues against meningitis. Understanding which drainage territory is affected helps predict the clinical deficits.",
+          "imageUrl": "case003_mri_parietal_venous_infarct.jpg"
         },
         {
           "id": "ai04",
