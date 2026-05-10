@@ -9,19 +9,21 @@
 </head>
 <body>
 
+<!-- ── LOADER ── -->
 <div id="loader">
   <div class="ld-logo"><span>Dx</span>/</div>
   <div class="ld-msg" id="ldMsg">Loading cases…</div>
   <div id="ldErr" style="display:none;flex-direction:column;align-items:center;gap:8px">
-    <div class="ld-err">Could not load <code>cases.json</code>. On GitHub Pages this works automatically. Running locally, either use <code>python -m http.server</code> or upload the file below.</div>
+    <div class="ld-err">Could not load <code>cases.json</code>. Running locally, use <code>python -m http.server</code> or upload the file below.</div>
     <label class="ld-upload">
-      <div style="font-size:.82rem;font-weight:700;color:var(--accent);margin-bottom:4px">📂 Select cases.json</div>
+      <div style="font-size:.82rem;font-weight:700;color:var(--accent);margin-bottom:4px">Select cases.json</div>
       <div style="font-size:.72rem;color:var(--muted)">Browse to your cases.json file</div>
       <input type="file" accept=".json" onchange="handleUpload(event)">
     </label>
   </div>
 </div>
 
+<!-- ── HOW TO PLAY MODAL ── -->
 <div id="mover" class="hide">
   <div class="modal">
     <div class="m-logo"><span>Dx</span>/</div>
@@ -29,89 +31,91 @@
     <div class="m-phases">
       <div class="mp"><span class="mp-badge p1">Phase 1</span>
         <div><div class="mp-title">Build Your Differential Diagnosis</div>
-          <div class="mp-desc">Read the vignette. Browse the diagnosis library on the left — every diagnosis in your preclinical syllabus. Select your tag (Must Not Miss / Working Diagnosis) then click to add. Think broadly — missing key diagnoses here is the most penalised error.</div>
+          <div class="mp-desc">Read the vignette. Open the diagnosis library and add conditions using the MNM or WD buttons. Think broadly — missing key diagnoses here is the most penalised error.</div>
         </div></div>
       <div class="mp"><span class="mp-badge p2">Phase 2</span>
-        <div><div class="mp-title">History → Examination → Investigations (locked order)</div>
-          <div class="mp-desc">Work through stages sequentially. You can skip any stage but it costs marks. Irrelevant options return "No significant findings." After each stage, rank your differential by likelihood. You can also eliminate diagnoses at any point during Phase 2.</div>
+        <div><div class="mp-title">History → Examination → Investigations</div>
+          <div class="mp-desc">Work through stages sequentially. Skipping costs marks. After each stage, rank your differential by likelihood — this trains Bayesian reasoning.</div>
         </div></div>
       <div class="mp"><span class="mp-badge p3">Phase 3</span>
-        <div><div class="mp-title">Commit & Debrief</div>
-          <div class="mp-desc">Select your final diagnosis and specify the subtype for full marks. The debrief reveals teaching points, must-not-miss rule-outs, and expert commentary on your pathway.</div>
+        <div><div class="mp-title">Commit &amp; Debrief</div>
+          <div class="mp-desc">Select your final diagnosis and specify the subtype for full marks. The debrief reveals teaching points, key pivots, and expert commentary.</div>
         </div></div>
     </div>
-    <div class="m-rule"><strong>🔴 Hard rule:</strong> Advancing without all must-not-miss diagnoses on your list triggers a safety stop and a permanent −30 pt penalty. Forcing through costs −50 pts. Safe clinical reasoning is the primary skill this game trains.</div>
+    <div class="m-rule"><strong>🔴 Hard rule:</strong> Advancing without all must-not-miss diagnoses triggers a safety stop and a permanent penalty. Safe clinical reasoning is the primary skill this game trains.</div>
     <div class="m-scores">
-      <div class="mscore"><div class="mscore-lbl">🎯 Approach (30%)</div><div class="mscore-desc">MNM coverage + common DDx breadth + significant negatives</div></div>
-      <div class="mscore"><div class="mscore-lbl">⚙️ Process (40%)</div><div class="mscore-desc">History weighted most, then PE, then investigations</div></div>
-      <div class="mscore"><div class="mscore-lbl">✅ Diagnosis (30%)</div><div class="mscore-desc">Specific subtype &gt; umbrella &gt; wrong diagnosis</div></div>
+      <div class="mscore"><div class="mscore-lbl">Approach (30%)</div><div class="mscore-desc">MNM coverage + DDx breadth + significant negatives</div></div>
+      <div class="mscore"><div class="mscore-lbl">Process (40%)</div><div class="mscore-desc">History weighted most, then PE, then investigations</div></div>
+      <div class="mscore"><div class="mscore-lbl">Diagnosis (30%)</div><div class="mscore-desc">Specific subtype &gt; umbrella &gt; wrong diagnosis</div></div>
     </div>
     <button class="m-start" onclick="closeModal()">Start →</button>
   </div>
 </div>
 
-
-<!-- YEAR LEVEL MODAL -->
+<!-- ── YEAR LEVEL MODAL ── -->
 <div id="yrmover" style="position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:700;display:none;align-items:center;justify-content:center;padding:20px">
   <div class="yr-modal">
     <div class="yr-title"><span>Dx</span>/ — What year are you?</div>
-    <div class="yr-sub">This sets your experience level. M2 shows more guidance and study aids. M3+ hides them by default to simulate clinical reasoning under exam conditions. You can toggle at any time using the mode button.</div>
+    <div class="yr-sub">Sets your experience level. M2 shows study aids and guidance. M3+ hides them to simulate clinical reasoning under exam conditions. Toggle anytime.</div>
     <div class="yr-opts">
       <button class="yr-opt" onclick="setLevel('m2')">
         <span class="yr-badge m2">M2 Preclinical</span>
         <div class="yr-opt-title">Year 2 — Guided Mode</div>
-        <div class="yr-opt-desc">Study aids visible: condition descriptions in the library, significant negative labels, expert commentary on findings, professor hints. Recommended for early learners building their differential reasoning.</div>
+        <div class="yr-opt-desc">Study aids visible: condition descriptions, significant negative labels, expert commentary, professor hints.</div>
       </button>
       <button class="yr-opt" onclick="setLevel('m3')">
         <span class="yr-badge m3">M3+ Clinical</span>
         <div class="yr-opt-title">Year 3 and above — Independent Mode</div>
-        <div class="yr-opt-desc">Study aids hidden by default. Library descriptions hidden. "Looking for" prompts shown before PE findings. Closer to clinical reasoning under exam conditions. You can still reveal aids via the Study toggle.</div>
+        <div class="yr-opt-desc">Study aids hidden by default. Closer to clinical reasoning under exam conditions. Reveal aids anytime via the Study toggle.</div>
       </button>
     </div>
   </div>
 </div>
 
-<div id="app">
-  <div id="lib">
-    <div class="lib-hd">
-      <div class="lib-top">
-        <div class="lib-logo"><span>Dx</span>/</div>
-        <span class="lib-hint">select tag → click to add</span>
-      </div>
-      <div class="lib-tags">
-        <button class="ltag sel-mnm" id="btnMNM" onclick="setLibTag('mnm')">🔴 Must Not Miss</button>
-        <button class="ltag" id="btnWD" onclick="setLibTag('wd')">🟡 Working Dx</button>
-      </div>
-    </div>
-    <div class="lib-srch-wrap">
-      <input class="lib-srch" id="libSrch" type="text" placeholder="Search all diagnoses…" autocomplete="off" oninput="renderLib()">
-    </div>
-    <div class="lib-sysrow" id="libFilters"></div>
-    <div class="lib-body" id="libBody"></div>
-  </div>
+<!-- ── RANKING MODAL ── -->
+<div id="rank-modal" class="hide">
+  <div class="rk-modal" id="rank-modal-inner"></div>
+</div>
 
-  <div id="main">
-    <div id="topbar">
-      <div class="tb-left">
-        <button class="tb-tog" onclick="toggleLib()">☰</button>
-        <div class="tb-brand">Dx<span>/</span></div>
-        <div class="tb-divider"></div>
-        <div class="tb-cname" id="tbCname">—</div>
-      </div>
-      <div class="tb-phases" id="tbStages"></div>
-      <div class="tb-right">
-        <div class="tb-scores" id="tbScores"></div>
-        <span class="tb-level m2" id="levelBadge" onclick="resetLevel()">M2</span>
-        <button class="mode-btn study" id="modeBtn" onclick="toggleMode()">Study</button>
-      </div>
-    </div>
-    <div id="content"></div>
+<!-- ── LIBRARY DRAWER ── -->
+<div id="drawer-overlay" onclick="closeDrawer()"></div>
+<div id="drawer">
+  <div class="drw-hd">
+    <span class="drw-title">Diagnosis Library</span>
+    <button class="drw-close" onclick="closeDrawer()">✕ Close</button>
   </div>
+  <div class="drw-tag-row study-aid">
+    <span class="drw-tag-lbl">Add as:</span>
+    <span class="dtag mnm">🔴 Must Not Miss</span>
+    <span class="dtag wd">🟡 Working Dx</span>
+  </div>
+  <div class="lib-srch-wrap">
+    <input class="lib-srch" id="libSrch" type="text" placeholder="Search all diagnoses…" autocomplete="off" oninput="renderLib()">
+  </div>
+  <div class="lib-sysrow" id="libFilters"></div>
+  <div class="lib-body" id="libBody"></div>
+</div>
+
+<!-- ── MAIN APP ── -->
+<div id="app">
+  <div id="topbar">
+    <div class="tb-left">
+      <div class="tb-brand">Dx<span>/</span></div>
+      <div class="tb-sep"></div>
+      <div class="tb-cname" id="tbCname">—</div>
+    </div>
+    <div class="tb-phases" id="tbStages"></div>
+    <div class="tb-right">
+      <span class="tb-level m2" id="levelBadge" onclick="resetLevel()">M2</span>
+      <button class="mode-btn study" id="modeBtn" onclick="toggleMode()">Study</button>
+    </div>
+  </div>
+  <div id="content"></div>
 </div>
 
 <script>
 // ═══════════════════════════════════════════
-// DIAGNOSIS LIBRARY
+// DIAGNOSIS LIBRARY DATA
 // ═══════════════════════════════════════════
 const DIAG_LIB = {
   "Cardiovascular":{ico:"❤️",diags:[
@@ -138,7 +142,7 @@ const DIAG_LIB = {
     {n:"Asthma Exacerbation",mnm:true,desc:"Acute worsening of airway narrowing in asthma"},
     {n:"Lung Cancer",u:true,subs:["Adenocarcinoma","Squamous Cell Carcinoma of Lung","Small Cell Lung Cancer (SCLC)"],mnm:true},
     {n:"Pulmonary Tuberculosis",u:true,subs:["Primary TB","Post-primary TB","Miliary TB"],mnm:true},
-    {n:"SIADH",mnm:false,desc:"Syndrome of Inappropriate ADH — kidneys retain too much water, diluting blood sodium; caused by lung disease, brain disorders, or medications"},
+    {n:"SIADH",mnm:false,desc:"Syndrome of Inappropriate ADH — kidneys retain too much water, diluting blood sodium"},
   ]},
   "Gastrointestinal":{ico:"🍃",diags:[
     {n:"Peptic Ulcer Disease",u:true,subs:["Gastric Ulcer","Duodenal Ulcer","Perforated PUD (ulcer bursts)"],mnm:false,desc:"Sore/ulcer in the stomach or duodenum lining"},
@@ -181,7 +185,7 @@ const DIAG_LIB = {
     {n:"Sickle Cell Crisis",mnm:false,desc:"Sickle-shaped red cells blocking small vessels — severe pain"},
     {n:"Acute Leukaemia",mnm:false,desc:"Rapidly progressing cancer of blood-forming cells"},
     {n:"DIC (Disseminated Intravascular Coagulation)",mnm:true,desc:"Runaway clotting consuming all clotting factors"},
-    {n:"Antiphospholipid Syndrome",mnm:false,desc:"Autoimmune condition causing increased clotting tendency — associated with CVST, DVT, PE"},
+    {n:"Antiphospholipid Syndrome",mnm:false,desc:"Autoimmune condition causing increased clotting tendency"},
   ]},
   "Neurology":{ico:"🧠",diags:[
     {n:"Subarachnoid Haemorrhage (SAH)",mnm:true,desc:"Bleeding around the brain — 'thunderclap headache' (worst of life, maximal at onset)"},
@@ -192,7 +196,7 @@ const DIAG_LIB = {
     {n:"Meningitis",u:true,subs:["Bacterial Meningitis (emergency)","Viral Meningitis","TB Meningitis"],mnm:true,desc:"Infection of the brain lining — headache, fever, neck stiffness"},
     {n:"Viral Encephalitis / Herpes Encephalitis",mnm:true,desc:"Viral infection of the brain — confusion, seizures, fever"},
     {n:"Brain Abscess",mnm:true,desc:"Collection of pus in the brain — headache, fever, focal deficit"},
-    {n:"Idiopathic Intracranial Hypertension (IIH)",mnm:false,desc:"Raised intracranial pressure without a mass — young overweight women; headache and visual disturbance"},
+    {n:"Idiopathic Intracranial Hypertension (IIH)",mnm:false,desc:"Raised intracranial pressure without a mass — young overweight women"},
     {n:"Migraine",u:true,subs:["Migraine with Aura","Migraine without Aura","Hemiplegic Migraine"],mnm:false,desc:"Recurrent severe headache — diagnosis of exclusion"},
     {n:"Tension Headache",mnm:false,desc:"Most common headache — bilateral pressing sensation; diagnosis of exclusion"},
     {n:"Cluster Headache",mnm:false,desc:"Severe unilateral headache around the eye — occurs in clusters"},
@@ -234,26 +238,23 @@ const DIAG_LIB = {
 // ═══════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════
-// ─ MNM helpers (support both string and {name,tier} formats in caseMNMs)
 function getMNMName(m){return typeof m==='string'?m:(m.name||m);}
 function getMNMTier(m){return typeof m==='string'?1:(m.tier||1);}
 
 let CASES = [];
 let G = null;
-let libOpen = true;
-let libTag = 'mnm';
 let libFilter = '';
 let libSysOpen = {};
 let studyMode = true;
-let playerLevel = null; // 'm2' | 'm3' — set once per session
+let playerLevel = null;
 let dragSrc = null;
 let rdragSrc = null;
+let debriefTab = 'score';
 
 const STAGES = ['setup','history','pe','basic','advanced','commit','debrief'];
 const STAGE_LBL = {setup:'Differential',history:'History',pe:'Examination',basic:'Basic Inv',advanced:'Advanced Inv',commit:'Commit',debrief:'Debrief'};
 const COST_LBL = {free:'Free',low:'Low cost',mid:'Moderate cost',high:'High cost'};
 const COST_PEN = {free:0,low:0,mid:5,high:10};
-const CAT_CSS = {history:'hf',pe:'pef',basic:'bif',advanced:'aif'};
 const CAT_LBL = {history:'History',pe:'Examination',basic:'Basic Inv',advanced:'Advanced Inv'};
 
 function freshG(idx){
@@ -265,9 +266,9 @@ function freshG(idx){
     rankSnaps:[],pendingRank:null,
     nudge:null,profOpen:false,
     commitSel:null,commitSub:null,
-    secondaryCommit:null,  // compound diagnosis (e.g. SIADH alongside SCLC)
+    secondaryCommit:null,
     hardPenalty:0,
-    softMissPenalty:0,  // penalty from MNM soft-warning handling
+    softMissPenalty:0,
     skipped:new Set(),
     pb:{hRel:0,hTotal:0,peRel:0,peTotal:0,biRel:0,biTotal:0,aiPen:0},
     sigNegsEarned:new Set(),
@@ -280,11 +281,17 @@ function freshG(idx){
 // BOOT / LOAD
 // ═══════════════════════════════════════════
 async function loadCases(){
-  try{
-    const r=await fetch('cases.json');
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    initCases(await r.json());
-  }catch(e){
+  let data;
+  for(const path of ['cases.json','../dx/cases.json']){
+    try{
+      const r=await fetch(path);
+      if(!r.ok)continue;
+      data=await r.json();
+      break;
+    }catch(e){}
+  }
+  if(data){initCases(data);}
+  else{
     document.getElementById('ldMsg').style.display='none';
     document.getElementById('ldErr').style.display='flex';
   }
@@ -292,10 +299,7 @@ async function loadCases(){
 function handleUpload(e){
   const f=e.target.files[0];if(!f)return;
   const rd=new FileReader();
-  rd.onload=ev=>{
-    try{initCases(JSON.parse(ev.target.result));}
-    catch{document.getElementById('ldMsg').textContent='❌ Invalid JSON file.';}
-  };
+  rd.onload=ev=>{try{initCases(JSON.parse(ev.target.result));}catch{document.getElementById('ldMsg').textContent='Invalid JSON file.';}};
   rd.readAsText(f);
 }
 function initCases(data){
@@ -305,45 +309,53 @@ function initCases(data){
   buildLibFilters();render();
 }
 
-// FIX #6 — mode
+// ═══════════════════════════════════════════
+// MODE / LEVEL
+// ═══════════════════════════════════════════
 function toggleMode(){
   studyMode=!studyMode;
   document.body.classList.toggle('exam',!studyMode);
   const b=document.getElementById('modeBtn');
   b.className='mode-btn '+(studyMode?'study':'exam');
-  b.textContent=studyMode?'📚 Study':'🎓 Exam';
+  b.textContent=studyMode?'Study':'Exam';
 }
 function applyLevelMode(){
-  // M2 = study (aids shown), M3 = exam (aids hidden) — can still toggle
   if(playerLevel==='m3'){
     studyMode=false;
     document.body.classList.add('exam','m3');
     document.body.classList.remove('m2');
-    // M3: library systems start collapsed
     libSysOpen={};
-  } else {
+  }else{
     studyMode=true;
     document.body.classList.remove('exam','m3');
     document.body.classList.add('m2');
-    // M2: expand all library systems
     Object.keys(DIAG_LIB).forEach(s=>{libSysOpen[s]=true;});
   }
   const b=document.getElementById('modeBtn');
-  if(b){b.className='mode-btn '+(studyMode?'study':'exam');b.textContent=studyMode?'📚 Study':'🎓 Exam';}
+  if(b){b.className='mode-btn '+(studyMode?'study':'exam');b.textContent=studyMode?'Study':'Exam';}
   const lv=document.getElementById('levelBadge');
   if(lv){lv.className='tb-level '+(playerLevel||'m2');lv.textContent=playerLevel==='m3'?'M3+':'M2';}
 }
 function closeModal(){document.getElementById('mover').classList.add('hide');}
 
 // ═══════════════════════════════════════════
+// DRAWER
+// ═══════════════════════════════════════════
+function openDrawer(){
+  if(!G)return;
+  renderLib();
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('libSrch')?.focus(),120);
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════
 // LIBRARY
 // ═══════════════════════════════════════════
-function setLibTag(t){
-  libTag=t;
-  document.getElementById('btnMNM').className='ltag'+(t==='mnm'?' sel-mnm':'');
-  document.getElementById('btnWD').className='ltag'+(t==='wd'?' sel-wd':'');
-}
-function toggleLib(){libOpen=!libOpen;document.getElementById('lib').classList.toggle('hide',!libOpen);}
 function buildLibFilters(){
   document.getElementById('libFilters').innerHTML=
     `<div class="lsf on" onclick="setLibFilt('')">All</div>`+
@@ -359,6 +371,8 @@ function setLibFilt(f){
   renderLib();
 }
 function renderLib(){
+  const container=document.getElementById('libBody');
+  if(!container)return;
   const q=(document.getElementById('libSrch')?.value||'').toLowerCase().trim();
   const added=G?new Set(G.diff.map(d=>d.n)):new Set();
   const keys=libFilter?[libFilter]:Object.keys(DIAG_LIB);
@@ -373,21 +387,33 @@ function renderLib(){
       const ad=added.has(d.n);
       const hasSubs=d.subs&&d.subs.length;
       const subOpen=libSysOpen[d.n];
-      dhtml+=`<div class="lrow" onclick="addToDiff('${escJs(d.n)}')">
+      dhtml+=`<div class="lrow">
         <div class="lrow-txt">
           <div class="lrow-nm${ad?' added':''}">${hlQ(d.n,q)}</div>
           ${d.desc?`<div class="lrow-desc">${d.desc}</div>`:''}
         </div>
         ${hasSubs?`<div class="lrow-exp${subOpen?' open':''}" onclick="event.stopPropagation();toggleLibSub('${escJs(d.n)}')">▶</div>`:''}
-        <div class="lrow-add${ad?' done':''}">${ad?'✓':'+'}</div>
+        <div class="lrow-btns">
+          ${ad
+            ?'<span class="lrow-added">✓ Added</span>'
+            :`<button class="lrow-addbtn mnm" onclick="addToDiff('${escJs(d.n)}','mnm')">MNM</button>
+               <button class="lrow-addbtn wd" onclick="addToDiff('${escJs(d.n)}','wd')">WD</button>`
+          }
+        </div>
       </div>`;
       if(hasSubs&&(subOpen||q)){
         d.subs.forEach(st=>{
           if(q&&!st.toLowerCase().includes(q))return;
           const sa=added.has(st);
-          dhtml+=`<div class="lrow sub" onclick="addToDiff('${escJs(st)}')">
+          dhtml+=`<div class="lrow sub">
             <div class="lrow-txt"><div class="lrow-nm${sa?' added':''}">${hlQ(st,q)}</div></div>
-            <div class="lrow-add${sa?' done':''}">${sa?'✓':'+'}</div>
+            <div class="lrow-btns">
+              ${sa
+                ?'<span class="lrow-added">✓</span>'
+                :`<button class="lrow-addbtn mnm" onclick="addToDiff('${escJs(st)}','mnm')">MNM</button>
+                   <button class="lrow-addbtn wd" onclick="addToDiff('${escJs(st)}','wd')">WD</button>`
+              }
+            </div>
           </div>`;
         });
       }
@@ -403,7 +429,7 @@ function renderLib(){
       <div class="ldiags${sOpen?' open':''}">${dhtml}</div>
     </div>`;
   });
-  document.getElementById('libBody').innerHTML=html||`<div style="padding:12px;font-size:.74rem;color:var(--muted2);text-align:center;font-style:italic">No matches</div>`;
+  container.innerHTML=html||`<div style="padding:14px;font-size:.74rem;color:var(--muted2);text-align:center;font-style:italic">No matches</div>`;
 }
 function toggleLibSys(s){libSysOpen[s]=!libSysOpen[s];renderLib();}
 function toggleLibSub(n){libSysOpen[n]=!libSysOpen[n];renderLib();}
@@ -416,7 +442,6 @@ function buildTopbar(){
   const cas=G?CASES[G.caseIdx]:null;
   document.getElementById('tbCname').textContent=cas?cas.title:'—';
 
-  // 3-phase progress bar
   const stage=G?G.stage:null;
   const p2stages=['history','pe','basic','advanced'];
   const p2idx=p2stages.indexOf(stage);
@@ -425,28 +450,25 @@ function buildTopbar(){
   const p3done=stage==='debrief';
 
   function dotClass(phase){
-    if(!G) return 'pdot locked';
-    if(phase===1) return 'pdot '+(stage==='setup'?'active':(p1done?'done':'locked'));
-    if(phase===2) return 'pdot '+(p2idx>=0?'active':(p2done?'done':(p1done?'':'locked')));
-    if(phase===3) return 'pdot '+(stage==='commit'||stage==='debrief'?'active':'locked');
+    if(!G)return 'pdot locked';
+    if(phase===1)return 'pdot '+(stage==='setup'?'active':(p1done?'done':'locked'));
+    if(phase===2)return 'pdot '+(p2idx>=0?'active':(p2done?'done':(p1done?'':'locked')));
+    if(phase===3)return 'pdot '+(stage==='commit'||stage==='debrief'?'active':'locked');
     return 'pdot locked';
   }
   function lineClass(after){
-    if(!G) return 'pline';
-    if(after===1) return 'pline '+(p2done?'done':(p2idx>=0||p1done?'active':''));
-    if(after===2) return 'pline '+(p3done?'done':(stage==='commit'||stage==='debrief'?'active':''));
+    if(!G)return 'pline';
+    if(after===1)return 'pline '+(p2done?'done':(p2idx>=0||p1done?'active':''));
+    if(after===2)return 'pline '+(p3done?'done':(stage==='commit'||stage==='debrief'?'active':''));
     return 'pline';
   }
-
-  // Sub-dots for phase 2
   const subDots=p2stages.map((s,i)=>{
     let cls='psdot';
-    if(p2done||i<p2idx) cls+=' ps-done';
-    else if(i===p2idx) cls+=' ps-active';
+    if(p2done||i<p2idx)cls+=' ps-done';
+    else if(i===p2idx)cls+=' ps-active';
     return`<span class="${cls}"></span>`;
   }).join('');
-  const p2Active=p2idx>=0;
-  const p2SubHtml=p2Active?`<span class="pdot-subs">${subDots}</span>`:'';
+  const p2SubHtml=(p2idx>=0)?`<span class="pdot-subs">${subDots}</span>`:'';
 
   document.getElementById('tbStages').innerHTML=`
     <div class="${dotClass(1)}">${p1done&&stage!=='setup'?'✓':'1'}</div>
@@ -454,22 +476,13 @@ function buildTopbar(){
     <div class="${dotClass(2)}">${p2done?'✓':'2'}${p2SubHtml}</div>
     <div class="${lineClass(2)}"></div>
     <div class="${dotClass(3)}">${p3done?'✓':'3'}</div>`;
-
-  const sc=document.getElementById('tbScores');
-  if(!G||G.stage==='setup'){sc.innerHTML='';return;}
-  const s=G.liveScore;
-  sc.innerHTML=`
-    <div class="tbs-item">A<div class="tbs-bar"><div class="tbs-fill" style="width:${s.a}%;background:${scol(s.a)}"></div></div>${Math.round(s.a)}</div>
-    <div class="tbs-item">P<div class="tbs-bar"><div class="tbs-fill" style="width:${s.p}%;background:${scol(s.p)}"></div></div>${Math.round(s.p)}</div>
-    <div class="tbs-item">Dx<div class="tbs-bar"><div class="tbs-fill" style="width:${s.d}%;background:${scol(s.d)}"></div></div>${Math.round(s.d)}</div>`;
 }
-function scol(v){return v>=75?'var(--green)':v>=50?'var(--yellow)':'var(--red)';}
 
 // ═══════════════════════════════════════════
 // RENDER ROUTER
 // ═══════════════════════════════════════════
 function render(){
-  buildTopbar();renderLib();
+  buildTopbar();
   if(!G){renderWelcome();return;}
   calcLiveScore();
   const s=G.stage;
@@ -478,23 +491,18 @@ function render(){
   else if(s==='commit')renderCommit();
   else if(s==='debrief')renderDebrief();
 }
-function renderWelcome(){
-  const SYS_COLOR={
-    Cardiovascular:'var(--red)',Respiratory:'var(--teal)',Gastrointestinal:'var(--green)',
-    Renal:'var(--purple)','Endocrine / Metabolic':'var(--yellow)',Neurology:'var(--orange)',
-    Haematology:'var(--red)',default:'var(--accent)'
-  };
-  const SYS_DIM={
-    Cardiovascular:'var(--rdim)',Respiratory:'var(--tdim)',Gastrointestinal:'var(--gdim)',
-    Renal:'var(--pdim)','Endocrine / Metabolic':'var(--ydim)',Neurology:'var(--odim)',
-    default:'var(--adim)'
-  };
-  function sysColor(s){return SYS_COLOR[s]||SYS_COLOR.default;}
-  function sysDim(s){return SYS_DIM[s]||SYS_DIM.default;}
 
+// ═══════════════════════════════════════════
+// WELCOME
+// ═══════════════════════════════════════════
+function renderWelcome(){
+  const SYS_COLOR={Cardiovascular:'var(--red)',Respiratory:'var(--teal)',Gastrointestinal:'var(--green)',Renal:'var(--purple)','Endocrine / Metabolic':'var(--yellow)',Neurology:'var(--orange)',default:'var(--accent)'};
+  const SYS_DIM={Cardiovascular:'var(--rdim)',Respiratory:'var(--tdim)',Gastrointestinal:'var(--gdim)',Renal:'var(--pdim)','Endocrine / Metabolic':'var(--ydim)',Neurology:'var(--odim)',default:'var(--adim)'};
+  function sc(s){return SYS_COLOR[s]||SYS_COLOR.default;}
+  function sd(s){return SYS_DIM[s]||SYS_DIM.default;}
   const cards=CASES.map((c,i)=>`
     <div class="case-card" onclick="startCase(${i})">
-      <div class="case-sys-badge" style="background:${sysDim(c.system)};color:${sysColor(c.system)}">${c.system||'Clinical'}</div>
+      <div class="case-sys-badge" style="background:${sd(c.system)};color:${sc(c.system)}">${c.system||'Clinical'}</div>
       <div class="case-card-title">${c.title}</div>
       <div class="case-card-patient">${c.patient||''}</div>
       <div class="case-card-meta">
@@ -502,21 +510,22 @@ function renderWelcome(){
         <span style="margin-left:auto">${c.difficulty==='challenging'?'⚡ Challenging':'Straightforward'}</span>
       </div>
     </div>`).join('');
-
   document.getElementById('content').innerHTML=`
-    <div class="welcome">
-      <div class="wl"><span>Dx</span>/</div>
-      <div class="ws">Build your differential. Investigate systematically. Commit to a diagnosis.</div>
+    <div class="inner" style="display:flex;flex-direction:column;align-items:center">
+      <div class="welcome">
+        <div class="wl"><span>Dx</span>/</div>
+        <div class="ws">Build your differential. Investigate systematically. Commit to a diagnosis.</div>
+      </div>
       <div class="case-grid">${cards}</div>
     </div>`;
 }
 
 // ═══════════════════════════════════════════
-// PHASE 1
+// PHASE 1 — SETUP
 // ═══════════════════════════════════════════
 function startCase(idx){
   if(!playerLevel){pendingCaseIdx=idx;document.getElementById('yrmover').style.display='flex';return;}
-  G=freshG(idx);render();
+  G=freshG(idx);debriefTab='score';render();
 }
 let pendingCaseIdx=null;
 function setLevel(lv){
@@ -530,53 +539,70 @@ function resetLevel(){playerLevel=null;pendingCaseIdx=null;document.getElementBy
 
 function renderSetup(){
   const cas=CASES[G.caseIdx];
-  const active=G.diff.filter(d=>!d.elim).length;
+  const active=G.diff.filter(d=>!d.elim);
+  const allMNMs=(cas.caseMNMs||[]).map(getMNMName);
+  const coveredMNMs=allMNMs.filter(m=>active.some(d=>normMatch(d.n,m)));
+  const mnmTotal=allMNMs.length;
+  const mnmCov=coveredMNMs.length;
+  const mnmCls=mnmCov===mnmTotal&&mnmTotal>0?'ok':mnmCov>=mnmTotal*.5?'warn':'bad';
+  const mnmStr=mnmTotal?`<span class="mnm-cover ${mnmCls}">MNM ${mnmCov}/${mnmTotal}</span>`:'';
+
+  // Parse patient demographics for structured header
+  const ptLine=cas.patient||'';
+  const ptParts=ptLine.split(/[,·|]/);
+
   document.getElementById('content').innerHTML=`
-    <div class="vig">
-      <div class="vig-patient">${cas.patient||'Clinical Presentation'}</div>
-      <div class="vig-txt">${cas.vignette}</div>
-    </div>
-    <div class="diff-box">
-      <div class="diff-hd">
-        Differential${active?` <span style="color:var(--accent)">(${active})</span>`:''}
-        <span class="diff-hint">drag to reorder</span>
+    <div class="inner">
+      <div class="vig">
+        <div class="vig-pt">
+          ${ptParts.map(p=>`<div class="vig-pt-item"><div class="vig-pt-val">${p.trim()}</div></div>`).join('')}
+        </div>
+        <div class="vig-body">
+          <div class="vig-txt">${cas.vignette}</div>
+        </div>
       </div>
-      <div class="dlist" id="dlist">${renderDiff()}</div>
-    </div>
-    ${G.nudge?`<div class="nudge">${G.nudge}</div>`:''}
-    <div class="nav-row">
-      <button class="nb go" onclick="toHistory()">Begin Investigation →</button>
-      <span class="prof study-aid" onclick="toggleProf()">Hint</span>
-    </div>
-    ${G.profOpen?`<div class="prof-reveal study-aid">Select <strong>Must Not Miss</strong> or <strong>Working Dx</strong> in the sidebar, then click a diagnosis to add it. Think systematically — consider every body system that could cause this presentation.</div>`:''}`;
+
+      <div class="diff-area">
+        <div class="diff-hd">
+          <div class="diff-hd-left">
+            <span class="diff-hd-title">Differential Diagnosis</span>
+            ${active.length?`<span class="diff-count">${active.length}</span>`:''}
+            ${mnmStr}
+          </div>
+          <button class="add-dx-btn" onclick="openDrawer()">+ Add Diagnosis</button>
+        </div>
+        <div class="dlist" id="dlist">${renderDiff()}</div>
+      </div>
+
+      ${G.nudge?`<div class="nudge">${G.nudge}</div>`:''}
+      <div class="setup-nav">
+        <button class="btn-primary" onclick="toHistory()">Begin Investigation →</button>
+        <button class="btn-hint study-aid" onclick="toggleProf()">Hint</button>
+      </div>
+      ${G.profOpen?`<div class="prof-reveal study-aid">Select <strong>Must Not Miss</strong> for dangerous diagnoses that cannot be missed, or <strong>Working Dx</strong> for your leading differentials. Think systematically — consider every body system that could cause this presentation.</div>`:''}
+    </div>`;
 }
 
 function toHistory(){
   if(G.diff.filter(d=>!d.elim).length<2){G.nudge='Add at least 2 diagnoses before proceeding.';render();return;}
   const cas=CASES[G.caseIdx];
   const allMNMs=cas.caseMNMs||[];
-  // Tier 1 = must consider (soft warned); Tier 2 = important but rare (debrief only)
   const tier1Missed=allMNMs.filter(m=>getMNMTier(m)===1&&!G.diff.some(d=>normMatch(d.n,getMNMName(m))));
   const tier2Missed=allMNMs.filter(m=>getMNMTier(m)===2&&!G.diff.some(d=>normMatch(d.n,getMNMName(m))));
-  G._tier2Missed=tier2Missed.map(getMNMName); // store for debrief
-  if(tier1Missed.length){
-    renderSoftWarn(tier1Missed,tier2Missed);
-    return;
-  }
+  G._tier2Missed=tier2Missed.map(getMNMName);
+  if(tier1Missed.length){renderSoftWarn(tier1Missed,tier2Missed);return;}
   if(tier2Missed.length&&!G._tier2WarnSeen){
-    // Gentle one-line nudge for tier 2, non-blocking
     G._tier2WarnSeen=true;
-    G.nudge='💡 Consider also: '+tier2Missed.map(getMNMName).join(', ')+' — less common but worth having in your differential.';
+    G.nudge='Consider also: '+tier2Missed.map(getMNMName).join(', ')+' — less common but worth having in your differential.';
   }
   G.phase1Names=new Set(G.diff.map(d=>d.n));
   G.stage='history';G.nudge=null;render();
 }
 
 // ═══════════════════════════════════════════
-// SOFT WARNING (replaces hard-lock)
+// SOFT WARNING
 // ═══════════════════════════════════════════
 function renderSoftWarn(tier1Missed,tier2Missed){
-  // Track which MNMs have been added during this warning
   const addedNow=new Set();
   function swRefresh(){
     const rows=tier1Missed.map(m=>{
@@ -591,19 +617,21 @@ function renderSoftWarn(tier1Missed,tier2Missed){
         +(already||wasAdded?'✓ Added':'+ Add')
         +'</button></div>';
     }).join('');
-    const t2Sec=tier2Missed.length?'<div class="softwarn-tier2">Also worth considering (less common, not required to proceed): <strong>'+tier2Missed.map(getMNMName).join(', ')+'</strong></div>':'';
+    const t2Sec=tier2Missed.length?'<div class="softwarn-tier2">Also worth considering (less common, not required): <strong>'+tier2Missed.map(getMNMName).join(', ')+'</strong></div>':'';
     const allAdded=tier1Missed.every(m=>G.diff.some(d=>normMatch(d.n,getMNMName(m))));
     document.getElementById('content').innerHTML=`
-      <div class="softwarn">
-        <div class="softwarn-ico">⚠️</div>
-        <div class="softwarn-title">Check Your Safety Net</div>
-        <div class="softwarn-body">Before you start taking a history, check that you have considered the most dangerous diagnoses for this presentation. You can add them now — or proceed and accept a smaller penalty.</div>
-        <div class="softwarn-missed">Missing from your differential: <strong>`+tier1Missed.map(getMNMName).join('  ·  ')+`</strong></div>
-        <div class="mnm-add-list">`+rows+`</div>
-        `+t2Sec+`
-        <div class="softwarn-acts">
-          <button class="abtn primary" onclick="swProceed()">`+(allAdded?'Proceed to History →':'Proceed Anyway (−15 pts)')+`</button>
-          <button class="abtn" onclick="G.stage='setup';render()">← Back to Differential</button>
+      <div class="inner narrow">
+        <div class="softwarn">
+          <div class="softwarn-ico">⚠️</div>
+          <div class="softwarn-title">Check Your Safety Net</div>
+          <div class="softwarn-body">Before taking a history, ensure you have considered the most dangerous diagnoses for this presentation.</div>
+          <div class="softwarn-missed">Missing: <strong>`+tier1Missed.map(getMNMName).join('  ·  ')+`</strong></div>
+          <div class="mnm-add-list">`+rows+`</div>
+          `+t2Sec+`
+          <div class="softwarn-acts">
+            <button class="abtn primary" onclick="swProceed()">`+(allAdded?'Proceed to History →':'Proceed Anyway (−15 pts)')+`</button>
+            <button class="abtn" onclick="G.stage='setup';render()">← Back</button>
+          </div>
         </div>
       </div>`;
   }
@@ -619,10 +647,9 @@ function renderSoftWarn(tier1Missed,tier2Missed){
   };
   window.swProceed=function(){
     const stillMissed=tier1Missed.filter(m=>!G.diff.some(d=>normMatch(d.n,getMNMName(m))));
-    if(stillMissed.length) G.softMissPenalty=(G.softMissPenalty||0)+15;
-    // If some were added via the prompt, small penalty
-    if(addedNow.size>0&&stillMissed.length===0) G.softMissPenalty=(G.softMissPenalty||0)+5;
-    G.hardPenalty=(G.softMissPenalty||0); // reuse hardPenalty field for scoring
+    if(stillMissed.length)G.softMissPenalty=(G.softMissPenalty||0)+15;
+    if(addedNow.size>0&&stillMissed.length===0)G.softMissPenalty=(G.softMissPenalty||0)+5;
+    G.hardPenalty=(G.softMissPenalty||0);
     G.phase1Names=new Set(G.diff.map(d=>d.n));
     G.stage='history';G.nudge=null;render();
   };
@@ -631,41 +658,36 @@ function renderSoftWarn(tier1Missed,tier2Missed){
 function getMNMExpl(n){
   const l=(n||'').toLowerCase();
   if(l.includes('myocard')||l.includes('infarct'))return'Inferior heart attacks frequently present as epigastric pain. Without MI on your list, you will not order an ECG — every 10-minute delay costs ~1,000 heart muscle cells.';
-  if(l.includes('dissection'))return'Aortic dissection carries 1-2% per hour death rate untreated. Without it on your list, you will not check both arm blood pressures — the 60-second examination that excludes it.';
-  if(l.includes('mesenteric'))return'Mesenteric ischaemia has >50% mortality when diagnosed late. Its hallmark is "pain out of proportion to examination" — you can only recognise this if you are looking for it.';
-  if(l.includes('ruptured')||l.includes('aaa'))return'Ruptured aortic aneurysm is rapidly fatal. In older patients with abdominal pain, this must always be considered before it can be excluded.';
+  if(l.includes('dissection'))return'Aortic dissection carries 1-2% per hour death rate untreated. Without it on your list, you will not check both arm blood pressures.';
+  if(l.includes('mesenteric'))return'Mesenteric ischaemia has >50% mortality when diagnosed late. Its hallmark is "pain out of proportion to examination".';
+  if(l.includes('ruptured')||l.includes('aaa'))return'Ruptured aortic aneurysm is rapidly fatal. In older patients with abdominal pain, this must always be considered.';
   if(l.includes('subarachnoid')||l.includes('sah'))return'Subarachnoid haemorrhage has significant mortality if missed. CT head and lumbar puncture are required to exclude it.';
   if(l.includes('meningitis'))return'Bacterial meningitis is rapidly fatal without treatment. Any combination of headache/fever/neck stiffness requires consideration.';
   if(l.includes('stroke')||l.includes('ischaemic'))return'Acute stroke is time-critical — treatment within hours dramatically improves outcomes.';
   if(l.includes('hypertensive'))return'Hypertensive emergency with end-organ damage requires immediate management.';
-  if(l.includes('embolism')||l.includes('pe'))return'Massive PE is rapidly fatal. Without PE on your list, you will not consider appropriate investigation.';
+  if(l.includes('embolism')||l.includes(' pe'))return'Massive PE is rapidly fatal. Without PE on your list, you will not consider appropriate investigation.';
   if(l.includes('tamponade'))return'Cardiac tamponade causes cardiac arrest if untreated — signs only noticed if you are looking for them.';
   if(l.includes('addison'))return'Addisonian crisis causes life-threatening electrolyte imbalance — immediately reversible with steroid replacement.';
   if(l.includes('tension'))return'Tension pneumothorax is rapidly fatal without immediate needle decompression — diagnosed clinically.';
   return`${n} is a must-not-miss because missing it leads directly to irreversible harm or death.`;
 }
-// critBack / critForce removed — replaced by swProceed in soft-warning system
 
 // ═══════════════════════════════════════════
-// PHASE 2 STAGES
+// PHASE 2 — INVESTIGATION
 // ═══════════════════════════════════════════
 const SCFG={
   history:{arr:'h',src:'history',label:'History Taking',badge:'history',cat:'hf',catLbl:'History',grid:'opts-grid',
-    instr:'Select what you would like to ask the patient. A thorough history is rewarded most heavily.',
     hint:'Think systematically: character of complaint (SOCRATES for pain), associated symptoms, past medical history, medications, family history, social history, systems review.'},
   pe:{arr:'pe',src:'pe',label:'Physical Examination',badge:'pe',cat:'pef',catLbl:'Examination',grid:'opts-grid',
-    instr:'Select what you would like to examine. Focus on what your history has suggested.',
     hint:'Which examinations rule out your must-not-miss diagnoses? Which would support or refute your leading working diagnosis?'},
   basic:{arr:'b',src:'basic',label:'Basic Investigations',badge:'basic',cat:'bif',catLbl:'Basic Inv',grid:'opts-grid two-col',
-    instr:'Order the basic investigations you need. What is the single most important investigation for this case?',
     hint:'One investigation in most cases is more important than all others. Think about the most time-sensitive, high-yield test for this specific presentation.'},
   advanced:{arr:'a',src:'advanced',label:'Advanced Investigations',badge:'advanced',cat:'aif',catLbl:'Advanced Inv',grid:'opts-grid two-col',
-    instr:'Only order investigations with a clear clinical indication. They are expensive and carry risks.',
     hint:'By now, basic investigations should have largely established the diagnosis. Advanced investigations confirm, localise, or enable definitive treatment.'},
 };
 const NEXT={history:'pe',pe:'basic',basic:'advanced',advanced:'commit'};
 const DONE_BTN={history:'Done with History →',pe:'Done with Examination →',basic:'Done with Basic Investigations →',advanced:'Proceed to Commit →'};
-const SKIP_BTN={history:'Skip History',pe:'Skip Examination',basic:'Skip Basic Investigations',advanced:'Skip Advanced Investigations'};
+const SKIP_BTN={history:'Skip History',pe:'Skip Examination',basic:'Skip Basic Inv',advanced:'Skip Advanced Inv'};
 
 function getDoneArr(stage){return{history:G.done.h,pe:G.done.pe,basic:G.done.b,advanced:G.done.a}[stage]||G.done.h;}
 function getSrcItems(stage){return(CASES[G.caseIdx]||{})[SCFG[stage].src]||[];}
@@ -675,55 +697,80 @@ function renderStage(stage){
   const cfg=SCFG[stage];
   const doneArr=getDoneArr(stage);
   const allItems=getSrcItems(stage);
-  // FIX #1: map IDs in order they were added to the array
   const doneItems=doneArr.map(id=>allItems.find(i=>i.id===id)).filter(Boolean);
   const pendItems=allItems.filter(i=>!doneArr.includes(i.id));
-  const isRanking=G.pendingRank===stage;
 
-  // Vignette: collapsible in phase 2 to reduce screen noise
+  // Stepper
+  const p2stages=['history','pe','basic','advanced'];
+  const stageIdx=p2stages.indexOf(stage);
+  const stepperHtml=p2stages.map((s,i)=>{
+    const done=i<stageIdx;
+    const active=i===stageIdx;
+    const locked=i>stageIdx;
+    return`<div class="inv-step ${done?'done':''} ${active?'active':''} ${locked?'locked':''}">
+      <span class="inv-step-num">${done?'✓':i+1}</span>${STAGE_LBL[s]}
+    </div>`;
+  }).join('');
+
+  // Collapsible vignette
   const vigOpen=G._vigOpen!==false;
-  let html=`
+  let leftHtml=`
     <div class="vig vig-collapsible${vigOpen?'':' vig-closed'}">
       <div class="vig-toggle" onclick="G._vigOpen=${!vigOpen};render()">
         <span class="vig-toggle-lbl">${cas.patient||'Patient'}</span>
         <span class="vig-toggle-arr${vigOpen?' open':''}">▶</span>
       </div>
-      <div class="vig-txt">${cas.vignette}</div>
+      <div class="vig-body"><div class="vig-txt">${cas.vignette}</div></div>
     </div>`;
 
   if(doneItems.length){
-    // FIX #1: findings in selection order
-    html+=`<div class="findings">${doneItems.map(i=>mkFinding(i,cfg.cat,cfg.catLbl)).join('')}</div>`;
+    leftHtml+=`<div class="findings">
+      <div class="findings-hd">Findings — ${cfg.label}</div>
+      ${doneItems.map(i=>mkFinding(i,cfg.cat,cfg.catLbl)).join('')}
+    </div>`;
   }
 
-  if(isRanking){
-    html+=mkRankPanel(stage,doneItems);
-  } else {
-    if(pendItems.length){
-      html+=`<div class="stage-box"><div class="stage-hd">${cfg.label}</div>
-        <div class="${cfg.grid}">${pendItems.map(i=>`
-          <div class="opt" onclick="doItem('${stage}','${escJs(i.id)}')">
-            <div class="opt-nm">${i.lbl}</div>
-            <div class="opt-cost ${i.cost}"><span class="cpip"></span>${COST_LBL[i.cost]}</div>
-          </div>`).join('')}</div>
-      </div>`;
-    } else {
-      html+=`<div class="stage-box"><div class="stage-hd" style="color:var(--green)">✓ All ${cfg.label} options completed</div></div>`;
-    }
-    // FIX #5: diff box always present in Phase 2
-    html+=`<div class="diff-box">
-      <div class="diff-hd">Your Differential (${G.diff.filter(d=>!d.elim).length} active)<span class="diff-hint">⠿ drag to reorder · Eliminate to remove</span></div>
-      <div class="dlist" id="dlist">${renderDiff()}</div>
+  if(pendItems.length){
+    leftHtml+=`<div class="stage-box">
+      <div class="stage-hd">${cfg.label}</div>
+      <div class="${cfg.grid}">${pendItems.map(i=>`
+        <div class="opt" onclick="doItem('${stage}','${escJs(i.id)}')">
+          <div class="opt-nm">${i.lbl}</div>
+          <div class="opt-cost ${i.cost}"><span class="cpip"></span>${COST_LBL[i.cost]}</div>
+        </div>`).join('')}
+      </div>
     </div>`;
-    if(G.nudge)html+=`<div class="nudge">💬 ${G.nudge}</div>`;
-    html+=`<div class="nav-row">
-      ${doneItems.length?`<button class="nb go" onclick="doneStage('${stage}')">${DONE_BTN[stage]}</button>`:''}
-      <button class="nb skip" onclick="skipStage('${stage}')">${SKIP_BTN[stage]}</button>
-      <span class="prof study-aid" onclick="toggleProf()">🎓 Hint</span>
-    </div>
-    ${G.profOpen?`<div class="prof-reveal study-aid">💡 ${cfg.hint}</div>`:''}`;
+  }else{
+    leftHtml+=`<div class="stage-box"><div class="stage-hd" style="color:var(--green)">✓ All ${cfg.label} options reviewed</div></div>`;
   }
-  document.getElementById('content').innerHTML=html;
+
+  if(G.nudge)leftHtml+=`<div class="nudge">${G.nudge}</div>`;
+
+  leftHtml+=`<div class="p2-nav">
+    ${doneItems.length?`<button class="btn-primary" onclick="doneStage('${stage}')">${DONE_BTN[stage]}</button>`:''}
+    <button class="btn-ghost" onclick="skipStage('${stage}')">${SKIP_BTN[stage]}</button>
+    <button class="btn-hint study-aid" onclick="toggleProf()">Hint</button>
+  </div>
+  ${G.profOpen?`<div class="prof-reveal study-aid">${cfg.hint}</div>`:''}`;
+
+  // Right column: compact diff
+  const rightHtml=`
+    <div class="p2-diff">
+      <div class="p2-diff-hd">
+        <span class="p2-diff-title">Differential</span>
+        <span class="p2-diff-add" onclick="openDrawer()">+ Add</span>
+      </div>
+      <div class="p2-dlist" id="dlist">${renderDiff()}</div>
+    </div>`;
+
+  document.getElementById('content').innerHTML=`
+    <div class="p2-wrap">
+      <div class="p2-main">
+        <div class="inv-stepper">${stepperHtml}</div>
+        ${leftHtml}
+      </div>
+      <div class="p2-sidebar">${rightHtml}</div>
+    </div>`;
 }
 
 function mkFinding(item,cat,catLbl){
@@ -737,44 +784,34 @@ function mkFinding(item,cat,catLbl){
     ?`<div class="fc-looking">Looking for: ${item.lookingFor}</div>`:'';
   const imgHtml=item.imageUrl
     ?`<img class="fc-img" src="images/${item.imageUrl}" alt="${item.lbl}" loading="lazy">`:'';
-
-  // All indicators in one compact row — study aids hidden in exam mode
   const indicators=[];
-  if(isReq) indicators.push('<span class="fc-note req study-aid">Key finding</span>');
-  if(sn)    indicators.push('<span class="fc-note sig study-aid">Significant negative</span>');
-  if(irrel) indicators.push('<span class="fc-note irrel study-aid">Not discriminating here</span>');
-  if(isIce) indicators.push('<span class="fc-note ice study-aid">ICE</span>');
-  const indicatorRow=indicators.length
-    ?`<div class="fc-indicators study-aid">${indicators.join('')}</div>`:'';
-
+  if(isReq)indicators.push('<span class="fc-note req study-aid">Key finding</span>');
+  if(sn)indicators.push('<span class="fc-note sig study-aid">Significant negative</span>');
+  if(irrel)indicators.push('<span class="fc-note irrel study-aid">Not discriminating here</span>');
+  if(isIce)indicators.push('<span class="fc-note ice study-aid">ICE</span>');
+  const indicatorRow=indicators.length?`<div class="fc-indicators study-aid">${indicators.join('')}</div>`:'';
   const expHtml=item.exp?`
     <button class="fc-exp-toggle" onclick="toggleFcExp('${uid}')">Why does this matter?</button>
     <div class="fc-exp" id="${uid}">${item.exp}</div>`:'';
-
   return '<div class="fc '+(isIce?'icef':cat)+'">'
     +'<div class="fc-lbl '+(isIce?'icef':cat)+'">'+catLbl+' — '+item.lbl+'</div>'
     +lookingForHtml
     +'<div class="fc-txt">'+item.find+'</div>'
-    +imgHtml
-    +indicatorRow
-    +expHtml
+    +imgHtml+indicatorRow+expHtml
     +'</div>';
 }
 function toggleFcExp(uid){
-  const el=document.getElementById(uid);
-  if(!el)return;
+  const el=document.getElementById(uid);if(!el)return;
   el.classList.toggle('open');
-  // flip button text
   const btn=el.previousElementSibling;
-  if(btn&&btn.classList.contains('fc-exp-toggle')){
-    btn.textContent=el.classList.contains('open')?'💡 Hide explanation':'💡 Why does this matter?';
-  }
+  if(btn&&btn.classList.contains('fc-exp-toggle'))
+    btn.textContent=el.classList.contains('open')?'Hide explanation':'Why does this matter?';
 }
 
 function doItem(stage,id){
   const arr=getDoneArr(stage);
   if(arr.includes(id))return;
-  arr.push(id); // FIX #1: push maintains selection order
+  arr.push(id);
   const item=getSrcItems(stage).find(i=>i.id===id);if(!item)return;
   G.nudge=null;G.profOpen=false;
   if(stage==='history'){G.pb.hTotal++;if(item.rel)G.pb.hRel++;}
@@ -790,25 +827,38 @@ function doItem(stage,id){
   calcLiveScore();render();
 }
 
-function doneStage(stage){G.pendingRank=stage;G.profOpen=false;render();}
-function skipStage(stage){G.skipped.add(stage);G.pendingRank=stage;G.profOpen=false;render();}
+function doneStage(stage){G.pendingRank=stage;G.profOpen=false;showRankModal(stage);}
+function skipStage(stage){G.skipped.add(stage);G.pendingRank=stage;G.profOpen=false;showRankModal(stage);}
 function toggleProf(){G.profOpen=!G.profOpen;render();}
 
 // ═══════════════════════════════════════════
-// RANKING PANEL
+// RANKING MODAL
 // ═══════════════════════════════════════════
+function showRankModal(stage){
+  const doneArr=getDoneArr(stage);
+  const allItems=getSrcItems(stage);
+  const doneItems=doneArr.map(id=>allItems.find(i=>i.id===id)).filter(Boolean);
+  document.getElementById('rank-modal-inner').innerHTML=mkRankPanel(stage,doneItems);
+  document.getElementById('rank-modal').classList.remove('hide');
+}
+function closeRankModal(){
+  document.getElementById('rank-modal').classList.add('hide');
+}
+
 function mkRankPanel(stage,doneItems){
   const active=G.diff.filter(d=>!d.elim);
   const skipped=G.skipped.has(stage);
   const lines=doneItems.slice(-4).map(i=>`• ${i.lbl}: ${i.find.slice(0,90)}${i.find.length>90?'…':''}`).join('<br>');
-  return`<div class="rp">
-    <div class="rp-lbl">📊 Update Your Ranking — After ${STAGE_LBL[stage]}</div>
-    <div class="rp-sub">${skipped?'You skipped this stage. Based on what you knew before, rank your differential.':'Drag your differential into order — <strong>most likely at the top</strong>. Each new piece of evidence should shift your probability estimates.'}</div>
-    ${!skipped&&doneItems.length?`<div class="rp-findings"><div class="rp-findings-lbl">Key findings from ${STAGE_LBL[stage]}</div><div class="rp-findings-body">${lines}</div></div>`:''}
-    ${active.length?`<div class="rlist" id="rlist">${buildRItems(active)}</div>`:
-      `<div style="font-size:.77rem;color:var(--muted);font-style:italic;padding:8px 0">No active diagnoses to rank. Add some to your differential first.</div>`}
-    <button class="rp-btn" onclick="confirmRank('${stage}')">Confirm Ranking and Continue →</button>
-  </div>`;
+  return`
+    <div class="rk-eyebrow">Ranking Checkpoint</div>
+    <div class="rk-title">After ${STAGE_LBL[stage]}</div>
+    <div class="rk-sub">${skipped?'You skipped this stage. Based on what you knew before, rank your differential.':'Drag your differential into order — <strong>most likely at the top</strong>. Each new piece of evidence should shift your probability estimates.'}</div>
+    ${!skipped&&doneItems.length?`<div class="rk-findings"><div class="rk-findings-lbl">Key findings from ${STAGE_LBL[stage]}</div><div class="rk-findings-body">${lines}</div></div>`:''}
+    ${active.length
+      ?`<div class="rlist" id="rlist">${buildRItems(active)}</div>`
+      :`<div style="font-size:.77rem;color:var(--muted);font-style:italic;padding:8px 0">No active diagnoses to rank.</div>`
+    }
+    <button class="rk-btn" onclick="confirmRank('${stage}')">Confirm Ranking and Continue →</button>`;
 }
 function buildRItems(active){
   const cas=CASES[G.caseIdx];
@@ -817,7 +867,7 @@ function buildRItems(active){
     const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
     const isLP=pairs.some(p=>normMatch(p.secondary,d.n));
     const tagCls=d.tag==='mnm'?'mnm':isLP?'lp':isRx?'rx':'wd';
-    const tagLbl=d.tag==='mnm'?'🔴':isLP?'🔗':isRx?'➕':'🟡';
+    const tagLbl=d.tag==='mnm'?'MNM':isLP?'Link':isRx?'+P2':'WD';
     return`<div class="ri" id="ri-${i}" draggable="true"
       ondragstart="rDS(event,${i})" ondragover="rDO(event,${i})" ondrop="rDrop(event,${i})"
       ondragleave="rDL(event,${i})" ondragend="rDE()">
@@ -832,6 +882,7 @@ function reRenderRList(){const el=document.getElementById('rlist');if(el)el.inne
 function confirmRank(stage){
   G.rankSnaps.push({stage:STAGE_LBL[stage],ranks:G.diff.filter(d=>!d.elim).map(d=>d.n),skipped:G.skipped.has(stage)});
   G.pendingRank=null;
+  closeRankModal();
   const next=NEXT[stage];if(next)G.stage=next;
   calcLiveScore();render();
 }
@@ -857,86 +908,110 @@ function renderCommit(){
   const subs=G.commitSel?(()=>{const e=pool.find(d=>d.n===G.commitSel);return e?.subs||[];})():[];
   const showSec=cas.hasSecondaryDx&&(G.done.b.includes(cas.secondaryDxTriggerInv)||G.done.pe.includes(cas.secondaryDxTriggerInv));
   const pairs=cas.linkedPairs||[];
+  const step1Done=!!G.commitSel;
+  const step2Done=!subs.length||!!G.commitSub;
+
   document.getElementById('content').innerHTML=`
-    ${missingReq.length?`<div class="commit-warn">Key investigation not performed: <strong>${missingReq.map(r=>{const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);return it?it.lbl:r;}).join(', ')}</strong>. This will reduce your score.</div>`:''}
-    <div class="commit-box">
-      <div class="commit-lbl">Primary Diagnosis</div>
-      <div class="cdx-list">${G.diff.map((d,i)=>{
-        const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
-        const isLP=pairs.some(p=>normMatch(p.secondary,d.n));
-        if(isLP&&!d.elim) return('<div class="cdx" style="cursor:default;opacity:.55;border-style:dashed"><div class="cdx-radio" style="border-color:var(--teal)"></div><div class="cdx-nm">'+d.n+' <span class="cdx-rx">complication — select below</span></div><div class="cdx-rank">#'+(i+1)+'</div></div>');
-        return('<div class="cdx '+(d.elim?'elimf':'')+' '+(G.commitSel===d.n&&!d.elim?'sel':'')+'" onclick="'+(d.elim?'':'selectCommit(\''+escJs(d.n)+'\')')+'"><div class="cdx-radio"></div><div class="cdx-nm">'+d.n+(d.elim?' (eliminated)':'')+'</div><div class="cdx-rank">#'+(i+1)+'</div>'+(isRx?'<div class="cdx-rx">added Phase 2</div>':'')+'</div>');
-      }).join('')}</div>
-      ${G.commitSel&&subs.length?('<div class="sub-sel"><div class="sub-sel-lbl">Specify subtype for full marks (umbrella = partial credit):</div><div class="sub-opts">'+subs.map(s=>'<div class="sopt '+(G.commitSub===s?'sel':'')+'" onclick="selectSub(\''+escJs(s)+'\')">'+s+'</div>').join('')+'</div></div>'):''}
-      ${showSec?('<div class="sec-commit"><div class="sec-commit-lbl">🔗 Complicating Syndrome</div><div class="sec-commit-hint">Your investigations suggest a complicating syndrome alongside the primary diagnosis. Did you identify one?</div><div class="sec-opts"><div class="scopt '+(G.secondaryCommit===cas.secondaryDx?'sel':'')+'" onclick="selectSecondaryCmt(\''+escJs(cas.secondaryDx)+'\')">'+( cas.secondaryDxLabel||cas.secondaryDx)+'</div><div class="scopt '+(G.secondaryCommit==='none'?'sel':'')+'" onclick="selectSecondaryCmt(\'none\')">None / not identified</div></div></div>'):''}
-      <div style="height:10px"></div>
+    <div class="commit-wrap">
+      <div class="commit-eyebrow">Phase 3</div>
+      <div class="commit-title">Commit to a Diagnosis</div>
+      ${missingReq.length?`<div class="commit-warn">Key investigation not performed: <strong>${missingReq.map(r=>{const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);return it?it.lbl:r;}).join(', ')}</strong>. This will reduce your score.</div>`:''}
+
+      <div class="cstep">
+        <div class="cstep-hd">
+          <div class="cstep-num ${!step1Done?'active':''}" style="${step1Done?'background:var(--green);border-color:var(--green);color:#000':''}">
+            ${step1Done?'✓':'1'}
+          </div>
+          <span class="cstep-lbl active">Primary Diagnosis</span>
+        </div>
+        <div class="cdx-list">${G.diff.map((d,i)=>{
+          const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
+          const isLP=pairs.some(p=>normMatch(p.secondary,d.n));
+          if(isLP&&!d.elim)return`<div class="cdx" style="cursor:default;opacity:.5;border-style:dashed">
+            <div class="cdx-radio" style="border-color:var(--teal)"></div>
+            <div class="cdx-nm">${d.n} <span class="cdx-rx">complication — select below if applicable</span></div>
+            <div class="cdx-rank">#${i+1}</div></div>`;
+          return`<div class="cdx ${d.elim?'elimf':''} ${G.commitSel===d.n&&!d.elim?'sel':''}"
+            onclick="${d.elim?'':'selectCommit(\''+escJs(d.n)+'\')'}">
+            <div class="cdx-radio"></div>
+            <div class="cdx-nm">${d.n}${d.elim?' (eliminated)':''}</div>
+            <div class="cdx-rank">#${i+1}</div>
+            ${isRx?'<div class="cdx-rx">added Phase 2</div>':''}
+          </div>`;
+        }).join('')}</div>
+      </div>
+
+      ${G.commitSel&&subs.length?`
+      <div class="sub-sel">
+        <div class="sub-sel-lbl">Specify subtype for full marks (umbrella diagnosis = partial credit):</div>
+        <div class="sub-opts">${subs.map(s=>`<div class="sopt ${G.commitSub===s?'sel':''}" onclick="selectSub('${escJs(s)}')">${s}</div>`).join('')}</div>
+      </div>`:''}
+
+      ${showSec?`
+      <div class="sec-commit">
+        <div class="sec-commit-lbl">Complicating Syndrome</div>
+        <div class="sec-commit-hint">Your investigations suggest a complicating syndrome alongside the primary diagnosis. Did you identify one?</div>
+        <div class="sec-opts">
+          <div class="scopt ${G.secondaryCommit===cas.secondaryDx?'sel':''}" onclick="selectSecondaryCmt('${escJs(cas.secondaryDx)}')">${cas.secondaryDxLabel||cas.secondaryDx}</div>
+          <div class="scopt ${G.secondaryCommit==='none'?'sel':''}" onclick="selectSecondaryCmt('none')">None / not identified</div>
+        </div>
+      </div>`:''}
+
       <button class="commit-btn" onclick="submitCommit()" ${!G.commitSel?'disabled':''}>
-        ${(()=>{if(!G.commitSel)return 'Select a diagnosis to commit';const p=G.commitSub||G.commitSel;const s=(showSec&&G.secondaryCommit&&G.secondaryCommit!=='none')?' + '+cas.secondaryDx:'';return 'Commit: '+p+s+' →';})()}
+        ${(()=>{
+          if(!G.commitSel)return'Select a diagnosis to commit';
+          const p=G.commitSub||G.commitSel;
+          const s=(showSec&&G.secondaryCommit&&G.secondaryCommit!=='none')?' + '+cas.secondaryDx:'';
+          return'Commit: '+p+s+' →';
+        })()}
       </button>
     </div>`;
 }
 function selectCommit(n){G.commitSel=n;G.commitSub=null;render();}
 function selectSub(s){G.commitSub=s;render();}
 function selectSecondaryCmt(v){G.secondaryCommit=v;render();}
-function submitCommit(){if(!G.commitSel)return;calcFinalScore();G.stage='debrief';render();}
+function submitCommit(){if(!G.commitSel)return;calcFinalScore();G.stage='debrief';debriefTab='score';render();}
 
 // ═══════════════════════════════════════════
 // SCORING
 // ═══════════════════════════════════════════
-// ═══════════════════════════════════════════
-// SCORING
-// ═══════════════════════════════════════════
 function calcMNMDemotionScore(){
-  // Score: did player move each MNM to bottom half AFTER the demoting evidence?
   const cas=CASES[G.caseIdx];
   const demotions=cas.mnmExpectedDemotion||[];
-  if(!demotions.length) return {pts:0,total:0,detail:[]};
+  if(!demotions.length)return{pts:0,total:0,detail:[]};
   const pairs=cas.linkedPairs||[];
-  const active=G.diff.filter(d=>!d.elim);
-  const n=active.length;
   let earned=0,detail=[];
-  // For each unique MNM+snapshot combo, find most recent snapshot after that item was done
   const uniqueKeys=[];
-  demotions.forEach(de=>{
-    const key=de.mnm+'|'+de.snapshot;
-    if(!uniqueKeys.includes(key)) uniqueKeys.push(key);
-  });
+  demotions.forEach(de=>{const key=de.mnm+'|'+de.snapshot;if(!uniqueKeys.includes(key))uniqueKeys.push(key);});
   uniqueKeys.forEach(key=>{
-    const [mnmName,snapStage]=key.split('|');
-    // Was the triggering item performed?
+    const[mnmName,snapStage]=key.split('|');
     const relevantDemotions=demotions.filter(d=>d.mnm===mnmName&&d.snapshot===snapStage);
-    const anyTriggerDone=relevantDemotions.some(d=>
-      G.done.h.includes(d.after_item)||G.done.pe.includes(d.after_item)||
-      G.done.b.includes(d.after_item)||G.done.a.includes(d.after_item));
+    const anyTriggerDone=relevantDemotions.some(d=>G.done.h.includes(d.after_item)||G.done.pe.includes(d.after_item)||G.done.b.includes(d.after_item)||G.done.a.includes(d.after_item));
     if(!anyTriggerDone){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'Trigger not performed'});return;}
-    // Find the snapshot taken after this stage
     const snap=G.rankSnaps.find(s=>s.stage===snapStage);
     if(!snap){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'No ranking snapshot taken'});return;}
-    // Is this MNM in the snapshot at all?
     const pos=snap.ranks.findIndex(r=>normMatch(r,mnmName));
-    if(pos<0){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'MNM not in differential at this point'});return;}
+    if(pos<0){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'MNM not in differential'});return;}
     const snapN=snap.ranks.length;
-    const inBottomHalf=pos>=Math.floor(snapN/2);
-    // Check if it's a linked-pair secondary (shouldn't apply demotion logic)
     const isLP=pairs.some(p=>normMatch(p.secondary,mnmName));
-    if(isLP){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'Linked complication — not evaluated'});return;}
-    // Special case: if MNM is "ruled in" (confirmed diagnosis), being #1 is correct
+    if(isLP){detail.push({mnm:mnmName,stage:snapStage,result:'skip',note:'Linked complication'});return;}
     const mnmRuleOutEntry=(cas.mnmRuleOut||[]).find(m=>normMatch(m.mnm,mnmName));
     if(mnmRuleOutEntry&&mnmRuleOutEntry.status==='ruled-in'){
       const inTopHalf=pos<Math.ceil(snapN/2);
       if(inTopHalf){earned++;detail.push({mnm:mnmName,stage:snapStage,result:'pass',note:'Correctly ranked high after confirming'});}
-      else{detail.push({mnm:mnmName,stage:snapStage,result:'fail',note:'Should be ranked #1 after confirmation'});}
+      else detail.push({mnm:mnmName,stage:snapStage,result:'fail',note:'Should be ranked #1 after confirmation'});
       return;
     }
-    if(inBottomHalf){earned++;detail.push({mnm:mnmName,stage:snapStage,result:'pass',note:'Correctly moved to bottom half after exclusionary evidence'});}
-    else{detail.push({mnm:mnmName,stage:snapStage,result:'fail',note:relevantDemotions[0]?.note||'Should be ranked lower after exclusionary evidence'});}
+    const inBottomHalf=pos>=Math.floor(snapN/2);
+    if(inBottomHalf){earned++;detail.push({mnm:mnmName,stage:snapStage,result:'pass',note:'Correctly moved to bottom half'});}
+    else detail.push({mnm:mnmName,stage:snapStage,result:'fail',note:relevantDemotions[0]?.note||'Should be ranked lower after exclusionary evidence'});
   });
   const total=uniqueKeys.filter(k=>{
-    const [mn,st]=k.split('|');
+    const[mn,st]=k.split('|');
     const d=demotions.filter(x=>x.mnm===mn&&x.snapshot===st);
     return d.some(x=>G.done.h.includes(x.after_item)||G.done.pe.includes(x.after_item)||G.done.b.includes(x.after_item)||G.done.a.includes(x.after_item));
   }).length;
-  return {pts:total?Math.round(earned/Math.max(1,total)*20):0,total,earned,detail};
+  return{pts:total?Math.round(earned/Math.max(1,total)*20):0,total,earned,detail};
 }
 
 function calcLiveScore(){
@@ -951,7 +1026,6 @@ function calcLiveScore(){
   const snPts=Math.min(20,[...G.sigNegsEarned].reduce((s,id)=>{const sn=(cas.sigNegs||[]).find(n=>n.id===id);return s+(sn?sn.pts:0);},0));
   const rxCount=G.phase1Names?exp.filter(e=>![...G.phase1Names].some(n=>normMatch(n,e))&&G.diff.some(d=>normMatch(d.n,e))).length:0;
   const demote=calcMNMDemotionScore();
-  // Approach = MNM coverage (30) + breadth (20) + sig negs (20) + demotion (20) + 10 base
   const approachRaw=Math.max(0,10+mnmPts+expPts+snPts+demote.pts-rxCount*3-G.hardPenalty);
   const hRel=(cas.history||[]).filter(i=>i.rel).length;
   const peRel=(cas.pe||[]).filter(i=>i.rel).length;
@@ -960,26 +1034,23 @@ function calcLiveScore(){
   const pePts=peRel?(pb.peRel||0)/peRel*30:0;
   const biPts=biRel?(pb.biRel||0)/biRel*20:0;
   const processRaw=Math.max(0,hPts+pePts+biPts-(pb.aiPen||0));
-  G.liveScore={a:Math.min(100,approachRaw),p:Math.min(100,processRaw),d:0,
-    _mnmOk:mnmOk,_expOk:expOk,_rx:rxCount,_demote:demote};
+  G.liveScore={a:Math.min(100,approachRaw),p:Math.min(100,processRaw),d:0,_mnmOk:mnmOk,_expOk:expOk,_rx:rxCount,_demote:demote};
 }
 
 function calcFinalScore(){
   calcLiveScore();
   const cas=CASES[G.caseIdx];
   const committed=G.commitSub||G.commitSel||'';
-  // Primary diagnosis score
   let dxPts=(cas.diagnosisScore||{})[committed]||(cas.diagnosisScore||{})[G.commitSel]||0;
-  // Secondary / compound bonus
   let secBonus=0,secNote='';
   if(cas.hasSecondaryDx){
     const secFound=G.secondaryCommit===cas.secondaryDx;
     const secInDiff=G.diff.some(d=>normMatch(d.n,cas.secondaryDx));
     const secInvDone=(cas.secondaryDxConfirmInvs||[]).every(id=>G.done.b.includes(id)||G.done.pe.includes(id));
     if(secFound&&secInvDone){secBonus=25;secNote='Complicating syndrome identified and confirmed (+25 pts).';}
-    else if(secFound&&!secInvDone){secBonus=10;secNote='Complicating syndrome identified but not confirmed with investigations (+10 pts).';}
-    else if(secInDiff&&!secFound){secBonus=5;secNote='Complicating syndrome was in your differential but not committed (+5 pts).';}
-    else{secNote='Complicating syndrome ('+cas.secondaryDx+') was not identified. The full diagnosis is: '+cas.finalDx+'.';}
+    else if(secFound&&!secInvDone){secBonus=10;secNote='Complicating syndrome identified but not confirmed (+10 pts).';}
+    else if(secInDiff&&!secFound){secBonus=5;secNote='Complicating syndrome in differential but not committed (+5 pts).';}
+    else secNote='Complicating syndrome ('+cas.secondaryDx+') was not identified.';
     dxPts=Math.min(100,dxPts+secBonus);
   }
   G.liveScore.d=dxPts;
@@ -993,43 +1064,31 @@ function calcFinalScore(){
     total:Math.round(a*.3+p*.4+d*.3),
     approachExpl:'MNM coverage: '+G.liveScore._mnmOk+'/'+mn.length+' ('+Math.round(G.liveScore._mnmOk/Math.max(1,mn.length)*30)+' pts). '
       +'Common DDx breadth: '+G.liveScore._expOk+'/'+(cas.expectedP1||[]).length+'. '
-      +'Significant negatives earned: '+G.sigNegsEarned.size+'. '
-      +'MNM ranking/demotion: '+demote.earned+'/'+demote.total+' correctly handled. '
-      +'Reactive additions (Phase 2 only): '+G.liveScore._rx+'. '
-      +'MNM handling penalty: '+(G.hardPenalty>0?'−'+G.hardPenalty+' pts ('+(G.softMissPenalty>0?'soft-miss':'hard block')+')':'none')+'.',
+      +'Significant negatives: '+G.sigNegsEarned.size+'. '
+      +'MNM demotion: '+demote.earned+'/'+demote.total+' correctly handled. '
+      +'Reactive additions: '+G.liveScore._rx+'. '
+      +'Penalty: '+(G.hardPenalty>0?'−'+G.hardPenalty+' pts':'none')+'.',
     processExpl:'History: '+(pb.hRel||0)+'/'+hRel+' relevant topics'+(G.skipped.has('history')?' (skipped)':'')+'. '
       +'PE: '+(pb.peRel||0)+'/'+peRel+' relevant examinations. '
       +'Basic investigations: '+(pb.biRel||0)+' relevant tests. '
       +'Advanced investigation penalties: '+(pb.aiPen||0)+' pts.',
     dxExpl:'Committed to: "'+(committed||'nothing')+'". '
       +(secNote?secNote+' ':'')
-      +(dxPts===100?'Correct — full diagnosis identified.':dxPts>=75?'Correct, not fully specified.':dxPts>=50?'Correct umbrella, subtype or complication missing.':dxPts>0?'Related territory, not the final diagnosis.':'Incorrect diagnosis.')
+      +(dxPts===100?'Correct — full diagnosis identified.':dxPts>=75?'Correct, not fully specified.':dxPts>=50?'Correct umbrella, subtype or complication missing.':dxPts>0?'Related territory, not the final diagnosis.':'Incorrect diagnosis.'),
   };
 }
 
 // ═══════════════════════════════════════════
 // DEBRIEF
 // ═══════════════════════════════════════════
-function toggleTL(){
-  const b=document.getElementById('tl-body');
-  const a=document.getElementById('tl-arr');
-  if(!b||!a)return;
-  b.classList.toggle('open');
-  a.classList.toggle('open');
-}
-function toggleDeepDive(){
-  const b=document.getElementById('deep-body');
-  const a=document.getElementById('deep-arr');
-  if(!b||!a)return;
-  b.classList.toggle('open');
-  a.classList.toggle('open');
-}
-function toggleSection(id){
-  const b=document.getElementById(id+'-body');
-  const a=document.getElementById(id+'-arr');
-  if(!b)return;
-  b.classList.toggle('open');
-  if(a)a.classList.toggle('open');
+function setDebriefTab(tab){
+  debriefTab=tab;
+  document.querySelectorAll('.db-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.db-panel').forEach(p=>p.classList.remove('active'));
+  const tabEl=document.querySelector(`.db-tab[data-tab="${tab}"]`);
+  const panelEl=document.getElementById('db-panel-'+tab);
+  if(tabEl)tabEl.classList.add('active');
+  if(panelEl)panelEl.classList.add('active');
 }
 
 function renderDebrief(){
@@ -1040,50 +1099,50 @@ function renderDebrief(){
     return p+s;
   })();
   const correct=fs.diagnosis>=75;
+  const scoreCls=fs.total>=75?'score-hi':fs.total>=50?'score-mid':'score-lo';
 
-  // Build timeline (selection order)
+  // Build timeline
   const allDone=[];
   [{arr:G.done.h,src:'history'},{arr:G.done.pe,src:'pe'},{arr:G.done.b,src:'basic'},{arr:G.done.a,src:'advanced'}]
-  .forEach(({arr,src})=>{
-    const items=(cas[src]||[]);
-    arr.map(id=>items.find(i=>i.id===id)).filter(Boolean)
-      .forEach(i=>allDone.push({...i,cat:src==='pe'?'pe':src==='basic'?'basic':src==='advanced'?'advanced':'history'}));
-  });
+    .forEach(({arr,src})=>{
+      const items=(cas[src]||[]);
+      arr.map(id=>items.find(i=>i.id===id)).filter(Boolean)
+        .forEach(i=>allDone.push({...i,cat:src==='pe'?'pe':src==='basic'?'basic':src==='advanced'?'advanced':'history'}));
+    });
 
-  // Key Pivots: required items + significant negatives that player DID perform
+  // Key pivots
   const pivotItems=allDone.filter(item=>{
     const isReq=(cas.required||[]).includes(item.id);
     const isSig=(cas.sigNegs||[]).some(s=>s.id===item.id);
     return isReq||isSig;
   });
-  // Also flag missed required items
   const missedReq=(cas.required||[]).filter(r=>!allDone.some(i=>i.id===r)).map(r=>{
     const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);
     return it?it.lbl:r;
   });
-
   const pivotHtml=pivotItems.length?pivotItems.map(item=>{
     const sn=(cas.sigNegs||[]).find(s=>s.id===item.id);
     const isReq=(cas.required||[]).includes(item.id);
     const kind=isReq?'req':sn?'sig':'conf';
-    const badge=isReq?'⭐ Key investigation':sn?'✓ Significant negative':'Confirmatory';
-    return '<div class="kp-item '+kind+'"><div class="kp-hd"><span class="kp-badge '+kind+'">'+badge+'</span><span class="kp-lbl">'+item.lbl+'</span></div><div class="kp-find">'+item.find+'</div></div>';
-  }).join('')+(missedReq.length?'<div class="kp-item" style="border-left-color:var(--red)"><div class="kp-hd"><span class="kp-badge" style="background:var(--rdim);color:var(--red)">⚠️ Not performed</span><span class="kp-lbl" style="color:var(--red)">'+missedReq.join(', ')+'</span></div><div class="kp-find" style="color:var(--red)">These key investigations were not performed — they would have significantly shaped the diagnosis or safety net.</div></div>':'')
-  :'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No key investigations were performed.</p>';
+    const badge=isReq?'Key investigation':sn?'Significant negative':'Confirmatory';
+    return'<div class="kp-item '+kind+'"><div class="kp-hd"><span class="kp-badge '+kind+'">'+badge+'</span><span class="kp-lbl">'+item.lbl+'</span></div><div class="kp-find">'+item.find+'</div></div>';
+  }).join('')+(missedReq.length?'<div class="kp-item" style="border-left-color:var(--red)"><div class="kp-hd"><span class="kp-badge" style="background:var(--rdim);color:var(--red)">Not performed</span><span class="kp-lbl" style="color:var(--red)">'+missedReq.join(', ')+'</span></div><div class="kp-find" style="color:var(--muted)">These key investigations were not performed.</div></div>':'')
+  :'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No key investigations performed.</p>';
 
   // Full timeline
+  const CAT_LBL2={history:'History',pe:'Examination',basic:'Basic Inv',advanced:'Advanced Inv'};
   const tlItems=allDone.map((item,n)=>{
     const sn=(cas.sigNegs||[]).find(s=>s.id===item.id);
     const isReq=(cas.required||[]).includes(item.id);
     const isIce=item.ice;
     const irrel=!item.rel&&!isIce;
-    const catLbl=CAT_LBL[item.cat]||item.cat;
-    return '<div class="tl-step">'
+    const catLbl=CAT_LBL2[item.cat]||item.cat;
+    return'<div class="tl-step">'
       +'<div class="tl-hd"><div class="tl-num">'+(n+1)+'</div><div class="tl-type">'+catLbl+' — '+item.lbl+'</div><div class="tl-cost '+item.cost+'">'+COST_LBL[item.cost]+'</div></div>'
-      +(isReq?'<div class="tl-tag req">⭐ Key investigation</div>':'')
-      +(sn?'<div class="tl-tag sig">✓ '+sn.label+'</div>':'')
-      +(irrel?'<div class="tl-tag irrel">○ Did not change differential</div>':'')
-      +(isIce?'<div class="tl-tag ice">💬 ICE</div>':'')
+      +(isReq?'<div class="tl-tag req">Key investigation</div>':'')
+      +(sn?'<div class="tl-tag sig">'+sn.label+'</div>':'')
+      +(irrel?'<div class="tl-tag irrel">Did not change differential</div>':'')
+      +(isIce?'<div class="tl-tag ice">ICE</div>':'')
       +'<div class="tl-finding">'+item.find+'</div>'
       +'<div class="tl-expert">'+item.exp+'</div>'
       +'</div>';
@@ -1095,210 +1154,245 @@ function renderDebrief(){
     const inP1=G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,e));
     const inLater=!inP1&&G.diff.some(d=>normMatch(d.n,e));
     const isMNM=cas.caseMNMs.some(m=>normMatch(getMNMName(m),e));
-    if(inP1) return '<div class="p1-row ok"><span class="p1-ico">✓</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'🔴 MNM · ':'')+'Phase 1</span></div>';
-    if(inLater) return '<div class="p1-row rx"><span class="p1-ico">↓</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'🔴 MNM · ':'')+'Added reactively in Phase 2</span></div>';
-    return '<div class="p1-row missed"><span class="p1-ico">✗</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'🔴 MNM · ':'')+'Never considered</span></div>';
+    if(inP1)return'<div class="p1-row ok"><span class="p1-ico">✓</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'MNM · ':'')+'Phase 1</span></div>';
+    if(inLater)return'<div class="p1-row rx"><span class="p1-ico">↓</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'MNM · ':'')+'Added Phase 2</span></div>';
+    return'<div class="p1-row missed"><span class="p1-ico">✗</span><span class="p1-nm">'+e+'</span><span class="p1-note">'+(isMNM?'MNM · ':'')+'Never considered</span></div>';
   }).join('');
 
-  // Ranking snapshots — linked-pair aware
+  // Ranking snapshots
   const pairs=cas.linkedPairs||[];
   const snapHtml=G.rankSnaps.length?G.rankSnaps.map(s=>{
     const rows=s.ranks.map((nm,i)=>{
       const isFx=normMatch(nm,cas.finalDx)||normMatch(nm,cas.finalUmbrella);
       const topHalf=i<Math.ceil(s.ranks.length/2);
       const isLP=pairs.some(p=>normMatch(p.secondary,nm));
-      // For linked-pair secondary: being directly below primary = correct; don't penalise
       let badge='';
-      if(isFx){badge='<span class="snap-badge '+(topHalf?'hi':'lo')+'">'+(topHalf?'✓ correct dx here':'↓ should rank higher')+'</span>';}
-      else if(isLP){
-        const primaryIdx=s.ranks.findIndex(r=>pairs.some(p=>normMatch(p.primary,r)));
-        const justBelowPrimary=primaryIdx>=0&&i===primaryIdx+1;
-        badge=justBelowPrimary?'<span class="snap-badge hi">✓ correctly below primary</span>':'';
-      }
-      return '<div class="snap-row"><span class="snap-pos">'+(i+1)+'.</span><span class="snap-nm">'+nm+'</span>'+badge+'</div>';
+      if(isFx)badge='<span class="snap-badge '+(topHalf?'hi':'lo')+'">'+(topHalf?'✓ correct':'↓ rank higher')+'</span>';
+      else if(isLP){const pi=s.ranks.findIndex(r=>pairs.some(p=>normMatch(p.primary,r)));badge=(pi>=0&&i===pi+1)?'<span class="snap-badge hi">✓ below primary</span>':'';}
+      return'<div class="snap-row"><span class="snap-pos">'+(i+1)+'.</span><span class="snap-nm">'+nm+'</span>'+badge+'</div>';
     }).join('');
-    return '<div class="snap-item"><div class="snap-lbl">After '+s.stage+(s.skipped?' <span class="snap-skip">⚠️ skipped</span>':'')+'</div><div class="snap-table">'+rows+'</div></div>';
-  }).join(''):'<p style="font-size:.78rem;color:var(--muted);font-style:italic;padding:4px 0">No ranking snapshots recorded — complete ranking prompts after each stage for Bayesian reasoning practice.</p>';
+    return'<div class="snap-item"><div class="snap-lbl">After '+s.stage+(s.skipped?' <span class="snap-skip">skipped</span>':'')+'</div><div class="snap-table">'+rows+'</div></div>';
+  }).join(''):'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No ranking snapshots recorded.</p>';
 
-  // MNM demotion detail
+  // MNM demotion
   const demote=G.liveScore._demote||{detail:[],earned:0,total:0};
   const dmtnHtml=(cas.mnmExpectedDemotion||[]).length?('<div class="dmtn-table">'+(()=>{
-    const pairs2=cas.linkedPairs||[];
     const grouped={};
-    (cas.mnmExpectedDemotion||[]).forEach(de=>{
-      if(!grouped[de.mnm]) grouped[de.mnm]=[];
-      grouped[de.mnm].push(de);
-    });
+    (cas.mnmExpectedDemotion||[]).forEach(de=>{if(!grouped[de.mnm])grouped[de.mnm]=[];grouped[de.mnm].push(de);});
     return Object.entries(grouped).map(([mnmName,des])=>{
       const checks=des.map(de=>{
         const triggerDone=G.done.h.includes(de.after_item)||G.done.pe.includes(de.after_item)||G.done.b.includes(de.after_item)||G.done.a.includes(de.after_item);
-        if(!triggerDone) return '<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>'+de.note+' <em>(trigger investigation not performed)</em></span></div>';
+        if(!triggerDone)return'<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>'+de.note+' (trigger not performed)</span></div>';
         const snap=G.rankSnaps.find(s=>s.stage===de.snapshot);
-        if(!snap) return '<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>'+de.note+' <em>(no ranking snapshot taken at '+de.snapshot+')</em></span></div>';
+        if(!snap)return'<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>'+de.note+' (no snapshot at '+de.snapshot+')</span></div>';
         const pos=snap.ranks.findIndex(r=>normMatch(r,mnmName));
-        if(pos<0) return '<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>'+de.note+' <em>(not in differential at this point)</em></span></div>';
-        const isLP=pairs2.some(p=>normMatch(p.secondary,mnmName));
-        if(isLP) return '<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>Linked complication — ordering evaluated separately</span></div>';
+        if(pos<0)return'<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>'+de.note+' (not in differential)</span></div>';
+        const isLP=pairs.some(p=>normMatch(p.secondary,mnmName));
+        if(isLP)return'<div class="dmtn-chk skip"><span class="dmtn-chk-ico">○</span><span>Linked complication — evaluated separately</span></div>';
         const mnmEntry=(cas.mnmRuleOut||[]).find(m=>normMatch(m.mnm,mnmName));
         const topHalf=pos<Math.ceil(snap.ranks.length/2);
-        if(mnmEntry&&mnmEntry.status==='ruled-in'){
-          return topHalf?'<div class="dmtn-chk pass"><span class="dmtn-chk-ico">✓</span><span>'+de.note+'</span></div>':'<div class="dmtn-chk fail"><span class="dmtn-chk-ico">✗</span><span>Should be ranked #1 — this was the confirmed diagnosis</span></div>';
-        }
+        if(mnmEntry&&mnmEntry.status==='ruled-in')return topHalf?'<div class="dmtn-chk pass"><span class="dmtn-chk-ico">✓</span><span>'+de.note+'</span></div>':'<div class="dmtn-chk fail"><span class="dmtn-chk-ico">✗</span><span>Should be ranked #1 — confirmed diagnosis</span></div>';
         const inBottom=pos>=Math.floor(snap.ranks.length/2);
-        return inBottom?'<div class="dmtn-chk pass"><span class="dmtn-chk-ico">✓</span><span>'+de.note+'</span></div>':'<div class="dmtn-chk fail"><span class="dmtn-chk-ico">✗</span><span>'+de.note+' — was still ranked in top half at '+de.snapshot+'</span></div>';
+        return inBottom?'<div class="dmtn-chk pass"><span class="dmtn-chk-ico">✓</span><span>'+de.note+'</span></div>':'<div class="dmtn-chk fail"><span class="dmtn-chk-ico">✗</span><span>'+de.note+' — still in top half at '+de.snapshot+'</span></div>';
       }).join('');
-      return '<div class="dmtn-row"><div><div class="dmtn-mnm">'+mnmName+'</div></div><div class="dmtn-checks">'+checks+'</div></div>';
+      return'<div class="dmtn-row"><div class="dmtn-mnm">'+mnmName+'</div><div class="dmtn-checks">'+checks+'</div></div>';
     }).join('');
-  })()+' </div>'):'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No demotion tracking data for this case.</p>';
+  })()+' </div>'):'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No demotion tracking for this case.</p>';
 
-  // MNM rule-out (done vs not-done)
-  function playerDid(itemId){
-    if(!itemId) return true;
-    return G.done.h.includes(itemId)||G.done.pe.includes(itemId)||G.done.b.includes(itemId)||G.done.a.includes(itemId);
-  }
+  // MNM rule-out
+  function playerDid(itemId){if(!itemId)return true;return G.done.h.includes(itemId)||G.done.pe.includes(itemId)||G.done.b.includes(itemId)||G.done.a.includes(itemId);}
   const mnmHtml=(cas.mnmRuleOut||[]).map(m=>{
     const findings=m.findings.map(f=>{
       const done=playerDid(f.item_id);
-      const typeLbl=f.type==='hx'?'History':f.type==='ex'?'Examination':'Investigation';
+      const typeLbl=f.type==='hx'?'History':f.type==='ex'?'Exam':'Investigation';
       const typeCls=f.type==='hx'?'hx':f.type==='ex'?'ex':'inv';
       const showAsDone=done||f.type==='hx';
-      return '<div class="mnm-f'+(showAsDone?'':' not-done')+'"><span class="mnm-ft '+(showAsDone?typeCls:'')+'">'+typeLbl+'</span><span>'+f.text+'</span>'+(showAsDone?'':'<span class="mnm-not-done-badge">not performed</span>')+'</div>';
+      return'<div class="mnm-f'+(showAsDone?'':' not-done')+'"><span class="mnm-ft '+(showAsDone?typeCls:'')+'">'+typeLbl+'</span><span>'+f.text+'</span>'+(showAsDone?'':'<span class="mnm-not-done-badge">not performed</span>')+'</div>';
     }).join('');
-    return '<div class="mnm-row"><div class="mnm-row-hd"><div class="mnm-row-nm">'+m.mnm+'</div><div class="mnm-status '+m.status+'">'+m.statusLbl+'</div></div><div class="mnm-findings">'+findings+'</div></div>';
+    return'<div class="mnm-row"><div class="mnm-row-hd"><div class="mnm-row-nm">'+m.mnm+'</div><div class="mnm-status '+m.status+'">'+m.statusLbl+'</div></div><div class="mnm-findings">'+findings+'</div></div>';
   }).join('');
 
   const acats=(cas.approachCats||[]).map(c=>'<div class="acat'+(c.hl?' hl':'')+'"><div class="acat-nm">'+c.name+'</div><div class="acat-eg">'+c.eg+'</div></div>').join('');
 
-  document.getElementById('content').innerHTML=`
-  <div class="db">
-
-    <!-- TIER 1: Result — always visible, immediately clear -->
-    <div class="db-result">
-      <div class="db-result-left">
-        <div class="db-verdict ${correct?'correct':'incorrect'}">${correct?'Correct diagnosis':'Incorrect or incomplete'}</div>
-        <div class="db-dx">${cas.finalDx}</div>
-        <div class="db-sub">Your answer: ${committed}</div>
-      </div>
-      <div class="db-total-score">
-        <div class="db-score-num">${fs.total}</div>
-        <div class="db-score-denom">/ 100</div>
-      </div>
-    </div>
-
+  // Build each panel's content
+  const scorePanel=`
     <div class="score-trio">
-      <div class="sc approach">
+      <div class="sc">
         <div class="sc-lbl">Approach (30%)</div>
         <div class="sc-val" style="color:${scol(fs.approach)}">${fs.approach}</div>
         <div class="sc-bar-w"><div class="sc-bar-f ${fs.approach>=75?'g':fs.approach>=50?'y':'r'}" style="width:${fs.approach}%"></div></div>
         <div class="sc-expl">${fs.approachExpl}</div>
       </div>
-      <div class="sc process">
+      <div class="sc">
         <div class="sc-lbl">Process (40%)</div>
         <div class="sc-val" style="color:${scol(fs.process)}">${fs.process}</div>
         <div class="sc-bar-w"><div class="sc-bar-f ${fs.process>=75?'g':fs.process>=50?'y':'r'}" style="width:${fs.process}%"></div></div>
         <div class="sc-expl">${fs.processExpl}</div>
       </div>
-      <div class="sc diagnosis">
+      <div class="sc">
         <div class="sc-lbl">Diagnosis (30%)</div>
         <div class="sc-val" style="color:${scol(fs.diagnosis)}">${fs.diagnosis}</div>
         <div class="sc-bar-w"><div class="sc-bar-f ${fs.diagnosis>=75?'g':fs.diagnosis>=50?'y':'r'}" style="width:${fs.diagnosis}%"></div></div>
         <div class="sc-expl">${fs.dxExpl}</div>
       </div>
-    </div>
+    </div>`;
 
-    <!-- TIER 2: Key learning — expanded by default -->
+  const teachingPanel=`
     ${(cas.keyTeachingPoints||[]).length?`
     <div class="db-card">
       <div class="db-card-lbl">What this case was teaching</div>
       <div class="ktp-list">${(cas.keyTeachingPoints||[]).map((t,i)=>'<div class="ktp"><span class="ktp-n">'+(i+1)+'</span><span>'+t+'</span></div>').join('')}</div>
     </div>`:''}
-
     <div class="db-card">
       <div class="db-card-lbl">Key clinical pivots</div>
       <div class="kp-grid">${pivotHtml}</div>
-    </div>
+    </div>`;
 
-    <!-- TIER 3: Deep dive — single collapsible container -->
-    <div class="db-deep">
-      <div class="db-deep-hd" onclick="toggleDeepDive()">
-        <span class="db-deep-title">Full Analysis</span>
-        <span class="db-deep-arr" id="deep-arr">▶</span>
+  const analysisPanel=`
+    <div class="db-section">
+      <div class="db-section-hd" onclick="toggleSection('mnm-ro')">
+        <span class="db-section-lbl">Must-not-miss — ruled in or out</span>
+        <span class="db-section-arr" id="mnm-ro-arr">▶</span>
       </div>
-      <div class="db-deep-body" id="deep-body">
-
-        <div class="db-section">
-          <div class="db-section-lbl">Must-not-miss — ruled in or out</div>
-          ${mnmHtml||'<p style="font-size:.82rem;color:var(--muted);font-style:italic">No MNM data for this case.</p>'}
-        </div>
-
-        <div class="db-section">
-          <div class="db-section-lbl">Phase 1 differential coverage</div>
-          <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Green = Phase 1 · Purple = added reactively in Phase 2 · Red = never considered</p>
-          <div class="p1-cov">${p1Cov}</div>
-        </div>
-
-        <div class="db-section">
-          <div class="db-section-lbl">Ranking progression</div>
-          <div class="snap-wrap">${snapHtml}</div>
-        </div>
-
-        <div class="db-section">
-          <div class="db-section-lbl">MNM demotion tracking</div>
-          ${dmtnHtml}
-        </div>
-
-        <div class="db-section">
-          <div class="db-section-lbl">Full investigation pathway</div>
-          ${tlItems||'<p style="font-size:.82rem;color:var(--muted);font-style:italic">No investigations performed.</p>'}
-        </div>
-
-        <div class="db-section">
-          <div class="db-section-lbl">Sensitivity &amp; specificity</div>
-          <div class="ss-row">
-            <div class="ssb sens"><div class="ssb-title">Sensitivity</div><div class="ssb-text">${cas.sensitivityNote||''}</div></div>
-            <div class="ssb spec"><div class="ssb-title">Specificity</div><div class="ssb-text">${cas.specificityNote||''}</div></div>
-            <div class="ssb safe"><div class="ssb-title">Safety net</div><div class="ssb-text">Must-not-miss diagnoses require high-sensitivity tests — missing them is catastrophic and irreversible.</div></div>
-          </div>
-        </div>
-
-        <div class="db-section">
-          <div class="approach-lbl">Clinical framework — revealed</div>
-          <div class="approach-title" style="margin-top:6px">${cas.approachTitle||''}</div>
-          <div class="approach-text">${cas.approachText||''}</div>
-          <div class="approach-cats">${acats}</div>
-          <div class="approach-insight">${cas.approachInsight||''}</div>
-        </div>
-
-        <div class="db-section">
-          <div class="db-section-lbl">Expert summary</div>
-          <p style="font-size:.86rem;line-height:1.78;color:var(--muted)">${cas.expertNarrative||''}</p>
-        </div>
-
+      <div class="db-section-body" id="mnm-ro-body">${mnmHtml||'<p style="font-size:.82rem;color:var(--muted);font-style:italic">No MNM data for this case.</p>'}</div>
+    </div>
+    <div class="db-section">
+      <div class="db-section-hd" onclick="toggleSection('p1-cov')">
+        <span class="db-section-lbl">Phase 1 differential coverage</span>
+        <span class="db-section-arr" id="p1-cov-arr">▶</span>
+      </div>
+      <div class="db-section-body" id="p1-cov-body">
+        <p style="font-size:.76rem;color:var(--muted);margin-bottom:10px">Green = Phase 1 · Purple = added Phase 2 · Red = never considered</p>
+        <div class="p1-cov">${p1Cov}</div>
       </div>
     </div>
-
-    <div class="nav-row" style="justify-content:center;padding-bottom:20px">
-      <button class="nb start" onclick="startCase(${G.caseIdx})">Try Again</button>
-      <button class="nb skip" onclick="G=null;render()">Back to Cases</button>
+    <div class="db-section">
+      <div class="db-section-hd" onclick="toggleSection('ranking')">
+        <span class="db-section-lbl">Ranking progression</span>
+        <span class="db-section-arr" id="ranking-arr">▶</span>
+      </div>
+      <div class="db-section-body" id="ranking-body"><div class="snap-wrap">${snapHtml}</div></div>
     </div>
-  </div>`;
+    <div class="db-section">
+      <div class="db-section-hd" onclick="toggleSection('demotion')">
+        <span class="db-section-lbl">MNM demotion tracking</span>
+        <span class="db-section-arr" id="demotion-arr">▶</span>
+      </div>
+      <div class="db-section-body" id="demotion-body">${dmtnHtml}</div>
+    </div>
+    <div class="db-section">
+      <div class="db-section-hd" onclick="toggleSection('timeline')">
+        <span class="db-section-lbl">Full investigation pathway</span>
+        <span class="db-section-arr" id="timeline-arr">▶</span>
+      </div>
+      <div class="db-section-body" id="timeline-body">${tlItems||'<p style="font-size:.82rem;color:var(--muted);font-style:italic">No investigations performed.</p>'}</div>
+    </div>
+    <div class="db-section">
+      <div class="db-section-hd" onclick="toggleSection('senspec')">
+        <span class="db-section-lbl">Sensitivity &amp; specificity</span>
+        <span class="db-section-arr" id="senspec-arr">▶</span>
+      </div>
+      <div class="db-section-body" id="senspec-body">
+        <div class="ss-row">
+          <div class="ssb sens"><div class="ssb-title">Sensitivity</div><div class="ssb-text">${cas.sensitivityNote||''}</div></div>
+          <div class="ssb spec"><div class="ssb-title">Specificity</div><div class="ssb-text">${cas.specificityNote||''}</div></div>
+          <div class="ssb safe"><div class="ssb-title">Safety net</div><div class="ssb-text">Must-not-miss diagnoses require high-sensitivity tests — missing them is catastrophic and irreversible.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="db-section">
+      <div class="db-section-hd" onclick="toggleSection('framework')">
+        <span class="db-section-lbl">Clinical framework — revealed</span>
+        <span class="db-section-arr" id="framework-arr">▶</span>
+      </div>
+      <div class="db-section-body" id="framework-body">
+        <div class="approach-lbl" style="margin-bottom:6px">Framework</div>
+        <div class="approach-title">${cas.approachTitle||''}</div>
+        <div class="approach-text">${cas.approachText||''}</div>
+        <div class="approach-cats">${acats}</div>
+        <div class="approach-insight">${cas.approachInsight||''}</div>
+      </div>
+    </div>
+    <div class="db-section">
+      <div class="db-section-hd" onclick="toggleSection('expert')">
+        <span class="db-section-lbl">Expert summary</span>
+        <span class="db-section-arr" id="expert-arr">▶</span>
+      </div>
+      <div class="db-section-body" id="expert-body">
+        <p style="font-size:.86rem;line-height:1.78;color:var(--muted)">${cas.expertNarrative||''}</p>
+      </div>
+    </div>`;
+
+  document.getElementById('content').innerHTML=`
+    <div class="db-wrap">
+      <div class="db-score-card">
+        <div class="db-verdict-area">
+          <div class="db-verdict ${correct?'correct':'incorrect'}">${correct?'Correct diagnosis':'Incorrect or incomplete'}</div>
+          <div class="db-dx">${cas.finalDx}</div>
+          <div class="db-your-ans">Your answer: ${committed}</div>
+        </div>
+        <div class="db-total">
+          <div class="db-score-num ${scoreCls}">${fs.total}</div>
+          <div class="db-score-denom">/ 100</div>
+        </div>
+      </div>
+
+      <div class="db-tabs">
+        <button class="db-tab ${debriefTab==='score'?'active':''}" data-tab="score" onclick="setDebriefTab('score')">Score Breakdown</button>
+        <button class="db-tab ${debriefTab==='teaching'?'active':''}" data-tab="teaching" onclick="setDebriefTab('teaching')">Teaching Points</button>
+        <button class="db-tab ${debriefTab==='analysis'?'active':''}" data-tab="analysis" onclick="setDebriefTab('analysis')">Full Analysis</button>
+      </div>
+
+      <div id="db-panel-score" class="db-panel ${debriefTab==='score'?'active':''}">${scorePanel}</div>
+      <div id="db-panel-teaching" class="db-panel ${debriefTab==='teaching'?'active':''}">${teachingPanel}</div>
+      <div id="db-panel-analysis" class="db-panel ${debriefTab==='analysis'?'active':''}">${analysisPanel}</div>
+
+      <div class="db-actions">
+        <button class="nb start" onclick="startCase(${G.caseIdx})">Try Again</button>
+        <button class="nb skip" onclick="G=null;render()">Back to Cases</button>
+      </div>
+    </div>`;
 }
+function toggleSection(id){
+  const b=document.getElementById(id+'-body');
+  const a=document.getElementById(id+'-arr');
+  if(!b)return;
+  b.classList.toggle('open');
+  if(a)a.classList.toggle('open');
+}
+function scol(v){return v>=75?'var(--green)':v>=50?'var(--yellow)':'var(--red)';}
 
 // ═══════════════════════════════════════════
 // DIFFERENTIAL MANAGEMENT
 // ═══════════════════════════════════════════
-function addToDiff(name){
+function addToDiff(name,tag){
   if(!G||G.diff.find(d=>d.n===name))return;
   const pool=Object.values(DIAG_LIB).flatMap(s=>s.diags);
   const entry=pool.find(d=>d.n===name||(d.subs&&d.subs.includes(name)));
   const subs=entry&&entry.n===name&&entry.subs?entry.subs:[];
-  G.diff.push({n:name,tag:libTag,elim:false,elimSubs:[],mnm:entry?.mnm||false,subs});
-  G.nudge=null;renderLib();reRenderDiff();
+  G.diff.push({n:name,tag:tag||'wd',elim:false,elimSubs:[],mnm:entry?.mnm||false,subs});
+  G.nudge=null;
+  renderLib();
+  reRenderDiff();
+  // Update MNM coverage counter in setup
+  if(G.stage==='setup'){
+    const cas=CASES[G.caseIdx];
+    const allMNMs=(cas.caseMNMs||[]).map(getMNMName);
+    const active=G.diff.filter(d=>!d.elim);
+    const mnmCov=allMNMs.filter(m=>active.some(d=>normMatch(d.n,m))).length;
+    const mnmTotal=allMNMs.length;
+    const el=document.querySelector('.mnm-cover');
+    if(el&&mnmTotal){
+      el.textContent='MNM '+mnmCov+'/'+mnmTotal;
+      el.className='mnm-cover '+(mnmCov===mnmTotal?'ok':mnmCov>=mnmTotal*.5?'warn':'bad');
+    }
+    const countEl=document.querySelector('.diff-count');
+    if(countEl)countEl.textContent=active.length;
+  }
 }
 
 function renderDiff(){
-  if(!G.diff.length)return`<div class="dempty">Add diagnoses from the library on the left</div>`;
-  // FIX #3: active first, eliminated at bottom
+  if(!G||!G.diff.length)return`<div class="dempty">Open the library and add diagnoses using the MNM or WD buttons</div>`;
   const active=G.diff.filter(d=>!d.elim);
   const elim=G.diff.filter(d=>d.elim);
   return[...active,...elim].map((d,visIdx)=>{
@@ -1315,18 +1409,17 @@ function renderDiff(){
         <div class="de-main">
           <div class="de-nm ${d.elim?'crossed':''}">
             ${d.n}
-            <span class="de-tag ${isRx?'t-rx':d.tag==='mnm'?'t-mnm':'t-wd'}">${isRx?'➕ Phase 2':d.tag==='mnm'?'🔴 MNM':'🟡 WD'}</span>
+            <span class="de-tag ${isRx?'t-rx':d.tag==='mnm'?'t-mnm':'t-wd'}">${isRx?'+P2':d.tag==='mnm'?'MNM':'WD'}</span>
           </div>
         </div>
         <div class="de-acts">
           ${d.elim
             ?`<button class="de-btn restore" onclick="restoreD(${origIdx})">Restore</button>`
-            // FIX #2: single "Eliminate" label for ALL entries (no "Deprioritise")
             :`<button class="de-btn" onclick="elimD(${origIdx})">Eliminate</button>`
           }
         </div>
       </div>
-      ${d.subs.length?`<div class="de-subs">${d.subs.map(s=>{
+      ${d.subs&&d.subs.length?`<div class="de-subs">${d.subs.map(s=>{
         const x=d.elimSubs.includes(s);
         return`<span class="de-sub ${x?'sub-x':''}" onclick="toggleSubElim(${origIdx},'${escJs(s)}')">${x?'✕ ':''} ${s}</span>`;
       }).join('')}</div>`:''}
@@ -1336,19 +1429,14 @@ function renderDiff(){
 function reRenderDiff(){const el=document.getElementById('dlist');if(el)el.innerHTML=renderDiff();}
 
 function elimD(i){
-  // FIX #3: move to bottom of array when eliminated
   const d=G.diff.splice(i,1)[0];
-  d.elim=true;
-  G.diff.push(d);
-  reRenderDiff();
+  d.elim=true;G.diff.push(d);reRenderDiff();
 }
 function restoreD(i){
-  // FIX #3: move back before first eliminated entry
   const d=G.diff.splice(i,1)[0];
   d.elim=false;
   const firstElim=G.diff.findIndex(x=>x.elim);
-  if(firstElim===-1)G.diff.push(d);
-  else G.diff.splice(firstElim,0,d);
+  if(firstElim===-1)G.diff.push(d);else G.diff.splice(firstElim,0,d);
   reRenderDiff();
 }
 function toggleSubElim(i,sub){
@@ -1365,10 +1453,7 @@ function dDrop(e,i){
   e.preventDefault();document.getElementById('de-'+i)?.classList.remove('drag-over');
   if(dragSrc===null||dragSrc===i)return;
   const src=G.diff[dragSrc];const tgt=G.diff[i];
-  // Only drag between active (non-eliminated) items
-  if(src&&tgt&&!src.elim&&!tgt.elim){
-    G.diff.splice(dragSrc,1);G.diff.splice(i,0,src);
-  }
+  if(src&&tgt&&!src.elim&&!tgt.elim){G.diff.splice(dragSrc,1);G.diff.splice(i,0,src);}
   reRenderDiff();dragSrc=null;
 }
 function dDE(){dragSrc=null;document.querySelectorAll('.de').forEach(el=>el.classList.remove('dragging','drag-over'));}
@@ -1376,7 +1461,6 @@ function dDE(){dragSrc=null;document.querySelectorAll('.de').forEach(el=>el.clas
 // ═══════════════════════════════════════════
 // UTILS
 // ═══════════════════════════════════════════
-// ─ MNM helpers (support both string and {name,tier} formats in caseMNMs)
 function normMatch(a,b){
   if(!a||!b)return false;
   const al=a.toLowerCase(),bl=b.toLowerCase();
