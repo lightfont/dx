@@ -5,458 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0d0f14;--surf:#161920;--surf2:#1c2030;--surf3:#232838;
-  --bdr:#252d3d;--bdr2:#2e3850;--text:#e8eaf0;--muted:#7a8499;--muted2:#3d4a60;
-  --accent:#4f9cf9;--adim:#182d47;
-  --green:#22d37a;--gdim:#0a2217;--yellow:#f5c842;--ydim:#26200c;
-  --red:#f25c5c;--rdim:#2a1010;--orange:#f8943a;--odim:#281808;
-  --purple:#a78bfa;--pdim:#1a1630;--teal:#2dd4bf;--tdim:#0a2220;
-  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
-  --r:7px;--rl:12px;
-}
-body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;overflow:hidden}
-::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:4px}
-
-/* FIX #6 — exam mode hides all .study-aid elements */
-body.exam .study-aid{display:none!important}
-body.exam .lrow-desc{display:none!important}
-
-#app{display:flex;height:100vh;overflow:hidden}
-
-/* ── LIBRARY ── */
-#lib{width:284px;flex-shrink:0;background:#0f1218;border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;transition:width .22s}
-#lib.hide{width:0}
-.lib-hd{padding:11px 12px 9px;border-bottom:1px solid var(--bdr);flex-shrink:0}
-.lib-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.lib-logo{font-family:var(--mono);font-size:.95rem;font-weight:700;letter-spacing:-1px}
-.lib-logo span{color:var(--accent)}
-.lib-hint{font-size:.61rem;color:var(--muted2);font-family:var(--mono)}
-.lib-tags{display:flex;gap:5px}
-.ltag{padding:3px 9px;border-radius:20px;font-size:.69rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf2);transition:all .12s;white-space:nowrap}
-.ltag.sel-mnm{border-color:var(--red);color:var(--red);background:var(--rdim)}
-.ltag.sel-wd{border-color:var(--yellow);color:var(--yellow);background:var(--ydim)}
-.lib-srch-wrap{padding:6px 10px;border-bottom:1px solid var(--bdr);flex-shrink:0}
-.lib-srch{width:100%;padding:6px 10px;background:var(--surf2);border:1px solid var(--bdr2);border-radius:var(--r);color:var(--text);font-size:.8rem;font-family:var(--sans);outline:none;transition:border-color .13s}
-.lib-srch:focus{border-color:var(--accent)}
-.lib-srch::placeholder{color:var(--muted2)}
-.lib-sysrow{display:flex;gap:3px;padding:5px 10px;border-bottom:1px solid var(--bdr);overflow-x:auto;flex-shrink:0}
-.lib-sysrow::-webkit-scrollbar{height:3px}
-.lsf{padding:2px 7px;border-radius:20px;font-size:.6rem;font-weight:700;cursor:pointer;border:1px solid var(--bdr2);color:var(--muted2);background:var(--surf2);white-space:nowrap;transition:all .11s}
-.lsf:hover{border-color:var(--accent);color:var(--accent)}
-.lsf.on{background:var(--accent);border-color:var(--accent);color:#000}
-.lib-body{flex:1;overflow-y:auto;padding-bottom:14px}
-.lsys{border-bottom:1px solid var(--bdr)}
-.lsys-hd{display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;transition:background .1s;user-select:none}
-.lsys-hd:hover{background:var(--surf2)}
-.lsys-ico{font-size:.88rem;flex-shrink:0}
-.lsys-nm{font-size:.73rem;font-weight:600;flex:1}
-.lsys-arr{font-size:.57rem;color:var(--muted2);transition:transform .13s}
-.lsys-arr.open{transform:rotate(90deg)}
-.ldiags{display:none}
-.ldiags.open{display:block}
-.lrow{display:flex;align-items:flex-start;gap:5px;padding:4px 10px 4px 12px;cursor:pointer;transition:background .09s}
-.lrow:hover{background:var(--surf2)}
-.lrow.sub{padding-left:22px}
-.lrow.sub .lrow-nm{font-size:.69rem;color:var(--muted)}
-.lrow-txt{flex:1;min-width:0}
-.lrow-nm{font-size:.74rem;line-height:1.3}
-.lrow-nm.added{color:var(--muted2);text-decoration:line-through}
-.lrow-desc{font-size:.64rem;color:var(--muted2);line-height:1.3;margin-top:1px}
-.lrow-add{width:17px;height:17px;border-radius:4px;border:1px solid var(--bdr2);background:var(--surf3);display:flex;align-items:center;justify-content:center;font-size:.72rem;color:var(--muted);flex-shrink:0;margin-top:1px;transition:all .1s}
-.lrow:hover .lrow-add{border-color:var(--accent);color:var(--accent);background:var(--adim)}
-.lrow-add.done{border-color:var(--green);color:var(--green);background:var(--gdim)}
-.lrow-exp{font-size:.57rem;color:var(--muted2);transition:transform .12s;flex-shrink:0;margin-top:3px}
-.lrow-exp.open{transform:rotate(90deg)}
-
-/* ── MAIN ── */
-#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-#topbar{border-bottom:1px solid var(--bdr);background:var(--surf);flex-shrink:0;display:flex;align-items:stretch;height:44px}
-.tb-left{display:flex;align-items:center;gap:8px;padding:0 12px;border-right:1px solid var(--bdr);flex-shrink:0}
-.tb-tog{background:none;border:1px solid var(--bdr2);border-radius:5px;padding:3px 6px;cursor:pointer;color:var(--muted);font-size:.78rem;transition:all .12s}
-.tb-tog:hover{border-color:var(--accent);color:var(--accent)}
-.tb-cname{font-size:.75rem;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
-
-/* FIX #4 — stage tabs much more visible */
-.tb-stages{display:flex;align-items:stretch;flex:1;overflow-x:auto}
-.tb-stages::-webkit-scrollbar{height:2px}
-.tbs{display:flex;align-items:center;padding:0 12px;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.03em;border-right:1px solid var(--bdr);white-space:nowrap;gap:5px;transition:all .14s}
-.tbs.locked{color:#2e3a4e}
-.tbs.done{color:#2da05c;background:rgba(34,211,122,.06)}
-.tbs.done::after{content:'✓';font-size:.58rem;color:var(--green)}
-.tbs.active{color:#fff;background:rgba(79,156,249,.2);border-bottom:2px solid var(--accent)}
-
-.tb-right{display:flex;align-items:center;gap:8px;padding:0 12px;border-left:1px solid var(--bdr);flex-shrink:0}
-/* FIX #6 — mode toggle */
-.mode-btn{padding:3px 10px;border-radius:20px;font-size:.65rem;font-weight:700;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf2);transition:all .13s;font-family:var(--mono);white-space:nowrap}
-.mode-btn.study{border-color:var(--green);color:var(--green);background:var(--gdim)}
-.mode-btn.exam{border-color:var(--yellow);color:var(--yellow);background:var(--ydim)}
-.tb-scores{display:flex;gap:8px;align-items:center}
-.tbs-item{display:flex;align-items:center;gap:3px;font-family:var(--mono);font-size:.61rem;color:var(--muted)}
-.tbs-bar{width:30px;height:4px;background:var(--bdr2);border-radius:2px;overflow:hidden}
-.tbs-fill{height:100%;border-radius:2px;transition:width .4s,background .4s}
-
-#content{flex:1;overflow-y:auto;padding:18px 22px;max-width:860px;margin:0 auto;width:100%}
-
-/* ── LOADER ── */
-#loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:999}
-#loader.hide{display:none}
-.ld-logo{font-family:var(--mono);font-size:2.2rem;font-weight:700;letter-spacing:-3px}
-.ld-logo span{color:var(--accent)}
-.ld-msg{font-size:.82rem;color:var(--muted)}
-.ld-err{font-size:.78rem;color:var(--red);max-width:420px;text-align:center;line-height:1.65}
-.ld-upload{border:2px dashed var(--bdr2);border-radius:var(--rl);padding:18px 26px;text-align:center;cursor:pointer;transition:border-color .15s;margin-top:10px}
-.ld-upload:hover{border-color:var(--accent)}
-.ld-upload input{display:none}
-
-/* ── MODAL ── */
-#mover{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px}
-#mover.hide{display:none}
-.modal{background:var(--surf);border:1px solid var(--bdr2);border-radius:var(--rl);max-width:620px;width:100%;max-height:90vh;overflow-y:auto;padding:24px 26px}
-.m-logo{font-family:var(--mono);font-size:1.7rem;font-weight:700;letter-spacing:-2px;margin-bottom:3px}
-.m-logo span{color:var(--accent)}
-.m-sub{font-size:.79rem;color:var(--muted);margin-bottom:16px}
-.m-phases{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-.mp{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:11px 13px;display:flex;gap:11px;align-items:flex-start}
-.mp-badge{font-family:var(--mono);font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:20px;flex-shrink:0;margin-top:1px}
-.mp-badge.p1{background:var(--pdim);color:var(--purple)}
-.mp-badge.p2{background:var(--tdim);color:var(--teal)}
-.mp-badge.p3{background:var(--odim);color:var(--orange)}
-.mp-title{font-size:.83rem;font-weight:700;margin-bottom:3px}
-.mp-desc{font-size:.73rem;color:var(--muted);line-height:1.6}
-.m-rule{background:var(--rdim);border:1px solid var(--red);border-radius:var(--r);padding:10px 12px;margin-bottom:13px;font-size:.74rem;line-height:1.65}
-.m-rule strong{color:var(--red)}
-.m-scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px}
-.mscore{padding:8px 10px;border-radius:var(--r);background:var(--surf2);border:1px solid var(--bdr)}
-.mscore-lbl{font-weight:700;font-size:.74rem;margin-bottom:3px}
-.mscore-desc{color:var(--muted);font-size:.7rem;line-height:1.4}
-.m-start{width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:.88rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:opacity .13s}
-.m-start:hover{opacity:.85}
-
-/* ── CONTENT ── */
-.ph-hd{display:flex;align-items:center;gap:9px;margin-bottom:12px}
-.ph-badge{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
-.ph-badge.setup{background:var(--pdim);color:var(--purple)}
-.ph-badge.history,.ph-badge.pe{background:var(--tdim);color:var(--teal)}
-.ph-badge.basic{background:var(--ydim);color:var(--yellow)}
-.ph-badge.advanced,.ph-badge.commit{background:var(--odim);color:var(--orange)}
-.ph-badge.debrief{background:var(--gdim);color:var(--green)}
-.ph-title{font-size:.97rem;font-weight:700}
-.ph-sub{font-size:.74rem;color:var(--muted);margin-top:1px}
-.vig{background:var(--surf);border:1px solid var(--bdr);border-left:3px solid var(--accent);border-radius:var(--rl);padding:14px 16px;margin-bottom:12px}
-.vig-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:6px}
-.vig-txt{font-size:.89rem;line-height:1.78}
-
-/* ── DIFFERENTIAL ── */
-.diff-box{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:12px 14px;margin-bottom:12px}
-.diff-hd{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
-.diff-hint{font-size:.62rem;color:var(--muted2);font-family:var(--sans);font-weight:400;letter-spacing:0}
-.dlist{display:flex;flex-direction:column;gap:4px;min-height:26px}
-.dempty{font-size:.75rem;color:var(--muted2);font-style:italic;padding:6px 0;text-align:center;font-family:var(--mono)}
-/* FIX #2 — elim looks identical for MNM and non-MNM entries */
-.de{background:var(--surf2);border:1.5px solid var(--bdr);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden;transition:border-color .12s}
-.de.mnm-e{border-left:3px solid var(--red)}.de.wd-e{border-left:3px solid var(--yellow)}.de.rx-e{border-left:3px solid var(--purple)}
-.de.elim{border-style:dashed;opacity:.36;border-left-color:var(--bdr2)!important}
-.de.drag-over{border-color:var(--accent);background:var(--adim)}
-.de.dragging{opacity:.28}
-.de-top{display:flex;align-items:flex-start;gap:5px;padding:6px 8px}
-.de-drag{color:var(--muted2);font-size:.72rem;flex-shrink:0;cursor:grab;margin-top:2px;padding:0 2px;user-select:none}
-.de-rank{font-family:var(--mono);font-size:.62rem;color:var(--muted2);width:14px;text-align:center;flex-shrink:0;margin-top:2px}
-.de-main{flex:1;min-width:0}
-.de-nm{font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap;line-height:1.3}
-.de-nm.crossed{text-decoration:line-through;color:var(--muted)}
-.de-tag{font-size:.57rem;font-family:var(--mono);font-weight:700;padding:1px 5px;border-radius:6px}
-.de-tag.t-mnm{background:var(--rdim);color:var(--red)}.de-tag.t-wd{background:var(--ydim);color:var(--yellow)}.de-tag.t-rx{background:var(--pdim);color:var(--purple)}
-.de-subs{padding:0 8px 6px 28px;display:flex;flex-wrap:wrap;gap:3px}
-.de-sub{font-size:.65rem;padding:1px 7px;border-radius:20px;background:var(--surf3);border:1px solid var(--bdr2);color:var(--muted);cursor:pointer;transition:all .1s;font-family:var(--mono)}
-.de-sub:hover{border-color:var(--red);color:var(--red)}
-.de-sub.sub-x{text-decoration:line-through;opacity:.32}
-.de-sub.sub-x:hover{opacity:.65;border-color:var(--green);color:var(--green);text-decoration:none}
-.de-acts{display:flex;flex-direction:column;gap:2px;flex-shrink:0}
-/* FIX #2 — unified "Eliminate" button */
-.de-btn{background:none;border:1px solid var(--bdr2);border-radius:4px;padding:2px 7px;font-size:.59rem;cursor:pointer;color:var(--muted);transition:all .1s;font-family:var(--mono);white-space:nowrap}
-.de-btn:hover{border-color:var(--red);color:var(--red);background:var(--rdim)}
-.de-btn.restore:hover{border-color:var(--green);color:var(--green);background:var(--gdim)}
-
-/* ── STAGE OPTIONS ── */
-.stage-box{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:12px 14px;margin-bottom:12px}
-.stage-hd{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
-.opts-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
-.opts-grid.two-col{grid-template-columns:1fr 1fr}
-.opt{background:var(--surf2);border:1.5px solid var(--bdr);border-radius:var(--r);padding:8px 10px;cursor:pointer;transition:all .14s;display:flex;flex-direction:column;gap:3px}
-.opt:hover{border-color:var(--teal);background:var(--tdim)}
-.opt-nm{font-size:.76rem;font-weight:600;line-height:1.3}
-.opt-cost{font-family:var(--mono);font-size:.6rem;display:flex;align-items:center;gap:3px}
-.opt-cost.free,.opt-cost.low{color:var(--green)}.opt-cost.mid{color:var(--yellow)}.opt-cost.high{color:var(--red)}
-.cpip{width:5px;height:5px;border-radius:50%;background:currentColor;display:inline-block}
-
-/* ── FINDINGS ── */
-.findings{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
-.fc{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 13px;border-left:3px solid var(--bdr2)}
-.fc.hf{border-left-color:var(--purple)}.fc.pef{border-left-color:var(--teal)}.fc.bif{border-left-color:var(--yellow)}.fc.aif{border-left-color:var(--orange)}.fc.icef{border-left-color:var(--muted)}
-.fc-lbl{font-family:var(--mono);font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.fc-lbl.hf{color:var(--purple)}.fc-lbl.pef{color:var(--teal)}.fc-lbl.bif{color:var(--yellow)}.fc-lbl.aif{color:var(--orange)}.fc-lbl.icef{color:var(--muted)}
-.fc-txt{font-size:.8rem;line-height:1.6}
-/* FIX #6 — fc-note is a study-aid */
-.fc-note{display:inline-flex;align-items:center;gap:3px;font-size:.62rem;font-family:var(--mono);padding:2px 6px;border-radius:4px;margin-top:5px}
-.fc-note.irrel{color:var(--yellow);background:var(--ydim)}
-.fc-note.sig{color:var(--green);background:var(--gdim)}
-.fc-note.req{color:var(--accent);background:var(--adim)}
-.fc-note.ice{color:var(--muted);background:var(--surf3)}
-
-/* ── RANKING ── */
-.rp{background:var(--surf);border:1px solid var(--teal);border-radius:var(--rl);padding:13px 15px;margin-bottom:12px}
-.rp-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
-.rp-sub{font-size:.74rem;color:var(--muted);margin-bottom:8px;line-height:1.5}
-.rp-findings{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:8px 10px;margin-bottom:9px}
-.rp-findings-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;color:var(--text);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
-.rp-findings-body{font-size:.74rem;color:var(--muted);line-height:1.6}
-.rlist{display:flex;flex-direction:column;gap:3px}
-.ri{background:var(--surf2);border:1.5px solid var(--bdr);border-radius:6px;padding:6px 9px;display:flex;align-items:center;gap:7px;cursor:grab;user-select:none;transition:border-color .12s}
-.ri:hover{border-color:var(--teal)}.ri.drag-over{border-color:var(--accent);background:var(--adim)}.ri.dragging{opacity:.28}
-.ri-num{font-family:var(--mono);font-size:.62rem;color:var(--muted2);width:15px;text-align:center;flex-shrink:0}
-.ri-nm{font-size:.79rem;font-weight:600;flex:1}
-.ri-tag{font-size:.57rem;font-family:var(--mono);padding:1px 5px;border-radius:6px}
-.ri-tag.mnm{background:var(--rdim);color:var(--red)}.ri-tag.wd{background:var(--ydim);color:var(--yellow)}.ri-tag.rx{background:var(--pdim);color:var(--purple)}
-.ri-ico{color:var(--muted2);font-size:.7rem}
-.rp-btn{margin-top:9px;padding:7px 14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-size:.78rem;font-weight:700;cursor:pointer;transition:opacity .12s}
-.rp-btn:hover{opacity:.85}
-
-/* ── CRITICAL MISS ── */
-.crit{background:var(--rdim);border:2px solid var(--red);border-radius:var(--rl);padding:20px 22px}
-.crit-ico{font-size:1.9rem;margin-bottom:7px}
-.crit-title{font-size:1.1rem;font-weight:700;color:var(--red);font-family:var(--mono);margin-bottom:6px}
-.crit-body{font-size:.82rem;line-height:1.72;margin-bottom:10px}
-.crit-missed{background:rgba(242,92,92,.1);border:1px solid var(--red);border-radius:var(--r);padding:8px 11px;margin-bottom:9px;font-size:.8rem;color:var(--red);font-family:var(--mono)}
-.crit-penalty{background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:7px 10px;margin-bottom:10px;font-size:.75rem;color:var(--yellow);line-height:1.55}
-/* FIX #6 — crit-expl is study-aid */
-.crit-expl{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 12px;margin-bottom:10px;font-size:.78rem;color:var(--muted);line-height:1.65}
-.crit-expl p{margin-bottom:6px}.crit-expl p:last-child{margin-bottom:0}
-.crit-acts{display:flex;gap:7px;flex-wrap:wrap}
-
-/* ── COMMIT ── */
-.commit-box{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:13px 15px;margin-bottom:12px}
-.commit-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:9px}
-.cdx-list{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
-.cdx{background:var(--surf2);border:1.5px solid var(--bdr);border-radius:var(--r);padding:7px 10px;display:flex;align-items:center;gap:7px;cursor:pointer;transition:all .12s}
-.cdx:hover{border-color:var(--accent);background:var(--adim)}
-.cdx.sel{border-color:var(--accent);background:var(--adim)}
-.cdx.elimf{opacity:.25;text-decoration:line-through;cursor:not-allowed}.cdx.elimf:hover{border-color:var(--bdr);background:var(--surf2)}
-.cdx-radio{width:12px;height:12px;border-radius:50%;border:2px solid var(--bdr2);flex-shrink:0;transition:all .12s}
-.cdx.sel .cdx-radio{background:var(--accent);border-color:var(--accent)}
-.cdx-nm{font-size:.81rem;font-weight:600;flex:1}
-.cdx-rank{font-family:var(--mono);font-size:.6rem;color:var(--muted2)}
-.cdx-rx{font-size:.58rem;font-family:var(--mono);color:var(--purple)}
-.sub-sel{margin-top:5px;background:var(--surf3);border:1px solid var(--bdr2);border-radius:var(--r);padding:8px 10px}
-.sub-sel-lbl{font-size:.65rem;color:var(--muted);margin-bottom:5px;font-family:var(--mono)}
-.sub-opts{display:flex;flex-wrap:wrap;gap:4px}
-.sopt{padding:3px 9px;border-radius:20px;font-size:.7rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf2);transition:all .11s;font-family:var(--mono)}
-.sopt:hover{border-color:var(--accent);color:var(--accent);background:var(--adim)}
-.sopt.sel{background:var(--accent);border-color:var(--accent);color:#000}
-.commit-warn{background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:8px 10px;margin-bottom:9px;font-size:.75rem;color:var(--yellow);line-height:1.55}
-.commit-btn{width:100%;padding:10px;border-radius:var(--r);background:var(--orange);color:#fff;font-size:.85rem;font-weight:700;border:none;cursor:pointer;transition:opacity .12s;font-family:var(--sans)}
-.commit-btn:hover{opacity:.85}.commit-btn:disabled{opacity:.26;cursor:not-allowed}
-
-/* ── DEBRIEF ── */
-.db{display:flex;flex-direction:column;gap:12px;padding-bottom:40px}
-.db-outcome{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:15px 17px}
-.db-res-lbl{font-family:var(--mono);font-size:.59rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.db-dx{font-size:1.1rem;font-weight:700;margin-bottom:3px}
-.db-sub{font-size:.75rem;color:var(--muted)}
-.score-trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
-.sc{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:13px 14px}
-.sc-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px}
-.sc.approach .sc-lbl{color:var(--purple)}.sc.process .sc-lbl{color:var(--teal)}.sc.diagnosis .sc-lbl{color:var(--orange)}
-.sc-val{font-family:var(--mono);font-size:1.35rem;font-weight:700;margin-bottom:5px}
-.sc-bar-w{height:4px;background:var(--bdr2);border-radius:2px;overflow:hidden;margin-bottom:7px}
-.sc-bar-f{height:100%;border-radius:2px;transition:width .7s .3s}
-.sc-bar-f.g{background:var(--green)}.sc-bar-f.y{background:var(--yellow)}.sc-bar-f.r{background:var(--red)}
-.sc-expl{font-size:.71rem;color:var(--muted);line-height:1.55}
-.db-total{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
-.db-total-lbl{font-size:.83rem;font-weight:700}
-.db-total-val{font-family:var(--mono);font-size:1.55rem;font-weight:700;color:var(--accent)}
-.db-card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:14px 16px}
-.db-card-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.ktp-list{display:flex;flex-direction:column;gap:7px}
-.ktp{display:flex;align-items:flex-start;gap:8px;font-size:.8rem;line-height:1.6}
-.ktp-n{font-family:var(--mono);font-size:.69rem;color:var(--accent);font-weight:700;flex-shrink:0;margin-top:2px}
-.mnm-table{display:flex;flex-direction:column;gap:6px}
-.mnm-row{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:9px 11px}
-.mnm-row-hd{display:flex;align-items:center;gap:7px;margin-bottom:6px}
-.mnm-row-nm{font-size:.81rem;font-weight:700;flex:1}
-.mnm-status{font-size:.66rem;font-family:var(--mono);padding:2px 6px;border-radius:20px}
-.mnm-status.ruled-in{background:var(--rdim);color:var(--red)}
-.mnm-status.ruled-out{background:var(--gdim);color:var(--green)}
-.mnm-status.not-excluded{background:var(--ydim);color:var(--yellow)}
-.mnm-findings{display:flex;flex-direction:column;gap:3px}
-.mnm-f{display:flex;align-items:flex-start;gap:7px;font-size:.75rem;color:var(--muted);line-height:1.5}
-.mnm-ft{font-family:var(--mono);font-size:.62rem;font-weight:700;flex-shrink:0;padding:1px 6px;border-radius:4px;margin-top:1px}
-.mnm-ft.hx{background:var(--pdim);color:var(--purple)}
-.mnm-ft.ex{background:var(--tdim);color:var(--teal)}
-.mnm-ft.inv{background:var(--ydim);color:var(--yellow)}
-/* finding not done by player */
-.mnm-f.not-done{opacity:.48}
-.mnm-f.not-done .mnm-ft{background:var(--surf3);color:var(--muted2)}
-.mnm-not-done-badge{font-size:.59rem;font-family:var(--mono);color:var(--muted2);background:var(--surf3);border:1px dashed var(--bdr2);padding:1px 5px;border-radius:4px;flex-shrink:0;margin-top:1px;white-space:nowrap}
-/* ── YEAR LEVEL modal ── */
-.yr-modal{background:var(--surf);border:1px solid var(--bdr2);border-radius:var(--rl);max-width:480px;width:100%;padding:26px 28px}
-.yr-title{font-family:var(--mono);font-size:1.2rem;font-weight:700;letter-spacing:-1px;margin-bottom:4px}
-.yr-title span{color:var(--accent)}
-.yr-sub{font-size:.79rem;color:var(--muted);margin-bottom:20px;line-height:1.6}
-.yr-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-.yr-opt{background:var(--surf2);border:2px solid var(--bdr2);border-radius:var(--rl);padding:14px 16px;cursor:pointer;transition:all .15s;text-align:left;width:100%;font-family:var(--sans)}
-.yr-opt:hover{border-color:var(--accent);background:var(--adim)}
-.yr-opt.sel{border-color:var(--accent);background:var(--adim)}
-.yr-opt-title{font-size:.9rem;font-weight:700;margin-bottom:4px;color:var(--text)}
-.yr-opt-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
-.yr-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:.61rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-bottom:6px}
-.yr-badge.m2{background:var(--gdim);color:var(--green)}.yr-badge.m3{background:var(--odim);color:var(--orange)}
-/* level indicator in topbar */
-.tb-level{font-family:var(--mono);font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:20px;cursor:pointer;transition:all .12s;white-space:nowrap}
-.tb-level.m2{background:var(--gdim);color:var(--green);border:1px solid var(--green)}
-.tb-level.m3{background:var(--odim);color:var(--orange);border:1px solid var(--orange)}
-/* soft-warning (replaces hard-lock) */
-.softwarn{background:var(--surf);border:2px solid var(--yellow);border-radius:var(--rl);padding:18px 20px}
-.softwarn-ico{font-size:1.6rem;margin-bottom:6px}
-.softwarn-title{font-size:1rem;font-weight:700;color:var(--yellow);font-family:var(--mono);margin-bottom:6px}
-.softwarn-body{font-size:.81rem;line-height:1.7;margin-bottom:10px}
-.softwarn-missed{background:rgba(245,200,66,.08);border:1px solid var(--yellow);border-radius:var(--r);padding:8px 11px;margin-bottom:9px}
-.mnm-add-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-.mnm-add-row{display:flex;align-items:flex-start;gap:10px;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:9px 11px}
-.mnm-add-info{flex:1;min-width:0}
-.mnm-add-name{font-size:.82rem;font-weight:700;margin-bottom:2px}
-.mnm-add-expl{font-size:.73rem;color:var(--muted);line-height:1.45}
-.mnm-add-btn{padding:4px 10px;border-radius:var(--r);font-size:.72rem;font-weight:700;cursor:pointer;border:none;white-space:nowrap;font-family:var(--sans);transition:all .13s}
-.mnm-add-btn.added{background:var(--gdim);color:var(--green);border:1px solid var(--green);cursor:default}
-.mnm-add-btn.add{background:var(--yellow);color:#000}
-.mnm-add-btn.add:hover{opacity:.85}
-.softwarn-tier2{background:var(--surf2);border:1px dashed var(--bdr2);border-radius:var(--r);padding:8px 11px;margin-bottom:9px;font-size:.75rem;color:var(--muted2);line-height:1.5}
-.softwarn-acts{display:flex;gap:7px;flex-wrap:wrap}
-/* progressive disclosure on finding cards */
-.fc-exp-toggle{display:inline-flex;align-items:center;gap:4px;font-size:.67rem;font-family:var(--mono);color:var(--accent);cursor:pointer;padding:2px 6px;border-radius:4px;background:var(--adim);border:1px solid var(--accent);margin-top:5px;transition:opacity .12s;user-select:none}
-.fc-exp-toggle:hover{opacity:.8}
-.fc-exp{font-size:.77rem;color:var(--muted);line-height:1.58;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:8px 10px;margin-top:5px;font-style:italic;display:none}
-.fc-exp.open{display:block}
-/* image in finding card */
-.fc-img{width:100%;max-width:480px;border-radius:var(--r);border:1px solid var(--bdr);margin-top:8px;margin-bottom:2px;display:block}
-/* lookingFor line (M3+ only, hidden in M2) */
-.fc-looking{font-size:.74rem;color:var(--teal);font-style:italic;margin-bottom:5px;padding:4px 8px;background:var(--tdim);border-radius:4px;border-left:2px solid var(--teal)}
-body:not(.m3) .fc-looking{display:none}
-/* irrel label context-specific wording */
-.fc-note.irrel-ctx{color:var(--yellow);background:var(--ydim)}
-/* linked-pair tag in ranking */
-.ri-tag.lp{background:var(--tdim);color:var(--teal)}
-/* MNM demotion reasoning section */
-.dmtn-table{display:flex;flex-direction:column;gap:5px}
-.dmtn-row{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:8px 11px;display:flex;align-items:flex-start;gap:9px}
-.dmtn-mnm{font-size:.76rem;font-weight:700;flex:1}
-.dmtn-checks{display:flex;flex-direction:column;gap:3px;font-size:.73rem;color:var(--muted)}
-.dmtn-chk{display:flex;align-items:flex-start;gap:6px;line-height:1.45}
-.dmtn-chk.pass{color:var(--green)}.dmtn-chk.fail{color:var(--red)}.dmtn-chk.skip{color:var(--muted2)}
-.dmtn-chk-ico{flex-shrink:0;font-family:var(--mono);font-size:.62rem;margin-top:2px}
-/* collapsible timeline */
-.tl-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:2px 0;margin-bottom:8px;user-select:none}
-.tl-toggle-lbl{font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.tl-toggle-arr{font-size:.7rem;color:var(--muted2);transition:transform .18s}
-.tl-toggle-arr.open{transform:rotate(90deg)}
-.tl-body{display:none}.tl-body.open{display:block}
-/* key pivots section */
-.kp-grid{display:flex;flex-direction:column;gap:6px}
-.kp-item{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:9px 12px;border-left:3px solid var(--bdr2)}
-.kp-item.req{border-left-color:var(--accent)}.kp-item.sig{border-left-color:var(--green)}.kp-item.conf{border-left-color:var(--orange)}
-.kp-hd{display:flex;align-items:center;gap:7px;margin-bottom:4px}
-.kp-badge{font-size:.6rem;font-family:var(--mono);font-weight:700;padding:1px 6px;border-radius:4px}
-.kp-badge.req{background:var(--adim);color:var(--accent)}.kp-badge.sig{background:var(--gdim);color:var(--green)}.kp-badge.conf{background:var(--odim);color:var(--orange)}
-.kp-lbl{font-size:.79rem;font-weight:600}
-.kp-find{font-size:.77rem;color:var(--muted);line-height:1.5;margin-top:3px}
-/* secondary commit */
-.sec-commit{background:var(--surf3);border:1px solid var(--bdr2);border-radius:var(--r);padding:9px 11px;margin-top:6px}
-.sec-commit-lbl{font-size:.65rem;font-family:var(--mono);color:var(--teal);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
-.sec-commit-hint{font-size:.72rem;color:var(--muted);margin-bottom:7px;line-height:1.5}
-.sec-opts{display:flex;flex-wrap:wrap;gap:4px}
-.scopt{padding:4px 10px;border-radius:20px;font-size:.71rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf2);transition:all .11s;font-family:var(--mono)}
-.scopt:hover{border-color:var(--teal);color:var(--teal);background:var(--tdim)}
-.scopt.sel{background:var(--teal);border-color:var(--teal);color:#000}
-.p1-cov{display:flex;flex-direction:column;gap:4px}
-.p1-row{display:flex;align-items:center;gap:8px;font-size:.78rem;padding:5px 8px;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r)}
-.p1-ico{font-size:.8rem;flex-shrink:0;width:18px;text-align:center}
-.p1-nm{flex:1}
-.p1-note{font-size:.65rem;font-family:var(--mono);color:var(--muted2)}
-.p1-row.ok{border-color:var(--green)}.p1-row.ok .p1-nm{color:var(--green)}
-.p1-row.rx{border-color:var(--purple)}.p1-row.rx .p1-nm{color:var(--purple)}
-.p1-row.missed{border-color:var(--red);opacity:.65}
-/* Ranking snapshots — properly structured */
-.snap-wrap{display:flex;flex-direction:column;gap:10px}
-.snap-item{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 12px}
-.snap-lbl{font-size:.71rem;font-weight:700;color:var(--muted);margin-bottom:8px;font-family:var(--mono);display:flex;align-items:center;gap:6px}
-.snap-skip{font-size:.62rem;background:var(--ydim);color:var(--yellow);padding:1px 6px;border-radius:4px}
-.snap-table{display:flex;flex-direction:column}
-.snap-row{display:flex;align-items:center;gap:8px;font-size:.77rem;padding:4px 0;border-bottom:1px solid var(--bdr)}
-.snap-row:last-child{border-bottom:none}
-.snap-pos{font-family:var(--mono);font-size:.64rem;color:var(--muted2);width:22px;flex-shrink:0;text-align:right}
-.snap-nm{flex:1}
-.snap-badge{font-size:.62rem;font-family:var(--mono);padding:1px 6px;border-radius:4px;flex-shrink:0}
-.snap-badge.hi{background:var(--gdim);color:var(--green)}
-.snap-badge.lo{background:var(--rdim);color:var(--red)}
-/* FIX #6 — expert = study-aid */
-.tl-card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:14px 16px}
-.tl-step{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:9px 12px;margin-bottom:5px}
-.tl-hd{display:flex;align-items:center;gap:6px;margin-bottom:5px}
-.tl-num{font-family:var(--mono);font-size:.6rem;font-weight:700;width:18px;height:18px;border-radius:50%;background:var(--surf3);color:var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tl-type{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;flex:1}
-.tl-cost{font-family:var(--mono);font-size:.58rem;padding:1px 5px;border-radius:4px}
-.tl-cost.free,.tl-cost.low{background:var(--gdim);color:var(--green)}.tl-cost.mid{background:var(--ydim);color:var(--yellow)}.tl-cost.high{background:var(--rdim);color:var(--red)}
-.tl-tag{font-size:.61rem;font-family:var(--mono);padding:1px 6px;border-radius:4px;margin-bottom:5px;display:inline-flex;align-items:center;gap:3px}
-.tl-tag.irrel{color:var(--yellow);background:var(--ydim)}.tl-tag.sig{color:var(--green);background:var(--gdim)}.tl-tag.req{color:var(--accent);background:var(--adim)}.tl-tag.ice{color:var(--muted);background:var(--surf3)}
-.tl-finding{font-size:.79rem;line-height:1.55;margin-bottom:4px}
-.tl-expert{font-size:.74rem;color:var(--muted);line-height:1.58;border-top:1px solid var(--bdr);padding-top:5px;font-style:italic}
-.ss-row{display:flex;gap:6px;flex-wrap:wrap}
-.ssb{flex:1;min-width:115px;padding:9px 11px;border-radius:var(--r);background:var(--surf2);border:1px solid var(--bdr)}
-.ssb-title{font-size:.69rem;font-weight:700;margin-bottom:3px}
-.ssb-text{font-size:.72rem;color:var(--muted);line-height:1.5}
-.ssb.sens .ssb-title{color:var(--teal)}.ssb.spec .ssb-title{color:var(--purple)}.ssb.safe .ssb-title{color:var(--red)}
-.approach-card{background:var(--surf);border:1px solid var(--bdr);border-left:3px solid var(--accent);border-radius:var(--rl);padding:13px 15px}
-.approach-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-.approach-title{font-size:.89rem;font-weight:700;margin-bottom:5px}
-.approach-text{font-size:.77rem;color:var(--muted);line-height:1.65;margin-bottom:9px}
-.approach-cats{display:flex;flex-direction:column;gap:4px;margin-bottom:9px}
-.acat{background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r);padding:6px 9px;font-size:.75rem;display:flex;gap:9px}
-.acat.hl{border-color:var(--accent);background:var(--adim)}
-.acat-nm{font-weight:700;min-width:145px;flex-shrink:0}
-.acat.hl .acat-nm{color:var(--accent)}
-.acat-eg{color:var(--muted)}
-.approach-insight{background:var(--adim);border:1px solid var(--accent);border-radius:var(--r);padding:9px 11px;font-size:.77rem;line-height:1.6}
-/* utils */
-.tip{background:var(--surf2);border:1px solid var(--bdr);border-left:3px solid var(--accent);border-radius:var(--r);padding:7px 10px;font-size:.74rem;color:var(--muted);line-height:1.55;margin-bottom:11px}
-.tip strong{color:var(--accent)}
-.nudge{background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:7px 10px;margin-bottom:11px;font-size:.74rem;color:var(--yellow);line-height:1.55}
-.nav-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}
-.nb{padding:7px 15px;border-radius:var(--r);font-size:.8rem;font-weight:700;cursor:pointer;border:none;transition:opacity .12s}
-.nb:hover{opacity:.85}
-.nb.go{background:var(--teal);color:#000}.nb.cmt{background:var(--orange);color:#fff}.nb.start{background:var(--accent);color:#fff}
-.nb.skip{background:var(--surf2);color:var(--muted);border:1.5px solid var(--bdr2);font-size:.76rem;font-weight:600}
-.nb.skip:hover{border-color:var(--muted);color:var(--text)}
-.abtn{padding:7px 13px;border-radius:var(--r);font-size:.78rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf);transition:all .12s}
-.abtn:hover{border-color:var(--accent);color:var(--accent);background:var(--adim)}
-.abtn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.abtn.primary:hover{opacity:.85}
-/* FIX #6 — prof hint = study-aid */
-.prof{display:inline-flex;align-items:center;gap:4px;font-size:.71rem;color:var(--muted);cursor:pointer;border:1px dashed var(--bdr2);border-radius:20px;padding:4px 10px;transition:all .12s}
-.prof:hover{border-color:var(--yellow);color:var(--yellow)}
-.prof-reveal{margin-top:7px;background:var(--ydim);border:1px solid var(--yellow);border-radius:var(--r);padding:8px 11px;font-size:.76rem;color:var(--yellow);line-height:1.5}
-.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;gap:7px}
-.wl{font-family:var(--mono);font-size:3rem;font-weight:700;letter-spacing:-4px}
-.wl span{color:var(--accent)}
-.ws{font-size:.9rem;color:var(--muted);max-width:300px;line-height:1.7;margin-top:3px}
-.wh{margin-top:20px;font-size:.72rem;color:var(--muted2);border:1px dashed var(--bdr2);border-radius:var(--r);padding:8px 14px;font-family:var(--mono)}
-@media(max-width:760px){
-  #lib{position:fixed;top:0;left:0;bottom:0;z-index:400;transform:translateX(-100%);transition:transform .22s}
-  #lib.mobile-open{transform:translateX(0)}
-  .opts-grid{grid-template-columns:1fr 1fr}.score-trio{grid-template-columns:1fr}
-  #content{padding:10px 12px}
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -545,13 +94,15 @@ body:not(.m3) .fc-looking{display:none}
     <div id="topbar">
       <div class="tb-left">
         <button class="tb-tog" onclick="toggleLib()">☰</button>
+        <div class="tb-brand">Dx<span>/</span></div>
+        <div class="tb-divider"></div>
         <div class="tb-cname" id="tbCname">—</div>
       </div>
-      <div class="tb-stages" id="tbStages"></div>
+      <div class="tb-phases" id="tbStages"></div>
       <div class="tb-right">
-        <span class="tb-level m2" id="levelBadge" onclick="resetLevel()" title="Click to change year level">M2</span>
-        <button class="mode-btn study" id="modeBtn" onclick="toggleMode()">📚 Study</button>
         <div class="tb-scores" id="tbScores"></div>
+        <span class="tb-level m2" id="levelBadge" onclick="resetLevel()">M2</span>
+        <button class="mode-btn study" id="modeBtn" onclick="toggleMode()">Study</button>
       </div>
     </div>
     <div id="content"></div>
@@ -864,15 +415,46 @@ function hlQ(s,q){if(!q)return s;return s.replace(new RegExp(`(${escRe(q)})`,'gi
 function buildTopbar(){
   const cas=G?CASES[G.caseIdx]:null;
   document.getElementById('tbCname').textContent=cas?cas.title:'—';
-  const si=G?STAGES.indexOf(G.stage):-1;
-  document.getElementById('tbStages').innerHTML=STAGES.map((s,i)=>{
-    let c='tbs';
-    if(!G)c+=' locked';
-    else if(i===si)c+=' active';
-    else if(i<si)c+=' done';
-    else c+=' locked';
-    return`<div class="${c}">${STAGE_LBL[s]}</div>`;
+
+  // 3-phase progress bar
+  const stage=G?G.stage:null;
+  const p2stages=['history','pe','basic','advanced'];
+  const p2idx=p2stages.indexOf(stage);
+  const p1done=stage&&stage!=='setup';
+  const p2done=stage==='commit'||stage==='debrief';
+  const p3done=stage==='debrief';
+
+  function dotClass(phase){
+    if(!G) return 'pdot locked';
+    if(phase===1) return 'pdot '+(stage==='setup'?'active':(p1done?'done':'locked'));
+    if(phase===2) return 'pdot '+(p2idx>=0?'active':(p2done?'done':(p1done?'':'locked')));
+    if(phase===3) return 'pdot '+(stage==='commit'||stage==='debrief'?'active':'locked');
+    return 'pdot locked';
+  }
+  function lineClass(after){
+    if(!G) return 'pline';
+    if(after===1) return 'pline '+(p2done?'done':(p2idx>=0||p1done?'active':''));
+    if(after===2) return 'pline '+(p3done?'done':(stage==='commit'||stage==='debrief'?'active':''));
+    return 'pline';
+  }
+
+  // Sub-dots for phase 2
+  const subDots=p2stages.map((s,i)=>{
+    let cls='psdot';
+    if(p2done||i<p2idx) cls+=' ps-done';
+    else if(i===p2idx) cls+=' ps-active';
+    return`<span class="${cls}"></span>`;
   }).join('');
+  const p2Active=p2idx>=0;
+  const p2SubHtml=p2Active?`<span class="pdot-subs">${subDots}</span>`:'';
+
+  document.getElementById('tbStages').innerHTML=`
+    <div class="${dotClass(1)}">${p1done&&stage!=='setup'?'✓':'1'}</div>
+    <div class="${lineClass(1)}"></div>
+    <div class="${dotClass(2)}">${p2done?'✓':'2'}${p2SubHtml}</div>
+    <div class="${lineClass(2)}"></div>
+    <div class="${dotClass(3)}">${p3done?'✓':'3'}</div>`;
+
   const sc=document.getElementById('tbScores');
   if(!G||G.stage==='setup'){sc.innerHTML='';return;}
   const s=G.liveScore;
@@ -897,17 +479,35 @@ function render(){
   else if(s==='debrief')renderDebrief();
 }
 function renderWelcome(){
+  const SYS_COLOR={
+    Cardiovascular:'var(--red)',Respiratory:'var(--teal)',Gastrointestinal:'var(--green)',
+    Renal:'var(--purple)','Endocrine / Metabolic':'var(--yellow)',Neurology:'var(--orange)',
+    Haematology:'var(--red)',default:'var(--accent)'
+  };
+  const SYS_DIM={
+    Cardiovascular:'var(--rdim)',Respiratory:'var(--tdim)',Gastrointestinal:'var(--gdim)',
+    Renal:'var(--pdim)','Endocrine / Metabolic':'var(--ydim)',Neurology:'var(--odim)',
+    default:'var(--adim)'
+  };
+  function sysColor(s){return SYS_COLOR[s]||SYS_COLOR.default;}
+  function sysDim(s){return SYS_DIM[s]||SYS_DIM.default;}
+
+  const cards=CASES.map((c,i)=>`
+    <div class="case-card" onclick="startCase(${i})">
+      <div class="case-sys-badge" style="background:${sysDim(c.system)};color:${sysColor(c.system)}">${c.system||'Clinical'}</div>
+      <div class="case-card-title">${c.title}</div>
+      <div class="case-card-patient">${c.patient||''}</div>
+      <div class="case-card-meta">
+        <span>${c.approach||''}</span>
+        <span style="margin-left:auto">${c.difficulty==='challenging'?'⚡ Challenging':'Straightforward'}</span>
+      </div>
+    </div>`).join('');
+
   document.getElementById('content').innerHTML=`
     <div class="welcome">
       <div class="wl"><span>Dx</span>/</div>
-      <div class="ws">Build your differential. Investigate systematically. Commit to a diagnosis. Learn from every decision.</div>
-      <div class="wh">Select a case to begin</div>
-      <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
-        ${CASES.map((c,i)=>`<button class="nb start" style="line-height:1.5" onclick="startCase(${i})">
-          Case ${i+1}: ${c.title}<br>
-          <span style="font-size:.64rem;font-weight:400;opacity:.7">${c.approach} · ${c.difficulty==='challenging'?'⚡ Challenging':'📗 Straightforward'}</span>
-        </button>`).join('')}
-      </div>
+      <div class="ws">Build your differential. Investigate systematically. Commit to a diagnosis.</div>
+      <div class="case-grid">${cards}</div>
     </div>`;
 }
 
@@ -930,25 +530,25 @@ function resetLevel(){playerLevel=null;pendingCaseIdx=null;document.getElementBy
 
 function renderSetup(){
   const cas=CASES[G.caseIdx];
+  const active=G.diff.filter(d=>!d.elim).length;
   document.getElementById('content').innerHTML=`
-    <div class="ph-hd"><div class="ph-badge setup">Phase 1</div>
-      <div><div class="ph-title">Build Your Differential Diagnosis</div>
-        <div class="ph-sub">Think broadly — what could cause this presentation?</div>
-      </div>
-    </div>
-    <div class="vig"><div class="vig-lbl">📋 Clinical Presentation</div><div class="vig-txt">${cas.vignette}</div></div>
-    <div class="tip">
-      <strong>How to use the library:</strong> Select your tag (Must Not Miss / Working Diagnosis) on the left, then click any diagnosis to add it. Browse all body systems systematically. An umbrella diagnosis (e.g. "Myocardial Infarction") includes all subtypes — you can eliminate specific subtypes later.<br><br>
-      <strong>Think broadly:</strong> Which diagnoses are dangerous and must not be missed? Which are most likely? Consider every system that could explain this presentation.
+    <div class="vig">
+      <div class="vig-patient">${cas.patient||'Clinical Presentation'}</div>
+      <div class="vig-txt">${cas.vignette}</div>
     </div>
     <div class="diff-box">
-      <div class="diff-hd">Your Differential (${G.diff.length} added)<span class="diff-hint">⠿ drag to reorder</span></div>
+      <div class="diff-hd">
+        Differential${active?` <span style="color:var(--accent)">(${active})</span>`:''}
+        <span class="diff-hint">drag to reorder</span>
+      </div>
       <div class="dlist" id="dlist">${renderDiff()}</div>
     </div>
-    ${G.nudge?`<div class="nudge">⚠️ ${G.nudge}</div>`:''}
+    ${G.nudge?`<div class="nudge">${G.nudge}</div>`:''}
     <div class="nav-row">
-      <button class="nb go" onclick="toHistory()">Proceed to History Taking →</button>
-    </div>`;
+      <button class="nb go" onclick="toHistory()">Begin Investigation →</button>
+      <span class="prof study-aid" onclick="toggleProf()">Hint</span>
+    </div>
+    ${G.profOpen?`<div class="prof-reveal study-aid">Select <strong>Must Not Miss</strong> or <strong>Working Dx</strong> in the sidebar, then click a diagnosis to add it. Think systematically — consider every body system that could cause this presentation.</div>`:''}`;
 }
 
 function toHistory(){
@@ -1080,11 +680,16 @@ function renderStage(stage){
   const pendItems=allItems.filter(i=>!doneArr.includes(i.id));
   const isRanking=G.pendingRank===stage;
 
+  // Vignette: collapsible in phase 2 to reduce screen noise
+  const vigOpen=G._vigOpen!==false;
   let html=`
-    <div class="ph-hd"><div class="ph-badge ${stage}">Phase 2 — ${cfg.label}</div>
-      <div><div class="ph-title">${cfg.label}</div><div class="ph-sub">${cfg.instr}</div></div>
-    </div>
-    <div class="vig"><div class="vig-lbl">📋 Patient</div><div class="vig-txt">${cas.vignette}</div></div>`;
+    <div class="vig vig-collapsible${vigOpen?'':' vig-closed'}">
+      <div class="vig-toggle" onclick="G._vigOpen=${!vigOpen};render()">
+        <span class="vig-toggle-lbl">${cas.patient||'Patient'}</span>
+        <span class="vig-toggle-arr${vigOpen?' open':''}">▶</span>
+      </div>
+      <div class="vig-txt">${cas.vignette}</div>
+    </div>`;
 
   if(doneItems.length){
     // FIX #1: findings in selection order
@@ -1095,7 +700,7 @@ function renderStage(stage){
     html+=mkRankPanel(stage,doneItems);
   } else {
     if(pendItems.length){
-      html+=`<div class="stage-box"><div class="stage-hd">Available ${stage==='history'?'History Topics':'Options'}</div>
+      html+=`<div class="stage-box"><div class="stage-hd">${cfg.label}</div>
         <div class="${cfg.grid}">${pendItems.map(i=>`
           <div class="opt" onclick="doItem('${stage}','${escJs(i.id)}')">
             <div class="opt-nm">${i.lbl}</div>
@@ -1128,25 +733,30 @@ function mkFinding(item,cat,catLbl){
   const isIce=item.ice;
   const irrel=!item.rel&&!isIce;
   const uid='fc-'+item.id;
-  // lookingFor: only shown in M3+ mode (body.m3) — pe items only
-  const lookingForHtml=item.lookingFor&&cat==='pef'?`<div class="fc-looking">🔍 Looking for: ${item.lookingFor}</div>`:'';
-  // image support
-  const imgHtml=item.imageUrl?`<img class="fc-img" src="images/${item.imageUrl}" alt="${item.lbl}" loading="lazy">`:'';
-  // expert commentary — hidden by default in M3, shown in M2; toggleable per card
+  const lookingForHtml=item.lookingFor&&cat==='pef'
+    ?`<div class="fc-looking">Looking for: ${item.lookingFor}</div>`:'';
+  const imgHtml=item.imageUrl
+    ?`<img class="fc-img" src="images/${item.imageUrl}" alt="${item.lbl}" loading="lazy">`:'';
+
+  // All indicators in one compact row — study aids hidden in exam mode
+  const indicators=[];
+  if(isReq) indicators.push('<span class="fc-note req study-aid">Key finding</span>');
+  if(sn)    indicators.push('<span class="fc-note sig study-aid">Significant negative</span>');
+  if(irrel) indicators.push('<span class="fc-note irrel study-aid">Not discriminating here</span>');
+  if(isIce) indicators.push('<span class="fc-note ice study-aid">ICE</span>');
+  const indicatorRow=indicators.length
+    ?`<div class="fc-indicators study-aid">${indicators.join('')}</div>`:'';
+
   const expHtml=item.exp?`
-    <button class="fc-exp-toggle" onclick="toggleFcExp('${uid}')">💡 Why does this matter?</button>
+    <button class="fc-exp-toggle" onclick="toggleFcExp('${uid}')">Why does this matter?</button>
     <div class="fc-exp" id="${uid}">${item.exp}</div>`:'';
-  // Note: irrel label is context-specific — different wording to avoid overgeneralising
-  const irrelNote=irrel?`<div class="fc-note irrel-ctx study-aid">○ Not discriminating in <em>this</em> presentation — this test is valuable in other contexts</div>`:'';
+
   return '<div class="fc '+(isIce?'icef':cat)+'">'
     +'<div class="fc-lbl '+(isIce?'icef':cat)+'">'+catLbl+' — '+item.lbl+'</div>'
     +lookingForHtml
     +'<div class="fc-txt">'+item.find+'</div>'
     +imgHtml
-    +(isReq?'<div class="fc-note req study-aid">⭐ Key investigation for this case</div>':'')
-    +(sn?'<div class="fc-note sig study-aid">✓ Significant negative: '+sn.label+'</div>':'')
-    +irrelNote
-    +(isIce?'<div class="fc-note ice study-aid">💬 ICE — good practice</div>':'')
+    +indicatorRow
     +expHtml
     +'</div>';
 }
@@ -1248,28 +858,22 @@ function renderCommit(){
   const showSec=cas.hasSecondaryDx&&(G.done.b.includes(cas.secondaryDxTriggerInv)||G.done.pe.includes(cas.secondaryDxTriggerInv));
   const pairs=cas.linkedPairs||[];
   document.getElementById('content').innerHTML=`
-    <div class="ph-hd"><div class="ph-badge commit">Phase 3</div>
-      <div><div class="ph-title">Commit to Your Diagnosis</div>
-        <div class="ph-sub">Select your most likely diagnosis. Specify the subtype for full marks.</div>
-      </div>
-    </div>
-    ${missingReq.length?`<div class="commit-warn">⚠️ You have not performed: <strong>${missingReq.map(r=>{const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);return it?it.lbl:r;}).join(', ')}</strong>. Missing these will significantly reduce your scores.</div>`:''}
+    ${missingReq.length?`<div class="commit-warn">Key investigation not performed: <strong>${missingReq.map(r=>{const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);return it?it.lbl:r;}).join(', ')}</strong>. This will reduce your score.</div>`:''}
     <div class="commit-box">
       <div class="commit-lbl">Primary Diagnosis</div>
       <div class="cdx-list">${G.diff.map((d,i)=>{
         const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
         const isLP=pairs.some(p=>normMatch(p.secondary,d.n));
-        if(isLP&&!d.elim) return('<div class="cdx" style="cursor:default;opacity:.55;border-style:dashed"><div class="cdx-radio" style="border-color:var(--teal)"></div><div class="cdx-nm">'+d.n+' <span style="font-size:.65rem;font-family:var(--mono);color:var(--teal)">🔗 complication — select below</span></div><div class="cdx-rank">#'+(i+1)+'</div></div>');
+        if(isLP&&!d.elim) return('<div class="cdx" style="cursor:default;opacity:.55;border-style:dashed"><div class="cdx-radio" style="border-color:var(--teal)"></div><div class="cdx-nm">'+d.n+' <span class="cdx-rx">complication — select below</span></div><div class="cdx-rank">#'+(i+1)+'</div></div>');
         return('<div class="cdx '+(d.elim?'elimf':'')+' '+(G.commitSel===d.n&&!d.elim?'sel':'')+'" onclick="'+(d.elim?'':'selectCommit(\''+escJs(d.n)+'\')')+'"><div class="cdx-radio"></div><div class="cdx-nm">'+d.n+(d.elim?' (eliminated)':'')+'</div><div class="cdx-rank">#'+(i+1)+'</div>'+(isRx?'<div class="cdx-rx">added Phase 2</div>':'')+'</div>');
       }).join('')}</div>
       ${G.commitSel&&subs.length?('<div class="sub-sel"><div class="sub-sel-lbl">Specify subtype for full marks (umbrella = partial credit):</div><div class="sub-opts">'+subs.map(s=>'<div class="sopt '+(G.commitSub===s?'sel':'')+'" onclick="selectSub(\''+escJs(s)+'\')">'+s+'</div>').join('')+'</div></div>'):''}
       ${showSec?('<div class="sec-commit"><div class="sec-commit-lbl">🔗 Complicating Syndrome</div><div class="sec-commit-hint">Your investigations suggest a complicating syndrome alongside the primary diagnosis. Did you identify one?</div><div class="sec-opts"><div class="scopt '+(G.secondaryCommit===cas.secondaryDx?'sel':'')+'" onclick="selectSecondaryCmt(\''+escJs(cas.secondaryDx)+'\')">'+( cas.secondaryDxLabel||cas.secondaryDx)+'</div><div class="scopt '+(G.secondaryCommit==='none'?'sel':'')+'" onclick="selectSecondaryCmt(\'none\')">None / not identified</div></div></div>'):''}
       <div style="height:10px"></div>
       <button class="commit-btn" onclick="submitCommit()" ${!G.commitSel?'disabled':''}>
-        ${(()=>{if(!G.commitSel)return 'Select a diagnosis above';const p=G.commitSub||G.commitSel;const s=(showSec&&G.secondaryCommit&&G.secondaryCommit!=='none')?' + '+cas.secondaryDx:'';return 'Commit: "'+p+'"'+s+' →';})()}
+        ${(()=>{if(!G.commitSel)return 'Select a diagnosis to commit';const p=G.commitSub||G.commitSel;const s=(showSec&&G.secondaryCommit&&G.secondaryCommit!=='none')?' + '+cas.secondaryDx:'';return 'Commit: '+p+s+' →';})()}
       </button>
-    </div>
-    <div class="tip"><strong>Specificity:</strong> Which diagnosis — at the most specific level you can confidently state — best explains all your findings?</div>`;
+    </div>`;
 }
 function selectCommit(n){G.commitSel=n;G.commitSub=null;render();}
 function selectSub(s){G.commitSub=s;render();}
@@ -1409,6 +1013,13 @@ function calcFinalScore(){
 function toggleTL(){
   const b=document.getElementById('tl-body');
   const a=document.getElementById('tl-arr');
+  if(!b||!a)return;
+  b.classList.toggle('open');
+  a.classList.toggle('open');
+}
+function toggleDeepDive(){
+  const b=document.getElementById('deep-body');
+  const a=document.getElementById('deep-arr');
   if(!b||!a)return;
   b.classList.toggle('open');
   a.classList.toggle('open');
@@ -1560,136 +1171,109 @@ function renderDebrief(){
 
   document.getElementById('content').innerHTML=`
   <div class="db">
-    <div class="db-outcome">
-      <div class="db-res-lbl">${correct?'✅ Correct':'❌ Incorrect or incomplete'}</div>
-      <div class="db-dx">${cas.finalDx}</div>
-      <div class="db-sub">Your answer: ${committed} · Diagnosis score: ${fs.diagnosis}/100</div>
+
+    <!-- TIER 1: Result — always visible, immediately clear -->
+    <div class="db-result">
+      <div class="db-result-left">
+        <div class="db-verdict ${correct?'correct':'incorrect'}">${correct?'Correct diagnosis':'Incorrect or incomplete'}</div>
+        <div class="db-dx">${cas.finalDx}</div>
+        <div class="db-sub">Your answer: ${committed}</div>
+      </div>
+      <div class="db-total-score">
+        <div class="db-score-num">${fs.total}</div>
+        <div class="db-score-denom">/ 100</div>
+      </div>
     </div>
 
     <div class="score-trio">
       <div class="sc approach">
-        <div class="sc-lbl">🎯 Approach (30%)</div>
+        <div class="sc-lbl">Approach (30%)</div>
         <div class="sc-val" style="color:${scol(fs.approach)}">${fs.approach}</div>
         <div class="sc-bar-w"><div class="sc-bar-f ${fs.approach>=75?'g':fs.approach>=50?'y':'r'}" style="width:${fs.approach}%"></div></div>
         <div class="sc-expl">${fs.approachExpl}</div>
       </div>
       <div class="sc process">
-        <div class="sc-lbl">⚙️ Process (40%)</div>
+        <div class="sc-lbl">Process (40%)</div>
         <div class="sc-val" style="color:${scol(fs.process)}">${fs.process}</div>
         <div class="sc-bar-w"><div class="sc-bar-f ${fs.process>=75?'g':fs.process>=50?'y':'r'}" style="width:${fs.process}%"></div></div>
         <div class="sc-expl">${fs.processExpl}</div>
       </div>
       <div class="sc diagnosis">
-        <div class="sc-lbl">✅ Diagnosis (30%)</div>
+        <div class="sc-lbl">Diagnosis (30%)</div>
         <div class="sc-val" style="color:${scol(fs.diagnosis)}">${fs.diagnosis}</div>
         <div class="sc-bar-w"><div class="sc-bar-f ${fs.diagnosis>=75?'g':fs.diagnosis>=50?'y':'r'}" style="width:${fs.diagnosis}%"></div></div>
         <div class="sc-expl">${fs.dxExpl}</div>
       </div>
     </div>
 
-    <div class="db-total">
-      <div class="db-total-lbl">Weighted Total (30% Approach + 40% Process + 30% Diagnosis)</div>
-      <div class="db-total-val">${fs.total} / 100</div>
-    </div>
-
+    <!-- TIER 2: Key learning — expanded by default -->
+    ${(cas.keyTeachingPoints||[]).length?`
     <div class="db-card">
-      <div class="db-card-lbl">📖 What This Case Was Teaching</div>
+      <div class="db-card-lbl">What this case was teaching</div>
       <div class="ktp-list">${(cas.keyTeachingPoints||[]).map((t,i)=>'<div class="ktp"><span class="ktp-n">'+(i+1)+'</span><span>'+t+'</span></div>').join('')}</div>
-    </div>
+    </div>`:''}
 
     <div class="db-card">
-      <div class="db-card-lbl">🔑 Key Clinical Pivots</div>
-      <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">The investigations and findings that matter most in this case — required steps and significant negatives that rule out dangerous diagnoses.</p>
+      <div class="db-card-lbl">Key clinical pivots</div>
       <div class="kp-grid">${pivotHtml}</div>
     </div>
 
-    <div class="db-card">
-      <div class="tl-toggle" onclick="toggleSection('mnm')">
-        <span class="tl-toggle-lbl">🔴 Must-Not-Miss — How Each Was Ruled In or Out</span>
-        <span class="tl-toggle-arr" id="mnm-arr">▶</span>
+    <!-- TIER 3: Deep dive — single collapsible container -->
+    <div class="db-deep">
+      <div class="db-deep-hd" onclick="toggleDeepDive()">
+        <span class="db-deep-title">Full Analysis</span>
+        <span class="db-deep-arr" id="deep-arr">▶</span>
       </div>
-      <div class="tl-body" id="mnm-body">
-        <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">Full colour = you performed this step. <span style="opacity:.5;font-style:italic">Faded / "not performed"</span> = available but not done.</p>
-        ${mnmHtml||'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No MNM data for this case.</p>'}
-      </div>
-    </div>
+      <div class="db-deep-body" id="deep-body">
 
-    <div class="db-card">
-      <div class="tl-toggle" onclick="toggleSection('p1')">
-        <span class="tl-toggle-lbl">📋 Your Phase 1 Differential Coverage</span>
-        <span class="tl-toggle-arr" id="p1-arr">▶</span>
-      </div>
-      <div class="tl-body" id="p1-body">
-        <p style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Green = Phase 1 · Purple = reactively added in Phase 2 (penalised) · Red = never considered</p>
-        <div class="p1-cov">${p1Cov}</div>
-      </div>
-    </div>
+        <div class="db-section">
+          <div class="db-section-lbl">Must-not-miss — ruled in or out</div>
+          ${mnmHtml||'<p style="font-size:.82rem;color:var(--muted);font-style:italic">No MNM data for this case.</p>'}
+        </div>
 
-    <div class="db-card">
-      <div class="tl-toggle" onclick="toggleSection('snap')">
-        <span class="tl-toggle-lbl">📊 Your Ranking Progression</span>
-        <span class="tl-toggle-arr" id="snap-arr">▶</span>
-      </div>
-      <div class="tl-body" id="snap-body">
-        <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">The correct diagnosis should move toward the top as evidence accumulates. 🔗 = complicating syndrome (should be directly below its primary diagnosis).</p>
-        <div class="snap-wrap">${snapHtml}</div>
-      </div>
-    </div>
+        <div class="db-section">
+          <div class="db-section-lbl">Phase 1 differential coverage</div>
+          <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Green = Phase 1 · Purple = added reactively in Phase 2 · Red = never considered</p>
+          <div class="p1-cov">${p1Cov}</div>
+        </div>
 
-    <div class="db-card">
-      <div class="tl-toggle" onclick="toggleSection('dmtn')">
-        <span class="tl-toggle-lbl">🧠 MNM Reasoning — Demotion Tracking</span>
-        <span class="tl-toggle-arr" id="dmtn-arr">▶</span>
-      </div>
-      <div class="tl-body" id="dmtn-body">
-        <p style="font-size:.75rem;color:var(--muted);margin-bottom:9px">After each piece of exclusionary evidence, must-not-miss diagnoses should move to the bottom half of your ranking. ✓ = you did. ✗ = it stayed too high. ○ = trigger investigation not performed.</p>
-        ${dmtnHtml}
-      </div>
-    </div>
+        <div class="db-section">
+          <div class="db-section-lbl">Ranking progression</div>
+          <div class="snap-wrap">${snapHtml}</div>
+        </div>
 
-    <div class="tl-card">
-      <div class="tl-toggle" onclick="toggleTL()">
-        <span class="tl-toggle-lbl">🧪 Full Investigation Pathway — Expert Commentary</span>
-        <span class="tl-toggle-arr" id="tl-arr">▶</span>
-      </div>
-      <div class="tl-body" id="tl-body">
-        ${tlItems||'<p style="font-size:.78rem;color:var(--muted);font-style:italic">No investigations performed.</p>'}
-      </div>
-    </div>
+        <div class="db-section">
+          <div class="db-section-lbl">MNM demotion tracking</div>
+          ${dmtnHtml}
+        </div>
 
-    <div class="db-card">
-      <div class="tl-toggle" onclick="toggleSection('ss')">
-        <span class="tl-toggle-lbl">🔍 Sensitivity &amp; Specificity</span>
-        <span class="tl-toggle-arr" id="ss-arr">▶</span>
-      </div>
-      <div class="tl-body" id="ss-body"><div class="ss-row">
-        <div class="ssb sens"><div class="ssb-title">Sensitivity</div><div class="ssb-text">${cas.sensitivityNote||''}</div></div>
-        <div class="ssb spec"><div class="ssb-title">Specificity</div><div class="ssb-text">${cas.specificityNote||''}</div></div>
-        <div class="ssb safe"><div class="ssb-title">Safety Net</div><div class="ssb-text">Must-not-miss diagnoses require high-sensitivity screening — missing them is catastrophic and irreversible.</div></div>
-      </div></div>
-    </div>
+        <div class="db-section">
+          <div class="db-section-lbl">Full investigation pathway</div>
+          ${tlItems||'<p style="font-size:.82rem;color:var(--muted);font-style:italic">No investigations performed.</p>'}
+        </div>
 
-    <div class="approach-card">
-      <div class="tl-toggle" onclick="toggleSection('approach')" style="margin-bottom:8px">
-        <span style="font-family:var(--mono);font-size:.59rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">📚 The Clinical Framework — Revealed</span>
-        <span class="tl-toggle-arr" id="approach-arr">▶</span>
-      </div>
-      <div class="tl-body" id="approach-body">
-      <div class="approach-lbl" style="display:none"></div>
-      <div class="approach-title">${cas.approachTitle||''}</div>
-      <div class="approach-text">${cas.approachText||''}</div>
-      <div class="approach-cats">${acats}</div>
-      <div class="approach-insight">💡 ${cas.approachInsight||''}</div>
-      </div>
-    </div>
+        <div class="db-section">
+          <div class="db-section-lbl">Sensitivity &amp; specificity</div>
+          <div class="ss-row">
+            <div class="ssb sens"><div class="ssb-title">Sensitivity</div><div class="ssb-text">${cas.sensitivityNote||''}</div></div>
+            <div class="ssb spec"><div class="ssb-title">Specificity</div><div class="ssb-text">${cas.specificityNote||''}</div></div>
+            <div class="ssb safe"><div class="ssb-title">Safety net</div><div class="ssb-text">Must-not-miss diagnoses require high-sensitivity tests — missing them is catastrophic and irreversible.</div></div>
+          </div>
+        </div>
 
-    <div class="db-card">
-      <div class="tl-toggle" onclick="toggleSection('expert')">
-        <span class="tl-toggle-lbl">📝 Expert Summary</span>
-        <span class="tl-toggle-arr" id="expert-arr">▶</span>
-      </div>
-      <div class="tl-body" id="expert-body">
-        <p style="font-size:.82rem;line-height:1.72;color:var(--muted)">${cas.expertNarrative||''}</p>
+        <div class="db-section">
+          <div class="approach-lbl">Clinical framework — revealed</div>
+          <div class="approach-title" style="margin-top:6px">${cas.approachTitle||''}</div>
+          <div class="approach-text">${cas.approachText||''}</div>
+          <div class="approach-cats">${acats}</div>
+          <div class="approach-insight">${cas.approachInsight||''}</div>
+        </div>
+
+        <div class="db-section">
+          <div class="db-section-lbl">Expert summary</div>
+          <p style="font-size:.86rem;line-height:1.78;color:var(--muted)">${cas.expertNarrative||''}</p>
+        </div>
+
       </div>
     </div>
 
