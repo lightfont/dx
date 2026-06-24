@@ -9,6 +9,27 @@
       "difficulty": "challenging",
       "patient": "Mr Tan Wei Ming, 62M, Bus Driver",
       "snomedCode": "703164000",
+      "demographics": { "name": "Tan Wei Ming", "age": "62", "sex": "M", "occupation": "Bus Driver", "mrn": "703164" },
+      "vitals": {
+        "hr": { "value": "56", "unit": "bpm", "abnormal": true },
+        "bp": { "value": "158/96", "unit": "mmHg", "abnormal": true },
+        "spo2": { "value": "96", "unit": "%", "abnormal": false },
+        "rr": { "value": "18", "unit": "/min", "abnormal": false },
+        "temp": { "value": "37.1", "unit": "°C", "abnormal": false }
+      },
+      "allergies": "NKDA",
+      "background": ["Hypertension", "Type 2 DM", "30 pk-yr smoker", "FHx MI <60"],
+      "pathway": {
+        "validation": { "status": "draft", "validatedBy": null, "validatedAt": null, "notes": "Awaiting cardiology sign-off on dissection re-open criteria and door-to-balloon target." },
+        "reasoning": {
+          "history": "Crushing epigastric pain radiating to the jaw/arm with diaphoresis in a patient with cardiac risk factors points to myocardial ischaemia; the absence of a tearing/inter-scapular character argues against dissection.",
+          "exam": "Equal bilateral arm BPs make aortic dissection less likely (but do not exclude it); a soft abdomen with no peritonism argues against a surgical abdomen.",
+          "bi01": "12-lead ECG first — fast, cheap and diagnostic in epigastric/chest pain with cardiac risk factors; order before bloods.",
+          "bi06": "Lipase deferred ahead of the ECG — pancreatitis is plausible, but a normal lipase does not exclude it (Revised Atlanta needs 2 of 3) and ordering it first delays reperfusion.",
+          "aortic_dissection": "Must-not-miss safety net — re-open if the patient becomes unstable."
+        },
+        "reveal": { "hint": "mask-diagnoses", "debrief": "full" }
+      },
       "vignette": "Mr Tan Wei Ming is a 62-year-old male bus driver who walks into the Emergency Department supported by his wife, looking pale and sweaty. He tells you he has had a heavy, squeezing discomfort in his upper abdomen for the past 2 hours. He has also been feeling nauseous and vomited once on the way to hospital.",
       "caseMNMs": [
         {
@@ -25,6 +46,10 @@
         },
         {
           "name": "Aortic Aneurysm / Ruptured AAA",
+          "tier": 2
+        },
+        {
+          "name": "Perforated Viscus",
           "tier": 2
         }
       ],
@@ -60,25 +85,25 @@
       "sigNegs": [
         {
           "id": "pe02",
-          "label": "Equal bilateral arm BPs → rules out Aortic Dissection",
+          "label": "Equal bilateral arm BPs → makes Aortic Dissection less likely (does not exclude it)",
           "pts": 10
         },
         {
           "id": "pe05",
-          "label": "No peritonism → rules out surgical emergency (peritonitis, perforated viscus)",
+          "label": "No peritonism → makes a surgical emergency (peritonitis, perforated viscus) much less likely",
           "pts": 10
         },
         {
           "id": "bi06",
-          "label": "Normal lipase/amylase → rules out Acute Pancreatitis",
+          "label": "Normal lipase/amylase → makes Acute Pancreatitis less likely (Revised Atlanta: 2 of 3 — pain, enzymes >3× ULN, imaging)",
           "pts": 10
         }
       ],
       "keyTeachingPoints": [
-        "Inferior MI frequently presents as epigastric (upper abdominal) pain rather than chest pain. This happens because the lower part of the heart and the upper abdomen share the same spinal nerve supply (T6-T10). Always think of a heart attack when an older patient with risk factors has unexplained upper abdominal discomfort.",
-        "The 4 must-not-miss diagnoses for epigastric pain are Myocardial Infarction, Aortic Dissection, Mesenteric Ischaemia, and Ruptured Aortic Aneurysm. All can be rapidly fatal if missed. They must be on your differential before you start investigating.",
-        "Checking both arm blood pressures takes 60 seconds and effectively rules out aortic dissection. A difference of more than 20 mmHg between arms suggests the aorta is torn. Equal pressures — as in this case — largely exclude it.",
-        "Absence of peritonism (no muscle guarding, no rebound tenderness) on abdominal examination rules out peritonitis from a ruptured organ. The mild tenderness on deep pressure only is actually a recognised feature of inferior MI.",
+        "Inferior MI frequently presents as epigastric (upper abdominal) pain rather than chest pain. Referred pain from the inferior-wall myocardium travels via autonomic (vagal) afferents and can be perceived in the epigastrium. Always think of a heart attack when an older patient with risk factors has unexplained upper abdominal discomfort.",
+        "The must-not-miss diagnoses for epigastric pain are Myocardial Infarction, Aortic Dissection, Mesenteric Ischaemia, Ruptured Aortic Aneurysm, and Perforated Viscus. All can be rapidly fatal if missed. They must be on your differential before you start investigating.",
+        "Checking both arm blood pressures takes 60 seconds and is a quick, useful bedside test when aortic dissection is suspected. A difference of more than 20 mmHg between arms raises concern that the aorta is torn. Equal pressures — as in this case — make dissection less likely but do not rule it out.",
+        "Absence of peritonism (no muscle guarding, no rebound tenderness) on abdominal examination reduces the possibility of peritonitis from a ruptured organ. The mild tenderness on deep pressure only is actually a recognised feature of inferior MI.",
         "The 12-lead ECG is the single most important investigation in this case — free, fast, and diagnostic. In any patient over 40 with unexplained upper abdominal symptoms and cardiovascular risk factors, order the ECG immediately.",
         "ST elevation in the inferior leads (II, III, aVF) with opposite changes in leads I and aVL is the ECG signature of Inferior STEMI. This pattern is about 95% specific for the diagnosis.",
         "Time matters critically in heart attacks. Every 10-minute delay in opening the blocked artery means approximately 1,000 more heart muscle cells die permanently. This is why the ECG must be done before other tests."
@@ -165,6 +190,21 @@
             {
               "type": "inv",
               "text": "Lactate 1.9 mmol/L (borderline normal). Severe mesenteric ischaemia typically causes lactic acidosis with lactate well above 2.0 mmol/L"
+            }
+          ]
+        },
+        {
+          "mnm": "Perforated Viscus",
+          "status": "ruled-out",
+          "statusLbl": "Largely excluded",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "Soft abdomen with no peritonism (no guarding, rigidity, or rebound tenderness) — a perforated viscus causes peritonitis with marked guarding and a rigid abdomen"
+            },
+            {
+              "type": "inv",
+              "text": "Erect chest X-ray shows no free air under the diaphragm — pneumoperitoneum would be expected with a perforated viscus"
             }
           ]
         }
@@ -371,7 +411,7 @@
           "cost": "free",
           "rel": true,
           "find": "Neck veins not raised. Normal heart sounds, no abnormal sounds or murmurs. No rubbing sound (pericardial rub). All pulses equal in both arms and legs.",
-          "exp": "Absence of a pericardial rub reduces likelihood of pericarditis. Equal pulses throughout, combined with equal arm BPs, effectively rules out aortic dissection. Normal neck veins suggest the right heart is not under severe strain yet.",
+          "exp": "Absence of a pericardial rub reduces likelihood of pericarditis. Equal pulses throughout, combined with equal arm BPs, make aortic dissection less likely — but do not exclude it (dissection can occur with no inter-arm BP difference). Normal neck veins suggest the right heart is not under severe strain yet.",
           "lookingFor": "JVP elevation; pericardial rub; muffled heart sounds; murmurs suggesting valvular cause; all peripheral pulses"
         },
         {
@@ -390,7 +430,7 @@
           "rel": true,
           "sigNeg": true,
           "find": "Abdomen soft and not distended. Mild tenderness to deep pressure only in the upper-middle abdomen — no muscle tensing (guarding), no rigidity, no rebound tenderness. Murphy's sign negative (pressing under right rib cage does not cause sudden pain worsening). Liver and spleen not enlarged. Normal bowel sounds. No pulsatile mass.",
-          "exp": "CRITICAL NEGATIVE: No peritonism (no guarding, rigidity, or rebound tenderness) effectively rules out peritonitis from a perforated organ. Negative Murphy's sign argues strongly against acute cholecystitis. The mild non-specific tenderness on deep pressure is actually a recognised feature of inferior MI — the heart pain refers to the upper abdomen via shared nerve supply. No pulsatile abdominal mass makes ruptured aortic aneurysm less likely.",
+          "exp": "CRITICAL NEGATIVE: No peritonism (no guarding, rigidity, or rebound tenderness) makes peritonitis from a perforated organ much less likely. Negative Murphy's sign argues strongly against acute cholecystitis. The mild non-specific tenderness on deep pressure is actually a recognised feature of inferior MI — referred pain from the inferior-wall myocardium via autonomic afferents. No pulsatile abdominal mass makes ruptured aortic aneurysm less likely.",
           "lookingFor": "Peritonism (guarding, rebound, rigidity) → surgical emergency; Murphy's sign → cholecystitis; pulsatile mass → AAA; bowel sounds"
         },
         {
@@ -434,7 +474,7 @@
       "basic": [
         {
           "id": "bi01",
-          "lbl": "12-lead ECG (heart tracing)",
+          "lbl": "12-lead ECG",
           "cost": "low",
           "rel": true,
           "required": true,
@@ -444,7 +484,7 @@
         },
         {
           "id": "bi02",
-          "lbl": "Troponin blood test",
+          "lbl": "High-Sensitivity Troponin T",
           "cost": "low",
           "rel": true,
           "find": "Troponin (hs-TnI): 248 ng/L at arrival (normal under 26 ng/L — about 10 times above normal). Repeat at 3 hours: 1,840 ng/L — rising significantly.",
@@ -452,7 +492,7 @@
         },
         {
           "id": "bi03",
-          "lbl": "Full blood count (FBC)",
+          "lbl": "Full Blood Count",
           "cost": "low",
           "rel": false,
           "find": "Haemoglobin 144 g/L (normal). White cells 11.8 (mildly elevated — a non-specific stress response). Platelets 228 (normal).",
@@ -460,7 +500,7 @@
         },
         {
           "id": "bi04",
-          "lbl": "Kidney function and electrolytes",
+          "lbl": "Renal Panel",
           "cost": "low",
           "rel": false,
           "find": "Sodium 138 (normal), Potassium 4.2 (normal), Creatinine 102 µmol/L (slightly reduced kidney function). All acceptable.",
@@ -468,7 +508,7 @@
         },
         {
           "id": "bi05",
-          "lbl": "Liver function tests (LFTs)",
+          "lbl": "Liver Panel",
           "cost": "low",
           "rel": false,
           "find": "All liver enzymes (ALT, AST, ALP, bilirubin, albumin) within normal range.",
@@ -476,16 +516,16 @@
         },
         {
           "id": "bi06",
-          "lbl": "Pancreatic enzymes (lipase and amylase)",
+          "lbl": "Serum Lipase",
           "cost": "low",
           "rel": false,
           "sigNeg": true,
           "find": "Lipase 36 U/L (normal — pancreatitis typically causes levels 3 times the upper limit of normal or higher). Amylase 74 U/L (normal).",
-          "exp": "SIGNIFICANT NEGATIVE: Normal lipase effectively rules out acute pancreatitis. Pancreatitis was a reasonable early consideration given the epigastric pain with nausea. However, ordering this before getting an ECG in someone with cardiovascular risk factors is poor test sequencing."
+          "exp": "SIGNIFICANT NEGATIVE: A normal lipase makes acute pancreatitis much less likely, but does not exclude it on its own. Under the Revised Atlanta criteria, the diagnosis of pancreatitis requires 2 of 3: characteristic epigastric pain radiating to the back, lipase/amylase >3× the upper limit of normal, OR characteristic imaging findings. Here the pain radiates to the jaw and arm (not the back) and the enzymes are normal, so pancreatitis is unlikely. However, ordering this before getting an ECG in someone with cardiovascular risk factors is poor test sequencing."
         },
         {
           "id": "bi07",
-          "lbl": "Blood sugar (glucose)",
+          "lbl": "Capillary Blood Glucose",
           "cost": "low",
           "rel": false,
           "find": "Blood glucose 11.2 mmol/L (elevated). Urine: glucose present (expected in a diabetic), no ketones.",
@@ -493,7 +533,7 @@
         },
         {
           "id": "bi08",
-          "lbl": "Chest X-ray",
+          "lbl": "Chest X-ray (CXR)",
           "cost": "low",
           "rel": false,
           "find": "Heart size normal. Mediastinum (space in middle of chest) not widened. Lung fields clear. No collapsed lung, no fluid around the lung.",
@@ -502,7 +542,7 @@
         },
         {
           "id": "bi09",
-          "lbl": "Urine dipstick",
+          "lbl": "Urine Dipstick",
           "cost": "low",
           "rel": false,
           "find": "Glucose in urine (expected in his diabetes). No blood, no protein, no signs of infection.",
@@ -510,7 +550,7 @@
         },
         {
           "id": "bi10",
-          "lbl": "Blood gas (ABG/VBG)",
+          "lbl": "Arterial Blood Gas (ABG)",
           "cost": "low",
           "rel": false,
           "find": "pH 7.40 (normal). Oxygen level adequate. Lactate 1.9 mmol/L (borderline — acceptable).",
@@ -518,7 +558,7 @@
         },
         {
           "id": "bi11",
-          "lbl": "D-dimer blood test",
+          "lbl": "D-Dimer",
           "cost": "low",
           "rel": false,
           "find": "D-dimer 0.45 mg/L (mildly elevated — non-specific, elevated in many conditions including heart attacks).",
@@ -526,7 +566,7 @@
         },
         {
           "id": "bi12",
-          "lbl": "CRP (inflammation marker)",
+          "lbl": "C-Reactive Protein (CRP)",
           "cost": "low",
           "rel": false,
           "find": "CRP 14 mg/L (mildly elevated). ESR 22 mm/hr (normal).",
@@ -536,7 +576,7 @@
       "advanced": [
         {
           "id": "ai01",
-          "lbl": "Coronary angiogram + emergency PCI (emergency heart procedure)",
+          "lbl": "Coronary Angiogram + Primary PCI",
           "cost": "high",
           "rel": true,
           "find": "Complete blockage of the mid right coronary artery (RCA) confirmed. Drug-coated stent successfully placed to open the artery. Blood flow restored. Time from arrival to balloon: 72 minutes (within the 90-minute target).",
@@ -545,7 +585,7 @@
         },
         {
           "id": "ai02",
-          "lbl": "Echocardiogram (heart ultrasound)",
+          "lbl": "Echocardiogram (2D Echo)",
           "cost": "mid",
           "rel": true,
           "find": "The lower (inferior) and side (inferolateral) heart walls are moving poorly. Mild right ventricular involvement. Pumping function approximately 48% (slightly below normal 55%). No fluid around the heart.",
@@ -554,7 +594,7 @@
         },
         {
           "id": "ai03",
-          "lbl": "CT aortogram (CT scan to look for aortic tear)",
+          "lbl": "CT Aortogram",
           "cost": "high",
           "rel": false,
           "penalize": true,
@@ -563,7 +603,7 @@
         },
         {
           "id": "ai04",
-          "lbl": "CT pulmonary angiography (CT scan to look for blood clots in lungs)",
+          "lbl": "CT Pulmonary Angiogram (CTPA)",
           "cost": "high",
           "rel": false,
           "penalize": true,
@@ -572,7 +612,7 @@
         },
         {
           "id": "ai05",
-          "lbl": "CT scan of abdomen and pelvis",
+          "lbl": "CT Abdomen/Pelvis",
           "cost": "mid",
           "rel": false,
           "penalize": true,
@@ -581,7 +621,7 @@
         },
         {
           "id": "ai06",
-          "lbl": "Upper GI endoscopy (camera into stomach)",
+          "lbl": "Oesophago-gastro-duodenoscopy (OGD)",
           "cost": "high",
           "rel": false,
           "penalize": true,
@@ -590,7 +630,7 @@
         },
         {
           "id": "ai07",
-          "lbl": "Abdominal ultrasound",
+          "lbl": "Ultrasound Abdomen",
           "cost": "mid",
           "rel": false,
           "find": "No gallstones. Normal liver and bile ducts. Normal kidney. Aorta normal diameter.",
@@ -598,7 +638,7 @@
         },
         {
           "id": "ai08",
-          "lbl": "V/Q scan (alternative scan for blood clots in lungs)",
+          "lbl": "V/Q Scan",
           "cost": "mid",
           "rel": false,
           "penalize": true,
@@ -612,7 +652,7 @@
           "mnm": "Aortic Dissection",
           "after_item": "pe02",
           "snapshot": "Examination",
-          "note": "Equal bilateral arm BPs (difference <10 mmHg) effectively excludes aortic dissection — dissection typically causes >20 mmHg difference"
+          "note": "Equal bilateral arm BPs (difference <10 mmHg) make aortic dissection less likely — a >20 mmHg difference would raise concern — but equal pressures do not exclude it; the absent tearing/inter-scapular pain is more reassuring"
         },
         {
           "mnm": "Aortic Aneurysm / Ruptured AAA",
@@ -625,6 +665,12 @@
           "after_item": "pe05",
           "snapshot": "Examination",
           "note": "Soft abdomen without peritonism argues against mesenteric ischaemia — bowel ischaemia classically causes 'pain out of proportion to exam', but frank peritonism develops as bowel dies"
+        },
+        {
+          "mnm": "Perforated Viscus",
+          "after_item": "pe05",
+          "snapshot": "Examination",
+          "note": "Soft abdomen with no peritonism argues against a perforated viscus — perforation causes peritonitis with guarding and rigidity"
         },
         {
           "mnm": "Myocardial Infarction",
@@ -643,6 +689,24 @@
       "difficulty": "challenging",
       "patient": "Mr Lim Ah Kow, 58M, Retired Factory Worker",
       "snomedCode": "1259239003",
+      "demographics": { "name": "Lim Ah Kow", "age": "58", "sex": "M", "occupation": "Retired Factory Worker", "mrn": "125923" },
+      "vitals": {
+        "hr": { "value": "96", "unit": "bpm", "abnormal": false },
+        "bp": { "value": "108/70", "unit": "mmHg", "abnormal": false },
+        "spo2": { "value": "91", "unit": "%", "abnormal": true },
+        "rr": { "value": "22", "unit": "/min", "abnormal": true },
+        "temp": { "value": "37.4", "unit": "°C", "abnormal": false }
+      },
+      "allergies": "NKDA",
+      "background": ["45 pk-yr smoker", "Asbestos exposure", "Underweight (BMI 17)"],
+      "pathway": {
+        "validation": { "status": "draft", "validatedBy": null, "validatedAt": null, "notes": "Awaiting respiratory/endocrine sign-off." },
+        "reasoning": {
+          "bi01": "Chest X-ray is the key first-line test — a central hilar mass reframes the whole presentation toward lung cancer.",
+          "addisonian_crisis": "Exclude adrenal insufficiency (9 am cortisol ± Synacthen) before attributing the hyponatraemia to SIADH — it is reversible and life-threatening."
+        },
+        "reveal": { "hint": "mask-diagnoses", "debrief": "full" }
+      },
       "vignette": "Mr Lim Ah Kow, a 58-year-old retired factory worker, is brought into the Emergency Department by his son. His son reports that his father has been getting progressively more breathless over the past 6 weeks, and has lost a lot of weight. Today, he seems more confused and unsteady than usual.",
       "caseMNMs": [
         {
@@ -712,13 +776,12 @@
       ],
       "keyTeachingPoints": [
         "Small cell lung cancer (SCLC) is an aggressive lung cancer strongly associated with heavy smoking. It arises centrally, near the main airways, and is typically already widespread at diagnosis. It is the lung cancer most strongly associated with paraneoplastic syndromes.",
-        "Paraneoplastic syndromes occur when tumour cells produce substances that affect other organs — without cancer having directly spread there. SCLC cells produce ectopic ADH, causing SIADH in 5–10% of patients clinically (though up to 45% produce ADH without symptoms).",
-        "SIADH causes euvolaemic hyponatraemia. The kidneys retain excess water, diluting the blood sodium. When sodium falls below approximately 125 mmol/L, brain swelling causes confusion. The diagnostic criteria for SIADH are: low serum sodium + low serum osmolality + inappropriately concentrated urine (osmolality >100 mOsm/kg) + high urine sodium (>40 mmol/L) + euvolaemia + exclusion of adrenal insufficiency, hypothyroidism, and diuretics.",
-        "The diagnostic approach to euvolaemic hyponatraemia must always exclude Addisonian crisis (adrenal insufficiency) first — it is life-threatening, immediately reversible with steroid replacement, and can mimic SIADH biochemically. A Synacthen test is mandatory before attributing hyponatraemia to SIADH.",
-        "Pulmonary TB must always be considered in any patient with 6+ weeks of progressive cough, haemoptysis, weight loss, night sweats, and anorexia — this is TB until proven otherwise. Missing TB has public health consequences: the patient needs isolation, and contacts need tracing.",
+        "Paraneoplastic syndromes occur when tumour cells produce substances that affect other organs — without cancer having directly spread there. SCLC is strongly associated with SIADH via ectopic ADH production.",
+        "SIADH causes euvolaemic hyponatraemia. The kidneys retain excess water, diluting the blood sodium. When sodium falls below approximately 125 mmol/L, brain swelling causes confusion. The diagnostic criteria for SIADH are: low serum sodium + low serum osmolality + inappropriately concentrated urine + high urine sodium (>40 mmol/L) + euvolaemia + exclusion of adrenal insufficiency, hypothyroidism, and diuretics.",
+        "In euvolaemic hyponatraemia, always consider Addison's disease (adrenal insufficiency) as an important and potentially life-threatening cause, as it can closely mimic SIADH biochemically. A 9 am serum cortisol should be checked early, and a Synacthen (ACTH stimulation) test is often used to confirm the diagnosis when appropriate. It is essential to exclude adrenal insufficiency before attributing hyponatraemia to SIADH, as it is immediately treatable with steroid replacement. Particularly, Addisonian crisis should not be missed, and steroid replacement in this condition can be rapidly life-saving.",
+        "TB should be considered in patients presenting with chronic cough, haemoptysis, weight loss, and systemic symptoms, particularly in high-risk or endemic settings. In suspected cases, appropriate infection-control precautions and isolation should be initiated early until tuberculosis is confirmed or confidently excluded, to reduce the risk of transmission.",
         "Cardiac tamponade is a must-not-miss in any patient with lung cancer and progressive dyspnoea — lung cancer extends to the pericardium more commonly than any other primary cancer. Beck's triad (raised JVP, muffled heart sounds, hypotension) with pulsus paradoxus identifies it clinically; echocardiogram confirms.",
-        "When a patient presents with two seemingly unrelated problems (breathlessness AND confusion), always ask whether one diagnosis can explain both. In SCLC, the cancer explains breathlessness (tumour mass, pleural effusion) AND confusion (paraneoplastic SIADH → hyponatraemia). The hyponatraemia is a clue pointing to the lungs, not the diagnosis itself.",
-        "Paraneoplastic SIADH in SCLC is usually reversible — approximately 80% of patients achieve normal sodium within 3 weeks of starting chemotherapy. Importantly, profound hyponatraemia can paradoxically worsen in the first 1–5 days after chemotherapy starts due to tumour lysis releasing more ADH."
+        "When a patient presents with two seemingly unrelated problems (breathlessness AND confusion), always ask whether one diagnosis can explain both. In SCLC, the cancer explains breathlessness (tumour mass, pleural effusion) AND confusion (paraneoplastic SIADH → hyponatraemia). The hyponatraemia is a clue pointing to the lungs, not the diagnosis itself."
       ],
       "mnmRuleOut": [
         {
@@ -816,7 +879,7 @@
             {
               "type": "inv",
               "item_id": "bi07",
-              "text": "Morning cortisol adequate; Synacthen test: cortisol rises to >550 nmol/L at 30 minutes — adrenal function confirmed intact. This investigation is MANDATORY before attributing hyponatraemia to SIADH"
+              "text": "Morning cortisol adequate; Synacthen test: cortisol rises to >550 nmol/L at 30 minutes — adrenal function confirmed intact. Excluding adrenal insufficiency is essential before attributing hyponatraemia to SIADH"
             }
           ]
         }
@@ -867,9 +930,9 @@
         }
       ],
       "approachInsight": "This case illustrates the principle of 'one diagnosis explaining two problems.' The SCLC explains both the breathlessness (tumour mass + pleural effusion) AND the confusion (paraneoplastic SIADH → hyponatraemia → cerebral oedema). The confusion is the diagnostic clue — it should prompt the question 'why is this patient confused?' which leads to serum electrolytes, which reveals the hyponatraemia, which triggers the SIADH workup, which points back to the lung. The sodium level is not the diagnosis; it is the pointer.",
-      "expertNarrative": "SCLC presenting with paraneoplastic SIADH is a classic advanced presentation. The central reasoning: (1) A heavy smoker with 6 weeks of progressive cough, haemoptysis, weight loss, night sweats, and new confusion has SCLC with paraneoplastic SIADH until proven otherwise. (2) The confusion triggers electrolyte testing, which reveals severe hyponatraemia. (3) Euvolaemia on examination localises this to SIADH (not dehydration, not cardiac or hepatic failure). (4) Addison's and hypothyroidism must be actively excluded before diagnosing SIADH — they are life-threatening and immediately reversible. (5) The CXR confirms a central hilar mass, and bronchoscopy biopsy provides histological diagnosis. (6) Treatment of the underlying SCLC is the primary treatment for the SIADH — approximately 80% of patients normalise their sodium within 3 weeks of starting chemotherapy.",
+      "expertNarrative": "SCLC presenting with paraneoplastic SIADH is a classic advanced presentation. The central reasoning: (1) A heavy smoker with 6 weeks of progressive cough, haemoptysis, weight loss, night sweats, and new confusion has SCLC with paraneoplastic SIADH until proven otherwise. (2) The confusion triggers electrolyte testing, which reveals severe hyponatraemia. (3) Euvolaemia on examination localises this to SIADH (not dehydration, not cardiac or hepatic failure). (4) Addison's and hypothyroidism must be actively excluded before diagnosing SIADH — they are life-threatening and immediately reversible. (5) The CXR confirms a central hilar mass, and bronchoscopy biopsy provides histological diagnosis. (6) Treatment of the underlying SCLC is the primary treatment for the SIADH.",
       "sensitivityNote": "SCLC has poor sensitivity for 'classic' respiratory symptoms — it frequently presents with weight loss, hyponatraemia, confusion, or neurological symptoms before obvious breathlessness develops. Paraneoplastic syndromes may precede diagnosis. Any heavy smoker with constitutional symptoms and unexplained confusion warrants urgent chest imaging and electrolyte testing.",
-      "specificityNote": "Tissue biopsy (bronchoscopy or CT-guided) with SCLC histology (small cells with high nuclear-to-cytoplasmic ratio, neuroendocrine immunohistochemistry — TTF-1, synaptophysin, CD56 positive) combined with a central lung mass on CT is highly specific. SIADH diagnosis requires: hypo-osmolar hyponatraemia + inappropriately concentrated urine (osmolality >100 mOsm/kg) + urine sodium >40 mmol/L + euvolaemia + exclusion of Addison's, hypothyroidism, and diuretic use.",
+      "specificityNote": "Tissue biopsy (bronchoscopy or CT-guided) with SCLC histology (small cells with high nuclear-to-cytoplasmic ratio, neuroendocrine immunohistochemistry — TTF-1, synaptophysin, CD56 positive) combined with a central lung mass on CT is highly specific. SIADH diagnosis requires: hypo-osmolar hyponatraemia + inappropriately concentrated urine + urine sodium >40 mmol/L + euvolaemia + exclusion of Addison's, hypothyroidism, and diuretic use.",
       "history": [
         {
           "id": "h01",
@@ -1040,7 +1103,7 @@
       "basic": [
         {
           "id": "bi01",
-          "lbl": "Chest X-ray",
+          "lbl": "Chest X-ray (CXR)",
           "cost": "low",
           "rel": true,
           "required": true,
@@ -1050,7 +1113,7 @@
         },
         {
           "id": "bi02",
-          "lbl": "D-dimer",
+          "lbl": "D-Dimer",
           "cost": "low",
           "rel": false,
           "sigNeg": true,
@@ -1059,7 +1122,7 @@
         },
         {
           "id": "bi03",
-          "lbl": "Full blood count (FBC)",
+          "lbl": "Full Blood Count",
           "cost": "low",
           "rel": true,
           "find": "Haemoglobin 94 g/L (low — anaemia; normal >130 g/L in men). White blood cells 12.4 × 10⁹/L (mildly elevated — non-specific). Platelets 392 × 10⁹/L (normal).",
@@ -1067,25 +1130,25 @@
         },
         {
           "id": "bi04",
-          "lbl": "Serum electrolytes",
+          "lbl": "Renal Panel",
           "cost": "low",
           "rel": true,
           "required": true,
           "sigNeg": true,
           "find": "Sodium 122 mmol/L (critically low — normal 135–145 mmol/L). Potassium 3.9 mmol/L (normal). Chloride 88 mmol/L (low — mirrors hyponatraemia). Urea 2.8 mmol/L (low-normal — consistent with water retention). Creatinine 78 µmol/L (normal).",
-          "exp": "CRITICAL FINDING: Sodium of 122 mmol/L confirms severe hyponatraemia — this is the direct cause of the confusion (cerebral oedema begins when sodium falls below approximately 125 mmol/L). In combination with euvolaemia confirmed on examination, this is the SIADH pattern. Normal potassium is important: Addison's disease characteristically causes hyperkalaemia alongside hyponatraemia (from lack of mineralocorticoid aldosterone); normal potassium makes Addison's less likely, but it does NOT exclude it — the Synacthen test is still mandatory. Low urea reflects dilution from water retention, consistent with SIADH. This result should immediately trigger thyroid function tests, Synacthen test, and SIADH confirmation tests."
+          "exp": "CRITICAL FINDING: Sodium of 122 mmol/L confirms severe hyponatraemia — this is the direct cause of the confusion (cerebral oedema begins when sodium falls below approximately 125 mmol/L). In combination with euvolaemia confirmed on examination, this is the SIADH pattern. Normal potassium is important: Addison's disease characteristically causes hyperkalaemia alongside hyponatraemia (from lack of mineralocorticoid aldosterone); normal potassium makes Addison's less likely, but it does NOT exclude it — adrenal insufficiency still needs to be excluded. Low urea reflects dilution from water retention, consistent with SIADH. This result should immediately trigger thyroid function tests, Synacthen test, and SIADH confirmation tests."
         },
         {
           "id": "bi05",
-          "lbl": "Urine osmolality and urine sodium",
+          "lbl": "Urine Osmolality & Sodium",
           "cost": "low",
           "rel": true,
           "find": "Serum osmolality: 258 mOsm/kg (low — normal 275–295 mOsm/kg). Urine osmolality: 498 mOsm/kg (inappropriately HIGH — normal response to low serum osmolality would be very dilute urine below 100 mOsm/kg). Urine sodium: 62 mmol/L (inappropriately HIGH — should be low as kidneys try to retain sodium).",
-          "exp": "DIAGNOSTIC FOR SIADH: This is the confirmatory biochemical test. The paradox is: the blood is dilute (serum osmolality 258) but the urine is concentrated (498 mOsm/kg). Normally, low serum osmolality triggers the kidneys to produce maximally dilute urine to get rid of the excess water — but in SIADH, the ectopic ADH produced by the tumour overrides this response. The formal SIADH diagnostic criteria are met: hypo-osmolar hyponatraemia + urine osmolality >100 mOsm/kg + urine sodium >40 mmol/L + euvolaemia + exclusion of adrenal/thyroid causes."
+          "exp": "DIAGNOSTIC FOR SIADH: This is the confirmatory biochemical test. The paradox is: the blood is dilute (serum osmolality 258) but the urine is inappropriately concentrated (498 mOsm/kg). Normally, low serum osmolality triggers the kidneys to produce maximally dilute urine to get rid of the excess water — but in SIADH, the ectopic ADH produced by the tumour overrides this response. The formal SIADH diagnostic criteria are met: hypo-osmolar hyponatraemia + inappropriately concentrated urine + urine sodium >40 mmol/L + euvolaemia + exclusion of adrenal/thyroid causes."
         },
         {
           "id": "bi06",
-          "lbl": "Thyroid function tests",
+          "lbl": "Thyroid Function Test (TFT)",
           "cost": "low",
           "rel": true,
           "find": "TSH 1.9 mU/L (normal). Free T4 14.8 pmol/L (normal). Thyroid function is normal.",
@@ -1093,15 +1156,15 @@
         },
         {
           "id": "bi07",
-          "lbl": "Morning cortisol + Synacthen test",
+          "lbl": "9am Cortisol + Short Synacthen Test",
           "cost": "low",
           "rel": true,
           "find": "Morning cortisol: 302 nmol/L (adequate baseline). Short ACTH stimulation test (Synacthen 250 µg IV): cortisol rises to 638 nmol/L at 30 minutes — NORMAL RESPONSE (threshold >550 nmol/L at 30 minutes). Adrenal function intact.",
-          "exp": "MANDATORY TEST: Addisonian crisis (adrenal insufficiency) must be actively excluded in any patient with euvolaemic hyponatraemia — it is immediately life-threatening and reversible with hydrocortisone replacement. An adrenal crisis can present identically to SIADH biochemically (low sodium, euvolaemia) but requires completely different and urgent treatment. A normal Synacthen test confirms the adrenal glands are working correctly and allows SIADH to be diagnosed with confidence. This test should never be omitted in the hyponatraemia workup."
+          "exp": "ESSENTIAL TO EXCLUDE: Addisonian crisis (adrenal insufficiency) must be actively excluded in any patient with euvolaemic hyponatraemia — it is immediately life-threatening and reversible with hydrocortisone replacement. An adrenal crisis can present identically to SIADH biochemically (low sodium, euvolaemia) but requires completely different and urgent treatment. A 9 am serum cortisol checked early, with a Synacthen (ACTH stimulation) test when appropriate, confirms the adrenal glands are working and allows SIADH to be diagnosed with confidence. Exclude adrenal insufficiency before attributing the hyponatraemia to SIADH."
         },
         {
           "id": "bi08",
-          "lbl": "Liver function tests and albumin",
+          "lbl": "Liver Panel",
           "cost": "low",
           "rel": true,
           "find": "ALT 58 U/L (mildly elevated). AST 52 U/L (mildly elevated). ALP 162 U/L (elevated). Albumin 25 g/L (low — normal >35 g/L). Bilirubin 13 µmol/L (normal).",
@@ -1109,7 +1172,7 @@
         },
         {
           "id": "bi09",
-          "lbl": "Sputum AFB smear, culture, and cytology",
+          "lbl": "Sputum AFB, Culture & Cytology",
           "cost": "low",
           "rel": true,
           "find": "AFB smear: NEGATIVE (no acid-fast bacilli seen). Sputum culture: no bacterial growth at 48 hours; TB culture pending (8 weeks). Sputum cytology: MALIGNANT CELLS identified — small cells with scant cytoplasm, high nuclear-to-cytoplasmic ratio, and stippled chromatin. Morphology consistent with small cell carcinoma.",
@@ -1118,7 +1181,7 @@
         },
         {
           "id": "bi10",
-          "lbl": "ABG (blood gas)",
+          "lbl": "Arterial Blood Gas (ABG)",
           "cost": "low",
           "rel": true,
           "find": "pH 7.38 (normal). PaO₂ 8.1 kPa (low — normal >10 kPa on room air = Type 1 respiratory failure). PaCO₂ 5.0 kPa (normal). HCO₃ 22 mmol/L (normal). Lactate 1.7 mmol/L (normal).",
@@ -1128,7 +1191,7 @@
       "advanced": [
         {
           "id": "ai01",
-          "lbl": "CT chest, abdomen and pelvis (staging CT)",
+          "lbl": "CT Thorax/Abdomen/Pelvis (Staging)",
           "cost": "mid",
           "rel": true,
           "find": "Right hilar mass (5.3 × 5.1 cm) at the right main bronchus with mediastinal lymphadenopathy (N2/N3 nodes). Moderate right pleural effusion. Multiple hepatic hypodense lesions consistent with metastases (largest 1.9 cm). Adrenal glands appear normal. No bony metastases identified on this scan. No upper lobe cavitation or miliary pattern (TB unlikely but not excluded).",
@@ -1137,7 +1200,7 @@
         },
         {
           "id": "ai02",
-          "lbl": "Bronchoscopy and biopsy",
+          "lbl": "Bronchoscopy + Biopsy",
           "cost": "high",
           "rel": true,
           "find": "Bronchoscopy: right main bronchus almost completely obstructed by an endobronchial tumour. Biopsy: SMALL CELL LUNG CANCER (SCLC). Histology: dense sheets of small cells with scant cytoplasm and stippled chromatin. Immunohistochemistry: TTF-1 positive, synaptophysin positive, CD56 positive, Ki-67 >80% (very high proliferative rate — characteristic of SCLC).",
@@ -1146,7 +1209,7 @@
         },
         {
           "id": "ai03",
-          "lbl": "MRI brain",
+          "lbl": "MRI Brain",
           "cost": "mid",
           "rel": true,
           "find": "Two small enhancing lesions: right frontal lobe (1.0 cm) and right cerebellar hemisphere (0.8 cm). Consistent with brain metastases. No significant oedema or midline shift.",
@@ -1155,7 +1218,7 @@
         },
         {
           "id": "ai04",
-          "lbl": "Pleural fluid aspiration (thoracocentesis)",
+          "lbl": "Pleural Tap (Thoracocentesis)",
           "cost": "mid",
           "rel": true,
           "find": "450 mL straw-coloured fluid aspirated. Exudate (protein elevated, meets Light's criteria). Cytology: malignant cells consistent with SCLC. Culture: negative. AFB smear: negative.",
@@ -1163,7 +1226,7 @@
         },
         {
           "id": "ai05",
-          "lbl": "PET-CT scan",
+          "lbl": "PET-CT",
           "cost": "high",
           "rel": false,
           "find": "Not performed — CT staging and MRI brain completed; extensive stage SCLC confirmed without PET-CT.",
@@ -1222,6 +1285,24 @@
       "difficulty": "challenging",
       "patient": "Miss Chen Mei Ling, 28F, Primary School Teacher",
       "snomedCode": "195229007",
+      "demographics": { "name": "Chen Mei Ling", "age": "28", "sex": "F", "occupation": "Primary School Teacher", "mrn": "195229" },
+      "vitals": {
+        "hr": { "value": "88", "unit": "bpm", "abnormal": false },
+        "bp": { "value": "134/86", "unit": "mmHg", "abnormal": true },
+        "spo2": { "value": "99", "unit": "%", "abnormal": false },
+        "rr": { "value": "16", "unit": "/min", "abnormal": false },
+        "temp": { "value": "37.2", "unit": "°C", "abnormal": false }
+      },
+      "allergies": "NKDA",
+      "background": ["On COCP (4 months)", "Migraine", "FHx DVT (mother, age 38)"],
+      "pathway": {
+        "validation": { "status": "draft", "validatedBy": null, "validatedAt": null, "notes": "Awaiting neurology sign-off on imaging sequence." },
+        "reasoning": {
+          "bi02": "A normal plain CT head does NOT exclude CVST — proceed to CT/MR venography when suspicion remains.",
+          "subarachnoid_haemorrhage_sah": "Thunderclap onset would mandate urgent CT ± LP — kept as the headache safety net."
+        },
+        "reveal": { "hint": "mask-diagnoses", "debrief": "full" }
+      },
       "vignette": "Miss Chen Mei Ling is a 28-year-old primary school teacher who presents to the Emergency Department with a 5-day history of progressively worsening headache. The headache has not responded to paracetamol. This morning, she noticed weakness in her left arm while writing on the whiteboard.",
       "caseMNMs": [
         {
@@ -1591,7 +1672,7 @@
       "basic": [
         {
           "id": "bi01",
-          "lbl": "Full blood count and CRP",
+          "lbl": "Full Blood Count + CRP",
           "cost": "low",
           "rel": true,
           "sigNeg": true,
@@ -1600,7 +1681,7 @@
         },
         {
           "id": "bi02",
-          "lbl": "CT head (non-contrast)",
+          "lbl": "CT Brain (non-contrast)",
           "cost": "low",
           "rel": true,
           "required": true,
@@ -1611,7 +1692,7 @@
         },
         {
           "id": "bi03",
-          "lbl": "Coagulation profile",
+          "lbl": "Coagulation Panel (PT/PTT)",
           "cost": "low",
           "rel": true,
           "find": "Prothrombin time (PT/INR): normal. APTT: normal. Fibrinogen: 4.1 g/L (normal).",
@@ -1619,7 +1700,7 @@
         },
         {
           "id": "bi04",
-          "lbl": "Serum electrolytes and renal function",
+          "lbl": "Renal Panel",
           "cost": "low",
           "rel": false,
           "find": "Sodium 139 mmol/L (normal). All other electrolytes and renal function within normal range.",
@@ -1627,7 +1708,7 @@
         },
         {
           "id": "bi05",
-          "lbl": "Pregnancy test",
+          "lbl": "Urine Pregnancy Test (UPT)",
           "cost": "low",
           "rel": true,
           "find": "Urine beta-hCG: NEGATIVE. Not pregnant.",
@@ -1635,7 +1716,7 @@
         },
         {
           "id": "bi06",
-          "lbl": "D-dimer",
+          "lbl": "D-Dimer",
           "cost": "low",
           "rel": true,
           "find": "D-dimer: 2.6 mg/L (elevated — above upper limit of normal).",
@@ -1643,7 +1724,7 @@
         },
         {
           "id": "bi07",
-          "lbl": "Lumbar puncture (LP) with opening pressure",
+          "lbl": "Lumbar Puncture (LP) + Opening Pressure",
           "cost": "low",
           "rel": true,
           "sigNeg": true,
@@ -1653,7 +1734,7 @@
         },
         {
           "id": "bi08",
-          "lbl": "Thrombophilia screen",
+          "lbl": "Thrombophilia Screen",
           "cost": "low",
           "rel": true,
           "find": "Antiphospholipid antibodies: POSITIVE — lupus anticoagulant detected. Anticardiolipin IgG: 52 GPL units (elevated, above 40 units). Factor V Leiden: NEGATIVE. Prothrombin gene mutation: NEGATIVE. Protein C and S: normal (note: may be transiently low on anticoagulation — repeat off treatment).",
@@ -1663,7 +1744,7 @@
       "advanced": [
         {
           "id": "ai01",
-          "lbl": "MRI brain with MR venography (MRV)",
+          "lbl": "MRI Brain + MR Venogram (MRV)",
           "cost": "mid",
           "rel": true,
           "required": true,
@@ -1673,7 +1754,7 @@
         },
         {
           "id": "ai02",
-          "lbl": "CT venography (CT with contrast looking at brain veins)",
+          "lbl": "CT Venogram (CTV)",
           "cost": "mid",
           "rel": true,
           "find": "CT venography: 'Empty delta sign' present in the superior sagittal sinus — triangular filling defect (non-enhancing clot) surrounded by enhancing sinus walls. Confirms superior sagittal sinus thrombosis. Findings correlate with MR venography.",
@@ -1682,7 +1763,7 @@
         },
         {
           "id": "ai03",
-          "lbl": "MRI brain with contrast (gadolinium)",
+          "lbl": "MRI Brain with Contrast",
           "cost": "mid",
           "rel": true,
           "find": "Right parietal lobe: T2/FLAIR signal change and mild restricted diffusion (early venous infarction/oedema). No ring-enhancing lesions (excludes brain abscess). No leptomeningeal enhancement (argues against meningitis). Findings are in the right parietal cortex in the drainage territory of the superior sagittal sinus.",
@@ -1691,7 +1772,7 @@
         },
         {
           "id": "ai04",
-          "lbl": "CT angiography (looking at the brain arteries)",
+          "lbl": "CT Angiogram (CTA) Brain",
           "cost": "high",
           "rel": false,
           "find": "CT angiography: cerebral arteries normal throughout. No arterial occlusion, no aneurysm, no arteriovenous malformation.",
@@ -1699,7 +1780,7 @@
         },
         {
           "id": "ai05",
-          "lbl": "EEG (brain electrical activity recording)",
+          "lbl": "EEG",
           "cost": "mid",
           "rel": false,
           "find": "Slowing of electrical activity over the right hemisphere — consistent with focal brain dysfunction. No epileptiform discharges at the time of recording.",

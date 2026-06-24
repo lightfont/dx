@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -77,6 +77,11 @@
   <div class="rk-modal" id="rank-modal-inner"></div>
 </div>
 
+<!-- ── COMMAND PALETTE (⌘K, M3+) ── -->
+<div id="palette" class="hide" onclick="if(event.target.id==='palette')closePalette()">
+  <div class="pal" id="pal-inner"></div>
+</div>
+
 <!-- ── LIBRARY DRAWER ── -->
 <div id="drawer-overlay" onclick="closeDrawer()"></div>
 <div id="drawer">
@@ -142,7 +147,6 @@ const DIAG_LIB = {
     {n:"Asthma Exacerbation",mnm:true,desc:"Acute worsening of airway narrowing in asthma"},
     {n:"Lung Cancer",u:true,subs:["Adenocarcinoma","Squamous Cell Carcinoma of Lung","Small Cell Lung Cancer (SCLC)"],mnm:true},
     {n:"Pulmonary Tuberculosis",u:true,subs:["Primary TB","Post-primary TB","Miliary TB"],mnm:true},
-    {n:"SIADH",mnm:false,desc:"Syndrome of Inappropriate ADH — kidneys retain too much water, diluting blood sodium"},
   ]},
   "Gastrointestinal":{ico:"🍃",diags:[
     {n:"Peptic Ulcer Disease",u:true,subs:["Gastric Ulcer","Duodenal Ulcer","Perforated PUD (ulcer bursts)"],mnm:false,desc:"Sore/ulcer in the stomach or duodenum lining"},
@@ -177,8 +181,17 @@ const DIAG_LIB = {
     {n:"Hypercalcaemia",mnm:false,desc:"Too much calcium — 'bones, stones, groans, psychic moans'"},
     {n:"Hypoglycaemia",mnm:true,desc:"Dangerously low blood sugar"},
     {n:"Thyroid Storm",mnm:true,desc:"Extreme overactivity of the thyroid — life-threatening"},
+    {n:"Hyperthyroidism / Thyrotoxicosis",u:true,subs:["Graves' Disease","Toxic Multinodular Goitre","Toxic Adenoma","Thyroiditis (thyrotoxic phase)"],mnm:false,desc:"Overactive thyroid — weight loss, palpitations, tremor, heat intolerance"},
     {n:"Hypothyroidism",mnm:false,desc:"Underactive thyroid — can cause low sodium in severe cases"},
+    {n:"SIADH",mnm:false,desc:"Syndrome of Inappropriate ADH — kidneys retain too much water, diluting blood sodium"},
+    {n:"Diabetes Insipidus",mnm:false,desc:"Too little ADH effect — large volumes of dilute urine, high sodium"},
     {n:"Phaeochromocytoma",mnm:true,desc:"Adrenal tumour releasing adrenaline bursts — causes hypertensive crises"},
+    {n:"Cushing's Syndrome",mnm:false,desc:"Excess cortisol — weight gain, proximal weakness, striae, hypertension"},
+    {n:"Addison's Disease (chronic)",mnm:false,desc:"Chronic adrenal insufficiency — fatigue, weight loss, pigmentation, low sodium"},
+    {n:"Primary Hyperaldosteronism (Conn's)",mnm:false,desc:"Excess aldosterone — hypertension with low potassium"},
+    {n:"Primary Hyperparathyroidism",mnm:false,desc:"Excess PTH — most common cause of hypercalcaemia in outpatients"},
+    {n:"Diabetes Mellitus",u:true,subs:["Type 1 Diabetes","Type 2 Diabetes"],mnm:false,desc:"Chronic high blood glucose from insulin deficiency or resistance"},
+    {n:"Acromegaly",mnm:false,desc:"Excess growth hormone in adults — enlarged hands, feet, jaw"},
   ]},
   "Haematology":{ico:"🩸",diags:[
     {n:"Severe Anaemia",mnm:false,desc:"Very low haemoglobin — can cause breathlessness and cardiac stress"},
@@ -203,6 +216,22 @@ const DIAG_LIB = {
     {n:"Raised Intracranial Pressure",mnm:true,desc:"Increased pressure inside the skull — headache, vomiting, papilloedema"},
     {n:"Spinal Radiculopathy",mnm:false,desc:"Pinched nerve causing pain radiating to chest or abdomen"},
     {n:"Herpes Zoster / Shingles (pre-rash)",mnm:false,desc:"Reactivation of chickenpox virus — dermatomal pain before the rash appears"},
+    {n:"Parkinson's Disease",mnm:false,desc:"Resting tremor, bradykinesia, rigidity — asymmetrical onset"},
+    {n:"Essential Tremor",mnm:false,desc:"Symmetrical action/postural tremor — improves with alcohol, family history"},
+    {n:"Drug-Induced Parkinsonism",mnm:false,desc:"Parkinsonism from dopamine-blocking drugs (e.g. antipsychotics, metoclopramide)"},
+    {n:"Multiple Sclerosis",mnm:false,desc:"Demyelination disseminated in time and space — e.g. optic neuritis, limb weakness"},
+    {n:"Myasthenia Gravis",mnm:true,desc:"Fatigable weakness, ptosis, diplopia — myasthenic crisis causes respiratory failure"},
+    {n:"Guillain–Barré Syndrome",mnm:true,desc:"Ascending weakness and areflexia after infection — risk of respiratory failure"},
+    {n:"Temporal Arteritis (Giant Cell Arteritis)",mnm:true,desc:"Large-vessel vasculitis — new headache, jaw claudication, sight-threatening"},
+    {n:"Motor Neuron Disease (ALS)",mnm:false,desc:"Mixed upper and lower motor neuron signs, no sensory loss"},
+    {n:"Peripheral Neuropathy",mnm:false,desc:"Glove-and-stocking sensory loss/weakness — e.g. diabetic, B12 deficiency"},
+    {n:"Bell's Palsy",mnm:false,desc:"Acute lower motor neuron facial weakness — forehead involved"},
+    {n:"Epilepsy / Seizure Disorder",mnm:false,desc:"Recurrent unprovoked seizures"},
+    {n:"Spinal Cord Compression",mnm:true,desc:"Cord compression — weakness, sensory level, sphincter disturbance; neurosurgical emergency"},
+    {n:"Cauda Equina Syndrome",mnm:true,desc:"Lumbosacral nerve root compression — saddle anaesthesia, urinary retention; emergency"},
+    {n:"Wernicke's Encephalopathy",mnm:true,desc:"Thiamine deficiency — confusion, ophthalmoplegia, ataxia; give thiamine urgently"},
+    {n:"Dementia",u:true,subs:["Alzheimer's Disease","Vascular Dementia","Lewy Body Dementia","Frontotemporal Dementia"],mnm:false,desc:"Progressive cognitive decline affecting function"},
+    {n:"Functional Neurological Disorder",mnm:false,desc:"Genuine neurological symptoms inconsistent with organic disease — diagnosis needs positive signs"},
   ]},
   "MSK / Rheumatology":{ico:"🦴",diags:[
     {n:"Costochondritis",mnm:false,desc:"Inflammation of rib cartilage — reproducible chest wall tenderness"},
@@ -263,6 +292,7 @@ function freshG(idx){
     diff:[],
     phase1Names:null,
     done:{h:[],pe:[],b:[],a:[]},
+    orderLog:[],_maxRank:0,
     rankSnaps:[],pendingRank:null,
     nudge:null,profOpen:false,
     commitSel:null,commitSub:null,
@@ -486,10 +516,298 @@ function render(){
   if(!G){renderWelcome();return;}
   calcLiveScore();
   const s=G.stage;
-  if(s==='setup')renderSetup();
-  else if(s==='history'||s==='pe'||s==='basic'||s==='advanced')renderStage(s);
+  if(s==='setup'||s==='history'||s==='pe'||s==='basic'||s==='advanced')renderWorkstation(s);
   else if(s==='commit')renderCommit();
   else if(s==='debrief')renderDebrief();
+}
+
+// ═══════════════════════════════════════════
+// CLINICAL WORKSTATION (Concept A) — core case-play shell
+// ═══════════════════════════════════════════
+function wsPhases(){return[['setup','Vignette'],['history','History'],['pe','Examination'],['basic','Basic Inv'],['advanced','Advanced Inv'],['commit','Commit']];}
+function wsStageCount(key){
+  const m={history:[G.done.h,'history'],pe:[G.done.pe,'pe'],basic:[G.done.b,'basic'],advanced:[G.done.a,'advanced']}[key];
+  if(!m)return null;
+  const total=((CASES[G.caseIdx]||{})[m[1]]||[]).length;
+  return m[0].length+'/'+total;
+}
+function wsBanner(cas){
+  const d=cas.demographics||{};
+  const nm=d.name||(cas.patient||'').split(',')[0]||'Patient';
+  const initials=(nm.split(/\s+/).map(w=>w[0]).slice(0,2).join('')||'P').toUpperCase();
+  const sub=[(d.age&&d.sex)?d.age+d.sex:'',d.occupation,d.mrn?'MRN '+d.mrn:''].filter(Boolean).join(' · ');
+  const v=cas.vitals||{};
+  const cells=[['HR',v.hr],['BP',v.bp],['SpO₂',v.spo2],['RR',v.rr],['Temp',v.temp]].filter(c=>c[1]&&c[1].value)
+    .map(([lbl,val])=>`<div class="ws-vital${val.abnormal?' abn':''}"><div class="ws-vital-lbl">${lbl}</div><div class="ws-vital-val">${val.value}</div></div>`).join('');
+  return`<div class="ws-banner">
+    <div class="ws-id"><div class="ws-avatar">${initials}</div>
+      <div class="ws-id-txt"><div class="ws-id-nm">${nm}</div><div class="ws-id-sub">${sub}</div></div></div>
+    <div class="ws-vitals">${cells}</div>
+    <div class="ws-mode"><span class="ws-mode-dot"></span>${playerLevel==='m3'?'M3+':'M2'} · ${studyMode?'Study':'Exam'}</div>
+  </div>`;
+}
+function wsElicited(cas){
+  // Allergies/background are only "known" once the student has taken the relevant history
+  const labels=(G.done.h||[]).map(id=>(((cas.history||[]).find(i=>i.id===id))||{}).lbl||'').join(' | ').toLowerCase();
+  return{
+    allergies:/allerg|medication/.test(labels),
+    background:/past medical|background|social|family|smok|occupation|drug history/.test(labels)
+  };
+}
+function wsChart(cas,stage){
+  const cur=wsPhases().findIndex(p=>p[0]===stage);
+  const nav=wsPhases().map((p,i)=>{
+    const st=i<cur?'done':i===cur?'active':'locked';
+    const tick=st==='done'?'✓':'';
+    const clickable=st!=='locked';
+    const rev=G._review===p[0]?' reviewing':'';
+    return`<div class="ws-nav-row ${st}${clickable?' clickable':''}${rev}"${clickable?` onclick="reviewStage('${p[0]}')"`:''}><span class="ws-nav-sq"></span><span class="ws-nav-lbl">${p[1]}</span><span class="ws-nav-meta">${tick}</span></div>`;
+  }).join('');
+  const el=wsElicited(cas);
+  const allergyCard=el.allergies?`<div class="ws-card"><div class="ws-card-lbl">Allergies</div><span class="ws-allergy">${cas.allergies||'NKDA'}</span></div>`:'';
+  const bgCard=el.background?`<div class="ws-card"><div class="ws-card-lbl">Background</div><div class="ws-chips">${(cas.background||[]).map(b=>`<span class="ws-chip">${b}</span>`).join('')||'<span class="ws-chip">—</span>'}</div></div>`:'';
+  return`<div class="ws-chart">
+    ${allergyCard}${bgCard}
+    <div class="ws-card"><div class="ws-card-lbl">Encounter</div><div class="ws-nav">${nav}</div></div>
+  </div>`;
+}
+function wsRail(cas,stage){
+  const allMNMs=(cas.caseMNMs||[]).map(getMNMName);
+  const active=G.diff.filter(d=>!d.elim);
+  const covered=allMNMs.filter(m=>active.some(d=>normMatch(d.n,m)));
+  const total=allMNMs.length,cov=covered.length;
+  const cls=total&&cov===total?'ok':cov>=total*.5?'warn':'bad';
+  const segs=allMNMs.map(m=>`<span class="ws-cov-seg ${covered.includes(m)?'on':''}"></span>`).join('');
+  const cta=stage==='setup'
+    ?`<button class="ws-cta" onclick="toHistory()">Take History →</button>`
+    :`<button class="ws-cta" onclick="doneStage('${stage}')">${DONE_BTN[stage]}</button>`;
+  return`<div class="ws-rail">
+    <div class="ws-rail-hd">
+      <div class="ws-rail-top"><span class="ws-rail-title">Differential</span>${total?`<span class="mnm-cover ${cls}">MNM ${cov}/${total}${cov===total?' cleared':''}</span>`:''}</div>
+      ${total?`<div class="ws-cov">${segs}</div>`:''}
+      <button class="ws-add-btn" onclick="openDrawer()">+ Add diagnosis</button>
+    </div>
+    <div class="ws-rail-list dlist" id="dlist">${renderDiff()}</div>
+    <div class="ws-rail-foot">${cta}</div>
+  </div>`;
+}
+function wsCenter(cas,stage){
+  const isIndep=playerLevel==='m3';
+  if(G._review&&G._review!==stage)return wsReview(cas,G._review,stage);
+  if(stage==='setup'){
+    return`<div class="ws-stage-hd"><span class="ws-stage-title">Build your differential</span><span class="ws-stage-meta">Phase 1 · Vignette</span></div>
+      <div class="ws-vignette">${cas.vignette}</div>
+      ${G.nudge?`<div class="nudge">${G.nudge}</div>`:''}
+      <div class="ws-center-nav"><button class="btn-hint study-aid" onclick="toggleProf()">Hint</button></div>
+      ${G.profOpen?`<div class="prof-reveal study-aid">Use <strong>+ Add diagnosis</strong> (right) to open the library. Tag dangerous, can't-miss diagnoses as <strong>Must Not Miss</strong> and your leading candidates as <strong>Working Dx</strong>. Think across every system.${isIndep?' In Independent mode you can also press <strong>⌘K</strong> to add diagnoses by name.':''}</div>`:''}`;
+  }
+  const cfg=SCFG[stage];
+  const allItems=getSrcItems(stage);
+  const doneArr=getDoneArr(stage);
+  const doneItems=doneArr.map(id=>allItems.find(i=>i.id===id)).filter(Boolean);
+  const pendItems=allItems.filter(i=>!doneArr.includes(i.id));
+  let html=`<div class="ws-stage-hd"><span class="ws-stage-title">${cfg.label}</span><span class="ws-stage-meta">${doneItems.length} of ${allItems.length} performed</span></div>`;
+  const vigOpen=G._vigOpen!=null?G._vigOpen:isIndep;
+  html+=`<div class="ws-vigc"><div class="ws-vigc-toggle" onclick="G._vigOpen=${!vigOpen};render()"><span>${(cas.demographics&&cas.demographics.name)||'Patient'} — presentation</span><span class="ws-vigc-arr${vigOpen?' open':''}">▶</span></div>${vigOpen?`<div class="ws-vigc-body">${cas.vignette}</div>`:''}</div>`;
+  if(isIndep){
+    // Cumulative chart — shows everything elicited so far (incl. earlier-stage items revisited), in order asked
+    const log=G.orderLog||[];
+    if(log.length){
+      html+=`<div class="ws-findings"><div class="ws-sub-lbl">Findings on chart — in the order you asked</div>`
+        +log.map((e,i)=>{const it=(cas[e.cat]||[]).find(x=>x.id===e.id);if(!it)return'';const cm=CAT_META[e.cat]||['hf','History'];
+          return`<div class="ws-logitem"><div class="ws-logmeta"><span class="ws-lognum">${i+1}</span><span class="ws-logcat">${cm[1]}</span></div>${mkFinding(it,cm[0],cm[1])}</div>`;}).join('')
+        +`</div>`;
+    }
+    const verb={history:'take the history',pe:'examine the patient — or revisit history',basic:'order basic investigations — or revisit history/examination',advanced:'order advanced investigations — or revisit earlier steps'}[stage]||'order';
+    html+=`<div class="ws-cmdk-hint" onclick="openPalette()"><span class="ws-cmdk-key">⌘K</span><span>Type to ${verb} (at least two letters)</span></div>`;
+  }else{
+    if(doneItems.length){
+      html+=`<div class="ws-findings"><div class="ws-sub-lbl">Findings on chart</div>${doneItems.map(i=>mkFinding(i,cfg.cat,cfg.catLbl)).join('')}</div>`;
+    }
+    if(pendItems.length){
+      html+=`<div class="ws-order"><div class="ws-sub-lbl">Order ${cfg.catLbl}</div><div class="${cfg.grid}">${pendItems.map(i=>`
+        <div class="opt" onclick="doItem('${stage}','${escJs(i.id)}')"><div class="opt-nm">${i.lbl}</div><div class="opt-cost ${i.cost}"><span class="cpip"></span>${COST_LBL[i.cost]}</div></div>`).join('')}</div></div>`;
+    }else{
+      html+=`<div class="ws-order"><div class="ws-sub-lbl" style="color:var(--ok)">✓ All ${cfg.label} reviewed</div></div>`;
+    }
+  }
+  if(G.nudge)html+=`<div class="nudge">${G.nudge}</div>`;
+  html+=`<div class="ws-center-nav"><button class="btn-ghost" onclick="skipStage('${stage}')">${SKIP_BTN[stage]}</button><button class="btn-hint study-aid" onclick="toggleProf()">Hint</button></div>`;
+  if(G.profOpen)html+=`<div class="prof-reveal study-aid">${cfg.hint}</div>`;
+  return html;
+}
+function renderWorkstation(stage){
+  const cas=CASES[G.caseIdx];
+  document.getElementById('content').innerHTML=
+    `<div class="wks">${wsBanner(cas)}<div class="ws-body">${wsChart(cas,stage)}<div class="ws-center">${wsCenter(cas,stage)}</div>${wsRail(cas,stage)}</div></div>`;
+}
+const CAT_META={history:['hf','History'],pe:['pef','Examination'],basic:['bif','Basic Inv'],advanced:['aif','Advanced Inv']};
+const STAGE_RANK={history:1,pe:2,basic:3,advanced:4};
+// Encounter review — go back and SEE (read-only) what was elicited in a step
+function reviewStage(key){G._review=(G._review===key)?null:key;render();}
+function returnReview(){G._review=null;render();}
+function wsReview(cas,key,curStage){
+  const back=`<div class="ws-center-nav"><button class="btn-ghost" onclick="returnReview()">← Back to ${STAGE_LBL[curStage]||'encounter'}</button></div>`;
+  if(key==='setup'){
+    return`<div class="ws-stage-hd"><span class="ws-stage-title">Vignette</span><span class="ws-stage-meta">Review · read-only</span></div>
+      <div class="ws-vignette">${cas.vignette}</div>${back}`;
+  }
+  const cfg=SCFG[key];if(!cfg)return back;
+  const allItems=getSrcItems(key);
+  const doneItems=(getDoneArr(key)||[]).map(id=>allItems.find(i=>i.id===id)).filter(Boolean);
+  let html=`<div class="ws-stage-hd"><span class="ws-stage-title">${cfg.label}</span><span class="ws-stage-meta">Review · read-only</span></div>`;
+  if(doneItems.length)html+=`<div class="ws-findings"><div class="ws-sub-lbl">Findings on chart</div>${doneItems.map(i=>mkFinding(i,cfg.cat,cfg.catLbl)).join('')}</div>`;
+  else html+=`<div class="ws-empty-chart">Nothing was elicited in ${cfg.label.toLowerCase()}${G.skipped.has(key)?' (skipped)':' yet'}.</div>`;
+  return html+back;
+}
+
+// ═══════════════════════════════════════════
+// COMMAND PALETTE (⌘K) — M3+ keyboard-first ordering
+// ═══════════════════════════════════════════
+let paletteOpen=false,palQuery='',palSel=0,palList=[];
+// ── Synonym matching (no LLM): query-expansion via global concept groups + fuzzy tokens ──
+const SYN_GROUPS=[
+  // Investigations (Singapore NGEMR / Epic naming)
+  ['renal panel','electrolytes','creatinine','egfr','urea','sodium','potassium','renal function','u/e','uecr','creatinine clearance','kidney function'],
+  ['full blood count','fbc','blood count','haemoglobin','white cell','platelet','total white'],
+  ['liver panel','lft','liver function','bilirubin','albumin','transaminase','alt','ast'],
+  ['high-sensitivity troponin','troponin','cardiac enzyme','cardiac marker','trop','tnt'],
+  ['serum lipase','lipase','amylase','pancreatic enzyme'],
+  ['capillary blood glucose','glucose','blood sugar','hypocount','bgl','dextrose'],
+  ['c-reactive protein','crp','inflammatory marker'],
+  ['arterial blood gas','abg','vbg','blood gas'],
+  ['d-dimer','ddimer'],
+  ['chest x-ray','cxr','chest radiograph','x-ray chest'],
+  ['urine dipstick','urinalysis','urine feme','dipstick'],
+  ['echocardiogram','echo','2d echo','heart ultrasound'],
+  ['ct aortogram','aortogram','ct aorta'],
+  ['ct pulmonary angiogram','ctpa','pulmonary angiography'],
+  ['oesophago-gastro-duodenoscopy','ogd','upper gi endoscopy','gastroscopy','endoscopy'],
+  ['ultrasound abdomen','abdominal ultrasound','us abdomen'],
+  ['thyroid function test','tft','thyroid','tsh','t4'],
+  ['cortisol','synacthen','short synacthen','acth stimulation'],
+  ['coagulation panel','pt','ptt','inr','clotting','coagulation profile'],
+  ['pregnancy test','upt','beta hcg','hcg'],
+  ['lumbar puncture','lp','spinal tap','opening pressure','csf'],
+  ['mri brain','mri head'],['mr venogram','mrv','venography','venogram'],
+  ['ct venogram','ctv'],['ct angiogram','cta','angiography'],
+  ['v/q scan','vq scan','ventilation perfusion'],['ct brain','ct head'],
+  ['bronchoscopy','biopsy'],['pet-ct','pet'],['thrombophilia screen','thrombophilia'],
+  ['pleural tap','thoracocentesis','pleural aspiration'],
+  ['sputum','afb','acid fast','cytology'],
+  // History (SOCRATES + common)
+  ['relieving','aggravating','alleviating','exacerbating','provoking','palliating','better or worse','precipitating','relieve','worsen'],
+  ['radiation','radiate','spread','moves to'],
+  ['onset','character','nature','started','quality'],
+  ['associated symptoms','associated features','accompanying'],
+  ['timing','duration','how long','frequency','pattern','progression'],
+  ['severity','how bad','pain score','intensity'],
+  ['site','location','where'],
+  ['past medical history','pmh','medical history','comorbid'],
+  ['medications','drug history','drugs','allergies','medication'],
+  ['social history','smoking','alcohol','occupation','occupational'],
+  ['family history','fhx','family'],
+  ['ice','ideas concerns expectations','concerns','expectations'],
+  // Deep-dive concepts (for future approach cases — e.g. haematuria)
+  ['stream timing','initial','terminal','total haematuria','start of stream','end of stream','throughout'],
+  ['clots','clot morphology','clot shape','worm-like'],
+  ['occupational exposure','amine','aniline','dye','rubber','workplace chemical'],
+  ['luts','lower urinary tract','urgency','nocturia','hesitancy','dysuria'],
+  // Examination
+  ['cardiovascular exam','cardiac exam','heart exam','praecordium','jvp'],
+  ['abdominal exam','abdomen exam','palpate abdomen','peritonism'],
+  ['respiratory exam','chest exam','lung exam','auscultation'],
+  ['vital signs','vitals','blood pressure','heart rate','observations'],
+  ['neurological exam','neuro exam','cranial nerves','power','reflexes'],
+];
+function normTxt(s){return(s||'').toLowerCase().replace(/[^a-z0-9\s/]/g,' ').replace(/\s+/g,' ').trim();}
+function lev(a,b){
+  if(a===b)return 0;const m=a.length,n=b.length;if(Math.abs(m-n)>1)return 2;
+  let prev=Array.from({length:n+1},(_,j)=>j);
+  for(let i=1;i<=m;i++){const cur=[i];for(let j=1;j<=n;j++)cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur;}
+  return prev[n];
+}
+function matchItem(query,label,aliases){
+  const q=normTxt(query);if(q.length<2)return false;
+  const lab=normTxt(label+' '+((aliases||[]).join(' ')));
+  if(lab.indexOf(q)>=0)return true;
+  const expanded=new Set(lab.split(' '));
+  SYN_GROUPS.forEach(g=>{if(g.some(t=>lab.indexOf(normTxt(t))>=0))g.forEach(t=>normTxt(t).split(' ').forEach(w=>expanded.add(w)));});
+  const exp=[...expanded].filter(Boolean);
+  return q.split(' ').filter(Boolean).every(qt=>exp.some(t=>t===qt||(qt.length>=3&&t.startsWith(qt))||(t.length>=3&&qt.startsWith(t))||(qt.length>=4&&t.length>=4&&lev(t,qt)<=1)));
+}
+const PAL_CATS=[['history','history','History','HX','Ask: '],['pe','pe','Examination','PE','Examine: '],['basic','basic','Basic investigations','BAS','Order: '],['advanced','advanced','Advanced investigations','ADV','Order: ']];
+function palCatalog(cas){
+  // Cumulative hierarchy — current stage + all earlier ones are orderable (not later)
+  const out=[];
+  const curRank=STAGE_RANK[G.stage]||0;
+  PAL_CATS.forEach(([arr,stage,cat,icon,verb])=>{
+    if((STAGE_RANK[stage]||99)>curRank)return;
+    (cas[arr]||[]).forEach(it=>out.push({type:'order',stage,cat,icon,verb,id:it.id,lbl:it.lbl,cost:it.cost,aliases:it.aliases,done:(getDoneArr(stage)||[]).includes(it.id)}));
+  });
+  const added=new Set(G.diff.map(d=>d.n));
+  Object.values(DIAG_LIB).flatMap(s=>s.diags).forEach(d=>{
+    out.push({type:'dx',cat:'Differential',icon:'DX',verb:'Add: ',lbl:d.n,aliases:d.syn,done:added.has(d.n)});
+    (d.subs||[]).forEach(s=>out.push({type:'dx',cat:'Differential',icon:'DX',verb:'Add: ',lbl:s,done:added.has(s)}));
+  });
+  return out;
+}
+function openPalette(){
+  if(!G||playerLevel!=='m3'||['commit','debrief'].includes(G.stage))return;
+  paletteOpen=true;palQuery='';palSel=0;palList=[];
+  document.getElementById('pal-inner').innerHTML=`
+    <div class="pal-input-row"><span class="pal-caret">›</span><input id="palInput" class="pal-input" autocomplete="off" spellcheck="false" placeholder="Order a test, examination, or history component…" oninput="palInput(this.value)"></div>
+    <div class="pal-body" id="pal-body"></div>
+    <div class="pal-foot"><span>↑↓ navigate</span><span>⏎ run</span><span>esc dismiss</span></div>`;
+  renderPalBody();
+  document.getElementById('palette').classList.remove('hide');
+  setTimeout(()=>document.getElementById('palInput')?.focus(),40);
+}
+function closePalette(){paletteOpen=false;document.getElementById('palette').classList.add('hide');}
+function palInput(v){palQuery=v;palSel=0;renderPalBody();}
+function renderPalBody(){
+  const cas=CASES[G.caseIdx];
+  const q=palQuery.trim().toLowerCase();
+  const bodyEl=document.getElementById('pal-body');if(!bodyEl)return;
+  if(q.length<2){palList=[];bodyEl.innerHTML=`<div class="pal-hint">Type at least two letters to search…</div>`;return;}
+  const all=palCatalog(cas).filter(it=>matchItem(palQuery,it.lbl,it.aliases));
+  palList=all;
+  if(!all.length){bodyEl.innerHTML=`<div class="pal-hint">No matches for “${palQuery}”.</div>`;return;}
+  const order=['History','Examination','Basic investigations','Advanced investigations','Differential'];
+  let idx=0,body='';
+  order.forEach(cat=>{
+    const items=all.filter(it=>it.cat===cat);if(!items.length)return;
+    body+=`<div class="pal-group">${cat}</div>`;
+    items.forEach(it=>{
+      const i=idx++;
+      const tier=it.cat.indexOf('Basic')>=0?'basic':it.cat.indexOf('Advanced')>=0?'advanced':it.cat.toLowerCase();
+      const meta=it.type==='order'?`${COST_LBL[it.cost]||''} · ${tier}`:(it.done?'on differential':'add');
+      body+=`<div class="pal-row${i===palSel?' sel':''}${it.done?' done':''}" data-i="${i}" onmouseenter="palSel=${i};palHi()" onclick="palRun(${i})">
+        <span class="pal-ico">${it.icon}</span><span class="pal-lbl">${it.done?'✓ ':''}${it.verb||''}${it.lbl}</span><span class="pal-meta">${meta}</span></div>`;
+    });
+  });
+  bodyEl.innerHTML=body;
+}
+function palHi(){document.querySelectorAll('.pal-row').forEach(r=>r.classList.toggle('sel',+r.dataset.i===palSel));}
+function palRun(i){
+  const it=palList[i];if(!it||it.done)return;
+  if(it.type==='dx')addToDiff(it.lbl,'wd');
+  else doItem(it.stage,it.id);
+  closePalette();render();
+}
+function paletteKey(e){
+  if(e.key==='Escape'){e.preventDefault();closePalette();}
+  else if(e.key==='ArrowDown'){e.preventDefault();palSel=Math.min(palSel+1,palList.length-1);palHi();document.querySelector('.pal-row.sel')?.scrollIntoView({block:'nearest'});}
+  else if(e.key==='ArrowUp'){e.preventDefault();palSel=Math.max(palSel-1,0);palHi();document.querySelector('.pal-row.sel')?.scrollIntoView({block:'nearest'});}
+  else if(e.key==='Enter'){e.preventDefault();palRun(palSel);}
+}
+function globalKey(e){
+  if((e.metaKey||e.ctrlKey)&&(e.key==='k'||e.key==='K')){
+    if(G&&playerLevel==='m3'&&!['commit','debrief'].includes(G.stage)){e.preventDefault();paletteOpen?closePalette():openPalette();}
+    return;
+  }
+  if(paletteOpen){paletteKey(e);return;}
+  rankKeyHandler(e);
 }
 
 // ═══════════════════════════════════════════
@@ -576,7 +894,7 @@ function renderSetup(){
 
       ${G.nudge?`<div class="nudge">${G.nudge}</div>`:''}
       <div class="setup-nav">
-        <button class="btn-primary" onclick="toHistory()">Begin Investigation →</button>
+        <button class="btn-primary" onclick="toHistory()">Take History →</button>
         <button class="btn-hint study-aid" onclick="toggleProf()">Hint</button>
       </div>
       ${G.profOpen?`<div class="prof-reveal study-aid">Select <strong>Must Not Miss</strong> for dangerous diagnoses that cannot be missed, or <strong>Working Dx</strong> for your leading differentials. Think systematically — consider every body system that could cause this presentation.</div>`:''}
@@ -596,7 +914,7 @@ function toHistory(){
     G.nudge='Consider also: '+tier2Missed.map(getMNMName).join(', ')+' — less common but worth having in your differential.';
   }
   G.phase1Names=new Set(G.diff.map(d=>d.n));
-  G.stage='history';G.nudge=null;render();
+  G.stage='history';G.nudge=null;G._review=null;render();
 }
 
 // ═══════════════════════════════════════════
@@ -686,7 +1004,7 @@ const SCFG={
     hint:'By now, basic investigations should have largely established the diagnosis. Advanced investigations confirm, localise, or enable definitive treatment.'},
 };
 const NEXT={history:'pe',pe:'basic',basic:'advanced',advanced:'commit'};
-const DONE_BTN={history:'Done with History →',pe:'Done with Examination →',basic:'Done with Basic Investigations →',advanced:'Proceed to Commit →'};
+const DONE_BTN={history:'Proceed to Examination →',pe:'Proceed to Basic Investigations →',basic:'Proceed to Advanced Investigations →',advanced:'Proceed to Commit →'};
 const SKIP_BTN={history:'Skip History',pe:'Skip Examination',basic:'Skip Basic Inv',advanced:'Skip Advanced Inv'};
 
 function getDoneArr(stage){return{history:G.done.h,pe:G.done.pe,basic:G.done.b,advanced:G.done.a}[stage]||G.done.h;}
@@ -783,7 +1101,7 @@ function mkFinding(item,cat,catLbl){
   const lookingForHtml=item.lookingFor&&cat==='pef'
     ?`<div class="fc-looking">Looking for: ${item.lookingFor}</div>`:'';
   const imgHtml=item.imageUrl
-    ?`<img class="fc-img" src="images/${item.imageUrl}" alt="${item.lbl}" loading="lazy">`:'';
+    ?`<img class="fc-img" src="images/${item.imageUrl}" alt="${item.lbl}" loading="lazy" onerror="this.style.display='none'">`:'';
   const indicators=[];
   if(isReq)indicators.push('<span class="fc-note req study-aid">Key finding</span>');
   if(sn)indicators.push('<span class="fc-note sig study-aid">Significant negative</span>');
@@ -824,6 +1142,8 @@ function doItem(stage,id){
   }
   const sn=(CASES[G.caseIdx].sigNegs||[]).find(n=>n.id===id);
   if(sn)G.sigNegsEarned.add(id);
+  // M3+ — log the order asked (cumulative chart). Hierarchy is enforced by palette scope.
+  if(playerLevel==='m3')G.orderLog.push({id,cat:stage});
   calcLiveScore();render();
 }
 
@@ -848,40 +1168,58 @@ function closeRankModal(){
 function mkRankPanel(stage,doneItems){
   const active=G.diff.filter(d=>!d.elim);
   const skipped=G.skipped.has(stage);
-  const lines=doneItems.slice(-4).map(i=>`• ${i.lbl}: ${i.find.slice(0,90)}${i.find.length>90?'…':''}`).join('<br>');
+  const last=doneItems.slice(-1)[0];
+  const evidence=skipped
+    ?'You skipped this stage — rank based on what you knew before.'
+    :(last?`New evidence: <strong>${last.find.slice(0,150)}${last.find.length>150?'…':''}</strong>`:'Re-rank your differential as the clinical picture evolves.');
   return`
-    <div class="rk-eyebrow">Ranking Checkpoint</div>
-    <div class="rk-title">After ${STAGE_LBL[stage]}</div>
-    <div class="rk-sub">${skipped?'You skipped this stage. Based on what you knew before, rank your differential.':'Drag your differential into order — <strong>most likely at the top</strong>. Each new piece of evidence should shift your probability estimates.'}</div>
-    ${!skipped&&doneItems.length?`<div class="rk-findings"><div class="rk-findings-lbl">Key findings from ${STAGE_LBL[stage]}</div><div class="rk-findings-body">${lines}</div></div>`:''}
-    ${active.length
-      ?`<div class="rlist" id="rlist">${buildRItems(active)}</div>`
-      :`<div style="font-size:.77rem;color:var(--muted);font-style:italic;padding:8px 0">No active diagnoses to rank.</div>`
-    }
-    <button class="rk-btn" onclick="confirmRank('${stage}')">Confirm Ranking and Continue →</button>`;
+    <div class="fc-stage">
+      <div class="fc-eyebrow">Ranking checkpoint · after ${STAGE_LBL[stage]}</div>
+      <div class="fc-prompt">Re-rank your differential</div>
+      <div class="fc-note">${evidence} Drag, or use ▲ ▼, to move the most likely diagnosis to the top.</div>
+      ${active.length
+        ?`<div class="fc-list rlist" id="rlist">${buildRItems(active)}</div>`
+        :`<div class="fc-empty">No active diagnoses to rank.</div>`
+      }
+      <button class="fc-confirm" onclick="confirmRank('${stage}')">Confirm ranking <span class="fc-key">⏎</span></button>
+    </div>`;
 }
 function buildRItems(active){
   const cas=CASES[G.caseIdx];
   const pairs=cas.linkedPairs||[];
+  const n=active.length;
   return active.map((d,i)=>{
     const isRx=G.phase1Names&&!G.phase1Names.has(d.n);
     const isLP=pairs.some(p=>normMatch(p.secondary,d.n));
-    const tagCls=d.tag==='mnm'?'mnm':isLP?'lp':isRx?'rx':'wd';
-    const tagLbl=d.tag==='mnm'?'MNM':isLP?'Link':isRx?'+P2':'WD';
-    return`<div class="ri" id="ri-${i}" draggable="true"
+    const isMNM=d.tag==='mnm';
+    const tagCls=isMNM?'mnm':isLP?'lp':isRx?'rx':'wd';
+    const tagLbl=isMNM?'MNM':isLP?'Link':isRx?'+P2':'WD';
+    return`<div class="fc-row" id="ri-${i}" draggable="true"
       ondragstart="rDS(event,${i})" ondragover="rDO(event,${i})" ondrop="rDrop(event,${i})"
       ondragleave="rDL(event,${i})" ondragend="rDE()">
-      <span class="ri-num">${i+1}</span>
-      <span class="ri-nm">${d.n}</span>
-      <span class="ri-tag ${tagCls}">${tagLbl}</span>
-      <span class="ri-ico">⠿</span>
+      <span class="fc-rank${isMNM?' mnm':''}">${i+1}</span>
+      <span class="fc-dot${isMNM?' mnm':''}"></span>
+      <span class="fc-nm">${d.n}</span>
+      <span class="fc-tag ${tagCls}">${tagLbl}</span>
+      <span class="fc-move"><button onclick="event.stopPropagation();rMove(${i},-1)"${i===0?' disabled':''}>▲</button><button onclick="event.stopPropagation();rMove(${i},1)"${i===n-1?' disabled':''}>▼</button></span>
     </div>`;
   }).join('');
 }
+function rMove(i,dir){
+  const act=G.diff.filter(d=>!d.elim),el=G.diff.filter(d=>d.elim);
+  const j=i+dir;if(j<0||j>=act.length)return;
+  const t=act[i];act[i]=act[j];act[j]=t;
+  G.diff=[...act,...el];reRenderRList();
+}
 function reRenderRList(){const el=document.getElementById('rlist');if(el)el.innerHTML=buildRItems(G.diff.filter(d=>!d.elim));}
+function rankKeyHandler(e){
+  const m=document.getElementById('rank-modal');
+  if(!m||m.classList.contains('hide'))return;
+  if(e.key==='Enter'){e.preventDefault();document.querySelector('.fc-confirm')?.click();}
+}
 function confirmRank(stage){
   G.rankSnaps.push({stage:STAGE_LBL[stage],ranks:G.diff.filter(d=>!d.elim).map(d=>d.n),skipped:G.skipped.has(stage)});
-  G.pendingRank=null;
+  G.pendingRank=null;G._review=null;
   closeRankModal();
   const next=NEXT[stage];if(next)G.stage=next;
   calcLiveScore();render();
@@ -1059,9 +1397,12 @@ function calcFinalScore(){
   const hRel=(cas.history||[]).filter(i=>i.rel).length;
   const peRel=(cas.pe||[]).filter(i=>i.rel).length;
   const demote=G.liveScore._demote;
+  const oooN=(playerLevel==='m3'?(G.pb.ooo||0):0);
+  const oooPen=Math.min(15,oooN*3);
   G.finalScore={
     approach:Math.round(a),process:Math.round(p),diagnosis:Math.round(d),
-    total:Math.round(a*.3+p*.4+d*.3),
+    total:Math.max(0,Math.round(a*.3+p*.4+d*.3)-oooPen),
+    oooN:oooN,oooPen:oooPen,
     approachExpl:'MNM coverage: '+G.liveScore._mnmOk+'/'+mn.length+' ('+Math.round(G.liveScore._mnmOk/Math.max(1,mn.length)*30)+' pts). '
       +'Common DDx breadth: '+G.liveScore._expOk+'/'+(cas.expectedP1||[]).length+'. '
       +'Significant negatives: '+G.sigNegsEarned.size+'. '
@@ -1071,7 +1412,8 @@ function calcFinalScore(){
     processExpl:'History: '+(pb.hRel||0)+'/'+hRel+' relevant topics'+(G.skipped.has('history')?' (skipped)':'')+'. '
       +'PE: '+(pb.peRel||0)+'/'+peRel+' relevant examinations. '
       +'Basic investigations: '+(pb.biRel||0)+' relevant tests. '
-      +'Advanced investigation penalties: '+(pb.aiPen||0)+' pts.',
+      +'Advanced investigation penalties: '+(pb.aiPen||0)+' pts.'
+      +(oooN?(' Out-of-sequence actions: '+oooN+' (−'+oooPen+' pts).'):''),
     dxExpl:'Committed to: "'+(committed||'nothing')+'". '
       +(secNote?secNote+' ':'')
       +(dxPts===100?'Correct — full diagnosis identified.':dxPts>=75?'Correct, not fully specified.':dxPts>=50?'Correct umbrella, subtype or complication missing.':dxPts>0?'Related territory, not the final diagnosis.':'Incorrect diagnosis.'),
@@ -1216,6 +1558,7 @@ function renderDebrief(){
 
   // Build each panel's content
   const scorePanel=`
+    ${fs.oooN>0?`<div class="ooo-flag">⚠️ ${fs.oooN} out-of-sequence action${fs.oooN>1?'s':''} — investigations/examinations were ordered before completing earlier steps in the history → examination → investigations approach (−${fs.oooPen} pts).</div>`:''}
     <div class="score-trio">
       <div class="sc">
         <div class="sc-lbl">Approach (30%)</div>
@@ -1339,11 +1682,13 @@ function renderDebrief(){
 
       <div class="db-tabs">
         <button class="db-tab ${debriefTab==='score'?'active':''}" data-tab="score" onclick="setDebriefTab('score')">Score Breakdown</button>
+        <button class="db-tab ${debriefTab==='pathway'?'active':''}" data-tab="pathway" onclick="setDebriefTab('pathway')">Pathway</button>
         <button class="db-tab ${debriefTab==='teaching'?'active':''}" data-tab="teaching" onclick="setDebriefTab('teaching')">Teaching Points</button>
         <button class="db-tab ${debriefTab==='analysis'?'active':''}" data-tab="analysis" onclick="setDebriefTab('analysis')">Full Analysis</button>
       </div>
 
       <div id="db-panel-score" class="db-panel ${debriefTab==='score'?'active':''}">${scorePanel}</div>
+      <div id="db-panel-pathway" class="db-panel ${debriefTab==='pathway'?'active':''}">${renderPathwayHtml(cas,'debrief')}</div>
       <div id="db-panel-teaching" class="db-panel ${debriefTab==='teaching'?'active':''}">${teachingPanel}</div>
       <div id="db-panel-analysis" class="db-panel ${debriefTab==='analysis'?'active':''}">${analysisPanel}</div>
 
@@ -1459,6 +1804,146 @@ function dDrop(e,i){
 function dDE(){dragSrc=null;document.querySelectorAll('.de').forEach(el=>el.classList.remove('dragging','drag-over'));}
 
 // ═══════════════════════════════════════════
+// PATHWAY (Concept F) — derived from the case + thin overlay
+// ═══════════════════════════════════════════
+function pwSlug(s){return(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_+$/g,'');}
+function buildPathway(cas){
+  const ov=cas.pathway||{};const reasoning=ov.reasoning||{};
+  const nodes=[],edges=[];
+  const dem=cas.demographics||{};
+  nodes.push({id:'root',type:'presentation',title:(cas.title||'Presentation'),
+    detail:[dem.age&&dem.sex?dem.age+dem.sex:'',...(cas.background||[]).slice(0,2)].filter(Boolean).join(' · '),
+    reason:reasoning.root});
+  let last='root';const chain=['root'];
+  // Focused history — the discriminating questions
+  const histKey=(cas.history||[]).filter(h=>h.rel).slice(0,4).map(h=>h.lbl);
+  if(histKey.length){
+    nodes.push({id:'history',type:'finding',kind:'history',title:'Focused history',detail:histKey.join(' · '),reason:reasoning.history});
+    edges.push({from:last,to:'history',kind:'recommended'});last='history';chain.push('history');
+  }
+  // Focused examination — discriminating signs / significant negatives
+  const sigPE=(cas.sigNegs||[]).filter(s=>/^pe/.test(s.id)).map(s=>s.label);
+  const reqPE=(cas.pe||[]).filter(p=>(cas.required||[]).includes(p.id)).map(p=>p.lbl);
+  const examBits=[...new Set([...reqPE,...sigPE])].slice(0,3);
+  if(examBits.length){
+    nodes.push({id:'exam',type:'finding',kind:'exam',title:'Focused examination',detail:examBits.join(' · '),reason:reasoning.exam});
+    edges.push({from:last,to:'exam',kind:'recommended'});last='exam';chain.push('exam');
+  }
+  // First-line decision node from a required basic investigation
+  const req=cas.required||[];
+  const firstTest=(cas.basic||[]).find(b=>req.includes(b.id))||(cas.basic||[]).find(b=>b.required);
+  if(firstTest){
+    nodes.push({id:firstTest.id,type:'decision',kind:'first-line-test',title:firstTest.lbl+'?',detail:'First-line test',reason:reasoning[firstTest.id]});
+    edges.push({from:last,to:firstTest.id,kind:'recommended'});last=firstTest.id;chain.push(firstTest.id);
+  }
+  // Confirmed final diagnosis
+  const fdxId=pwSlug(cas.finalUmbrella||cas.finalDx);
+  nodes.push({id:fdxId,type:'diagnosis',status:'active',
+    mnm:(cas.caseMNMs||[]).some(m=>normMatch(getMNMName(m),cas.finalUmbrella||cas.finalDx)),
+    title:cas.finalDx,detail:firstTest?('Confirmed on '+firstTest.lbl):'',badge:'Diagnosis locked',reason:reasoning[fdxId]});
+  edges.push({from:last,to:fdxId,kind:'recommended',label:'diagnostic'});chain.push(fdxId);
+  // Excluded must-not-miss safety nets — branch from the examination where they were cleared
+  const branchFrom=nodes.some(n=>n.id==='exam')?'exam':'root';
+  (cas.mnmRuleOut||[]).filter(m=>m.status==='ruled-out'&&!normMatch(m.mnm,cas.finalUmbrella||cas.finalDx)).slice(0,3).forEach(m=>{
+    const id=pwSlug(m.mnm);
+    if(nodes.some(n=>n.id===id))return;
+    const f0=(m.findings||[])[0];
+    nodes.push({id,type:'diagnosis',status:'excluded',mnm:true,title:m.mnm,
+      detail:f0?f0.text.slice(0,72):'',badge:m.statusLbl||'Ruled out',reason:reasoning[id]});
+    edges.push({from:branchFrom,to:id,kind:'safety',label:'safety check'});
+  });
+  // overlay-added nodes (e.g. a non-interactive management caption)
+  (ov.add||[]).forEach(n=>{
+    nodes.push({...n,reason:reasoning[n.id]||n.reason});
+    if(n.from)edges.push({from:n.from,to:n.id,kind:n.edgeKind||'recommended',label:n.edgeLabel||''});
+  });
+  const recommendedPath=(ov.order&&ov.order.length)?ov.order:chain;
+  return{nodes,edges,recommendedPath,validation:ov.validation||{status:'draft'},reveal:ov.reveal||{},fdxId,firstTest};
+}
+function layoutPathway(g){
+  const rank={root:0},adj={};
+  g.edges.forEach(e=>{(adj[e.from]=adj[e.from]||[]).push(e.to);});
+  let frontier=['root'],guard=0;
+  while(frontier.length&&guard++<50){
+    const next=[];
+    frontier.forEach(n=>(adj[n]||[]).forEach(t=>{if(rank[t]==null||rank[t]<rank[n]+1){rank[t]=rank[n]+1;next.push(t);}}));
+    frontier=next;
+  }
+  g.nodes.forEach(n=>{if(rank[n.id]==null)rank[n.id]=1;});
+  const byRank={};g.nodes.forEach(n=>{(byRank[rank[n.id]]=byRank[rank[n.id]]||[]).push(n);});
+  const COLW=248,ROWH=158,NW=208,NH=96,pos={};
+  Object.keys(byRank).forEach(r=>byRank[r].forEach((n,i)=>{pos[n.id]={x:36+i*COLW,y:28+r*ROWH};}));
+  let maxX=0,maxY=0;Object.values(pos).forEach(p=>{maxX=Math.max(maxX,p.x+NW);maxY=Math.max(maxY,p.y+NH);});
+  return{pos,NW,NH,W:maxX+36,H:maxY+36};
+}
+function pwStudentPath(cas,g){
+  const path=['root'];
+  if((G.done.h||[]).length)path.push('history');
+  if((G.done.pe||[]).length)path.push('exam');
+  if(g.firstTest&&G.done.b.includes(g.firstTest.id))path.push(g.firstTest.id);
+  const committed=G.commitSub||G.commitSel;
+  if(committed&&normMatch(committed,cas.finalUmbrella||cas.finalDx))path.push(g.fdxId);
+  return path;
+}
+function renderPathwayHtml(cas,mode){
+  const g=buildPathway(cas);
+  const L=layoutPathway(g);
+  const node=id=>g.nodes.find(n=>n.id===id);
+  const masked=mode==='hint'&&(g.reveal.hint==='mask-diagnoses');
+  const edgesSvg=g.edges.map(e=>{
+    const a=L.pos[e.from],b=L.pos[e.to];if(!a||!b)return'';
+    const x1=a.x+L.NW/2,y1=a.y+L.NH,x2=b.x+L.NW/2,y2=b.y,my=(y1+y2)/2;
+    const cls=e.kind==='recommended'?'e-taken':e.kind==='safety'?'e-safety':'e-skip';
+    const lc=e.kind==='recommended'?'yes':e.kind==='safety'?'safe':'no';
+    const lbl=e.label?`<text class="pw-elabel ${lc}" x="${(x1+x2)/2}" y="${my-5}" text-anchor="middle">${e.label}</text>`:'';
+    return`<path class="pw-edge ${cls}" d="M${x1},${y1} L${x1},${my} L${x2},${my} L${x2},${y2}"/>${lbl}`;
+  }).join('');
+  const sp=mode==='debrief'?pwStudentPath(cas,g):[];
+  const nodesHtml=g.nodes.map(n=>{
+    const p=L.pos[n.id];if(!p)return'';
+    let cls='pw-node';
+    if(n.type==='finding')cls+=' find';
+    else if(n.type==='decision')cls+=' dec'+(n.kind==='safety-check'?' safety':'');
+    else if(n.status==='active'||n.status==='confirmed')cls+=' active';
+    else if(n.status==='excluded')cls+=' excluded';
+    else if(n.status==='alternate')cls+=' ghost';
+    else if(n.type==='action'||n.type==='terminal')cls+=' commit';
+    if(sp.includes(n.id))cls+=' onpath';
+    const isDx=n.type==='diagnosis';
+    const title=(masked&&isDx&&n.status!=='active')?'•••':n.title;
+    const eyebrow=n.type==='decision'?(n.detail||'Decision')
+      :n.status==='active'?'You are here · confirmed'
+      :n.status==='excluded'?'Ruled out'
+      :n.type==='presentation'?'Presentation'
+      :n.type==='finding'?(n.kind==='exam'?'Examination':'Focused history')
+      :n.type==='action'?'Recommended next action':'';
+    return`<div class="${cls}" style="left:${p.x}px;top:${p.y}px;width:${L.NW}px">
+      ${eyebrow?`<div class="pw-eyebrow">${eyebrow}</div>`:''}
+      <div class="pw-node-title">${title}</div>
+      ${(n.detail&&n.type!=='decision'&&!masked)?`<div class="pw-node-detail">${n.detail}</div>`:''}
+      ${n.badge?`<div class="pw-nbadge ${n.status==='excluded'?'danger':'ok'}">${n.badge}</div>`:''}
+      ${(n.reason&&!masked)?`<div class="pw-reason">${n.reason}</div>`:''}
+    </div>`;
+  }).join('');
+  const steps=g.recommendedPath.map((id,i)=>{
+    const n=node(id);if(!n)return'';
+    const cur=sp.length&&sp[sp.length-1]===id;
+    return`<div class="pw-step ${cur?'now':sp.includes(id)?'done':''}"><span class="pw-step-num">${i+1}</span><div><div class="pw-step-t">${n.title}</div>${n.detail?`<div class="pw-step-d">${n.detail}</div>`:''}</div></div>`;
+  }).join('');
+  const ribbon=g.validation.status!=='validated'?`<div class="pw-ribbon">Draft — pending physician review${g.validation.notes?' · '+g.validation.notes:''}</div>`:'';
+  const legend=`<div class="pw-legend"><span><i class="lg ok"></i>recommended</span><span><i class="lg safe"></i>safety check</span><span><i class="lg skip"></i>not taken</span>${mode==='debrief'?'<span><i class="lg path"></i>your route</span>':''}</div>`;
+  return`<div class="pw">
+    ${ribbon}
+    <div class="pw-grid">
+      <div class="pw-canvas-wrap"><div class="pw-canvas" style="width:${L.W}px;height:${L.H}px">
+        <svg class="pw-edges" width="${L.W}" height="${L.H}">${edgesSvg}</svg>${nodesHtml}
+      </div>${legend}</div>
+      <div class="pw-rail"><div class="pw-rail-lbl">Recommended path</div>${steps}</div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
 // UTILS
 // ═══════════════════════════════════════════
 function normMatch(a,b){
@@ -1472,6 +1957,7 @@ function escJs(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replac
 // ═══════════════════════════════════════════
 // BOOT
 // ═══════════════════════════════════════════
+window.addEventListener('keydown',globalKey);
 loadCases();
 </script>
 </body>
