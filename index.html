@@ -638,9 +638,16 @@ function wsCenter(cas,stage){
 }
 function renderWorkstation(stage){
   const cas=CASES[G.caseIdx];
+  const mt=G._mtab||'work';
   document.getElementById('content').innerHTML=
-    `<div class="wks">${wsBanner(cas)}<div class="ws-body">${wsChart(cas,stage)}<div class="ws-center">${wsCenter(cas,stage)}</div>${wsRail(cas,stage)}</div></div>`;
+    `<div class="wks m-${mt}">${wsBanner(cas)}<div class="ws-body">${wsChart(cas,stage)}<div class="ws-center">${wsCenter(cas,stage)}</div>${wsRail(cas,stage)}</div>
+      <div class="ws-mtabs">
+        <button class="ws-mtab${mt==='chart'?' on':''}" onclick="setMTab('chart')">📋 Chart</button>
+        <button class="ws-mtab${mt==='work'?' on':''}" onclick="setMTab('work')">🩺 Workspace</button>
+        <button class="ws-mtab${mt==='diff'?' on':''}" onclick="setMTab('diff')">🧠 Differential</button>
+      </div></div>`;
 }
+function setMTab(t){G._mtab=t;render();}
 const CAT_META={history:['hf','History'],pe:['pef','Examination'],basic:['bif','Basic Inv'],advanced:['aif','Advanced Inv']};
 const STAGE_RANK={history:1,pe:2,basic:3,advanced:4};
 // Encounter review — go back and SEE (read-only) what was elicited in a step
