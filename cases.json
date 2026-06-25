@@ -1826,6 +1826,2353 @@
           "note": "MR venography confirms CVST (venous thrombosis) — this is venous, not arterial; arterial ischaemic stroke excluded by MRI DWI"
         }
       ]
+    },
+    {
+      "id": "case_004",
+      "title": "Drooping Eyelid & Double Vision",
+      "approach": "An Approach to Ptosis / Diplopia / Fatigable Weakness",
+      "secondaryApproach": "An Approach to Generalised Weakness",
+      "system": "Neurology",
+      "difficulty": "moderate",
+      "patient": "Ms Siti Rahimah, 30F, Accountant",
+      "snomedCode": "91637004",
+      "demographics": {
+        "name": "Siti Rahimah",
+        "age": "30",
+        "sex": "F",
+        "occupation": "Accountant",
+        "mrn": "916370"
+      },
+      "vitals": {
+        "hr": {
+          "value": "78",
+          "unit": "bpm",
+          "abnormal": false
+        },
+        "bp": {
+          "value": "122/76",
+          "unit": "mmHg",
+          "abnormal": false
+        },
+        "spo2": {
+          "value": "98",
+          "unit": "%",
+          "abnormal": false
+        },
+        "rr": {
+          "value": "14",
+          "unit": "/min",
+          "abnormal": false
+        },
+        "temp": {
+          "value": "36.8",
+          "unit": "°C",
+          "abnormal": false
+        }
+      },
+      "allergies": "NKDA",
+      "background": [
+        "Previously well",
+        "Sister has autoimmune hypothyroidism",
+        "Non-smoker"
+      ],
+      "pathway": {
+        "validation": {
+          "status": "draft",
+          "validatedBy": null,
+          "validatedAt": null,
+          "notes": "Awaiting neurology sign-off on antibody/electrophysiology sequence."
+        },
+        "reasoning": {
+          "pe06": "Bedside single-breath count is the fastest airway screen — a falling count flags impending crisis before SpO2 drops.",
+          "bi01": "Formal FVC first among investigations: it is the number that decides ICU vs ward (the 20/30/40 rule), not the antibody result.",
+          "ai01": "Anti-AChR antibody is the confirmatory discriminator and is withheld to this stage; RNS/SFEMG and CT thorax follow to characterise and screen for thymoma.",
+          "myasthenia_gravis": "Fatigable ptosis + normal pupils + preserved reflexes localise to the neuromuscular junction; antibodies and decrement confirm."
+        },
+        "reveal": {
+          "hint": "mask-diagnoses",
+          "debrief": "full"
+        }
+      },
+      "vignette": "Ms Siti Rahimah is a 30-year-old accountant who presents with a 3-week history of a drooping right eyelid and intermittent double vision. She has noticed that both are barely there when she wakes but become more obvious as the day goes on, particularly after long stretches at her computer.",
+      "caseMNMs": [
+        {
+          "name": "Myasthenic Crisis",
+          "tier": 1
+        },
+        {
+          "name": "Ischaemic Stroke",
+          "tier": 1
+        },
+        {
+          "name": "Guillain–Barré Syndrome",
+          "tier": 2
+        },
+        {
+          "name": "Botulism",
+          "tier": 2
+        }
+      ],
+      "expectedP1": [
+        "Lambert-Eaton Myasthenic Syndrome",
+        "Thyroid Eye Disease",
+        "Third Nerve Palsy",
+        "Functional Neurological Disorder"
+      ],
+      "finalDx": "Myasthenia Gravis",
+      "finalUmbrella": "Myasthenia Gravis",
+      "diagnosisScore": {
+        "Myasthenia Gravis": 100,
+        "Generalised Myasthenia Gravis": 100,
+        "Ocular Myasthenia Gravis": 80,
+        "Lambert-Eaton Myasthenic Syndrome": 35,
+        "Thyroid Eye Disease": 20,
+        "Third Nerve Palsy": 10,
+        "Guillain–Barré Syndrome": 15,
+        "Botulism": 10
+      },
+      "required": [
+        "pe01",
+        "pe06",
+        "bi01",
+        "ai01"
+      ],
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Ptosis & diplopia — pattern and fatigability",
+          "cost": "free",
+          "rel": true,
+          "find": "Right upper eyelid droops; horizontal double vision that comes and goes. Both are minimal on waking and after a nap, and worsen progressively through the day — worst in the evening and after reading or screen work. Resting the eyes for a few minutes makes the lid lift again.",
+          "exp": "Fatigability with a clear diurnal pattern — better after rest, worse with sustained use and towards the end of the day — is the single most useful pointer to a neuromuscular junction (NMJ) disorder. A fixed, non-fluctuating deficit would point elsewhere (e.g. a structural cranial nerve lesion).",
+          "aliases": [
+            "double vision",
+            "droopy eyelid",
+            "drooping eyelid",
+            "eyelid drooping",
+            "seeing double",
+            "ptosis",
+            "diplopia",
+            "worse in evening",
+            "tired eyes",
+            "fatigable",
+            "diurnal"
+          ]
+        },
+        {
+          "id": "h02",
+          "lbl": "Bulbar symptoms (speech, chewing, swallowing)",
+          "cost": "free",
+          "rel": true,
+          "find": "Her voice fades and becomes nasal towards the end of long phone calls, and her jaw tires partway through a meal so she stops chewing to rest. No frank choking on fluids, no nasal regurgitation of liquids.",
+          "exp": "Fatigable bulbar weakness (voice fading, jaw tiring mid-meal) signals spread beyond the eyes and raises the stakes — bulbar and respiratory involvement are what make MG a must-not-miss, because they herald aspiration and crisis.",
+          "aliases": [
+            "swallowing",
+            "dysphagia",
+            "slurred speech",
+            "dysarthria",
+            "nasal speech",
+            "chewing",
+            "jaw tires",
+            "voice fading",
+            "choking",
+            "bulbar"
+          ]
+        },
+        {
+          "id": "h03",
+          "lbl": "Breathlessness or orthopnoea",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "find": "No breathlessness at rest and no orthopnoea. She does feel slightly “short of puff” climbing stairs late in the evening but can lie flat comfortably and sleep through the night.",
+          "exp": "Orthopnoea and exertional breathlessness that worsen with fatigue are early signs of diaphragmatic weakness. Their absence is reassuring now, but respiratory function must still be measured — oxygen desaturation is a late sign in neuromuscular respiratory failure.",
+          "aliases": [
+            "breathing",
+            "breathless",
+            "short of breath",
+            "shortness of breath",
+            "orthopnoea",
+            "orthopnea",
+            "lying flat",
+            "dyspnoea",
+            "sob",
+            "respiratory symptoms"
+          ]
+        },
+        {
+          "id": "h04",
+          "lbl": "Limb weakness — distribution and timing",
+          "cost": "free",
+          "rel": true,
+          "find": "Her arms tire when hanging out laundry or combing her hair, and her legs feel heavier climbing stairs late in the day. Strength is near-normal in the morning. The weakness is proximal and fluctuates rather than steadily progressing.",
+          "exp": "Proximal, fatigable, fluctuating limb weakness fits generalised MG. The morning–evening swing again separates an NMJ disorder from a fixed structural or steadily progressive cause.",
+          "aliases": [
+            "arm weakness",
+            "leg weakness",
+            "limb weakness",
+            "proximal weakness",
+            "tired arms",
+            "climbing stairs",
+            "combing hair",
+            "muscle weakness",
+            "heaviness"
+          ]
+        },
+        {
+          "id": "h05",
+          "lbl": "Speed of onset and time course",
+          "cost": "free",
+          "rel": true,
+          "find": "Symptoms came on gradually over about three weeks and fluctuate day to day. Nothing started suddenly or “all at once.”",
+          "exp": "A gradual, fluctuating course over weeks argues strongly against a brainstem stroke, which is sudden (maximal at onset). Tempo is one of the cheapest and most powerful discriminators in neurology.",
+          "aliases": [
+            "onset",
+            "time course",
+            "how it started",
+            "sudden onset",
+            "gradual onset",
+            "tempo",
+            "duration",
+            "progression",
+            "speed of onset"
+          ]
+        },
+        {
+          "id": "h06",
+          "lbl": "Symptoms with use, dry mouth, autonomic features",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "find": "Sustained activity makes her weaker, and rest helps — she does NOT transiently improve with exercise. No dry mouth, no constipation, no light-headedness on standing.",
+          "exp": "This is the Lambert-Eaton (LEMS) screen. LEMS classically improves transiently with sustained effort (post-exercise facilitation) and carries autonomic features (dry mouth, constipation) plus a small-cell lung cancer association. MG does the opposite — it fatigues with use.",
+          "aliases": [
+            "improves with use",
+            "worse with use",
+            "post-exercise",
+            "dry mouth",
+            "autonomic",
+            "constipation",
+            "light-headed",
+            "lambert eaton",
+            "lambert-eaton",
+            "lems"
+          ]
+        },
+        {
+          "id": "h07",
+          "lbl": "Thyroid symptoms",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "find": "No heat intolerance, no palpitations, weight stable, no neck swelling or gritty/protruding eyes.",
+          "exp": "Thyroid eye disease (Graves' orbitopathy) can also cause lid and ocular-motility problems. The absence of thyrotoxic features makes it less likely — but autoimmune thyroid disease coexists with MG, so thyroid function is still checked before treatment.",
+          "aliases": [
+            "thyroid symptoms",
+            "heat intolerance",
+            "weight loss",
+            "palpitations",
+            "neck swelling",
+            "goitre",
+            "graves",
+            "thyrotoxic"
+          ]
+        },
+        {
+          "id": "h08",
+          "lbl": "Drug history, allergies, preceding infection, exposures",
+          "cost": "free",
+          "rel": true,
+          "find": "No regular medications and no drug allergies (NKDA). No recent diarrhoeal or respiratory illness, no home-canned or fermented foods, and no wounds. Family history notable for a sister with autoimmune hypothyroidism.",
+          "exp": "A preceding gastrointestinal/respiratory infection would raise Guillain–Barré (including the Miller-Fisher variant); home-canned food or a wound would raise botulism — both absent here. Certain drugs (e.g. aminoglycosides) unmask or worsen MG. The autoimmune family history fits the MG illness script.",
+          "aliases": [
+            "medications",
+            "drug history",
+            "allergies",
+            "recent infection",
+            "diarrhoea",
+            "preceding illness",
+            "canned food",
+            "wound",
+            "aminoglycoside",
+            "family history"
+          ]
+        },
+        {
+          "id": "h09",
+          "lbl": "Ideas, concerns and expectations",
+          "cost": "free",
+          "rel": false,
+          "ice": true,
+          "find": "She is frightened she is having a stroke like her father did, and is worried the double vision means she is going blind.",
+          "exp": "Eliciting her specific fear (stroke, blindness) lets you target reassurance and explanation once the diagnosis is clear, and signals which differentials she most needs addressed.",
+          "aliases": [
+            "ideas concerns expectations",
+            "worries",
+            "what she thinks",
+            "patient concerns"
+          ]
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "Fatigable ptosis on sustained upgaze",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "find": "At rest there is mild right ptosis. On sustained upgaze for 45–60 seconds the right (then left) lid droops progressively. A brief Cogan's lid twitch is seen — the lid over-elevates then settles when she looks back to primary gaze.",
+          "exp": "Demonstrable fatigue of the levator on sustained upgaze, and Cogan's lid twitch, are bedside hallmarks of MG. Reproducing fatigability turns a symptom into a sign.",
+          "lookingFor": "Progressive lid drop on sustained upgaze; Cogan's twitch — demonstrable fatigability of ocular muscles.",
+          "aliases": [
+            "sustained upgaze",
+            "fatigable ptosis",
+            "cogan",
+            "lid twitch",
+            "ptosis on upgaze",
+            "fatigue eyelid"
+          ]
+        },
+        {
+          "id": "pe02",
+          "lbl": "Eye movements & diplopia",
+          "cost": "free",
+          "rel": true,
+          "find": "Complex, variable limitation of eye movements that does not respect a single cranial-nerve territory; diplopia worsens after sustained gaze in any direction.",
+          "exp": "MG can mimic any pattern of ophthalmoplegia, but the variability and lack of a single-nerve pattern are the clue — unlike a discrete third-nerve palsy. A pattern that is fixed and confined to one nerve should prompt a search for a compressive cause.",
+          "lookingFor": "Pattern not confined to one cranial nerve; fatigable, variable diplopia.",
+          "aliases": [
+            "eye movements",
+            "ocular motility",
+            "extraocular movements",
+            "gaze",
+            "diplopia examination",
+            "ophthalmoplegia"
+          ]
+        },
+        {
+          "id": "pe03",
+          "lbl": "Pupils",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "find": "Pupils are equal, round and briskly reactive to light. No anisocoria.",
+          "exp": "MG never affects the pupil. Normal pupils help exclude a pupil-involving third-nerve palsy (a posterior communicating artery aneurysm is the feared cause) and argue against botulism, which classically causes dilated, poorly reactive pupils.",
+          "lookingFor": "Pupil sparing — distinguishes MG from compressive 3rd-nerve palsy and from botulism.",
+          "aliases": [
+            "pupil",
+            "pupils",
+            "pupillary",
+            "anisocoria",
+            "light reflex",
+            "pupil reaction"
+          ]
+        },
+        {
+          "id": "pe04",
+          "lbl": "Ice-pack test",
+          "cost": "free",
+          "rel": true,
+          "find": "After a cold pack is held over the closed ptotic eye for two minutes, the ptosis improves by more than 2 mm.",
+          "exp": "Cooling slows acetylcholinesterase activity and improves neuromuscular transmission, lifting myasthenic ptosis. A >2 mm improvement is a simple bedside test with roughly 80% sensitivity and specificity for ocular MG.",
+          "lookingFor": ">2 mm lift in ptosis after cooling — supports a neuromuscular junction cause.",
+          "aliases": [
+            "ice pack",
+            "ice test",
+            "cooling test",
+            "ice on eye"
+          ]
+        },
+        {
+          "id": "pe05",
+          "lbl": "Limb power, reflexes and sensation",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "find": "Mild fatigable proximal weakness in the arms. Deep tendon reflexes are present and normal. Sensation is entirely intact.",
+          "exp": "Preserved reflexes and normal sensation are pivotal negatives: Guillain–Barré produces areflexia, and LEMS produces depressed reflexes that briefly potentiate after exercise. Normal sensation throughout argues against a peripheral neuropathy.",
+          "lookingFor": "Preserved reflexes + intact sensation — separates MG from GBS and peripheral neuropathy.",
+          "aliases": [
+            "reflexes",
+            "power",
+            "tone",
+            "sensation",
+            "tendon reflexes",
+            "neuro exam",
+            "deep tendon reflexes",
+            "limb examination"
+          ]
+        },
+        {
+          "id": "pe06",
+          "lbl": "Bedside single-breath count",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "find": "Counting out loud on a single breath she reaches about 28 (normal >40). She is not in respiratory distress and speaks in full sentences.",
+          "exp": "The single-breath count is a quick surrogate for vital capacity (roughly count × 100 mL). A reduced count flags early respiratory muscle involvement and should trigger formal, serial FVC measurement — the airway is screened before, not after, things deteriorate.",
+          "lookingFor": "Single-breath count <40 — surrogate for falling vital capacity; triggers formal FVC.",
+          "aliases": [
+            "single breath count",
+            "breath count",
+            "count in one breath",
+            "bedside respiratory",
+            "vital capacity bedside"
+          ]
+        },
+        {
+          "id": "pe07",
+          "lbl": "General examination & vital signs",
+          "cost": "free",
+          "rel": false,
+          "find": "Afebrile, normotensive, oxygen saturation 98% on room air, regular pulse. No goitre, no proptosis.",
+          "exp": "A normal afebrile baseline argues against an infective or dysautonomic process and records the starting point against which serial respiratory observations are judged.",
+          "aliases": [
+            "vital signs",
+            "general examination",
+            "temperature",
+            "observations",
+            "obs"
+          ]
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "Forced Vital Capacity (bedside spirometry) + NIF",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "find": "FVC 28 mL/kg (normal >60); negative inspiratory force (NIF) −45 cmH2O. Above the thresholds that mandate ICU but reduced — to be repeated serially.",
+          "exp": "Formal respiratory measurement applies the '20/30/40' rule: FVC <20 mL/kg, NIF less negative than −30 cmH2O, or MEP <40 cmH2O indicates a myasthenic crisis warranting ICU-level care (Claytor et al., Muscle & Nerve 2023). FVC is more reliable than NIF/MEP, which are effort-dependent. Serial trend matters more than a single value, and SpO2 falls late.",
+          "aliases": [
+            "fvc",
+            "forced vital capacity",
+            "spirometry",
+            "nif",
+            "negative inspiratory force",
+            "respiratory function test",
+            "lung function"
+          ]
+        },
+        {
+          "id": "bi02",
+          "lbl": "Thyroid Function Test (TSH, free T4)",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "find": "TSH and free T4 within normal limits — no biochemical thyrotoxicosis.",
+          "exp": "Normal thyroid function makes thyroid eye disease/Graves an unlikely explanation for the ocular signs, and documents baseline thyroid status given the frequent co-occurrence of autoimmune thyroid disease with MG.",
+          "aliases": [
+            "tft",
+            "thyroid function",
+            "tsh",
+            "free t4",
+            "thyroid panel"
+          ]
+        },
+        {
+          "id": "bi03",
+          "lbl": "Chest X-ray (CXR)",
+          "cost": "low",
+          "rel": true,
+          "find": "No widened mediastinum or obvious anterior mediastinal mass on the plain film.",
+          "exp": "A CXR is a reasonable first look but is insensitive for thymoma — a normal film does not exclude it, so CT of the thorax is required once MG is suspected.",
+          "imageUrl": "case004_cxr_mediastinum.jpg",
+          "aliases": [
+            "cxr",
+            "chest xray",
+            "chest x-ray",
+            "chest radiograph"
+          ]
+        },
+        {
+          "id": "bi04",
+          "lbl": "Full Blood Count + Renal Panel",
+          "cost": "low",
+          "rel": false,
+          "find": "Full blood count and renal panel (including potassium) all normal.",
+          "exp": "Baseline bloods exclude readily treatable mimics of weakness such as electrolyte disturbance (e.g. hypokalaemia) and provide a pre-treatment baseline.",
+          "aliases": [
+            "fbc",
+            "full blood count",
+            "renal panel",
+            "u&e",
+            "electrolytes",
+            "potassium",
+            "baseline bloods"
+          ]
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "Anti-Acetylcholine Receptor (AChR) Antibodies",
+          "cost": "mid",
+          "rel": true,
+          "required": true,
+          "find": "Anti-AChR antibodies POSITIVE at an elevated titre — confirms autoimmune myasthenia gravis.",
+          "exp": "Anti-AChR antibodies are diagnostic: sensitivity ~80–85% in generalised MG but under 50% in purely ocular disease, with specificity >98% (prospective multicentre data, 2024). A positive result in this clinical context confirms the diagnosis.",
+          "aliases": [
+            "achr",
+            "acetylcholine receptor antibody",
+            "anti-achr",
+            "ach receptor antibodies",
+            "mg antibodies"
+          ]
+        },
+        {
+          "id": "ai02",
+          "lbl": "Anti-MuSK Antibodies",
+          "cost": "mid",
+          "rel": true,
+          "find": "Not required once AChR is positive. Would be the next test if AChR were negative — positive in roughly 40% of AChR-negative generalised MG.",
+          "exp": "Anti-MuSK antibodies define a distinct MG subtype (more bulbar/respiratory, often poorer response to anticholinesterases) and are tested when AChR antibodies are negative but MG is still suspected.",
+          "aliases": [
+            "musk",
+            "anti-musk",
+            "muscle specific kinase antibody"
+          ]
+        },
+        {
+          "id": "ai03",
+          "lbl": "Repetitive Nerve Stimulation (RNS)",
+          "cost": "mid",
+          "rel": true,
+          "find": "Low-frequency (3 Hz) repetitive nerve stimulation shows a >10% decremental response in a proximal muscle — consistent with a postsynaptic NMJ disorder.",
+          "exp": "A decrement of ≥10% is the accepted pathological threshold and confirms impaired neuromuscular transmission. If RNS is normal but suspicion remains, single-fibre EMG is the most sensitive test (~95–99%). In LEMS and botulism the pattern differs — high-frequency stimulation shows an INCREMENT (facilitation).",
+          "aliases": [
+            "rns",
+            "repetitive nerve stimulation",
+            "decrement",
+            "sfemg",
+            "single fibre emg",
+            "single-fibre emg",
+            "electrophysiology",
+            "nerve conduction"
+          ]
+        },
+        {
+          "id": "ai04",
+          "lbl": "CT Thorax (thymoma screen)",
+          "cost": "high",
+          "rel": true,
+          "find": "Anterior mediastinal soft-tissue mass approximately 3 cm — consistent with a thymoma.",
+          "exp": "About 10–15% of MG patients have a thymoma, and thymic hyperplasia is commoner still. Every patient with newly diagnosed MG should have cross-sectional chest imaging, because identifying a thymoma changes downstream management.",
+          "imageUrl": "case004_ct_thorax_thymoma.jpg",
+          "aliases": [
+            "ct chest",
+            "ct thorax",
+            "thymoma",
+            "mediastinal scan",
+            "chest ct",
+            "thymus imaging"
+          ]
+        },
+        {
+          "id": "ai05",
+          "lbl": "MRI Brain & Brainstem",
+          "cost": "mid",
+          "rel": true,
+          "find": "Normal brainstem and cranial nerves; no infarct or demyelinating lesion.",
+          "exp": "Reasonable when there is genuine doubt about a brainstem cause of the ophthalmoplegia. A normal study here helps exclude a brainstem stroke or demyelination, but the fluctuating, fatigable, pupil-sparing picture already pointed away from a fixed structural lesion.",
+          "aliases": [
+            "mri brain",
+            "mri",
+            "brainstem imaging",
+            "brain scan"
+          ]
+        },
+        {
+          "id": "ai06",
+          "lbl": "Lumbar Puncture",
+          "cost": "mid",
+          "rel": false,
+          "penalize": true,
+          "find": "Cerebrospinal fluid normal — normal protein and cell count. No useful diagnostic information for this presentation.",
+          "exp": "An LP looking for albuminocytological dissociation belongs to the Guillain–Barré work-up, not MG. Ordering it here reflects anchoring on the wrong differential and exposes the patient to an unnecessary invasive test.",
+          "aliases": [
+            "lumbar puncture",
+            "lp",
+            "spinal tap",
+            "csf",
+            "albuminocytological"
+          ]
+        }
+      ],
+      "sigNegs": [
+        {
+          "id": "pe03",
+          "label": "Pupils normal and reactive → not a pupil-involving 3rd-nerve palsy, and argues against botulism",
+          "pts": 10
+        },
+        {
+          "id": "pe05",
+          "label": "Preserved reflexes + intact sensation → not Guillain–Barré and not LEMS",
+          "pts": 10
+        },
+        {
+          "id": "h06",
+          "label": "Weakness worsens with use (no post-exercise facilitation), no autonomic features → LEMS unlikely",
+          "pts": 8
+        },
+        {
+          "id": "bi02",
+          "label": "Normal thyroid function → thyroid eye disease/Graves unlikely",
+          "pts": 6
+        }
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Myasthenic Crisis",
+          "status": "ruled-out",
+          "statusLbl": "Not in crisis — monitor",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No orthopnoea and no breathlessness at rest — she lies flat and sleeps through the night"
+            },
+            {
+              "type": "ex",
+              "text": "Single-breath count ~28 and speaking in full sentences, not in respiratory distress"
+            },
+            {
+              "type": "inv",
+              "text": "FVC 28 mL/kg and NIF −45 cmH2O — above the 20/30/40 ICU thresholds, but reduced and to be monitored serially"
+            }
+          ]
+        },
+        {
+          "mnm": "Ischaemic Stroke",
+          "status": "ruled-out",
+          "statusLbl": "Excluded",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Gradual, fluctuating onset over 3 weeks — brainstem stroke is sudden and maximal at onset"
+            },
+            {
+              "type": "ex",
+              "text": "Variable, fatigable ophthalmoplegia not confined to one vascular territory, with normal pupils"
+            },
+            {
+              "type": "inv",
+              "text": "MRI brain/brainstem normal — no infarct"
+            }
+          ]
+        },
+        {
+          "mnm": "Guillain–Barré Syndrome",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No preceding diarrhoeal or respiratory illness; weakness fatigues with use rather than ascending steadily"
+            },
+            {
+              "type": "ex",
+              "text": "Deep tendon reflexes preserved — Guillain–Barré (including Miller-Fisher) is characteristically areflexic"
+            },
+            {
+              "type": "inv",
+              "text": "RNS shows a decrement typical of an NMJ disorder; nerve conduction studies would be needed to show the demyelination of GBS"
+            }
+          ]
+        },
+        {
+          "mnm": "Botulism",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No home-canned/fermented food and no wound; symptoms fluctuate rather than show a relentless descending paralysis"
+            },
+            {
+              "type": "ex",
+              "text": "Pupils normal and reactive (botulism causes dilated, poorly reactive pupils); no dry mouth or other cholinergic-blockade features"
+            },
+            {
+              "type": "inv",
+              "text": "High-frequency RNS would show an incremental (facilitating) response in botulism, opposite to the decrement seen here"
+            }
+          ]
+        }
+      ],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Ischaemic Stroke",
+          "after_item": "h05",
+          "snapshot": "History",
+          "note": "Gradual fluctuating course over weeks — not the sudden onset of a brainstem stroke"
+        },
+        {
+          "mnm": "Botulism",
+          "after_item": "pe03",
+          "snapshot": "Examination",
+          "note": "Normal reactive pupils and no autonomic features — botulism much less likely"
+        },
+        {
+          "mnm": "Guillain–Barré Syndrome",
+          "after_item": "pe05",
+          "snapshot": "Examination",
+          "note": "Reflexes preserved — argues strongly against GBS/Miller-Fisher"
+        },
+        {
+          "mnm": "Myasthenic Crisis",
+          "after_item": "bi01",
+          "snapshot": "Basic Inv",
+          "note": "FVC/NIF above ICU thresholds — not in crisis now, continue serial monitoring"
+        }
+      ],
+      "keyTeachingPoints": [
+        "Fatigability is the hallmark of myasthenia gravis: weakness that worsens with sustained use and through the day, and recovers with rest. A clear diurnal pattern (better on waking, worse by evening) is the cheapest pointer to a neuromuscular junction disorder.",
+        "Assess respiratory function early and serially. Apply the 20/30/40 rule — FVC <20 mL/kg, NIF less negative than −30 cmH2O, or MEP <40 cmH2O indicates myasthenic crisis and ICU-level care (Claytor, Muscle & Nerve 2023). Oxygen desaturation is a late sign; the single-breath count is a useful bedside surrogate.",
+        "Anti-AChR antibodies confirm the diagnosis — sensitivity ~80–85% in generalised MG but <50% in purely ocular disease, specificity >98% (multicentre data, 2024). If AChR is negative, test anti-MuSK (positive in ~40% of AChR-negative cases).",
+        "Electrophysiology supports the diagnosis: a decrement ≥10% on low-frequency repetitive nerve stimulation is pathological, and single-fibre EMG is the most sensitive test (~95–99%) when RNS is normal.",
+        "Always image the chest (CT thorax) once MG is diagnosed: 10–15% of patients have a thymoma. A normal chest X-ray does not exclude it.",
+        "Normal pupils separate MG ophthalmoplegia from a pupil-involving third-nerve palsy (a posterior communicating artery aneurysm is the feared cause) and from botulism, which causes dilated, poorly reactive pupils.",
+        "Preserved reflexes and intact sensation separate MG from Guillain–Barré (areflexia) and from Lambert-Eaton syndrome — LEMS improves transiently with exercise, has autonomic features, and is linked to small-cell lung cancer.",
+        "The ice-pack test (>2 mm improvement in ptosis after cooling) is a simple, ~80% sensitive/specific bedside test that supports an NMJ cause."
+      ],
+      "approachTitle": "An Approach to Ptosis & Fatigable Weakness",
+      "approachSub": "Localise the lesion, prove the weakness is fatigable, then screen the airway",
+      "approachText": "Ptosis and diplopia can arise anywhere from muscle to brainstem. The discriminating question is whether the weakness is fatigable (worse with use, better with rest) and whether the pupil and reflexes are spared — features that localise to the neuromuscular junction and, specifically, to myasthenia gravis.",
+      "approachCats": [
+        {
+          "name": "Muscle",
+          "eg": "Mitochondrial/ocular myopathy, thyroid eye disease (restrictive)",
+          "hl": false
+        },
+        {
+          "name": "Neuromuscular junction ← THIS CASE",
+          "eg": "Myasthenia gravis, Lambert-Eaton syndrome, botulism",
+          "hl": true
+        },
+        {
+          "name": "Cranial nerve / peripheral nerve",
+          "eg": "Third-nerve palsy, Guillain–Barré (Miller-Fisher)",
+          "hl": false
+        },
+        {
+          "name": "Brainstem",
+          "eg": "Ischaemic stroke, demyelination",
+          "hl": false
+        },
+        {
+          "name": "Endocrine",
+          "eg": "Thyroid eye disease / Graves'",
+          "hl": false
+        },
+        {
+          "name": "Functional",
+          "eg": "Functional neurological disorder — positive signs, inconsistency",
+          "hl": false
+        }
+      ],
+      "approachInsight": "The trap in this presentation is to localise too soon. A drooping lid and double vision instinctively suggest a third-nerve palsy or a stroke, and both are dangerous — but the moment the history reveals that the deficit fluctuates and fatigues, the lesion is pulled down to the neuromuscular junction. Two bedside negatives then do most of the discriminating work: a spared pupil takes a compressive third-nerve palsy and botulism off the table, and preserved reflexes separate MG from Guillain–Barré and Lambert-Eaton. What must never be deferred is the airway: fatigable bulbar and respiratory muscles are the reason MG is a must-not-miss, so vital capacity is measured early and tracked, long before any antibody result returns.",
+      "expertNarrative": "An experienced clinician hearing 'droopy lid and double vision, worse in the evening' is already thinking neuromuscular junction before the patient finishes the sentence — the diurnal, fatigable quality is that specific. The examination is then used to confirm fatigability (sustained upgaze, Cogan's twitch, the ice-pack test) and to harvest the negatives that exclude the dangerous mimics: a normal pupil, preserved reflexes, intact sensation. Crucially, the airway is assessed in the same breath as the eyes — a single-breath count and a formal FVC — because the patient who looks comfortable can still be sliding towards a crisis, and SpO2 will not warn you until it is late. Only then does the work-up move to the confirmatory layer: anti-AChR antibodies (anti-MuSK if negative), repetitive nerve stimulation or single-fibre EMG, and CT of the thorax to look for a thymoma. The discipline is to hold stroke, Guillain–Barré and botulism live until a specific finding retires each, rather than collapsing onto MG because it is the expected answer.",
+      "sensitivityNote": "Anti-AChR antibodies are ~80–85% sensitive in generalised MG but under 50% in purely ocular MG, so a negative result does not exclude the diagnosis — anti-MuSK antibodies and single-fibre EMG (the most sensitive test, ~95–99%) extend the work-up. Bedside FVC is the most sensitive practical marker of early respiratory compromise and is far more reliable than waiting for oxygen desaturation.",
+      "specificityNote": "Fatigable ptosis with a spared pupil and preserved reflexes is highly specific for a neuromuscular junction disorder, and a positive anti-AChR antibody (specificity >98%) effectively seals MG. A >10% decrement on repetitive nerve stimulation is specific for impaired neuromuscular transmission, while an incremental (facilitating) response instead points to Lambert-Eaton syndrome or botulism.",
+      "linkedPairs": []
+    },
+    {
+      "id": "case_005",
+      "title": "Right Upper Quadrant Pain & Fever",
+      "approach": "An Approach to Abdominal Pain",
+      "secondaryApproach": "An Approach to Right Upper Quadrant Pain",
+      "system": "Gastrointestinal",
+      "discipline": "General Surgery (GS)",
+      "difficulty": "moderate",
+      "patient": "Mdm Liew Geok Choo, 50F, Business Executive",
+      "snomedCode": "65275009",
+      "demographics": {
+        "name": "Liew Geok Choo",
+        "age": "50",
+        "sex": "F",
+        "occupation": "Business Executive",
+        "mrn": "652750"
+      },
+      "vitals": {
+        "hr": {
+          "value": "96",
+          "unit": "bpm",
+          "abnormal": true
+        },
+        "bp": {
+          "value": "128/78",
+          "unit": "mmHg",
+          "abnormal": false
+        },
+        "spo2": {
+          "value": "98",
+          "unit": "%",
+          "abnormal": false
+        },
+        "rr": {
+          "value": "18",
+          "unit": "/min",
+          "abnormal": false
+        },
+        "temp": {
+          "value": "37.8",
+          "unit": "°C",
+          "abnormal": true
+        }
+      },
+      "allergies": "NKDA",
+      "background": [
+        "Recurrent biliary colic (≥5 episodes over 2 years)",
+        "Type 2 Diabetes",
+        "Hypertension",
+        "Hyperlipidaemia"
+      ],
+      "pathway": {
+        "validation": {
+          "status": "draft",
+          "validatedBy": null,
+          "validatedAt": null,
+          "notes": "Awaiting surgical sign-off on the imaging sequence (US first-line; ERCP reserved for proven ductal obstruction)."
+        },
+        "reasoning": {
+          "bi05": "Lipase is checked early specifically to exclude gallstone pancreatitis — a normal lipase keeps this in the cholecystitis lane.",
+          "ai01": "Ultrasound is the first-line confirmatory test (wall thickening, stones, pericholecystic fluid, sonographic Murphy's) and also reads the CBD calibre.",
+          "ai04": "ERCP is NOT a diagnostic step here — with no jaundice, normal bilirubin and a non-dilated duct there is nothing to intervene on, and it risks iatrogenic pancreatitis.",
+          "acute_calculous_cholecystitis": "Positive Murphy's + systemic inflammation + characteristic ultrasound = Tokyo Guidelines 2018 definite acute cholecystitis."
+        },
+        "reveal": {
+          "hint": "mask-diagnoses",
+          "debrief": "full"
+        }
+      },
+      "vignette": "Mdm Liew Geok Choo is a 50-year-old business executive who presents with three days of constant pain in the right upper part of her abdomen, gradually worsening. She feels warm and has vomited twice, but has otherwise been coping at home until today.",
+      "caseMNMs": [
+        {
+          "name": "Ascending Cholangitis",
+          "tier": 1
+        },
+        {
+          "name": "Myocardial Infarction",
+          "tier": 1
+        },
+        {
+          "name": "Acute Pancreatitis",
+          "tier": 2
+        },
+        {
+          "name": "Perforated Viscus",
+          "tier": 2
+        }
+      ],
+      "expectedP1": [
+        "Acute Cholecystitis",
+        "Biliary Colic",
+        "Choledocholithiasis",
+        "Gallstone Ileus",
+        "Hepatitis",
+        "Peptic Ulcer Disease",
+        "Acute Gastritis",
+        "Dengue Fever"
+      ],
+      "finalDx": "Acute Calculous Cholecystitis",
+      "finalUmbrella": "Acute Cholecystitis",
+      "diagnosisScore": {
+        "Acute Calculous Cholecystitis": 100,
+        "Calculous Cholecystitis": 100,
+        "Acute Cholecystitis": 85,
+        "Acute Acalculous Cholecystitis": 55,
+        "Biliary Colic": 40,
+        "Choledocholithiasis": 35,
+        "Ascending Cholangitis": 25,
+        "Acute Pancreatitis": 20,
+        "Gallstone Ileus": 15,
+        "Hepatitis": 15
+      },
+      "required": [
+        "pe02",
+        "bi05",
+        "ai01"
+      ],
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Pain — site, onset, character, radiation, timing",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "socrates",
+            "pain history",
+            "where is the pain",
+            "radiation",
+            "onset of pain",
+            "character of pain",
+            "right upper quadrant",
+            "ruq pain",
+            "duration",
+            "constant or colicky"
+          ],
+          "find": "Pain is in the right upper abdomen (right hypochondrium), came on over a few hours three days ago and has been constant and gradually worsening since. It does NOT radiate to the back or to the shoulder tip, and is NOT relieved by sitting forward. It is worse on movement and on taking a deep breath.",
+          "exp": "A constant right-hypochondrial pain lasting well over 6 hours and worsening on inspiration points to the gallbladder. Radiation through to the back would raise pancreatitis; radiation to the shoulder tip would suggest diaphragmatic irritation. The duration (>6h) is what separates this from self-limiting biliary colic."
+        },
+        {
+          "id": "h02",
+          "lbl": "Fever, rigors and chills",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "fever",
+            "rigors",
+            "chills",
+            "temperature",
+            "feverish",
+            "sweats",
+            "swinging fever"
+          ],
+          "find": "She has felt feverish (measured 37.8°C at home) but has had NO shaking chills or rigors.",
+          "exp": "Low-grade fever fits acute cholecystitis. High swinging fevers with rigors would raise ascending cholangitis or an abscess — their absence is reassuring against a suppurative biliary infection."
+        },
+        {
+          "id": "h03",
+          "lbl": "Jaundice, dark urine, pale stools",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "jaundice",
+            "yellow eyes",
+            "dark urine",
+            "tea coloured urine",
+            "pale stools",
+            "clay stools",
+            "obstructive symptoms",
+            "cholangitis screen"
+          ],
+          "find": "No yellowing of the eyes or skin, no tea-coloured (dark) urine and no pale stools.",
+          "exp": "Jaundice with dark urine and pale stools signals obstruction of the common bile duct (a stone in the duct, or cholangitis). Its absence here argues strongly against ascending cholangitis — there is no Charcot's triad."
+        },
+        {
+          "id": "h04",
+          "lbl": "Relation to fatty meals & previous similar episodes",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "fatty food",
+            "after meals",
+            "previous episodes",
+            "biliary colic",
+            "recurrent pain",
+            "gallstone history",
+            "past episodes"
+          ],
+          "find": "Over the last two years she has had at least five episodes of right-upper pain coming on after fatty meals, each building over 3–4 hours then settling. Those were milder and she was never febrile. This episode is different: it has not settled and she now has a fever.",
+          "exp": "A background of self-limiting post-fatty-meal pain is classic biliary colic. The change to persistent pain plus fever marks the transition to acute cholecystitis — a stone has impacted in the cystic duct, producing inflammation and infection."
+        },
+        {
+          "id": "h05",
+          "lbl": "Vomiting and any GI bleeding",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "vomiting",
+            "nausea",
+            "haematemesis",
+            "coffee ground vomit",
+            "melena",
+            "pr bleed",
+            "blood in stool",
+            "gi bleed",
+            "peptic ulcer"
+          ],
+          "find": "Two episodes of non-bilious, non-bloody vomiting. No haematemesis, no coffee-ground vomitus, no black stools and no rectal bleeding.",
+          "exp": "Vomiting is common in biliary disease. Screening for haematemesis/melena keeps peptic ulcer disease and an upper GI bleed in view — both absent here."
+        },
+        {
+          "id": "h06",
+          "lbl": "Hepatitis risk — shellfish, vaccination, exposures",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "raw oysters",
+            "shellfish",
+            "hepatitis",
+            "hep a",
+            "vaccination",
+            "ivdu",
+            "blood transfusion",
+            "sexual history",
+            "hepatitis risk factors"
+          ],
+          "find": "She ate raw oysters at a function last week and has not been vaccinated against hepatitis A or B. No intravenous drug use, in a stable monogamous relationship, and has never received blood products.",
+          "exp": "Recent raw shellfish in an unvaccinated person genuinely raises hepatitis A — useful 'noise' that must be weighed. It is later argued down by the liver panel, which shows neither a hepatocellular nor a cholestatic pattern."
+        },
+        {
+          "id": "h07",
+          "lbl": "Cardiac screen — chest pain, dyspnoea",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "chest pain",
+            "shortness of breath",
+            "sob",
+            "diaphoresis",
+            "palpitations",
+            "cardiac",
+            "heart attack screen"
+          ],
+          "find": "No chest pain, no shortness of breath, no sweating and no palpitations.",
+          "exp": "An inferior myocardial infarction can present as epigastric/right-upper pain. Screening for cardiac features (and doing an ECG and troponin) is mandatory before settling on a biliary cause."
+        },
+        {
+          "id": "h08",
+          "lbl": "Travel, dengue features, sick contacts",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "travel history",
+            "dengue",
+            "mosquito",
+            "rash",
+            "myalgia",
+            "retro-orbital pain",
+            "outbreak",
+            "sick contacts",
+            "tropical"
+          ],
+          "find": "No recent travel. She lives in an area with a current dengue cluster but has no rash, no severe muscle/joint or retro-orbital pain and no bleeding tendency.",
+          "exp": "Dengue is endemic in Singapore and belongs on the differential for any fever. The absence of dengue-specific features, and a later negative NS1, set it aside."
+        },
+        {
+          "id": "h09",
+          "lbl": "Past medical, drugs, allergies, risk factors",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "past medical history",
+            "medications",
+            "drug history",
+            "allergies",
+            "nsaids",
+            "steroids",
+            "mechanical heart valve",
+            "family history",
+            "haemolytic anaemia"
+          ],
+          "find": "Diabetes, hypertension and high cholesterol, all well controlled. No regular NSAIDs or steroids, no drug allergies (NKDA), no mechanical heart valve and no family history of jaundice or haemolytic anaemia.",
+          "exp": "NSAIDs/steroids would raise peptic ulcer disease; a mechanical valve or haemolytic anaemia would raise pigment stones. The classic 'fat, female, forty, fertile' risk profile for cholesterol gallstones fits."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "General inspection & vital signs",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "general inspection",
+            "vitals",
+            "vital signs",
+            "jaundice on exam",
+            "scleral icterus",
+            "pallor",
+            "observations",
+            "end of bed"
+          ],
+          "find": "Alert and reasonably comfortable. Mildly febrile at 37.8°C, heart rate 96, blood pressure 128/78. No scleral icterus and no pallor.",
+          "exp": "No clinical jaundice argues against biliary obstruction/cholangitis, and she is haemodynamically stable (not in septic shock). Fever plus tachycardia are the systemic component of the Tokyo criteria.",
+          "lookingFor": "Jaundice (cholangitis/CBD obstruction); haemodynamic instability (sepsis); pallor (bleeding)."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Abdominal examination & Murphy's sign",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "abdominal exam",
+            "palpate abdomen",
+            "murphy's sign",
+            "murphys sign",
+            "tenderness",
+            "guarding",
+            "gallbladder",
+            "ruq tenderness"
+          ],
+          "find": "Tenderness with guarding over the right hypochondrium and epigastrium. Murphy's sign is POSITIVE (catching of the breath on deep RUQ palpation). The rest of the abdomen is soft and non-tender, with no organomegaly and no palpable mass.",
+          "exp": "A positive Murphy's sign is the cardinal local sign of acute cholecystitis (Tokyo Guidelines 2018, Part A). Localised — rather than generalised — tenderness argues against a perforated viscus.",
+          "lookingFor": "Positive Murphy's sign (local TG18 criterion); a palpable tender mass (TG18 Grade II); generalised peritonism (perforation)."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Signs of peritonism / perforation",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "peritonism",
+            "rebound tenderness",
+            "rigidity",
+            "board-like abdomen",
+            "guarding generalised",
+            "bowel sounds",
+            "perforation signs"
+          ],
+          "find": "No generalised rigidity and no rebound tenderness away from the right hypochondrium. Bowel sounds are present and normal.",
+          "exp": "Board-like rigidity, generalised rebound and absent bowel sounds would indicate a perforated viscus with peritonitis. Their absence keeps this a localised gallbladder process."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Cardiorespiratory examination",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "chest exam",
+            "lung exam",
+            "heart sounds",
+            "murmurs",
+            "auscultation",
+            "respiratory exam",
+            "basal crepitations"
+          ],
+          "find": "Chest clear with equal air entry. Heart sounds dual, no murmurs. Pulse regular at 96.",
+          "exp": "A right basal pneumonia can refer pain to the right upper quadrant; a clear chest makes it less likely. Cardiac auscultation complements the ECG/troponin in screening for an ischaemic cause."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Palpable gallbladder / Courvoisier's sign",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "palpable gallbladder",
+            "gallbladder mass",
+            "courvoisier",
+            "mass right upper quadrant",
+            "distended gallbladder"
+          ],
+          "find": "No palpable gallbladder mass.",
+          "exp": "A palpable tender RUQ mass would upgrade severity (TG18 Grade II). A palpable NON-tender gallbladder with jaundice (Courvoisier's sign) would instead point to malignant biliary obstruction — not the picture here."
+        },
+        {
+          "id": "pe06",
+          "lbl": "Hydration status & digital rectal examination",
+          "cost": "free",
+          "rel": false,
+          "aliases": [
+            "hydration",
+            "fluid status",
+            "dehydration",
+            "mucous membranes",
+            "dre",
+            "rectal examination",
+            "melena on pr"
+          ],
+          "find": "Mildly dry mucous membranes after vomiting. Digital rectal examination is unremarkable with no melena.",
+          "exp": "Assessing fluid status guides resuscitation; completing the examination with a DRE checks for occult GI bleeding."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "Full Blood Count",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "fbc",
+            "full blood count",
+            "white cell count",
+            "wbc",
+            "tw",
+            "total white",
+            "haemoglobin",
+            "leukocytosis"
+          ],
+          "find": "White cell count raised at 14.5 ×10⁹/L with neutrophilia. Haemoglobin and platelets normal.",
+          "exp": "Leukocytosis is the systemic-inflammation limb of the Tokyo criteria. A white cell count >18 ×10⁹/L would push severity towards TG18 Grade II."
+        },
+        {
+          "id": "bi02",
+          "lbl": "Liver Panel",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "lft",
+            "liver function test",
+            "liver panel",
+            "bilirubin",
+            "alt",
+            "ast",
+            "alp",
+            "ggt",
+            "transaminases",
+            "cholestatic"
+          ],
+          "find": "Mildly raised ALP and GGT. Bilirubin normal. ALT and AST normal — neither a cholestatic nor a hepatocellular pattern.",
+          "exp": "A markedly cholestatic panel (high bilirubin/ALP) would point to a CBD stone or cholangitis; a hepatocellular panel (high ALT/AST) to hepatitis. A normal bilirubin with only mildly raised ALP fits uncomplicated cholecystitis and argues against duct obstruction."
+        },
+        {
+          "id": "bi03",
+          "lbl": "C-Reactive Protein (CRP)",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "crp",
+            "c reactive protein",
+            "inflammatory markers",
+            "procalcitonin"
+          ],
+          "find": "CRP raised at 85 mg/L.",
+          "exp": "A raised CRP is part of the systemic-inflammation criterion in TG18 and provides a baseline to trend the response to treatment."
+        },
+        {
+          "id": "bi04",
+          "lbl": "Renal Panel",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "renal panel",
+            "u&e",
+            "urea",
+            "creatinine",
+            "electrolytes",
+            "kidney function",
+            "aki"
+          ],
+          "find": "Urea mildly raised with a small rise in creatinine — a pre-renal picture from vomiting and reduced intake.",
+          "exp": "Documents a pre-renal acute kidney injury and guides fluid resuscitation."
+        },
+        {
+          "id": "bi05",
+          "lbl": "Serum Lipase",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "sigNeg": true,
+          "aliases": [
+            "lipase",
+            "amylase",
+            "pancreatic enzymes",
+            "serum lipase",
+            "pancreatitis bloods"
+          ],
+          "find": "Serum lipase 60 U/L (normal <140) — NOT elevated.",
+          "exp": "Gallstones are the commonest cause of acute pancreatitis, so lipase must be checked. A lipase >3× the upper limit of normal would reclassify this as acute pancreatitis (Revised Atlanta). A normal lipase keeps the diagnosis as cholecystitis."
+        },
+        {
+          "id": "bi06",
+          "lbl": "ECG + High-Sensitivity Troponin T",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "ecg",
+            "ekg",
+            "troponin",
+            "cardiac enzymes",
+            "12 lead",
+            "hs troponin",
+            "cardiac workup"
+          ],
+          "find": "ECG shows sinus rhythm with no ischaemic changes. High-sensitivity troponin T normal.",
+          "exp": "Excludes an inferior myocardial infarction presenting as upper-abdominal pain.",
+          "imageUrl": "case005_ecg_normal.jpg"
+        },
+        {
+          "id": "bi07",
+          "lbl": "Chest X-ray (CXR) — erect",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "cxr",
+            "chest xray",
+            "chest x-ray",
+            "erect chest film",
+            "air under diaphragm",
+            "free air",
+            "pneumoperitoneum"
+          ],
+          "find": "No free air under the diaphragm. No basal consolidation.",
+          "exp": "An erect chest film screens for pneumoperitoneum (a perforated viscus) and for a right basal pneumonia mimicking biliary pain.",
+          "imageUrl": "case005_cxr_erect.jpg"
+        },
+        {
+          "id": "bi08",
+          "lbl": "Dengue serology (NS1 / PCR)",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "dengue",
+            "ns1",
+            "dengue pcr",
+            "dengue serology",
+            "arbovirus"
+          ],
+          "find": "Dengue NS1 antigen negative.",
+          "exp": "In an endemic setting with a local cluster, a negative dengue test removes an important fever differential."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "Ultrasound Hepatobiliary System (US HBS)",
+          "cost": "mid",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "ultrasound",
+            "us hbs",
+            "abdominal ultrasound",
+            "hepatobiliary ultrasound",
+            "gallbladder scan",
+            "sonographic murphy",
+            "biliary ultrasound"
+          ],
+          "find": "Thickened gallbladder wall (5 mm) with multiple intraluminal gallstones casting posterior acoustic shadows. Pericholecystic fluid present. Sonographic Murphy's sign positive. Common bile duct NOT dilated (normal calibre), with no ductal stone seen.",
+          "exp": "Ultrasound is the first-line imaging test and supplies the Tokyo 2018 imaging criterion: wall thickening, stones, pericholecystic fluid and a sonographic Murphy's sign confirm acute cholecystitis. A non-dilated CBD with no ductal stone argues against choledocholithiasis and cholangitis.",
+          "imageUrl": "case005_us_gallbladder.jpg"
+        },
+        {
+          "id": "ai02",
+          "lbl": "CT Abdomen & Pelvis",
+          "cost": "high",
+          "rel": true,
+          "aliases": [
+            "ct abdomen",
+            "ct abdo pelvis",
+            "ct scan abdomen",
+            "computed tomography",
+            "cross sectional imaging"
+          ],
+          "find": "Gallbladder wall thickening, gallstones and pericholecystic fat stranding. No free air, no abscess or collection.",
+          "exp": "CT is a useful second-line test when ultrasound is equivocal or unavailable overnight, and to look for complications (perforation, abscess, emphysematous cholecystitis). It is not preferred over ultrasound as the first test for uncomplicated cholecystitis.",
+          "imageUrl": "case005_ct_abdomen.jpg"
+        },
+        {
+          "id": "ai03",
+          "lbl": "MRCP (Magnetic Resonance Cholangiopancreatography)",
+          "cost": "high",
+          "rel": true,
+          "aliases": [
+            "mrcp",
+            "magnetic resonance cholangiopancreatography",
+            "biliary mri",
+            "mri biliary tree",
+            "duct imaging"
+          ],
+          "find": "Common bile duct of normal calibre with no filling defect — no choledocholithiasis.",
+          "exp": "MRCP is the non-invasive way to interrogate the bile duct when there is concern about a CBD stone (deranged LFTs or a dilated duct). Here, with normal bilirubin and a non-dilated CBD, it is confirmatory-only and largely unnecessary — but it is the correct step BEFORE any thought of ERCP."
+        },
+        {
+          "id": "ai04",
+          "lbl": "ERCP (Endoscopic Retrograde Cholangiopancreatography)",
+          "cost": "high",
+          "rel": false,
+          "penalize": true,
+          "aliases": [
+            "ercp",
+            "endoscopic retrograde cholangiopancreatography",
+            "sphincterotomy",
+            "duct clearance"
+          ],
+          "find": "Not indicated. There is no jaundice, the bilirubin is normal and the duct is not dilated — there is no ductal obstruction to treat.",
+          "exp": "ERCP is a therapeutic, invasive procedure reserved for proven CBD stones or cholangitis, and it carries a real risk of causing pancreatitis, bleeding or perforation. It is never a diagnostic test for cholecystitis. Reaching for ERCP here is the classic over-investigation error — image the duct non-invasively (MRCP/EUS) first if there is any concern."
+        }
+      ],
+      "sigNegs": [
+        {
+          "id": "h03",
+          "label": "No jaundice, dark urine or pale stools → ascending cholangitis / CBD obstruction unlikely (no Charcot's triad)",
+          "pts": 10
+        },
+        {
+          "id": "bi05",
+          "label": "Normal serum lipase → acute pancreatitis excluded",
+          "pts": 10
+        },
+        {
+          "id": "bi02",
+          "label": "Normal bilirubin, non-cholestatic / non-hepatocellular liver panel → choledocholithiasis and hepatitis less likely",
+          "pts": 8
+        },
+        {
+          "id": "pe03",
+          "label": "No generalised peritonism, bowel sounds present → perforated viscus unlikely",
+          "pts": 8
+        },
+        {
+          "id": "bi06",
+          "label": "Normal ECG and troponin → myocardial infarction less likely",
+          "pts": 6
+        }
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Ascending Cholangitis",
+          "status": "ruled-out",
+          "statusLbl": "Excluded",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No jaundice, no dark urine and no rigors — Charcot's triad (RUQ pain, fever, jaundice) is incomplete"
+            },
+            {
+              "type": "ex",
+              "text": "No scleral icterus; haemodynamically stable (no hypotension or confusion to suggest Reynolds' pentad)"
+            },
+            {
+              "type": "inv",
+              "text": "Normal bilirubin, a non-dilated common bile duct on ultrasound and no ductal stone on MRCP"
+            }
+          ]
+        },
+        {
+          "mnm": "Myocardial Infarction",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No chest pain, dyspnoea, diaphoresis or palpitations"
+            },
+            {
+              "type": "inv",
+              "text": "ECG in sinus rhythm with no ischaemic changes and a normal high-sensitivity troponin"
+            }
+          ]
+        },
+        {
+          "mnm": "Acute Pancreatitis",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Pain does not radiate to the back and is not relieved by sitting forward"
+            },
+            {
+              "type": "inv",
+              "text": "Serum lipase is normal (not >3× the upper limit of normal), so the Revised Atlanta biochemical criterion is not met"
+            }
+          ]
+        },
+        {
+          "mnm": "Perforated Viscus",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No sudden, severe, generalised abdominal pain"
+            },
+            {
+              "type": "ex",
+              "text": "Localised RUQ tenderness only, no generalised peritonism, bowel sounds present"
+            },
+            {
+              "type": "inv",
+              "text": "No free air under the diaphragm on the erect chest film or CT"
+            }
+          ]
+        }
+      ],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Perforated Viscus",
+          "after_item": "pe03",
+          "snapshot": "Examination",
+          "note": "Localised tenderness with no peritonism and present bowel sounds — perforation much less likely"
+        },
+        {
+          "mnm": "Acute Pancreatitis",
+          "after_item": "bi05",
+          "snapshot": "Basic Inv",
+          "note": "Normal lipase — does not meet the Revised Atlanta biochemical threshold"
+        },
+        {
+          "mnm": "Myocardial Infarction",
+          "after_item": "bi06",
+          "snapshot": "Basic Inv",
+          "note": "Normal ECG and troponin — ischaemic cause excluded"
+        },
+        {
+          "mnm": "Ascending Cholangitis",
+          "after_item": "bi02",
+          "snapshot": "Basic Inv",
+          "note": "Normal bilirubin and non-cholestatic panel — no biochemical evidence of duct obstruction"
+        }
+      ],
+      "keyTeachingPoints": [
+        "Tokyo Guidelines 2018 (TG18) define acute cholecystitis by three parts: A — local signs (Murphy's sign, RUQ pain/mass/tenderness); B — systemic signs (fever, raised CRP, raised white cell count); C — characteristic imaging. A definite diagnosis needs A + B + C; A + B alone is a suspected diagnosis.",
+        "Biliary colic is self-limiting (typically <6 hours) and follows fatty meals; when the pain becomes persistent (>6 hours) and is accompanied by fever and a raised white cell count, the stone has impacted the cystic duct and the picture is acute cholecystitis.",
+        "The dangerous escalation is ascending cholangitis — Charcot's triad (RUQ pain, fever, jaundice), and Reynolds' pentad with added hypotension and confusion. Look for jaundice, a cholestatic liver panel and a dilated CBD; their absence keeps the diagnosis at cholecystitis.",
+        "Always check lipase: gallstones are the leading cause of acute pancreatitis, and a lipase >3× the upper limit of normal would reclassify the patient (Revised Atlanta classification, 2012).",
+        "Ultrasound is the first-line investigation — gallbladder wall thickening (>3–4 mm), gallstones with posterior acoustic shadowing, pericholecystic fluid and a sonographic Murphy's sign — and it reads the CBD calibre to screen for ductal stones.",
+        "ERCP is NOT a diagnostic test for cholecystitis. It is an invasive, therapeutic procedure for proven CBD stones or cholangitis and risks causing pancreatitis. If a ductal stone is suspected, screen non-invasively with MRCP or EUS first.",
+        "TG18 severity grading drives urgency: Grade II (moderate) if white cell count >18 ×10⁹/L, a palpable tender RUQ mass, symptoms >72 hours, or marked local inflammation (gangrenous/emphysematous cholecystitis, abscess); Grade III (severe) if there is organ dysfunction.",
+        "Definitive treatment is laparoscopic cholecystectomy, ideally early (within 72 hours). Watch for failure of conservative management (rising fever, worsening pain, peritonism) signalling empyema, gangrene or perforation; other complications include cholecystoenteric fistula → gallstone ileus, and (long term) gallbladder cancer."
+      ],
+      "approachTitle": "An Approach to Right Upper Quadrant Pain",
+      "approachSub": "Separate the biliary tree from the liver, pancreas, gut, heart and chest",
+      "approachText": "Right-upper-quadrant pain with fever is biliary until proven otherwise, but the job is to place it precisely: is this the gallbladder (cholecystitis), the duct (stone/cholangitis), the liver (hepatitis), the pancreas, or a referred cardiac/pleural cause? The discriminators are jaundice, the liver panel pattern, the lipase and the ultrasound.",
+      "approachCats": [
+        {
+          "name": "Biliary — gallbladder ← THIS CASE",
+          "eg": "Biliary colic, acute cholecystitis, empyema/gangrene",
+          "hl": true
+        },
+        {
+          "name": "Biliary — duct",
+          "eg": "Choledocholithiasis, ascending cholangitis",
+          "hl": false
+        },
+        {
+          "name": "Hepatic",
+          "eg": "Viral hepatitis, liver abscess",
+          "hl": false
+        },
+        {
+          "name": "Pancreatic",
+          "eg": "Acute pancreatitis",
+          "hl": false
+        },
+        {
+          "name": "Gastroduodenal",
+          "eg": "Peptic ulcer disease, gastritis, perforation",
+          "hl": false
+        },
+        {
+          "name": "Referred — cardiac / pleural / tropical",
+          "eg": "Inferior MI, right basal pneumonia, dengue",
+          "hl": false
+        }
+      ],
+      "approachInsight": "The trap in right-upper-quadrant pain is to stop at 'gallstones' and miss either the dangerous duct (cholangitis) or a referred killer (inferior MI). The clean way through is to ask three questions in order: is the duct obstructed (jaundice, dark urine, cholestatic panel, dilated CBD)? — if not, cholangitis and a retained stone fall away. Is the pancreas involved (back radiation, lipase >3× ULN)? — if not, pancreatitis falls away. Is this referred from the chest (ECG, troponin, chest film)? — if not, the heart and lung fall away. What remains, anchored by a positive Murphy's sign and a confirmatory ultrasound, is acute cholecystitis. Crucially, the absence of duct obstruction is also what tells you ERCP has no role — there is nothing to clear.",
+      "expertNarrative": "The experienced surgeon hears 'days of constant RUQ pain with fever on a background of fatty-food colic' and is already on cholecystitis, but spends the consultation deliberately excluding the things that change management. Jaundice and a cholestatic panel are hunted because cholangitis is the emergency that needs the duct cleared; a lipase is sent because gallstone pancreatitis sits one stone away; an ECG and troponin are done because an inferior MI hides in this exact location. The ultrasound is then used to confirm the gallbladder and — just as importantly — to read the bile duct. With a normal bilirubin, a non-dilated duct and no ductal stone, the reasoning closes: this is acute cholecystitis, and there is nothing for an ERCP to do. The discipline is to let the cheap, fast tests (lipase, LFT, ECG, ultrasound) retire each dangerous mimic rather than jumping to invasive imaging.",
+      "sensitivityNote": "Ultrasound is highly sensitive for gallstones and, combined with wall thickening, pericholecystic fluid and a sonographic Murphy's sign, is sensitive for acute cholecystitis; a normal study in a convincing clinical picture should still prompt further imaging (CT or HIDA). Bedside Murphy's sign is sensitive but less specific. A normal bilirubin and non-dilated CBD are reassuring but do not completely exclude a small or passed ductal stone — which is why MRCP/EUS exist for the equivocal case.",
+      "specificityNote": "A positive sonographic Murphy's sign with gallbladder wall thickening and pericholecystic fluid is highly specific for acute cholecystitis. Charcot's triad is specific for cholangitis but insensitive (present in a minority); its absence does not fully exclude the diagnosis, so the liver panel and duct calibre are checked. A lipase >3× the upper limit of normal is specific for pancreatitis and would change the diagnosis entirely.",
+      "linkedPairs": []
+    },
+    {
+      "id": "case_006",
+      "title": "Epigastric Pain Radiating to the Back",
+      "approach": "An Approach to Abdominal Pain",
+      "secondaryApproach": "An Approach to Epigastric Pain",
+      "system": "Gastrointestinal",
+      "discipline": "General Surgery (GS)",
+      "difficulty": "challenging",
+      "patient": "Mdm Goh Swee Lan, 52F, Hawker",
+      "snomedCode": "197456007",
+      "demographics": {
+        "name": "Goh Swee Lan",
+        "age": "52",
+        "sex": "F",
+        "occupation": "Hawker",
+        "mrn": "197456"
+      },
+      "vitals": {
+        "hr": {
+          "value": "104",
+          "unit": "bpm",
+          "abnormal": true
+        },
+        "bp": {
+          "value": "114/72",
+          "unit": "mmHg",
+          "abnormal": false
+        },
+        "spo2": {
+          "value": "95",
+          "unit": "%",
+          "abnormal": true
+        },
+        "rr": {
+          "value": "22",
+          "unit": "/min",
+          "abnormal": true
+        },
+        "temp": {
+          "value": "37.9",
+          "unit": "°C",
+          "abnormal": true
+        }
+      },
+      "allergies": "NKDA",
+      "background": [
+        "Gallstones noted on a previous ultrasound",
+        "Hyperlipidaemia (high triglycerides)",
+        "Type 2 Diabetes",
+        "Hypertension",
+        "Only occasional alcohol"
+      ],
+      "pathway": {
+        "validation": {
+          "status": "draft",
+          "validatedBy": null,
+          "validatedAt": null,
+          "notes": "Awaiting GI/HPB sign-off on the investigation order (diagnosis = pain + lipase; ducts assessed by MRCP/EUS before ERCP; CT deferred for necrosis)."
+        },
+        "reasoning": {
+          "bi05": "Lipase is the pivotal test — a level >3× the upper limit of normal with characteristic pain already satisfies the Revised Atlanta diagnosis, BEFORE any cross-sectional imaging.",
+          "ai01": "Ultrasound is first-line to establish the gallstone aetiology and read the CBD — not to 'diagnose' the pancreatitis, which is already established.",
+          "ai03": "With a suspected but unproven duct stone and NO cholangitis, MRCP (or EUS) is the correct next step to image the duct non-invasively.",
+          "ai05": "ERCP is withheld: there is no cholangitis and no confirmed ongoing obstruction, so a diagnostic/early ERCP only adds the risk of worsening the pancreatitis.",
+          "ai02": "Acutely, CT adds little to a typical diagnosis and underestimates necrosis early — it is most useful deferred to ~72–96 h if the patient deteriorates.",
+          "acute_pancreatitis": "Characteristic epigastric pain radiating to the back + lipase >3× ULN meets 2 of 3 Revised Atlanta criteria; gallstones supply the aetiology."
+        },
+        "reveal": {
+          "hint": "mask-diagnoses",
+          "debrief": "full"
+        }
+      },
+      "vignette": "Mdm Goh Swee Lan is a 52-year-old hawker who presents with two days of severe, constant pain in the upper-middle of her abdomen. It came on suddenly and has not let up. She has vomited twice and feels feverish.",
+      "caseMNMs": [
+        {
+          "name": "Aortic Dissection",
+          "tier": 1
+        },
+        {
+          "name": "Ascending Cholangitis",
+          "tier": 1
+        },
+        {
+          "name": "Myocardial Infarction",
+          "tier": 2
+        },
+        {
+          "name": "Perforated Viscus",
+          "tier": 2
+        }
+      ],
+      "expectedP1": [
+        "Acute Pancreatitis",
+        "Acute Cholecystitis",
+        "Choledocholithiasis",
+        "Peptic Ulcer Disease",
+        "Acute Gastritis",
+        "Mesenteric Ischaemia",
+        "Dengue Fever"
+      ],
+      "finalDx": "Acute Pancreatitis",
+      "finalUmbrella": "Acute Pancreatitis",
+      "diagnosisScore": {
+        "Acute Pancreatitis": 100,
+        "Gallstone Pancreatitis": 100,
+        "Acute Gallstone Pancreatitis": 100,
+        "Choledocholithiasis": 35,
+        "Acute Cholecystitis": 30,
+        "Ascending Cholangitis": 25,
+        "Peptic Ulcer Disease": 15
+      },
+      "required": [
+        "pe02",
+        "bi05",
+        "ai01"
+      ],
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Pain — site, onset, character, radiation, relief",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "socrates",
+            "pain history",
+            "epigastric pain",
+            "radiation to back",
+            "through to the back",
+            "relieved leaning forward",
+            "sitting forward",
+            "onset",
+            "character of pain",
+            "constant pain"
+          ],
+          "find": "Severe, constant, boring epigastric pain that began suddenly two days ago and has not eased. It radiates straight THROUGH to the back, is slightly better sitting up and leaning forward, and worse lying flat.",
+          "exp": "Epigastric pain boring through to the back, eased by leaning forward, is the classic pancreatitis script. But back radiation also overlaps with an aortic catastrophe, and epigastric pain with peptic ulcer disease — so the history must actively separate these."
+        },
+        {
+          "id": "h02",
+          "lbl": "Cardiac & aortic screen — chest pain, tearing, migration",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "chest pain",
+            "tearing pain",
+            "ripping pain",
+            "migratory pain",
+            "aortic dissection",
+            "heart attack",
+            "diaphoresis",
+            "palpitations",
+            "syncope",
+            "collapse",
+            "limb weakness"
+          ],
+          "find": "The pain did NOT start in the chest and migrate, and is not 'tearing' or 'ripping'. No crushing chest pain, breathlessness, sweating or palpitations. No blackouts, limb weakness or facial droop.",
+          "exp": "A sudden tearing chest pain migrating to the back is aortic dissection; crushing chest pain with diaphoresis is myocardial infarction. Both are can't-miss causes of epigastric/back pain and must be screened before anchoring on pancreatitis."
+        },
+        {
+          "id": "h03",
+          "lbl": "Jaundice, dark urine, rigors",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "jaundice",
+            "yellow eyes",
+            "dark urine",
+            "tea coloured urine",
+            "pale stools",
+            "rigors",
+            "swinging fever",
+            "cholangitis screen",
+            "charcot"
+          ],
+          "find": "No yellowing of eyes or skin, no dark urine or pale stools, and no shaking rigors. Fever is low-grade (37.9°C) without chills.",
+          "exp": "Charcot's triad (RUQ pain, fever, jaundice) signals ascending cholangitis — the finding that, if present, would justify urgent ERCP. Its absence here is central to the investigation strategy: there is no cholangitis to drain."
+        },
+        {
+          "id": "h04",
+          "lbl": "Vomiting and GI bleeding / ulcer risk",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "vomiting",
+            "nausea",
+            "haematemesis",
+            "coffee ground vomit",
+            "melena",
+            "pr bleed",
+            "nsaids",
+            "steroids",
+            "h pylori",
+            "peptic ulcer",
+            "dyspepsia"
+          ],
+          "find": "Nausea with two episodes of non-bilious, non-bloody vomiting. No haematemesis or melena. No long-term NSAID or steroid use and no known peptic ulcer or H. pylori.",
+          "exp": "A perforated or bleeding peptic ulcer is a key epigastric differential; the absence of bleeding and ulcer risk factors makes it less likely but does not exclude perforation, which the examination and erect film address."
+        },
+        {
+          "id": "h05",
+          "lbl": "Aetiology screen — gallstones, alcohol, lipids, drugs, metabolic",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "aetiology",
+            "cause",
+            "gallstones",
+            "alcohol",
+            "triglycerides",
+            "hyperlipidaemia",
+            "drugs",
+            "steroids",
+            "ercp",
+            "instrumentation",
+            "hypercalcaemia",
+            "mumps",
+            "i get smashed"
+          ],
+          "find": "Known gallstones on a previous ultrasound and longstanding post-meal dyspepsia. Only occasional, small amounts of alcohol. Hyperlipidaemic with a history of high triglycerides. No recent ERCP or OGD, no offending drugs, no symptoms of hypercalcaemia, and no recent mumps.",
+          "exp": "Walking through the 'I GET SMASHED' aetiologies, the leading candidates here are gallstones and hypertriglyceridaemia. Establishing the cause matters because gallstone disease is the part that may eventually need duct clearance and cholecystectomy."
+        },
+        {
+          "id": "h06",
+          "lbl": "Bowel habit & mesenteric/vascular risk",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "bowel habit",
+            "diarrhoea",
+            "bloody stool",
+            "pain out of proportion",
+            "mesenteric ischaemia",
+            "atrial fibrillation",
+            "vascular history",
+            "weight loss"
+          ],
+          "find": "No bloody diarrhoea and the pain is not strikingly out of proportion to the examination. No atrial fibrillation or known vascular disease.",
+          "exp": "Mesenteric ischaemia classically gives pain out of proportion to a soft abdomen, often in a vasculopath or someone with AF — a quick screen keeps this dangerous mimic in view."
+        },
+        {
+          "id": "h07",
+          "lbl": "Travel, dengue features",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "dengue",
+            "travel history",
+            "mosquito",
+            "rash",
+            "myalgia",
+            "retro-orbital pain",
+            "outbreak",
+            "tropical"
+          ],
+          "find": "Lives in an area with a current dengue cluster, but has no rash, severe myalgia, retro-orbital pain or bleeding tendency.",
+          "exp": "Dengue is endemic and can cause abdominal pain and deranged bloods; the absence of dengue features and a later negative test set it aside."
+        },
+        {
+          "id": "h08",
+          "lbl": "Past medical & social history",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "past medical history",
+            "diabetes",
+            "hypertension",
+            "social history",
+            "occupation",
+            "diet",
+            "family history"
+          ],
+          "find": "Diabetes, hypertension and high cholesterol, reasonably controlled (HbA1c 6.0%). Works as a hawker with a rich, fatty diet. No previous surgery, NKDA.",
+          "exp": "The metabolic background (diabetes, hyperlipidaemia) and diet reinforce the gallstone/triglyceride aetiology and matter for risk and recurrence."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "General inspection, vital signs & SIRS",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "general inspection",
+            "vitals",
+            "vital signs",
+            "sirs",
+            "observations",
+            "tachycardia",
+            "tachypnoea",
+            "fever",
+            "septic",
+            "unwell"
+          ],
+          "find": "Looks unwell and prefers to sit forward. Heart rate 104, respiratory rate 22, temperature 37.9°C, blood pressure 114/72, oxygen saturation 95% on room air — meeting SIRS criteria.",
+          "exp": "Tachycardia, tachypnoea and fever indicate a systemic inflammatory response. Tachypnoea and a borderline saturation are early warnings of severe disease (third-spacing, effusion, evolving ARDS) and feed the severity score.",
+          "lookingFor": "SIRS (HR, RR, temp, WCC); early respiratory compromise (RR, SpO₂) signalling severe pancreatitis."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Abdominal examination",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "abdominal exam",
+            "palpate abdomen",
+            "epigastric tenderness",
+            "guarding",
+            "murphy's sign",
+            "pulsatile mass",
+            "organomegaly",
+            "bowel sounds"
+          ],
+          "find": "Epigastric tenderness with voluntary guarding, but NO generalised peritonism. Murphy's sign negative. No pulsatile expansile mass and no organomegaly. Bowel sounds present but reduced.",
+          "exp": "Epigastric tenderness with a soft remainder fits pancreatitis. A negative Murphy's sign points away from cholecystitis; the absence of a pulsatile expansile mass is reassuring (though not definitive) against an abdominal aortic aneurysm; reduced bowel sounds suggest an ileus.",
+          "lookingFor": "Murphy's negative (vs cholecystitis); no pulsatile mass (vs AAA); peritonism (vs perforation); ileus."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Signs of peritonism / perforation",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "peritonism",
+            "rebound",
+            "rigidity",
+            "board-like abdomen",
+            "generalised guarding",
+            "perforation signs",
+            "bowel sounds absent"
+          ],
+          "find": "No board-like rigidity and no generalised rebound. Bowel sounds, though reduced, are present.",
+          "exp": "Generalised peritonitis with a silent, rigid abdomen would indicate a perforated viscus. The localised epigastric signs here argue against free perforation."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Flank & periumbilical bruising (Grey-Turner / Cullen)",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "grey turner sign",
+            "cullen sign",
+            "flank bruising",
+            "periumbilical bruising",
+            "ecchymosis",
+            "haemorrhagic pancreatitis"
+          ],
+          "find": "No flank (Grey-Turner) or periumbilical (Cullen) bruising.",
+          "exp": "These are late, infrequent signs of severe haemorrhagic pancreatitis. Their absence is expected early and does not exclude severe disease."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Cardiovascular — pulses, BP both arms, murmurs",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "pulses",
+            "blood pressure both arms",
+            "radio-femoral delay",
+            "aortic regurgitation",
+            "murmur",
+            "peripheral pulses",
+            "dissection exam"
+          ],
+          "find": "Blood pressure equal in both arms, no radio-femoral delay, no early diastolic (aortic regurgitation) murmur, peripheral pulses all present.",
+          "exp": "These findings are reassuring against an aortic dissection — but note that equal arm pressures and present pulses do NOT exclude dissection, so a high clinical suspicion still warrants CT aortography."
+        },
+        {
+          "id": "pe06",
+          "lbl": "Respiratory examination",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "respiratory exam",
+            "lung exam",
+            "chest auscultation",
+            "basal crepitations",
+            "pleural effusion",
+            "reduced air entry"
+          ],
+          "find": "Mildly reduced air entry at both bases with oxygen saturation 95%.",
+          "exp": "Basal atelectasis and pleural effusions are common in pancreatitis, and hypoxia is part of both the severity score and the spectrum towards ARDS."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "Full Blood Count",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "fbc",
+            "full blood count",
+            "white cell count",
+            "wbc",
+            "neutrophils",
+            "haematocrit",
+            "glasgow"
+          ],
+          "find": "White cell count raised at 17 ×10⁹/L. Haematocrit elevated (haemoconcentration). Platelets normal.",
+          "exp": "Leukocytosis is one of the modified Glasgow (Imrie) severity criteria (white cells >15 ×10⁹/L). A high haematocrit reflects third-space fluid loss and predicts a more severe course."
+        },
+        {
+          "id": "bi02",
+          "lbl": "Renal Panel + Glucose",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "renal panel",
+            "u&e",
+            "urea",
+            "creatinine",
+            "glucose",
+            "sugar",
+            "electrolytes",
+            "aki",
+            "dka",
+            "glasgow"
+          ],
+          "find": "Urea raised at 9 mmol/L with a rise in creatinine (acute kidney injury). Glucose 12 mmol/L. Bicarbonate and ketones do not suggest DKA.",
+          "exp": "Urea (>16 mmol/L) and glucose (>10 mmol/L) are Glasgow severity criteria; a pre-renal AKI reflects hypovolaemia and drives aggressive fluid resuscitation. Checking ketones/bicarbonate excludes DKA as a cause of the abdominal pain."
+        },
+        {
+          "id": "bi03",
+          "lbl": "Calcium, Magnesium & Phosphate",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "calcium",
+            "corrected calcium",
+            "magnesium",
+            "phosphate",
+            "hypocalcaemia",
+            "bone profile",
+            "glasgow"
+          ],
+          "find": "Corrected calcium 2.0 mmol/L (low-normal/mildly low). Magnesium and phosphate normal.",
+          "exp": "Hypocalcaemia (<2 mmol/L) is a Glasgow criterion and a marker of severity (fat saponification). It is also worth noting hypercalcaemia can be a CAUSE of pancreatitis — so calcium cuts both ways."
+        },
+        {
+          "id": "bi04",
+          "lbl": "Liver Panel + LDH + Albumin",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "lft",
+            "liver panel",
+            "liver function",
+            "bilirubin",
+            "alt",
+            "ast",
+            "alp",
+            "ldh",
+            "albumin",
+            "cholestatic",
+            "glasgow"
+          ],
+          "find": "ALT mildly raised (a clue to gallstone aetiology). Bilirubin only marginally raised; not a frankly cholestatic picture. LDH and albumin recorded for the Glasgow score.",
+          "exp": "A raised ALT supports a gallstone cause. A markedly cholestatic panel with a high bilirubin would instead suggest a retained duct stone or cholangitis and push towards duct imaging. LDH (>600) and albumin (<32 g/L) are Glasgow severity markers."
+        },
+        {
+          "id": "bi05",
+          "lbl": "Serum Lipase",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "lipase",
+            "amylase",
+            "pancreatic enzymes",
+            "serum lipase",
+            "amylase lipase"
+          ],
+          "find": "Serum lipase 850 U/L — more than three times the upper limit of normal (<140).",
+          "exp": "With characteristic pain, a lipase >3× the upper limit of normal already satisfies 2 of the 3 Revised Atlanta criteria — the diagnosis of acute pancreatitis is made here, biochemically, WITHOUT needing a CT scan. Lipase is more specific and stays elevated longer than amylase."
+        },
+        {
+          "id": "bi06",
+          "lbl": "Arterial Blood Gas (ABG)",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "abg",
+            "arterial blood gas",
+            "pao2",
+            "oxygen",
+            "hypoxia",
+            "lactate",
+            "acid base",
+            "glasgow"
+          ],
+          "find": "PaO₂ 9.5 kPa on room air with a mild metabolic acidosis and a modestly raised lactate.",
+          "exp": "PaO₂ (<8 kPa) is a Glasgow criterion; hypoxia and a rising lactate flag evolving organ dysfunction and the need for closer monitoring (HD/ICU)."
+        },
+        {
+          "id": "bi07",
+          "lbl": "C-Reactive Protein (CRP)",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "crp",
+            "c reactive protein",
+            "inflammatory marker",
+            "trend"
+          ],
+          "find": "CRP 180 mg/L.",
+          "exp": "CRP is used to trend severity — a value >150 mg/L at 48 hours correlates with severe pancreatitis and the development of necrosis."
+        },
+        {
+          "id": "bi08",
+          "lbl": "ECG + High-Sensitivity Troponin T",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "ecg",
+            "ekg",
+            "troponin",
+            "cardiac enzymes",
+            "12 lead",
+            "cardiac workup"
+          ],
+          "find": "ECG in sinus tachycardia with no ischaemic changes; troponin normal.",
+          "exp": "Excludes a myocardial infarction presenting as epigastric pain; sinus tachycardia simply reflects pain and the systemic inflammatory response.",
+          "imageUrl": "case006_ecg_sinus_tachy.jpg"
+        },
+        {
+          "id": "bi09",
+          "lbl": "Coagulation + Group & Match; Dengue serology",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "coagulation",
+            "pt",
+            "ptt",
+            "inr",
+            "group and match",
+            "gxm",
+            "crossmatch",
+            "dengue",
+            "ns1",
+            "baseline bloods"
+          ],
+          "find": "Clotting and group-and-match sent as a baseline (in case intervention is needed). Dengue NS1 negative.",
+          "exp": "Baseline coagulation and crossmatch are prudent before any possible endoscopic or surgical intervention; the negative dengue test removes an endemic differential."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "Ultrasound Hepatobiliary System (US HBS)",
+          "cost": "mid",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "ultrasound",
+            "us hbs",
+            "abdominal ultrasound",
+            "hepatobiliary ultrasound",
+            "gallbladder",
+            "biliary ultrasound",
+            "cbd"
+          ],
+          "find": "Gallstones present within the gallbladder. Common bile duct of normal calibre with no definite ductal stone seen. The pancreas is poorly visualised due to overlying bowel gas.",
+          "exp": "Ultrasound is first-line — not to 'diagnose' the pancreatitis (already established by pain + lipase) but to establish the gallstone aetiology and to read the bile duct. A non-dilated duct with no visible stone lowers the pre-test probability of a retained CBD stone.",
+          "imageUrl": "case006_us_gallstones.jpg"
+        },
+        {
+          "id": "ai02",
+          "lbl": "CT Abdomen & Pelvis (contrast)",
+          "cost": "high",
+          "rel": true,
+          "aliases": [
+            "ct abdomen",
+            "ct abdo pelvis",
+            "cect",
+            "contrast ct",
+            "ctap",
+            "cross sectional imaging",
+            "necrosis"
+          ],
+          "find": "Oedematous pancreas with peripancreatic fat stranding; no necrosis and no free air. (Performed here largely to exclude other intra-abdominal pathology.)",
+          "exp": "Acutely, CT is NOT required to diagnose pancreatitis when the history and lipase are typical, and it UNDERESTIMATES necrosis in the first 72 hours. Its real value is deferred — at ~72–96 hours or on deterioration — to assess for necrosis and complications. Early routine CT is low-yield (though often done in practice to exclude other diagnoses).",
+          "imageUrl": "case006_ct_pancreas.jpg"
+        },
+        {
+          "id": "ai03",
+          "lbl": "MRCP (Magnetic Resonance Cholangiopancreatography)",
+          "cost": "high",
+          "rel": true,
+          "aliases": [
+            "mrcp",
+            "magnetic resonance cholangiopancreatography",
+            "biliary mri",
+            "duct imaging",
+            "mri biliary tree"
+          ],
+          "find": "No retained common bile duct stone; duct calibre normal.",
+          "exp": "When a CBD stone is suspected (gallstone aetiology, mildly deranged LFTs) but there is NO cholangitis, MRCP is the correct non-invasive way to image the duct — and it is done BEFORE any ERCP. Here it confirms there is no ductal stone to clear."
+        },
+        {
+          "id": "ai04",
+          "lbl": "Endoscopic Ultrasound (EUS)",
+          "cost": "high",
+          "rel": true,
+          "aliases": [
+            "eus",
+            "endoscopic ultrasound",
+            "endosonography",
+            "duct assessment",
+            "small cbd stone"
+          ],
+          "find": "No microlithiasis or small ampullary/CBD stone identified.",
+          "exp": "EUS is an alternative to MRCP for screening the duct before ERCP, and is especially sensitive for small stones and microlithiasis that MRCP can miss. Like MRCP, it precedes — and frequently spares — an ERCP."
+        },
+        {
+          "id": "ai05",
+          "lbl": "ERCP (Endoscopic Retrograde Cholangiopancreatography)",
+          "cost": "high",
+          "rel": false,
+          "penalize": true,
+          "aliases": [
+            "ercp",
+            "endoscopic retrograde cholangiopancreatography",
+            "sphincterotomy",
+            "duct clearance",
+            "stone extraction"
+          ],
+          "find": "Not indicated as a first step. There is no cholangitis and no confirmed or persistent ductal obstruction, so there is nothing to clear — and a diagnostic ERCP would only add the risk of worsening the pancreatitis.",
+          "exp": "This is the central error this case tests. ERCP is therapeutic, reserved for gallstone pancreatitis WITH cholangitis or ongoing biliary obstruction (ACG 2024). Doing it early/diagnostically — before MRCP or EUS has even confirmed a duct stone — exposes the patient to post-ERCP pancreatitis, bleeding and perforation. The correct order is: diagnose with pain + lipase, find the aetiology on ultrasound, screen the duct with MRCP/EUS, and only then ERCP if a stone with obstruction/cholangitis is proven."
+        },
+        {
+          "id": "ai06",
+          "lbl": "CT Aortogram",
+          "cost": "high",
+          "rel": true,
+          "aliases": [
+            "ct aortogram",
+            "ct angiogram",
+            "aortic imaging",
+            "dissection scan",
+            "cta aorta"
+          ],
+          "find": "Aorta of normal calibre with no dissection flap and no aneurysm.",
+          "exp": "Appropriate when the back-radiating pain raises genuine concern for aortic dissection or a leaking aneurysm — because clinical signs alone cannot exclude them. Normal here, retiring the aortic differential."
+        }
+      ],
+      "sigNegs": [
+        {
+          "id": "h02",
+          "label": "No tearing/migratory chest-to-back pain; no crushing chest pain → aortic dissection and MI less likely",
+          "pts": 10
+        },
+        {
+          "id": "h03",
+          "label": "No jaundice, dark urine or rigors → no Charcot's triad → ascending cholangitis less likely (and no indication for ERCP)",
+          "pts": 10
+        },
+        {
+          "id": "pe03",
+          "label": "No generalised peritonism, bowel sounds present → perforated viscus less likely",
+          "pts": 8
+        },
+        {
+          "id": "pe05",
+          "label": "Equal arm BPs, no radio-femoral delay, pulses intact → reassuring against dissection (not definitive)",
+          "pts": 6
+        }
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Aortic Dissection",
+          "status": "ruled-out",
+          "statusLbl": "Excluded on imaging",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Pain did not begin in the chest and migrate, and is not tearing or ripping in quality"
+            },
+            {
+              "type": "ex",
+              "text": "Equal blood pressures in both arms, no radio-femoral delay and no aortic regurgitation murmur — reassuring, though not by themselves definitive"
+            },
+            {
+              "type": "inv",
+              "text": "CT aortogram shows a normal aorta with no dissection flap"
+            }
+          ]
+        },
+        {
+          "mnm": "Ascending Cholangitis",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No jaundice, dark urine or rigors — Charcot's triad is absent"
+            },
+            {
+              "type": "inv",
+              "text": "Bilirubin only marginally raised, a non-dilated duct on ultrasound and no ductal stone on MRCP — no obstructed, infected duct"
+            }
+          ]
+        },
+        {
+          "mnm": "Myocardial Infarction",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No crushing chest pain, dyspnoea or diaphoresis"
+            },
+            {
+              "type": "inv",
+              "text": "ECG with no ischaemic changes and a normal troponin"
+            }
+          ]
+        },
+        {
+          "mnm": "Perforated Viscus",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "Localised epigastric tenderness without generalised peritonism; bowel sounds present"
+            },
+            {
+              "type": "inv",
+              "text": "No free air on the CT (or erect chest film)"
+            }
+          ]
+        }
+      ],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Myocardial Infarction",
+          "after_item": "bi08",
+          "snapshot": "Basic Inv",
+          "note": "Normal ECG and troponin — ischaemic cause excluded"
+        },
+        {
+          "mnm": "Ascending Cholangitis",
+          "after_item": "bi04",
+          "snapshot": "Basic Inv",
+          "note": "Bilirubin only marginally raised, not a cholestatic obstructive picture"
+        },
+        {
+          "mnm": "Perforated Viscus",
+          "after_item": "pe03",
+          "snapshot": "Examination",
+          "note": "No peritonism and bowel sounds present — free perforation unlikely"
+        },
+        {
+          "mnm": "Aortic Dissection",
+          "after_item": "ai06",
+          "snapshot": "Advanced Inv",
+          "note": "CT aortogram normal — dissection excluded"
+        }
+      ],
+      "keyTeachingPoints": [
+        "The Revised Atlanta classification (2012) diagnoses acute pancreatitis when 2 of 3 are present: (1) characteristic abdominal pain, (2) lipase or amylase >3× the upper limit of normal, (3) cross-sectional imaging findings. With typical pain and a lipase >3× ULN, the diagnosis is made BEFORE — and without needing — a CT scan.",
+        "Investigation ORDER matters. Diagnose with pain + lipase; establish the gallstone aetiology and read the duct on ultrasound; if a CBD stone is suspected without cholangitis, screen the duct non-invasively with MRCP or EUS; reserve ERCP for proven obstruction or cholangitis.",
+        "ERCP is NOT a first-line or diagnostic test in acute pancreatitis. Early/diagnostic ERCP — especially before MRCP/EUS has confirmed a duct stone — risks worsening the pancreatitis and causing bleeding or perforation. It is indicated for gallstone pancreatitis WITH cholangitis or ongoing biliary obstruction (ACG 2024).",
+        "CT is not needed acutely for a typical diagnosis and underestimates necrosis in the first 72 hours; its value is in the deferred scan (~72–96 h or on deterioration) to assess necrosis and complications. In practice it is often done early to exclude other intra-abdominal pathology.",
+        "Stratify severity early. The modified Glasgow (Imrie) score (PANCREAS: PaO₂ <8 kPa, Age >55, Neutrophils/WCC >15, Calcium <2 mmol/L, Renal urea >16 mmol/L, Enzymes LDH >600, Albumin <32 g/L, Sugar/glucose >10 mmol/L) — a score ≥3 within 48 hours indicates severe disease and HD/ICU-level care.",
+        "Aortic dissection and an inferior MI both present with epigastric pain radiating to the back and must be screened (and imaged if suspected) — equal arm pressures and intact pulses are reassuring but do NOT exclude dissection.",
+        "Cornerstones of management are aggressive fluid resuscitation, analgesia, nil by mouth with early enteral nutrition as tolerated, and treating the cause. Gallstone pancreatitis is followed by same-admission cholecystectomy once the patient recovers, to prevent recurrence (≈ high recurrence within weeks if the gallbladder is left in).",
+        "Complications are local (pseudocyst, sterile or infected necrosis, pseudoaneurysm, exocrine/endocrine insufficiency) and systemic (ARDS, AKI, DIC, hypocalcaemia) — infected necrosis is suspected when a patient deteriorates ~1 week in with persisting fever and pain."
+      ],
+      "approachTitle": "An Approach to Epigastric Pain",
+      "approachSub": "Place the pancreas among the vascular, cardiac, biliary and gut causes — then investigate in the right order",
+      "approachText": "Epigastric pain radiating to the back has a short list of causes that kill (aortic dissection, MI, perforation, mesenteric ischaemia) and a short list that are common (pancreatitis, peptic ulcer, biliary disease). Pancreatitis is diagnosed cheaply and early with pain + lipase; the harder skill is sequencing the imaging — duct before ERCP, CT deferred.",
+      "approachCats": [
+        {
+          "name": "Pancreatic ← THIS CASE",
+          "eg": "Acute pancreatitis (gallstone, alcohol, hypertriglyceridaemia)",
+          "hl": true
+        },
+        {
+          "name": "Vascular",
+          "eg": "Aortic dissection, leaking AAA, mesenteric ischaemia",
+          "hl": false
+        },
+        {
+          "name": "Cardiac",
+          "eg": "Inferior myocardial infarction",
+          "hl": false
+        },
+        {
+          "name": "Biliary",
+          "eg": "Choledocholithiasis, ascending cholangitis, cholecystitis",
+          "hl": false
+        },
+        {
+          "name": "Gastroduodenal",
+          "eg": "Peptic ulcer disease, perforation, gastritis",
+          "hl": false
+        },
+        {
+          "name": "Infective / tropical",
+          "eg": "Dengue, gastroenteritis",
+          "hl": false
+        }
+      ],
+      "approachInsight": "There are two separate skills this case examines. The first is the differential of epigastric/back pain, where the discipline is to screen the vascular and cardiac killers (dissection, MI) and the biliary emergency (cholangitis) before settling on the common answer. The second — and the one most often done badly — is investigation order. Pancreatitis is a clinical–biochemical diagnosis: characteristic pain plus a lipase >3× ULN meets Revised Atlanta, so a CT is not needed to make the diagnosis and is actively misleading if used early to gauge necrosis. The aetiology and the duct are then assessed by ultrasound, and a suspected duct stone WITHOUT cholangitis is chased with MRCP or EUS — never a diagnostic ERCP, which can ignite the very pancreatitis you are treating. ERCP earns its place only when a stone is obstructing or cholangitis is present.",
+      "expertNarrative": "Confronted with two days of boring epigastric pain through to the back, the experienced clinician makes the diagnosis quickly and cheaply — send a lipase, and with a typical history a level over three times normal closes it under Revised Atlanta. The energy then goes two ways. First, to the killers that share this pain: a focused history and examination screen for dissection and MI, and if suspicion is real the aorta is imaged with CT — because, as the examination notes, equal arm pressures do not exclude a dissection. Second, to severity and aetiology: a Glasgow score is assembled from the bloods and gas, fluids are run hard, and an ultrasound finds the gallstones and reads the duct. The discriminating judgement is what NOT to do — not to order an early CT expecting it to grade necrosis, and above all not to send the patient for a diagnostic ERCP. With no cholangitis and an unobstructed duct, the duct is interrogated non-invasively by MRCP or EUS, and ERCP is held in reserve. The case rewards the student who diagnoses on lipase, stratifies on Glasgow, and sequences the imaging correctly.",
+      "sensitivityNote": "Lipase is more sensitive and specific than amylase and remains elevated longer, making it the test of choice; however the magnitude of elevation does not correlate with severity. CT is insensitive for necrosis in the first 72 hours, so an early normal-looking scan is falsely reassuring — severity is judged clinically and by score, not by early CT. MRCP and EUS are both sensitive for choledocholithiasis, with EUS superior for small stones and microlithiasis.",
+      "specificityNote": "A lipase >3× the upper limit of normal with characteristic pain is specific enough to diagnose acute pancreatitis without imaging. Charcot's triad is specific for cholangitis but insensitive — its absence does not fully exclude a duct stone, which is why the duct is imaged when LFTs are deranged. A normal CT aortogram is definitive for excluding dissection, which clinical signs cannot do.",
+      "linkedPairs": []
     }
   ]
 }

@@ -153,9 +153,11 @@ const DIAG_LIB = {
     {n:"GORD / Acid Reflux",mnm:false,desc:"Stomach acid washing back up into the food pipe"},
     {n:"Acute Gastritis",mnm:false,desc:"Inflammation of the stomach lining"},
     {n:"Acute Pancreatitis",mnm:true,desc:"Sudden inflammation of the pancreas — severe upper abdominal pain"},
-    {n:"Acute Cholecystitis",mnm:false,desc:"Inflamed gallbladder, usually from gallstones"},
+    {n:"Acute Cholecystitis",u:true,subs:["Acute Calculous Cholecystitis","Acute Acalculous Cholecystitis"],mnm:false,desc:"Inflamed gallbladder — calculous (gallstone-related, ~90%) or acalculous (critically ill, no stones)"},
     {n:"Biliary Colic",mnm:false,desc:"Crampy pain from a gallstone temporarily blocking the bile duct"},
     {n:"Choledocholithiasis",mnm:false,desc:"Gallstone stuck in the main bile duct — can cause jaundice"},
+    {n:"Ascending Cholangitis",mnm:true,desc:"Infection of an obstructed bile duct — Charcot's triad (RUQ pain, fever, jaundice); a surgical emergency"},
+    {n:"Gallstone Ileus",mnm:false,desc:"Mechanical small-bowel obstruction from a large gallstone eroding through a cholecystoenteric fistula"},
     {n:"Acute Appendicitis",mnm:true,desc:"Inflamed appendix — right lower abdominal pain"},
     {n:"Bowel Obstruction",u:true,subs:["Small Bowel Obstruction","Large Bowel Obstruction"],mnm:true,desc:"Blockage preventing bowel contents from passing"},
     {n:"Mesenteric Ischaemia",mnm:true,desc:"Loss of blood supply to the bowel — life-threatening emergency"},
@@ -183,6 +185,7 @@ const DIAG_LIB = {
     {n:"Thyroid Storm",mnm:true,desc:"Extreme overactivity of the thyroid — life-threatening"},
     {n:"Hyperthyroidism / Thyrotoxicosis",u:true,subs:["Graves' Disease","Toxic Multinodular Goitre","Toxic Adenoma","Thyroiditis (thyrotoxic phase)"],mnm:false,desc:"Overactive thyroid — weight loss, palpitations, tremor, heat intolerance"},
     {n:"Hypothyroidism",mnm:false,desc:"Underactive thyroid — can cause low sodium in severe cases"},
+    {n:"Thyroid Eye Disease",mnm:false,desc:"Graves' orbitopathy — proptosis, lid retraction, restrictive diplopia (worse on gaze, not fatigable)"},
     {n:"SIADH",mnm:false,desc:"Syndrome of Inappropriate ADH — kidneys retain too much water, diluting blood sodium"},
     {n:"Diabetes Insipidus",mnm:false,desc:"Too little ADH effect — large volumes of dilute urine, high sodium"},
     {n:"Phaeochromocytoma",mnm:true,desc:"Adrenal tumour releasing adrenaline bursts — causes hypertensive crises"},
@@ -221,6 +224,10 @@ const DIAG_LIB = {
     {n:"Drug-Induced Parkinsonism",mnm:false,desc:"Parkinsonism from dopamine-blocking drugs (e.g. antipsychotics, metoclopramide)"},
     {n:"Multiple Sclerosis",mnm:false,desc:"Demyelination disseminated in time and space — e.g. optic neuritis, limb weakness"},
     {n:"Myasthenia Gravis",mnm:true,desc:"Fatigable weakness, ptosis, diplopia — myasthenic crisis causes respiratory failure"},
+    {n:"Myasthenic Crisis",mnm:true,desc:"Severe MG with respiratory muscle weakness — neuromuscular respiratory failure; monitor FVC"},
+    {n:"Lambert-Eaton Myasthenic Syndrome",mnm:false,desc:"Antibodies to presynaptic calcium channels — proximal weakness that improves with use; paraneoplastic (SCLC)"},
+    {n:"Botulism",mnm:true,desc:"Clostridial toxin blocking ACh release — descending paralysis, dilated pupils, dry mouth"},
+    {n:"Third Nerve Palsy",mnm:true,desc:"Oculomotor palsy — ptosis + 'down-and-out' eye; a painful, pupil-involving palsy suggests a posterior communicating artery aneurysm"},
     {n:"Guillain–Barré Syndrome",mnm:true,desc:"Ascending weakness and areflexia after infection — risk of respiratory failure"},
     {n:"Temporal Arteritis (Giant Cell Arteritis)",mnm:true,desc:"Large-vessel vasculitis — new headache, jaw claudication, sight-threatening"},
     {n:"Motor Neuron Disease (ALS)",mnm:false,desc:"Mixed upper and lower motor neuron signs, no sensory loss"},
@@ -827,7 +834,7 @@ function renderWelcome(){
   function sd(s){return SYS_DIM[s]||SYS_DIM.default;}
   const cards=CASES.map((c,i)=>`
     <div class="case-card" onclick="startCase(${i})">
-      <div class="case-sys-badge" style="background:${sd(c.system)};color:${sc(c.system)}">${c.system||'Clinical'}</div>
+      <div class="case-badges"><div class="case-sys-badge" style="background:${sd(c.system)};color:${sc(c.system)}">${c.system||'Clinical'}</div>${c.discipline?`<div class="case-disc-badge" title="${c.discipline}">${c.discipline}</div>`:''}</div>
       <div class="case-card-title">${c.title}</div>
       <div class="case-card-patient">${c.patient||''}</div>
       <div class="case-card-meta">
