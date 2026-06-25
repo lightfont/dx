@@ -4173,6 +4173,3549 @@
       "sensitivityNote": "Lipase is more sensitive and specific than amylase and remains elevated longer, making it the test of choice; however the magnitude of elevation does not correlate with severity. CT is insensitive for necrosis in the first 72 hours, so an early normal-looking scan is falsely reassuring — severity is judged clinically and by score, not by early CT. MRCP and EUS are both sensitive for choledocholithiasis, with EUS superior for small stones and microlithiasis.",
       "specificityNote": "A lipase >3× the upper limit of normal with characteristic pain is specific enough to diagnose acute pancreatitis without imaging. Charcot's triad is specific for cholangitis but insensitive — its absence does not fully exclude a duct stone, which is why the duct is imaged when LFTs are deranged. A normal CT aortogram is definitive for excluding dissection, which clinical signs cannot do.",
       "linkedPairs": []
+    },
+    {
+      "id": "case_007",
+      "title": "Hand Tremor at Rest",
+      "approach": "An Approach to Tremor",
+      "secondaryApproach": "An Approach to Movement Disorders",
+      "system": "Neurology",
+      "difficulty": "moderate",
+      "patient": "Mr Tan Ah Seng, 68M, Retired",
+      "snomedCode": "49049000",
+      "demographics": {
+        "name": "Tan Ah Seng",
+        "age": "68",
+        "sex": "M",
+        "occupation": "Retired",
+        "mrn": "490490"
+      },
+      "vitals": {
+        "hr": {
+          "value": "74",
+          "unit": "bpm",
+          "abnormal": false
+        },
+        "bp": {
+          "value": "134/80",
+          "unit": "mmHg",
+          "abnormal": false
+        },
+        "spo2": {
+          "value": "98",
+          "unit": "%",
+          "abnormal": false
+        },
+        "rr": {
+          "value": "15",
+          "unit": "/min",
+          "abnormal": false
+        },
+        "temp": {
+          "value": "36.7",
+          "unit": "°C",
+          "abnormal": false
+        }
+      },
+      "allergies": "NKDA",
+      "background": [
+        "Hypertension",
+        "Type 2 Diabetes",
+        "Not on any antipsychotics or anti-emetics",
+        "Independent in daily activities"
+      ],
+      "pathway": {
+        "validation": {
+          "status": "draft",
+          "validatedBy": null,
+          "validatedAt": null,
+          "notes": "Awaiting neurology sign-off — PD is a clinical diagnosis; DaTscan/MRI used to separate mimics."
+        },
+        "reasoning": {
+          "h06": "The drug history is checked early and deliberately — drug-induced parkinsonism is the reversible must-not-miss and is easy to overlook.",
+          "ai01": "DaTscan is the discriminator withheld to this stage: it separates degenerative parkinsonism (PD) from essential tremor and drug-induced parkinsonism (both have a normal scan).",
+          "parkinson_s_disease": "Asymmetrical rest tremor + bradykinesia + cogwheel rigidity, no Parkinson-plus red flags, abnormal DaTscan and good levodopa response = idiopathic Parkinson's disease."
+        },
+        "reveal": {
+          "hint": "mask-diagnoses",
+          "debrief": "full"
+        }
+      },
+      "vignette": "Mr Tan Ah Seng is a 68-year-old retiree brought in by his daughter because of a tremor in his right hand that she has noticed over the past several months. She says it is most obvious when his hand is resting in his lap.",
+      "caseMNMs": [
+        {
+          "name": "Drug-Induced Parkinsonism",
+          "tier": 1
+        },
+        {
+          "name": "Normal Pressure Hydrocephalus",
+          "tier": 2
+        },
+        {
+          "name": "Wilson's Disease",
+          "tier": 2
+        }
+      ],
+      "expectedP1": [
+        "Parkinson's Disease",
+        "Essential Tremor",
+        "Vascular Parkinsonism",
+        "Parkinson-plus Syndrome",
+        "Hyperthyroidism / Thyrotoxicosis",
+        "Functional Neurological Disorder"
+      ],
+      "finalDx": "Parkinson's Disease",
+      "finalUmbrella": "Parkinson's Disease",
+      "diagnosisScore": {
+        "Parkinson's Disease": 100,
+        "Idiopathic Parkinson's Disease": 100,
+        "Vascular Parkinsonism": 35,
+        "Drug-Induced Parkinsonism": 30,
+        "Parkinson-plus Syndrome": 25,
+        "Essential Tremor": 15,
+        "Wilson's Disease": 10,
+        "Hyperthyroidism / Thyrotoxicosis": 10
+      },
+      "required": [
+        "h06",
+        "pe02",
+        "ai01"
+      ],
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Tremor — rest vs action, asymmetry, what changes it",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "tremor",
+            "shaking",
+            "rest tremor",
+            "resting tremor",
+            "action tremor",
+            "pill rolling",
+            "asymmetry",
+            "one hand",
+            "worse at rest",
+            "better with movement",
+            "tremor history"
+          ],
+          "find": "The tremor is present at REST — most obvious when the hand lies still in his lap or while watching television — and it eases when he reaches for something. It is worse on the right than the left (asymmetrical) and has a 'pill-rolling' quality. It worsens with stress and disappears in sleep.",
+          "exp": "A rest tremor that improves with voluntary movement and is asymmetrical is the signature of Parkinson's disease. An action/postural tremor that worsens on reaching (and improves with alcohol) would instead point to essential tremor — the single most useful distinction in tremor."
+        },
+        {
+          "id": "h02",
+          "lbl": "Bradykinesia — handwriting, dexterity, slowness",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "bradykinesia",
+            "slowness",
+            "micrographia",
+            "small handwriting",
+            "buttoning",
+            "dexterity",
+            "slow movements",
+            "clumsy hand"
+          ],
+          "find": "His handwriting has become noticeably smaller (micrographia) and he is slower doing up buttons and other fine tasks with the right hand.",
+          "exp": "Bradykinesia — slowness with decrementing amplitude of repetitive movement — is the essential feature of parkinsonism in the MDS 2015 criteria; micrographia is a classic everyday manifestation."
+        },
+        {
+          "id": "h03",
+          "lbl": "Rigidity, gait, shuffling and falls",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "rigidity",
+            "stiffness",
+            "gait",
+            "shuffling",
+            "walking",
+            "reduced arm swing",
+            "falls",
+            "balance",
+            "stooped"
+          ],
+          "find": "He feels stiff, walks with smaller shuffling steps and reduced right arm swing, and stoops slightly. He has NOT had early falls.",
+          "exp": "A shuffling gait with reduced arm swing fits PD. The absence of EARLY, prominent falls is important — early falls would point to progressive supranuclear palsy (a Parkinson-plus syndrome)."
+        },
+        {
+          "id": "h04",
+          "lbl": "Non-motor features — smell, sleep, bowels, mood",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "smell",
+            "hyposmia",
+            "anosmia",
+            "rem sleep",
+            "acting out dreams",
+            "dream enactment",
+            "constipation",
+            "mood",
+            "depression",
+            "non-motor"
+          ],
+          "find": "His sense of smell has been reduced for over a year, he acts out his dreams at night (shouting, thrashing), and he is constipated.",
+          "exp": "Hyposmia, REM sleep behaviour disorder and constipation are prodromal non-motor features that often predate the motor signs and strongly support a diagnosis of Parkinson's disease."
+        },
+        {
+          "id": "h05",
+          "lbl": "Red-flag screen for Parkinson-plus (cognition, autonomic, falls, gaze)",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "dementia",
+            "memory",
+            "cognition",
+            "autonomic",
+            "fainting",
+            "postural drop",
+            "blackouts",
+            "early falls",
+            "gaze",
+            "double vision",
+            "parkinson plus",
+            "atypical"
+          ],
+          "find": "No early memory loss or hallucinations, no fainting or marked light-headedness on standing, no early falls, and no trouble looking up or down.",
+          "exp": "Early dementia/hallucinations (Lewy body), early severe autonomic failure (MSA), early falls and vertical gaze problems (PSP) are red flags for a Parkinson-plus syndrome. Their absence favours idiopathic PD."
+        },
+        {
+          "id": "h06",
+          "lbl": "Drug history — dopamine blockers",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "sigNeg": true,
+          "aliases": [
+            "drug history",
+            "medications",
+            "antipsychotics",
+            "metoclopramide",
+            "prochlorperazine",
+            "maxolon",
+            "stemetil",
+            "haloperidol",
+            "dopamine blocker",
+            "anti-emetic"
+          ],
+          "find": "He takes only an ACE inhibitor and metformin. He is NOT on any antipsychotic, metoclopramide, prochlorperazine or other dopamine-blocking drug.",
+          "exp": "Drug-induced parkinsonism — from dopamine-blocking antipsychotics and anti-emetics — is REVERSIBLE and the key must-not-miss in any new parkinsonism. Reviewing the drug list is mandatory; a normal DaTscan would further confirm it if a culprit drug were present."
+        },
+        {
+          "id": "h07",
+          "lbl": "Alcohol response & family history of tremor",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "alcohol",
+            "drinking",
+            "family history",
+            "hereditary tremor",
+            "essential tremor",
+            "relatives",
+            "does alcohol help"
+          ],
+          "find": "A drink of alcohol does NOT settle the tremor, and there is no strong family history of tremor.",
+          "exp": "Essential tremor classically improves transiently with alcohol and runs in families (autosomal dominant). Neither is true here, arguing against essential tremor."
+        },
+        {
+          "id": "h08",
+          "lbl": "Liver/psychiatric (Wilson's) & thyroid symptoms",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "liver disease",
+            "jaundice",
+            "psychiatric",
+            "behaviour change",
+            "wilson",
+            "copper",
+            "heat intolerance",
+            "weight loss",
+            "palpitations",
+            "thyroid"
+          ],
+          "find": "No liver disease or behavioural change, and no heat intolerance, palpitations or weight loss.",
+          "exp": "Wilson's disease (copper accumulation) must be screened in YOUNGER patients with movement disorder; hyperthyroidism produces a fine action tremor. Both are screened biochemically."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "General inspection, facial expression & lying/standing BP",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "general inspection",
+            "facial expression",
+            "hypomimia",
+            "masked face",
+            "hypophonia",
+            "soft speech",
+            "postural blood pressure",
+            "lying standing bp",
+            "orthostatic"
+          ],
+          "find": "Reduced facial expression (hypomimia) and soft speech (hypophonia). Lying and standing blood pressures show no significant postural drop.",
+          "exp": "Facial masking and hypophonia are typical of PD. A large postural blood-pressure drop would raise multiple system atrophy (a Parkinson-plus syndrome with early autonomic failure).",
+          "lookingFor": "Hypomimia/hypophonia (PD); significant postural BP drop (MSA)."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Cardinal motor signs — rest tremor, rigidity, bradykinesia",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "resting tremor",
+            "pill rolling",
+            "cogwheel rigidity",
+            "rigidity",
+            "bradykinesia",
+            "finger tapping",
+            "decrement",
+            "tone",
+            "cardinal signs",
+            "motor exam"
+          ],
+          "find": "Asymmetrical resting pill-rolling tremor (right > left). Cogwheel rigidity at the right wrist. Finger-tapping shows progressive slowing and decrementing amplitude (bradykinesia).",
+          "exp": "Bradykinesia plus rest tremor and rigidity establishes parkinsonism (MDS 2015). The marked asymmetry favours idiopathic Parkinson's disease over the more symmetrical Parkinson-plus and vascular forms.",
+          "lookingFor": "Bradykinesia + rest tremor + cogwheel rigidity (parkinsonism); asymmetry (favours PD)."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Gait & postural stability (pull test)",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "gait",
+            "walking",
+            "shuffling",
+            "festinant",
+            "arm swing",
+            "pull test",
+            "postural stability",
+            "retropulsion",
+            "turning"
+          ],
+          "find": "Stooped, shuffling (festinant) gait with reduced right arm swing. Pull test shows mild retropulsion but he recovers — no early, severe postural instability.",
+          "exp": "This gait fits PD. Prominent postural instability and falls within the first year would instead point to PSP.",
+          "lookingFor": "Festinant gait, reduced arm swing (PD); early severe instability/falls (PSP)."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Eye movements (vertical gaze)",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "eye movements",
+            "vertical gaze",
+            "gaze palsy",
+            "look up down",
+            "supranuclear",
+            "saccades",
+            "psp sign"
+          ],
+          "find": "Full range of eye movements with normal vertical gaze.",
+          "exp": "A vertical supranuclear gaze palsy is the hallmark of progressive supranuclear palsy; its absence argues against this Parkinson-plus syndrome.",
+          "lookingFor": "Vertical supranuclear gaze palsy → PSP (absent here)."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Kayser-Fleischer rings & signs of liver disease",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "kayser fleischer",
+            "kf rings",
+            "slit lamp",
+            "liver disease",
+            "dystonia",
+            "wilson signs",
+            "copper eye"
+          ],
+          "find": "No Kayser-Fleischer rings on slit-lamp examination, no dystonia and no stigmata of chronic liver disease.",
+          "exp": "Kayser-Fleischer rings and dystonia/liver disease point to Wilson's disease (relevant chiefly in younger patients); their absence, with normal copper studies, excludes it here.",
+          "lookingFor": "Kayser-Fleischer rings / dystonia / liver disease → Wilson's (absent)."
+        },
+        {
+          "id": "pe06",
+          "lbl": "Cognitive screen & glabellar tap",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "cognition",
+            "memory",
+            "mmse",
+            "moca",
+            "glabellar tap",
+            "myerson",
+            "frontal signs",
+            "dementia screen"
+          ],
+          "find": "Cognition grossly intact (no early dementia). Glabellar tap is positive (Myerson's sign).",
+          "exp": "Early dementia would suggest Lewy body dementia or a Parkinson-plus syndrome; a positive glabellar tap is a soft supportive sign of parkinsonism."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "Thyroid Function Test (TSH, free T4)",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "tft",
+            "thyroid function",
+            "tsh",
+            "free t4",
+            "thyroid",
+            "hyperthyroid"
+          ],
+          "find": "TSH and free T4 normal.",
+          "exp": "Hyperthyroidism causes a fine postural/action tremor; normal thyroid function removes it from the differential."
+        },
+        {
+          "id": "bi02",
+          "lbl": "Full Blood Count, Renal Panel & Glucose",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "fbc",
+            "full blood count",
+            "renal panel",
+            "u&e",
+            "glucose",
+            "electrolytes",
+            "baseline bloods"
+          ],
+          "find": "Full blood count, renal panel and glucose all normal.",
+          "exp": "Baseline bloods exclude metabolic contributors and provide a pre-treatment baseline."
+        },
+        {
+          "id": "bi03",
+          "lbl": "Copper studies (serum caeruloplasmin / copper)",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "copper",
+            "caeruloplasmin",
+            "ceruloplasmin",
+            "wilson",
+            "24 hour urinary copper",
+            "wilson screen"
+          ],
+          "find": "Serum caeruloplasmin and copper normal.",
+          "exp": "Copper studies screen for Wilson's disease — essential in young-onset movement disorder. They are normal here, and Wilson's is in any case very unlikely at this age."
+        },
+        {
+          "id": "bi04",
+          "lbl": "Vitamin B12",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "b12",
+            "vitamin b12",
+            "cobalamin",
+            "b12 deficiency"
+          ],
+          "find": "Vitamin B12 normal.",
+          "exp": "A reversible contributor to neurological signs; checked and normal."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "DaTscan (dopamine transporter SPECT)",
+          "cost": "high",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "datscan",
+            "dat scan",
+            "dopamine transporter",
+            "spect",
+            "dopaminergic imaging",
+            "nuclear scan",
+            "fp-cit"
+          ],
+          "find": "Reduced dopamine-transporter uptake in the putamen, asymmetrically worse on the left (matching the right-sided clinical signs) — an abnormal scan consistent with a degenerative parkinsonism.",
+          "exp": "DaTscan separates degenerative parkinsonism (reduced uptake — Parkinson's disease AND Parkinson-plus) from essential tremor and drug-induced parkinsonism (both have a NORMAL scan). It does NOT distinguish PD from Parkinson-plus — that remains a clinical call.",
+          "imageUrl": "case007_datscan.jpg"
+        },
+        {
+          "id": "ai02",
+          "lbl": "MRI Brain",
+          "cost": "mid",
+          "rel": true,
+          "aliases": [
+            "mri brain",
+            "mri",
+            "brain scan",
+            "structural imaging",
+            "hummingbird sign",
+            "hot cross bun",
+            "midbrain atrophy"
+          ],
+          "find": "No vascular small-vessel lesions of significance, no hydrocephalus, and no midbrain atrophy ('hummingbird' sign of PSP) or pontine 'hot cross bun' (MSA).",
+          "exp": "MRI excludes vascular parkinsonism, normal-pressure hydrocephalus and structural lesions, and looks for the imaging signatures of Parkinson-plus syndromes. It is typically normal in early idiopathic PD.",
+          "imageUrl": "case007_mri_brain.jpg"
+        },
+        {
+          "id": "ai03",
+          "lbl": "Levodopa response (diagnostic trial)",
+          "cost": "mid",
+          "rel": true,
+          "aliases": [
+            "levodopa",
+            "l-dopa",
+            "madopar",
+            "sinemet",
+            "dopamine response",
+            "levodopa challenge",
+            "levodopa trial"
+          ],
+          "find": "A clear and sustained improvement in both tremor and bradykinesia with levodopa.",
+          "exp": "An excellent, sustained levodopa response is a strong supportive criterion for Parkinson's disease (MDS 2015). A poor response should prompt reconsideration of a Parkinson-plus syndrome or vascular parkinsonism."
+        },
+        {
+          "id": "ai04",
+          "lbl": "Electroencephalogram (EEG)",
+          "cost": "mid",
+          "rel": false,
+          "penalize": true,
+          "aliases": [
+            "eeg",
+            "electroencephalogram",
+            "brain waves",
+            "seizure study"
+          ],
+          "find": "Normal — and not indicated for this presentation.",
+          "exp": "Parkinsonism is a movement disorder, not a seizure disorder; an EEG has no role here and represents an unnecessary, low-yield investigation."
+        }
+      ],
+      "sigNegs": [
+        {
+          "id": "h06",
+          "label": "No dopamine-blocking drugs → drug-induced parkinsonism excluded",
+          "pts": 10
+        },
+        {
+          "id": "pe04",
+          "label": "Normal vertical gaze → progressive supranuclear palsy (Parkinson-plus) unlikely",
+          "pts": 8
+        },
+        {
+          "id": "h07",
+          "label": "No alcohol response and no family history → essential tremor unlikely",
+          "pts": 8
+        },
+        {
+          "id": "pe05",
+          "label": "No Kayser-Fleischer rings and normal caeruloplasmin → Wilson's disease excluded",
+          "pts": 6
+        }
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Drug-Induced Parkinsonism",
+          "status": "ruled-out",
+          "statusLbl": "Excluded",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Not taking any antipsychotic, metoclopramide, prochlorperazine or other dopamine-blocking drug"
+            },
+            {
+              "type": "inv",
+              "text": "DaTscan is ABNORMAL — drug-induced parkinsonism has a normal scan, so the reduced uptake here points to a degenerative cause"
+            }
+          ]
+        },
+        {
+          "mnm": "Normal Pressure Hydrocephalus",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No urinary incontinence and no early cognitive decline — the NPH triad (gait apraxia, incontinence, dementia) is absent"
+            },
+            {
+              "type": "inv",
+              "text": "MRI shows no hydrocephalus"
+            }
+          ]
+        },
+        {
+          "mnm": "Wilson's Disease",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Older patient with no liver disease or psychiatric/behavioural change (Wilson's presents in the young)"
+            },
+            {
+              "type": "ex",
+              "text": "No Kayser-Fleischer rings and no dystonia"
+            },
+            {
+              "type": "inv",
+              "text": "Normal serum caeruloplasmin and copper"
+            }
+          ]
+        }
+      ],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Drug-Induced Parkinsonism",
+          "after_item": "h06",
+          "snapshot": "History",
+          "note": "No culprit dopamine-blocking drug on the medication list"
+        },
+        {
+          "mnm": "Wilson's Disease",
+          "after_item": "bi03",
+          "snapshot": "Basic Inv",
+          "note": "Normal copper studies and age make Wilson's very unlikely"
+        },
+        {
+          "mnm": "Normal Pressure Hydrocephalus",
+          "after_item": "ai02",
+          "snapshot": "Advanced Inv",
+          "note": "MRI shows no hydrocephalus and the clinical triad is absent"
+        }
+      ],
+      "keyTeachingPoints": [
+        "Parkinsonism (MDS 2015 clinical diagnostic criteria) is defined as bradykinesia PLUS at least one of rest tremor or rigidity. Asymmetry of onset favours idiopathic Parkinson's disease.",
+        "Always review the drug list: drug-induced parkinsonism (antipsychotics, metoclopramide, prochlorperazine) is REVERSIBLE and the key must-not-miss — and it has a normal DaTscan.",
+        "Red flags for a Parkinson-plus syndrome rather than PD include early falls and a vertical supranuclear gaze palsy (PSP), early severe autonomic failure (MSA), and a poor levodopa response.",
+        "DaTscan separates degenerative parkinsonism (reduced uptake — both PD and Parkinson-plus) from essential tremor and drug-induced parkinsonism (normal uptake). It does NOT distinguish PD from a Parkinson-plus syndrome.",
+        "Essential tremor is an action/postural tremor that improves with alcohol and often has a family history — the mirror image of the rest tremor of Parkinson's disease.",
+        "Screen for reversible/treatable mimics: thyroid function (hyperthyroid tremor), copper studies/caeruloplasmin in the young (<40) for Wilson's disease, and the triad of normal-pressure hydrocephalus (gait apraxia, urinary incontinence, dementia), which is treatable by shunting.",
+        "An excellent, sustained response to levodopa is a strong supportive criterion for Parkinson's disease (MDS 2015).",
+        "Non-motor features — reduced sense of smell, REM sleep behaviour disorder and constipation — frequently predate the motor signs and support the diagnosis."
+      ],
+      "approachTitle": "An Approach to Tremor",
+      "approachSub": "First decide rest versus action, then screen the reversible and atypical mimics",
+      "approachText": "The first fork in any tremor is rest versus action. A rest tremor that is asymmetrical, with bradykinesia and rigidity, is parkinsonism — and the task is then to separate idiopathic Parkinson's disease from the reversible mimics (drugs), the treatable mimics (NPH, Wilson's) and the atypical Parkinson-plus syndromes.",
+      "approachCats": [
+        {
+          "name": "Rest tremor — degenerative ← THIS CASE",
+          "eg": "Parkinson's disease, Parkinson-plus (PSP, MSA)",
+          "hl": true
+        },
+        {
+          "name": "Action / postural tremor",
+          "eg": "Essential tremor, physiological, hyperthyroid",
+          "hl": false
+        },
+        {
+          "name": "Reversible — drug-induced",
+          "eg": "Antipsychotics, metoclopramide, prochlorperazine",
+          "hl": false
+        },
+        {
+          "name": "Structural / vascular",
+          "eg": "Vascular parkinsonism, normal-pressure hydrocephalus",
+          "hl": false
+        },
+        {
+          "name": "Metabolic (young)",
+          "eg": "Wilson's disease",
+          "hl": false
+        },
+        {
+          "name": "Functional",
+          "eg": "Functional (distractibility, entrainment, variability)",
+          "hl": false
+        }
+      ],
+      "approachInsight": "The danger in tremor is not that Parkinson's disease is hard to spot — it usually isn't — but that the treatable and reversible causes get skipped because the picture 'looks like PD'. So the discipline is to actively exclude them: review the drug list (drug-induced parkinsonism is reversible and the commonest mimic), check thyroid function and, in the young, copper studies, and keep normal-pressure hydrocephalus in mind when gait and continence dominate. Asymmetry, a rest tremor, hyposmia and REM sleep behaviour disorder all build the case for idiopathic PD, while early falls, a vertical gaze palsy or early autonomic failure pull towards a Parkinson-plus syndrome. The DaTscan earns its place by separating degenerative parkinsonism from essential tremor and drug-induced disease — but it cannot, by itself, tell PD apart from Parkinson-plus.",
+      "expertNarrative": "Seeing an older man with an asymmetrical rest tremor, the neurologist is thinking Parkinson's disease immediately — but spends the consultation proving it is idiopathic and not one of the impostors. The examination confirms parkinsonism (bradykinesia with decrement, cogwheel rigidity, rest tremor) and then deliberately hunts the red flags: vertical gaze (PSP), a postural blood-pressure drop (MSA), early falls, early dementia. The history mines for supportive non-motor clues (hyposmia, dream enactment, constipation) and, crucially, for a culprit drug — because drug-induced parkinsonism is reversible and missing it is the real error. Bloods screen the reversible mimics, a DaTscan separates degenerative parkinsonism from essential tremor and drug-induced disease, and a clear levodopa response seals an idiopathic PD diagnosis. The skill rewarded here is not pattern-spotting PD, but systematically retiring the treatable causes before committing.",
+      "sensitivityNote": "The clinical MDS criteria are sensitive for parkinsonism, and a DaTscan is highly sensitive for the dopaminergic deficit of degenerative parkinsonism — but a normal DaTscan does not exclude essential tremor or drug-induced parkinsonism (indeed it supports them). Non-motor features (hyposmia, RBD) increase diagnostic confidence but are not individually sensitive.",
+      "specificityNote": "Asymmetry, a rest tremor and an excellent levodopa response are relatively specific for idiopathic PD. A DaTscan is specific for separating degenerative parkinsonism from essential/drug-induced tremor, but is NOT specific for PD versus Parkinson-plus (both reduce uptake). Vertical supranuclear gaze palsy is specific for PSP, and a normal scan with a clear culprit drug is specific for drug-induced parkinsonism.",
+      "linkedPairs": []
+    },
+    {
+      "id": "case_008",
+      "title": "Ascending Leg Weakness",
+      "approach": "An Approach to Acute Generalised Weakness",
+      "secondaryApproach": "An Approach to Ascending Weakness",
+      "system": "Neurology",
+      "difficulty": "moderate",
+      "patient": "Mr Kumar Raj, 40M, Delivery Rider",
+      "snomedCode": "40956001",
+      "demographics": {
+        "name": "Kumar Raj",
+        "age": "40",
+        "sex": "M",
+        "occupation": "Delivery Rider",
+        "mrn": "409560"
+      },
+      "vitals": {
+        "hr": {
+          "value": "96",
+          "unit": "bpm",
+          "abnormal": true
+        },
+        "bp": {
+          "value": "142/90",
+          "unit": "mmHg",
+          "abnormal": true
+        },
+        "spo2": {
+          "value": "97",
+          "unit": "%",
+          "abnormal": false
+        },
+        "rr": {
+          "value": "20",
+          "unit": "/min",
+          "abnormal": true
+        },
+        "temp": {
+          "value": "36.9",
+          "unit": "°C",
+          "abnormal": false
+        }
+      },
+      "allergies": "NKDA",
+      "background": [
+        "Watery diarrhoeal illness ~2 weeks ago (self-limiting)",
+        "Previously well",
+        "Non-smoker",
+        "No regular medications"
+      ],
+      "pathway": {
+        "validation": {
+          "status": "draft",
+          "validatedBy": null,
+          "validatedAt": null,
+          "notes": "Awaiting neurology sign-off — diagnosis is clinical (Brighton); LP/NCS support, MRI excludes cord compression."
+        },
+        "reasoning": {
+          "bi02": "Bedside then formal FVC is done early and repeated — respiratory failure is the can't-miss complication and SpO2 drops only late.",
+          "ai01": "The confirmatory layer (CSF albuminocytological dissociation, NCS demyelination) is withheld to this stage; note CSF protein may be normal in the first week.",
+          "ai03": "MRI whole spine is the safety net — it excludes the surgical must-not-miss (cord compression) before attributing everything to GBS.",
+          "guillain_barr_syndrome": "Acute symmetrical ascending flaccid weakness with areflexia after a diarrhoeal illness, no sensory level, normal potassium = Guillain–Barré syndrome."
+        },
+        "reveal": {
+          "hint": "mask-diagnoses",
+          "debrief": "full"
+        }
+      },
+      "vignette": "Mr Kumar Raj is a 40-year-old delivery rider who presents with a few days of progressive weakness in both legs. Over the last day it has started to involve his hands, and he is finding it harder to climb the stairs to his flat.",
+      "caseMNMs": [
+        {
+          "name": "Spinal Cord Compression",
+          "tier": 1
+        },
+        {
+          "name": "Transverse Myelitis",
+          "tier": 1
+        },
+        {
+          "name": "Hypokalaemic Periodic Paralysis",
+          "tier": 2
+        },
+        {
+          "name": "Botulism",
+          "tier": 2
+        }
+      ],
+      "expectedP1": [
+        "Guillain–Barré Syndrome",
+        "Chronic Inflammatory Demyelinating Polyneuropathy (CIDP)",
+        "Myasthenia Gravis",
+        "Peripheral Neuropathy",
+        "Functional Neurological Disorder"
+      ],
+      "finalDx": "Guillain–Barré Syndrome",
+      "finalUmbrella": "Guillain–Barré Syndrome",
+      "diagnosisScore": {
+        "Guillain–Barré Syndrome": 100,
+        "Guillain-Barré Syndrome": 100,
+        "GBS": 100,
+        "Acute Inflammatory Demyelinating Polyneuropathy (AIDP)": 100,
+        "Chronic Inflammatory Demyelinating Polyneuropathy (CIDP)": 40,
+        "Transverse Myelitis": 30,
+        "Peripheral Neuropathy": 20,
+        "Myasthenia Gravis": 15
+      },
+      "required": [
+        "pe03",
+        "bi02",
+        "ai01"
+      ],
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Weakness — pattern, onset, ascending, time course",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "weakness",
+            "ascending",
+            "legs to arms",
+            "onset",
+            "time course",
+            "progressive",
+            "symmetrical",
+            "how it started",
+            "climbing stairs",
+            "spreading up"
+          ],
+          "find": "Weakness began in both legs about five days ago and has been ascending — now the hands tingle and feel weak too. It is symmetrical and has been steadily progressive over days (well within four weeks), not episodic.",
+          "exp": "Acute, symmetrical, ascending flaccid weakness evolving over days to less than four weeks is the Guillain–Barré pattern. A relapsing course over more than eight weeks would instead suggest CIDP."
+        },
+        {
+          "id": "h02",
+          "lbl": "Preceding infection",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "preceding infection",
+            "diarrhoea",
+            "gastroenteritis",
+            "campylobacter",
+            "recent illness",
+            "viral illness",
+            "urti",
+            "trigger"
+          ],
+          "find": "He had a self-limiting watery diarrhoeal illness about two weeks ago.",
+          "exp": "Around two-thirds of GBS follows a gastrointestinal (classically Campylobacter) or respiratory infection 1–3 weeks earlier, via molecular mimicry — a key supporting feature."
+        },
+        {
+          "id": "h03",
+          "lbl": "Sensory symptoms & for a sensory level",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "sensory",
+            "numbness",
+            "tingling",
+            "paraesthesiae",
+            "sensory level",
+            "band around trunk",
+            "back pain",
+            "pins and needles"
+          ],
+          "find": "Tingling in the toes and fingertips, but NO band-like sensory level across the trunk and no significant back pain.",
+          "exp": "Distal paraesthesiae without a sensory level fit GBS. A discrete sensory level with back pain would point to spinal cord compression — the surgical must-not-miss."
+        },
+        {
+          "id": "h04",
+          "lbl": "Breathing & bulbar symptoms",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "breathing",
+            "breathless",
+            "shortness of breath",
+            "deep breath",
+            "swallowing",
+            "slurred speech",
+            "bulbar",
+            "choking",
+            "respiratory"
+          ],
+          "find": "Mildly breathless on exertion and finds it a little harder to take a deep breath. Slight slurring of speech and mild difficulty swallowing are starting.",
+          "exp": "Respiratory and bulbar involvement mark the dangerous trajectory of GBS; they mandate close, serial respiratory monitoring."
+        },
+        {
+          "id": "h05",
+          "lbl": "Autonomic features",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "autonomic",
+            "palpitations",
+            "blood pressure swings",
+            "sweating",
+            "arrhythmia",
+            "constipation",
+            "urinary hesitancy",
+            "dysautonomia"
+          ],
+          "find": "Palpitations, fluctuating blood pressure and episodes of sweating, with some constipation and urinary hesitancy.",
+          "exp": "Autonomic instability — labile blood pressure and arrhythmias — is a major cause of mortality in GBS and warrants cardiac monitoring."
+        },
+        {
+          "id": "h06",
+          "lbl": "Bladder/bowel & back pain (cord screen)",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "bladder",
+            "bowel",
+            "urinary retention",
+            "incontinence",
+            "sphincter",
+            "saddle",
+            "back pain",
+            "cord compression screen"
+          ],
+          "find": "No early, prominent urinary retention or bowel incontinence and no severe back pain — only mild late autonomic bladder symptoms.",
+          "exp": "Early prominent sphincter loss with back pain points to cord compression or cauda equina. Its absence argues against a compressive cord lesion."
+        },
+        {
+          "id": "h07",
+          "lbl": "Episodic paralysis, potassium & drug history",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "periodic paralysis",
+            "episodic weakness",
+            "previous attacks",
+            "potassium",
+            "hypokalaemia",
+            "diuretics",
+            "family history",
+            "reversible weakness",
+            "thyroid"
+          ],
+          "find": "No previous episodes of paralysis, no family history of such attacks, not on diuretics, and the weakness is steadily progressive rather than episodic and self-resolving.",
+          "exp": "Hypokalaemic periodic paralysis causes recurrent, reversible episodes of flaccid weakness — check potassium to exclude this treatable mimic."
+        },
+        {
+          "id": "h08",
+          "lbl": "Botulism exposure & direction of spread",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "botulism",
+            "canned food",
+            "fermented food",
+            "wound",
+            "descending",
+            "dry mouth",
+            "dilated pupils",
+            "food poisoning"
+          ],
+          "find": "No home-canned or fermented foods and no wounds. The weakness is clearly ASCENDING, and there is no early dry mouth or blurred vision.",
+          "exp": "Botulism produces a DESCENDING paralysis (cranial nerves first) with prominent autonomic/pupillary features — the opposite direction and pattern to this ascending picture."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "General inspection, vitals & autonomic status",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "general inspection",
+            "vitals",
+            "autonomic",
+            "tachycardia",
+            "blood pressure",
+            "respiratory rate",
+            "accessory muscles",
+            "observations"
+          ],
+          "find": "Alert but anxious. Heart rate 96 with fluctuating blood pressure, respiratory rate 20, oxygen saturation 97%. Mild use of accessory muscles.",
+          "exp": "Tachypnoea, accessory-muscle use and labile observations are early warnings of respiratory compromise and autonomic instability.",
+          "lookingFor": "Accessory-muscle use / tachypnoea (respiratory); labile HR/BP (autonomic instability)."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Tone & power",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "tone",
+            "power",
+            "strength",
+            "flaccid",
+            "proximal",
+            "distal",
+            "muscle power",
+            "weakness exam",
+            "mrc grade"
+          ],
+          "find": "Symmetrical, flaccid weakness — legs weaker than arms, both proximal and distal, with a clearly ascending distribution.",
+          "exp": "A symmetrical lower-motor-neuron (flaccid) pattern of weakness is characteristic; spasticity would instead indicate an upper-motor-neuron/cord lesion."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Deep tendon reflexes",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "sigNeg": true,
+          "aliases": [
+            "reflexes",
+            "deep tendon reflexes",
+            "areflexia",
+            "hyporeflexia",
+            "knee jerk",
+            "ankle jerk",
+            "absent reflexes",
+            "plantars"
+          ],
+          "find": "Areflexia — absent ankle and knee jerks with reduced upper-limb reflexes. Plantars are downgoing.",
+          "exp": "Areflexia is the cardinal sign of GBS (Brighton criteria). Preserved or brisk reflexes would argue against it — and brisk reflexes with upgoing plantars would point to a cord lesion.",
+          "lookingFor": "Areflexia (GBS); hyperreflexia/upgoing plantars (cord lesion); preserved reflexes (MG)."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Sensory examination & sensory level",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "sensory exam",
+            "sensory level",
+            "pinprick",
+            "proprioception",
+            "sensation",
+            "trunk level",
+            "dermatome"
+          ],
+          "find": "Mild distal sensory blunting in the feet and fingertips, but NO discrete sensory level on the trunk; proprioception is relatively preserved.",
+          "exp": "The absence of a sensory level is pivotal: a clear-cut sensory level would mandate urgent imaging of the cord for compression or transverse myelitis.",
+          "lookingFor": "A discrete truncal sensory level → cord compression / transverse myelitis (absent here)."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Bedside single-breath count",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "single breath count",
+            "breath count",
+            "count in one breath",
+            "bedside respiratory",
+            "vital capacity bedside"
+          ],
+          "find": "Counts to about 22 on a single breath (normal >40), with mild accessory-muscle use.",
+          "exp": "The single-breath count is a quick surrogate for vital capacity and, when reduced, should trigger formal, serial FVC measurement before the patient deteriorates.",
+          "lookingFor": "Single-breath count <40 — surrogate for falling vital capacity."
+        },
+        {
+          "id": "pe06",
+          "lbl": "Cranial nerves, bulbar & pupils",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "cranial nerves",
+            "facial weakness",
+            "bulbar",
+            "pupils",
+            "eye movements",
+            "ophthalmoplegia",
+            "fundoscopy",
+            "swallow"
+          ],
+          "find": "Mild bilateral facial weakness and early bulbar signs. Pupils are equal, round and reactive; eye movements full.",
+          "exp": "Bilateral facial/bulbar weakness is common in GBS. Normal reactive pupils argue against botulism (which causes dilated, poorly reactive pupils); ophthalmoplegia + ataxia + areflexia would suggest the Miller-Fisher variant.",
+          "lookingFor": "Normal pupils (vs botulism); ophthalmoplegia + ataxia (Miller-Fisher variant)."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "Renal Panel + Potassium",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "renal panel",
+            "u&e",
+            "potassium",
+            "electrolytes",
+            "serum potassium",
+            "hypokalaemia",
+            "kidney function"
+          ],
+          "find": "Potassium normal at 4.0 mmol/L; renal function normal.",
+          "exp": "A normal potassium excludes hypokalaemic periodic paralysis — a reversible cause of acute flaccid weakness that must not be missed."
+        },
+        {
+          "id": "bi02",
+          "lbl": "Forced Vital Capacity (FVC) + NIF — serial",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "fvc",
+            "forced vital capacity",
+            "nif",
+            "negative inspiratory force",
+            "spirometry",
+            "respiratory function",
+            "vital capacity",
+            "lung function"
+          ],
+          "find": "FVC 1.4 L (≈20 mL/kg) and falling on repeat; negative inspiratory force reduced. Flagged for serial monitoring.",
+          "exp": "Apply the 20/30/40 rule: FVC <20 mL/kg, NIF less negative than −30 cmH₂O, or MEP <40 cmH₂O indicates the need for ICU-level care and possible ventilation. Oxygen desaturation is a LATE sign — monitor FVC serially rather than waiting for the saturation to drop."
+        },
+        {
+          "id": "bi03",
+          "lbl": "ECG + continuous cardiac monitoring",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "ecg",
+            "ekg",
+            "cardiac monitor",
+            "telemetry",
+            "arrhythmia",
+            "autonomic",
+            "heart rhythm"
+          ],
+          "find": "Sinus tachycardia with occasional ectopics; placed on continuous monitoring.",
+          "exp": "Autonomic instability in GBS can cause dangerous brady- and tachy-arrhythmias and blood-pressure swings, so continuous cardiac monitoring is warranted."
+        },
+        {
+          "id": "bi04",
+          "lbl": "FBC, Glucose, Magnesium & Calcium",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "fbc",
+            "full blood count",
+            "glucose",
+            "magnesium",
+            "calcium",
+            "baseline bloods",
+            "electrolytes"
+          ],
+          "find": "All normal.",
+          "exp": "Baseline bloods exclude other electrolyte and metabolic contributors to weakness."
+        },
+        {
+          "id": "bi05",
+          "lbl": "Thyroid Function Test",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "tft",
+            "thyroid function",
+            "tsh",
+            "free t4",
+            "thyrotoxic"
+          ],
+          "find": "Normal.",
+          "exp": "Thyrotoxicosis is associated with periodic paralysis; thyroid function is screened and normal."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "Lumbar Puncture (CSF analysis)",
+          "cost": "mid",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "lumbar puncture",
+            "lp",
+            "csf",
+            "spinal tap",
+            "albuminocytological dissociation",
+            "csf protein",
+            "cerebrospinal fluid"
+          ],
+          "find": "Raised CSF protein with a NORMAL cell count — albuminocytological dissociation.",
+          "exp": "Albuminocytological dissociation (raised protein, normal cells) supports GBS (Brighton criteria). CSF protein rises over the first 1–2 weeks, so it may be NORMAL in the first few days — a normal early LP does not exclude GBS."
+        },
+        {
+          "id": "ai02",
+          "lbl": "Nerve Conduction Studies (NCS)",
+          "cost": "mid",
+          "rel": true,
+          "aliases": [
+            "ncs",
+            "nerve conduction studies",
+            "emg",
+            "electrophysiology",
+            "demyelination",
+            "conduction block",
+            "f waves"
+          ],
+          "find": "A demyelinating pattern — prolonged distal motor latencies, conduction block and reduced conduction velocities — consistent with AIDP.",
+          "exp": "Nerve conduction studies confirm a demyelinating polyradiculoneuropathy and subtype GBS (demyelinating AIDP versus axonal AMAN). They are the most useful confirmatory electrophysiological test."
+        },
+        {
+          "id": "ai03",
+          "lbl": "MRI Whole Spine (with contrast)",
+          "cost": "high",
+          "rel": true,
+          "aliases": [
+            "mri spine",
+            "mri whole spine",
+            "spinal cord imaging",
+            "cord compression",
+            "nerve root enhancement",
+            "gadolinium spine"
+          ],
+          "find": "No cord compression and no intramedullary inflammatory lesion. Subtle enhancement of the anterior nerve roots/cauda equina may be seen.",
+          "exp": "MRI of the spine excludes the surgical must-not-miss (cord compression) and transverse myelitis, and nerve-root enhancement can support GBS. It is essential if any sensory level or sphincter disturbance appears.",
+          "imageUrl": "case008_mri_spine.jpg"
+        },
+        {
+          "id": "ai04",
+          "lbl": "Anti-ganglioside antibodies (anti-GQ1b)",
+          "cost": "mid",
+          "rel": true,
+          "aliases": [
+            "anti-ganglioside",
+            "gq1b",
+            "anti-gq1b",
+            "miller fisher",
+            "ganglioside antibodies",
+            "gm1"
+          ],
+          "find": "Sent for completeness; the picture is classic GBS rather than the Miller-Fisher variant.",
+          "exp": "Anti-GQ1b antibodies are strongly associated with the Miller-Fisher variant (ophthalmoplegia, ataxia, areflexia); antibody testing helps characterise specific GBS variants."
+        },
+        {
+          "id": "ai05",
+          "lbl": "Muscle Biopsy",
+          "cost": "high",
+          "rel": false,
+          "penalize": true,
+          "aliases": [
+            "muscle biopsy",
+            "biopsy",
+            "histology muscle"
+          ],
+          "find": "Not indicated. GBS is a disorder of peripheral nerve, not muscle — a biopsy adds nothing and is invasive.",
+          "exp": "A muscle biopsy is for suspected myopathy. Ordering it in a demyelinating neuropathy reflects the wrong localisation and exposes the patient to an unnecessary invasive procedure."
+        }
+      ],
+      "sigNegs": [
+        {
+          "id": "pe04",
+          "label": "No discrete sensory level → spinal cord compression / transverse myelitis less likely",
+          "pts": 10
+        },
+        {
+          "id": "bi01",
+          "label": "Normal serum potassium → hypokalaemic periodic paralysis excluded",
+          "pts": 8
+        },
+        {
+          "id": "pe06",
+          "label": "Normal reactive pupils and an ascending (not descending) pattern → botulism unlikely",
+          "pts": 8
+        },
+        {
+          "id": "pe03",
+          "label": "Areflexia (not the preserved reflexes of myasthenia gravis) → supports GBS",
+          "pts": 6
+        }
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Spinal Cord Compression",
+          "status": "ruled-out",
+          "statusLbl": "Excluded on imaging",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No significant back pain and no early prominent urinary retention or bowel incontinence"
+            },
+            {
+              "type": "ex",
+              "text": "Areflexia (not hyperreflexia with upgoing plantars) and NO discrete sensory level"
+            },
+            {
+              "type": "inv",
+              "text": "MRI whole spine shows no cord compression"
+            }
+          ]
+        },
+        {
+          "mnm": "Transverse Myelitis",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "No sensory level and a flaccid, areflexic (rather than upper-motor-neuron) pattern"
+            },
+            {
+              "type": "inv",
+              "text": "MRI cord shows no intramedullary inflammatory lesion"
+            }
+          ]
+        },
+        {
+          "mnm": "Hypokalaemic Periodic Paralysis",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No previous episodic, self-resolving attacks; the weakness is steadily progressive"
+            },
+            {
+              "type": "inv",
+              "text": "Serum potassium is normal"
+            }
+          ]
+        },
+        {
+          "mnm": "Botulism",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Weakness is ascending (botulism descends) with no canned/fermented food and no wound"
+            },
+            {
+              "type": "ex",
+              "text": "Pupils normal and reactive; no early dry mouth"
+            },
+            {
+              "type": "inv",
+              "text": "Nerve conduction studies show demyelination, not the presynaptic NMJ pattern of botulism"
+            }
+          ]
+        }
+      ],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Botulism",
+          "after_item": "pe06",
+          "snapshot": "Examination",
+          "note": "Ascending pattern with normal reactive pupils — botulism much less likely"
+        },
+        {
+          "mnm": "Hypokalaemic Periodic Paralysis",
+          "after_item": "bi01",
+          "snapshot": "Basic Inv",
+          "note": "Normal potassium and a progressive (non-episodic) course"
+        },
+        {
+          "mnm": "Spinal Cord Compression",
+          "after_item": "pe04",
+          "snapshot": "Examination",
+          "note": "Areflexia and no sensory level argue against a compressive cord lesion"
+        },
+        {
+          "mnm": "Transverse Myelitis",
+          "after_item": "ai03",
+          "snapshot": "Advanced Inv",
+          "note": "MRI cord shows no intramedullary lesion"
+        }
+      ],
+      "keyTeachingPoints": [
+        "Acute, symmetrical, ascending flaccid weakness with AREFLEXIA, often 1–3 weeks after a gastrointestinal (Campylobacter) or respiratory infection, is Guillain–Barré syndrome until proven otherwise (Brighton criteria).",
+        "The danger is respiratory failure and autonomic instability. Monitor FVC serially using the 20/30/40 rule (FVC <20 mL/kg, NIF less negative than −30 cmH₂O, MEP <40 cmH₂O → ICU); oxygen desaturation is a LATE sign, so do not wait for it. Use continuous cardiac monitoring for autonomic arrhythmias.",
+        "CSF shows albuminocytological dissociation (raised protein, normal cell count), but the protein rises over 1–2 weeks and may be NORMAL in the first few days — a normal early lumbar puncture does not exclude GBS.",
+        "Nerve conduction studies confirm the diagnosis and subtype it (demyelinating AIDP versus axonal AMAN).",
+        "A discrete sensory level, early prominent sphincter dysfunction or significant back pain points to spinal cord compression or transverse myelitis — image the cord (MRI) urgently if any of these appears.",
+        "Exclude reversible mimics: check potassium for hypokalaemic periodic paralysis, and remember botulism — which causes a DESCENDING paralysis with pupillary and autonomic involvement, the opposite direction.",
+        "Preserved reflexes argue against GBS; fatigable weakness with normal reflexes suggests myasthenia gravis instead.",
+        "Anti-GQ1b antibodies are associated with the Miller-Fisher variant (ophthalmoplegia, ataxia, areflexia)."
+      ],
+      "approachTitle": "An Approach to Acute Generalised Weakness",
+      "approachSub": "Localise the lesion — nerve, cord, junction or muscle — then secure the airway",
+      "approachText": "Acute generalised weakness is localised by its company: areflexia and an ascending pattern point to the peripheral nerve (GBS); a sensory level and brisk reflexes to the cord; fatigability to the neuromuscular junction; and episodic, potassium-linked attacks to muscle. Whatever the cause, the airway and autonomic status come first.",
+      "approachCats": [
+        {
+          "name": "Peripheral nerve / root ← THIS CASE",
+          "eg": "Guillain–Barré syndrome, CIDP",
+          "hl": true
+        },
+        {
+          "name": "Spinal cord",
+          "eg": "Cord compression, transverse myelitis",
+          "hl": false
+        },
+        {
+          "name": "Neuromuscular junction",
+          "eg": "Myasthenia gravis, botulism",
+          "hl": false
+        },
+        {
+          "name": "Muscle / metabolic",
+          "eg": "Hypokalaemic periodic paralysis",
+          "hl": false
+        },
+        {
+          "name": "Brain / upper motor neuron",
+          "eg": "Stroke, central lesions",
+          "hl": false
+        },
+        {
+          "name": "Functional",
+          "eg": "Functional weakness (inconsistency, positive signs)",
+          "hl": false
+        }
+      ],
+      "approachInsight": "Two things must happen at once in ascending weakness: localise, and protect the airway. Localisation turns on a few cheap findings — areflexia and a symmetric ascending pattern place the lesion in the peripheral nerve and make GBS the front-runner, while a discrete sensory level, brisk reflexes or early sphincter loss would redirect urgently to the cord. The reversible mimics are actively excluded (potassium for periodic paralysis; the descending pattern and pupils for botulism). But the examination that cannot wait is respiratory: the single-breath count and serial FVC are tracked from the outset because neuromuscular respiratory failure arrives before the oxygen saturation falls, and autonomic instability can kill through arrhythmia. CSF and nerve conduction studies confirm GBS, and an MRI of the cord is the safety net that retires the surgical mimic before the label is applied.",
+      "expertNarrative": "Hearing 'ascending weakness over days after a diarrhoeal illness', the clinician is on GBS at once — but the examination is run to confirm the localisation and, above all, to gauge the airway. Areflexia and the absence of a sensory level place the lesion in the peripheral nerves and steer firmly away from a cord lesion; normal pupils and an ascending direction argue against botulism; a normal potassium retires periodic paralysis. In parallel — not afterwards — the respiratory reserve is measured with a single-breath count and serial FVC, and the patient is put on a cardiac monitor for autonomic instability, because both can deteriorate faster than the saturation reading suggests. Only then does the work-up move to confirmation: a lumbar puncture for albuminocytological dissociation (accepting it may be normal in the first week), nerve conduction studies to prove and subtype the demyelination, and an MRI of the spine to make certain no compressive lesion has been missed.",
+      "sensitivityNote": "CSF albuminocytological dissociation is time-dependent — protein is raised in roughly half of patients in the first days but the large majority by two weeks, so a normal early lumbar puncture does not exclude GBS. Nerve conduction studies are highly sensitive for the neuropathy but may be subtle very early. Serial FVC is the most sensitive practical marker of impending respiratory failure — far more so than oxygen saturation.",
+      "specificityNote": "Areflexia with an ascending, symmetric flaccid weakness after an antecedent infection is highly suggestive of GBS, and albuminocytological dissociation with a demyelinating NCS pattern is specific in the right context. A discrete sensory level is specific for a cord lesion, a normal potassium specifically excludes hypokalaemic periodic paralysis, and dilated unreactive pupils with descending weakness would specifically suggest botulism.",
+      "linkedPairs": []
+    },
+    {
+      "id": "case_009",
+      "title": "New Temple Headache in an Older Woman",
+      "approach": "An Approach to Headache",
+      "secondaryApproach": "An Approach to New Headache in the Older Patient",
+      "system": "Neurology",
+      "difficulty": "moderate",
+      "patient": "Mdm Wong Lai Heng, 72F, Retired Teacher",
+      "snomedCode": "195353004",
+      "demographics": {
+        "name": "Wong Lai Heng",
+        "age": "72",
+        "sex": "F",
+        "occupation": "Retired Teacher",
+        "mrn": "195353"
+      },
+      "vitals": {
+        "hr": {
+          "value": "80",
+          "unit": "bpm",
+          "abnormal": false
+        },
+        "bp": {
+          "value": "148/86",
+          "unit": "mmHg",
+          "abnormal": true
+        },
+        "spo2": {
+          "value": "98",
+          "unit": "%",
+          "abnormal": false
+        },
+        "rr": {
+          "value": "16",
+          "unit": "/min",
+          "abnormal": false
+        },
+        "temp": {
+          "value": "37.5",
+          "unit": "°C",
+          "abnormal": true
+        }
+      },
+      "allergies": "NKDA",
+      "background": [
+        "Hypertension",
+        "Recent shoulder & hip girdle stiffness",
+        "Non-smoker",
+        "No previous headache disorder"
+      ],
+      "pathway": {
+        "validation": {
+          "status": "draft",
+          "validatedBy": null,
+          "validatedAt": null,
+          "notes": "Awaiting rheumatology sign-off — emphasise treat-before-biopsy as a teaching point only."
+        },
+        "reasoning": {
+          "bi01": "ESR and CRP are the fast, decisive first-line tests — a markedly raised ESR/CRP in a new headache over 50 is the trigger to treat and to biopsy.",
+          "ai01": "Temporal artery biopsy is the confirmatory gold standard, withheld to this stage; it can stay positive for weeks after steroids, so it must NOT delay treatment.",
+          "temporal_arteritis_giant_cell_arteritis": "New temporal headache >50 with jaw claudication, scalp tenderness, visual symptoms, a tender pulseless temporal artery and raised ESR/CRP, confirmed on biopsy = giant cell arteritis. Treat immediately to save sight."
+        },
+        "reveal": {
+          "hint": "mask-diagnoses",
+          "debrief": "full"
+        }
+      },
+      "vignette": "Mdm Wong Lai Heng is a 72-year-old retired teacher who presents with a two-week history of a new headache over her right temple. She has never been troubled by headaches before.",
+      "caseMNMs": [
+        {
+          "name": "Temporal Arteritis (Giant Cell Arteritis)",
+          "tier": 1
+        },
+        {
+          "name": "Subarachnoid Haemorrhage (SAH)",
+          "tier": 1
+        },
+        {
+          "name": "Ischaemic Stroke",
+          "tier": 1
+        },
+        {
+          "name": "Brain Tumour (Space-Occupying Lesion)",
+          "tier": 2
+        }
+      ],
+      "expectedP1": [
+        "Tension Headache",
+        "Migraine",
+        "Trigeminal Neuralgia",
+        "Medication-Overuse Headache",
+        "Cervicogenic Headache",
+        "Acute Angle-Closure Glaucoma",
+        "Polymyalgia Rheumatica"
+      ],
+      "finalDx": "Temporal Arteritis (Giant Cell Arteritis)",
+      "finalUmbrella": "Temporal Arteritis (Giant Cell Arteritis)",
+      "diagnosisScore": {
+        "Temporal Arteritis (Giant Cell Arteritis)": 100,
+        "Giant Cell Arteritis": 100,
+        "Temporal Arteritis": 100,
+        "GCA": 100,
+        "Polymyalgia Rheumatica": 40,
+        "Acute Angle-Closure Glaucoma": 15,
+        "Tension Headache": 10,
+        "Migraine": 10,
+        "Medication-Overuse Headache": 10
+      },
+      "required": [
+        "pe02",
+        "bi01",
+        "ai01"
+      ],
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Headache — onset, character, location, progression",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "headache history",
+            "onset",
+            "character",
+            "location",
+            "temple",
+            "progression",
+            "new headache",
+            "when did it start",
+            "thunderclap",
+            "worst headache"
+          ],
+          "find": "A NEW headache, unlike anything before, localised over the right temple for two weeks. It is a continuous, boring ache that has worsened over days. It did NOT come on suddenly or reach maximum intensity within seconds.",
+          "exp": "A new headache in a patient over 50 is itself a red flag. The gradual (not thunderclap) onset argues against subarachnoid haemorrhage, while the temporal location and persistence raise giant cell arteritis."
+        },
+        {
+          "id": "h02",
+          "lbl": "Scalp tenderness",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "scalp tenderness",
+            "tender scalp",
+            "combing hair",
+            "brushing hair",
+            "pillow",
+            "scalp pain",
+            "touching head hurts"
+          ],
+          "find": "Her scalp is tender — it hurts to comb her hair and to rest the side of her head on the pillow.",
+          "exp": "Scalp tenderness over an inflamed superficial temporal artery is a characteristic feature of GCA."
+        },
+        {
+          "id": "h03",
+          "lbl": "Jaw claudication",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "jaw claudication",
+            "jaw pain on chewing",
+            "jaw tires",
+            "chewing",
+            "masseter",
+            "jaw ache eating",
+            "tongue claudication"
+          ],
+          "find": "Her jaw aches and tires when she chews, easing when she stops — she has started avoiding tougher foods.",
+          "exp": "Jaw claudication (masseter ischaemia) is the single most specific symptom of giant cell arteritis and substantially raises the probability of the diagnosis."
+        },
+        {
+          "id": "h04",
+          "lbl": "Visual symptoms",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "visual symptoms",
+            "amaurosis fugax",
+            "vision loss",
+            "blurred vision",
+            "double vision",
+            "diplopia",
+            "transient blindness",
+            "eye",
+            "sight"
+          ],
+          "find": "Twice this week her right eye briefly 'greyed out' for a few minutes before recovering (amaurosis fugax). No permanent visual loss yet.",
+          "exp": "Transient visual loss, diplopia or amaurosis fugax signal impending anterior ischaemic optic neuropathy — the sight-threatening, irreversible complication that makes GCA an emergency."
+        },
+        {
+          "id": "h05",
+          "lbl": "Proximal girdle stiffness (PMR features)",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "polymyalgia",
+            "pmr",
+            "shoulder stiffness",
+            "hip girdle",
+            "morning stiffness",
+            "proximal stiffness",
+            "aching shoulders"
+          ],
+          "find": "For a few weeks she has had aching and morning stiffness across both shoulders and hips, making it hard to rise from a chair.",
+          "exp": "Around 40–50% of GCA patients have associated polymyalgia rheumatica; proximal girdle pain and stiffness in the over-50s should prompt a search for GCA."
+        },
+        {
+          "id": "h06",
+          "lbl": "Constitutional symptoms",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "constitutional",
+            "fever",
+            "weight loss",
+            "malaise",
+            "appetite",
+            "night sweats",
+            "tired",
+            "systemic symptoms"
+          ],
+          "find": "Low-grade fevers, malaise, poor appetite and a few kilograms of weight loss over the past month.",
+          "exp": "Systemic inflammatory symptoms are common in GCA and support an active large-vessel vasculitis."
+        },
+        {
+          "id": "h07",
+          "lbl": "Thunderclap onset & focal neurological screen",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "thunderclap",
+            "sudden onset",
+            "worst headache of life",
+            "focal deficit",
+            "weakness",
+            "speech",
+            "neck stiffness",
+            "stroke screen",
+            "sah screen"
+          ],
+          "find": "The headache did NOT start suddenly or peak within seconds, and there is no limb weakness, speech disturbance or neck stiffness.",
+          "exp": "A thunderclap, maximal-at-onset headache would mandate exclusion of subarachnoid haemorrhage; a focal deficit would point to stroke or a space-occupying lesion. Their absence lowers those probabilities."
+        },
+        {
+          "id": "h08",
+          "lbl": "Analgesic use, neck triggers & facial pain pattern",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "analgesic overuse",
+            "painkillers",
+            "medication overuse",
+            "neck movement",
+            "cervicogenic",
+            "trigeminal",
+            "electric shock",
+            "face touch trigger",
+            "triptan"
+          ],
+          "find": "She is not overusing analgesics, the pain is not provoked by neck movement, and it is not the brief, electric-shock-like facial pain triggered by touch.",
+          "exp": "This screens out medication-overuse headache, cervicogenic headache and trigeminal neuralgia — common primary/secondary headaches with characteristic triggers absent here."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "General examination & vital signs",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "general examination",
+            "vitals",
+            "temperature",
+            "fever",
+            "blood pressure",
+            "observations",
+            "looks unwell"
+          ],
+          "find": "Low-grade temperature 37.5°C, blood pressure mildly elevated, and she looks generally unwell with malaise.",
+          "exp": "A low-grade fever and malaise fit systemic inflammation; markedly high BP with end-organ features would instead suggest a hypertensive cause.",
+          "lookingFor": "Low-grade fever / systemic upset (vasculitis); very high BP (hypertensive headache)."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Temporal artery palpation",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "temporal artery",
+            "palpate temporal artery",
+            "tender artery",
+            "thickened artery",
+            "pulseless",
+            "beaded artery",
+            "superficial temporal"
+          ],
+          "find": "The right superficial temporal artery is tender, thickened and beaded, with reduced pulsation compared with the left.",
+          "exp": "A tender, thickened, pulseless temporal artery is a classic and weighted feature of GCA and directs the work-up toward biopsy/ultrasound of that vessel.",
+          "lookingFor": "Tender, thickened, pulseless temporal artery — a hallmark of GCA."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Fundoscopy",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "fundoscopy",
+            "ophthalmoscopy",
+            "optic disc",
+            "disc swelling",
+            "aion",
+            "pale disc",
+            "retina"
+          ],
+          "find": "The right optic disc looks pale and swollen — consistent with early anterior ischaemic optic neuropathy (AION).",
+          "exp": "A pale, swollen disc indicates anterior ischaemic optic neuropathy from arteritic occlusion — a sight-threatening sign demanding immediate treatment.",
+          "imageUrl": "case009_fundus_aion.jpg",
+          "lookingFor": "Pale swollen optic disc (arteritic AION) — sight-threatening."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Visual acuity & fields",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "visual acuity",
+            "snellen",
+            "visual fields",
+            "rapd",
+            "relative afferent pupillary defect",
+            "colour vision",
+            "eye test"
+          ],
+          "find": "Mildly reduced acuity in the right eye with a borderline relative afferent pupillary defect (RAPD).",
+          "exp": "Documenting acuity, fields and an RAPD establishes a baseline and quantifies optic nerve involvement.",
+          "lookingFor": "Reduced acuity / RAPD → optic nerve ischaemia."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Proximal girdle examination",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "shoulder examination",
+            "girdle",
+            "proximal",
+            "abduction",
+            "pmr exam",
+            "hip girdle",
+            "stiffness exam"
+          ],
+          "find": "Tenderness and restricted active abduction at both shoulders from stiffness, but no true weakness.",
+          "exp": "Girdle stiffness without weakness fits associated polymyalgia rheumatica rather than a primary myopathy.",
+          "lookingFor": "Girdle stiffness without weakness (PMR association)."
+        },
+        {
+          "id": "pe06",
+          "lbl": "Focused neurological examination",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "neurological examination",
+            "focal deficit",
+            "cranial nerves",
+            "limb power",
+            "neck stiffness",
+            "meningism",
+            "neuro exam"
+          ],
+          "find": "No focal limb deficit, no neck stiffness or meningism, and cranial nerves intact apart from the visual findings.",
+          "exp": "The absence of a focal deficit or meningism argues against stroke, a space-occupying lesion and subarachnoid haemorrhage/meningitis.",
+          "lookingFor": "Focal deficit / meningism → stroke, SOL or SAH (absent here)."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "ESR + CRP",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "sigNeg": true,
+          "aliases": [
+            "esr",
+            "erythrocyte sedimentation rate",
+            "crp",
+            "c-reactive protein",
+            "inflammatory markers",
+            "sed rate"
+          ],
+          "find": "ESR markedly raised at 92 mm/hr and CRP 110 mg/L — both strongly elevated.",
+          "exp": "A markedly raised ESR (often >50 mm/hr) with a high CRP is a weighted item in the 2022 ACR/EULAR GCA criteria. A normal ESR AND CRP makes GCA unlikely, but check both — a minority have a normal ESR with a raised CRP."
+        },
+        {
+          "id": "bi02",
+          "lbl": "Full Blood Count",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "fbc",
+            "full blood count",
+            "anaemia",
+            "platelets",
+            "thrombocytosis",
+            "haemoglobin"
+          ],
+          "find": "Normocytic anaemia with a reactive thrombocytosis (raised platelets).",
+          "exp": "Normocytic anaemia of chronic disease and thrombocytosis are supportive laboratory features of active GCA."
+        },
+        {
+          "id": "bi03",
+          "lbl": "Liver Panel",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "liver panel",
+            "lft",
+            "alp",
+            "alkaline phosphatase",
+            "liver function"
+          ],
+          "find": "Mildly raised alkaline phosphatase (ALP); other liver enzymes normal.",
+          "exp": "A raised ALP is a recognised, if non-specific, accompaniment of GCA."
+        },
+        {
+          "id": "bi04",
+          "lbl": "Renal Panel + Glucose",
+          "cost": "low",
+          "rel": false,
+          "aliases": [
+            "renal panel",
+            "u&e",
+            "glucose",
+            "electrolytes",
+            "baseline bloods"
+          ],
+          "find": "Renal function and glucose normal.",
+          "exp": "A pre-treatment baseline (relevant before high-dose corticosteroids), though not diagnostic."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "Temporal Artery Biopsy",
+          "cost": "high",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "temporal artery biopsy",
+            "tab",
+            "biopsy",
+            "histology",
+            "granuloma",
+            "giant cells",
+            "skip lesions"
+          ],
+          "find": "Granulomatous transmural inflammation with multinucleated giant cells and intimal thickening; skip lesions noted — diagnostic of giant cell arteritis.",
+          "exp": "Temporal artery biopsy is the gold standard. Because of skip lesions an adequate length is needed, and it can remain positive for ~2–6 weeks after starting steroids — so corticosteroids must NOT be delayed for the biopsy (a management point only).",
+          "imageUrl": "case009_tab_histology.jpg"
+        },
+        {
+          "id": "ai02",
+          "lbl": "Temporal / Axillary Artery Ultrasound",
+          "cost": "mid",
+          "rel": true,
+          "aliases": [
+            "ultrasound",
+            "temporal artery ultrasound",
+            "halo sign",
+            "doppler temporal",
+            "compression sign",
+            "vascular ultrasound"
+          ],
+          "find": "A hypoechoic circumferential wall thickening — the 'halo sign' — around the temporal artery, with a positive compression sign.",
+          "exp": "The halo sign on temporal/axillary artery ultrasound is a fast, non-invasive adjunct now incorporated into the 2022 ACR/EULAR criteria and can support the diagnosis when biopsy is delayed or negative.",
+          "imageUrl": "case009_temporal_us_halo.jpg"
+        },
+        {
+          "id": "ai03",
+          "lbl": "CT Brain (non-contrast)",
+          "cost": "mid",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "ct brain",
+            "ct head",
+            "non-contrast ct",
+            "exclude sah",
+            "exclude bleed",
+            "exclude mass"
+          ],
+          "find": "No subarachnoid blood, no intracranial haemorrhage and no mass lesion.",
+          "exp": "CT excludes the dangerous structural mimics (subarachnoid haemorrhage, a space-occupying lesion); it is normal in GCA and does not itself confirm the diagnosis."
+        },
+        {
+          "id": "ai04",
+          "lbl": "Lumbar Puncture",
+          "cost": "mid",
+          "rel": false,
+          "penalize": true,
+          "aliases": [
+            "lumbar puncture",
+            "lp",
+            "csf",
+            "spinal tap"
+          ],
+          "find": "Not indicated here. CSF would be normal and the procedure adds nothing in this non-thunderclap presentation.",
+          "exp": "Lumbar puncture belongs to the subarachnoid-haemorrhage pathway (a thunderclap headache with a negative CT). Ordering it here adds no information and risks delaying sight-saving steroid treatment."
+        }
+      ],
+      "sigNegs": [
+        {
+          "id": "h07",
+          "label": "Not thunderclap and no focal deficit → subarachnoid haemorrhage / stroke less likely",
+          "pts": 10
+        },
+        {
+          "id": "pe06",
+          "label": "No focal neurological deficit or meningism → stroke, space-occupying lesion and SAH less likely",
+          "pts": 8
+        },
+        {
+          "id": "ai03",
+          "label": "CT brain shows no blood and no mass → SAH and space-occupying lesion excluded on imaging",
+          "pts": 8
+        },
+        {
+          "id": "h08",
+          "label": "No analgesic overuse, no neck trigger, no shock-like facial pain → medication-overuse / cervicogenic / trigeminal unlikely",
+          "pts": 6
+        }
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Temporal Arteritis (Giant Cell Arteritis)",
+          "status": "ruled-in",
+          "statusLbl": "Confirmed",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "New temporal headache >50 with jaw claudication, scalp tenderness, transient visual loss and PMR-type girdle stiffness"
+            },
+            {
+              "type": "ex",
+              "text": "Tender, thickened, pulseless right temporal artery; pale swollen optic disc (AION) on fundoscopy"
+            },
+            {
+              "type": "inv",
+              "text": "ESR 92 / CRP 110; ultrasound 'halo sign'; biopsy shows granulomatous inflammation with giant cells"
+            }
+          ]
+        },
+        {
+          "mnm": "Subarachnoid Haemorrhage (SAH)",
+          "status": "ruled-out",
+          "statusLbl": "Excluded",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Headache was gradual over two weeks, NOT thunderclap (maximal within seconds)"
+            },
+            {
+              "type": "inv",
+              "text": "CT brain shows no subarachnoid blood"
+            }
+          ]
+        },
+        {
+          "mnm": "Ischaemic Stroke",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No sudden focal neurological symptoms"
+            },
+            {
+              "type": "ex",
+              "text": "No focal limb or speech deficit"
+            },
+            {
+              "type": "inv",
+              "text": "CT brain shows no infarct"
+            }
+          ]
+        },
+        {
+          "mnm": "Brain Tumour (Space-Occupying Lesion)",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No progressive focal deficit, early-morning vomiting or seizures"
+            },
+            {
+              "type": "inv",
+              "text": "CT brain shows no mass lesion or midline shift"
+            }
+          ]
+        }
+      ],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Subarachnoid Haemorrhage (SAH)",
+          "after_item": "h07",
+          "snapshot": "History",
+          "note": "Gradual onset over weeks, not a thunderclap — SAH much less likely"
+        },
+        {
+          "mnm": "Ischaemic Stroke",
+          "after_item": "pe06",
+          "snapshot": "Examination",
+          "note": "No focal neurological deficit"
+        },
+        {
+          "mnm": "Brain Tumour (Space-Occupying Lesion)",
+          "after_item": "ai03",
+          "snapshot": "Advanced Inv",
+          "note": "CT brain shows no mass lesion"
+        }
+      ],
+      "keyTeachingPoints": [
+        "A NEW headache in a patient over 50 with a raised ESR/CRP is giant cell arteritis until excluded. The 2022 ACR/EULAR classification criteria (age ≥50 mandatory, a weighted score ≥6 from clinical, laboratory and imaging items, applied once a vasculitis is confirmed) reflect current practice.",
+        "Jaw claudication is the most specific symptom, and visual symptoms (amaurosis fugax, diplopia, visual loss) are the highest-stakes — arteritic anterior ischaemic optic neuropathy causes IRREVERSIBLE blindness.",
+        "Start high-dose corticosteroids IMMEDIATELY when GCA is suspected (IV methylprednisolone if there are visual symptoms) — BEFORE the biopsy — to prevent blindness. (Management is noted here as a teaching point only; Dx/ does not simulate management.)",
+        "Temporal artery biopsy (granulomatous inflammation, giant cells, skip lesions) is the gold standard but can remain positive for ~2–6 weeks after steroids are started, so treatment should not be delayed for it.",
+        "Temporal/axillary artery ultrasound showing the 'halo sign' is a fast, non-invasive adjunct now incorporated into the 2022 criteria.",
+        "About 40–50% of GCA patients have associated polymyalgia rheumatica (proximal girdle pain and stiffness).",
+        "A normal ESR AND CRP makes GCA unlikely — but check both, as a minority have a normal ESR with a raised CRP.",
+        "A thunderclap (maximal-at-onset) headache mandates exclusion of subarachnoid haemorrhage (CT ± LP); a focal deficit prompts imaging for stroke or a space-occupying lesion."
+      ],
+      "approachTitle": "An Approach to Headache in the Older Patient",
+      "approachSub": "Treat new headache over 50 as dangerous until the can't-miss causes are excluded",
+      "approachText": "A new headache after 50 is never dismissed as primary until the dangerous secondary causes are excluded. The sieve runs through vasculitis (GCA), bleeding (SAH), clot (stroke/TIA), raised pressure/mass and the eye (angle-closure), with primary headaches a diagnosis of exclusion.",
+      "approachCats": [
+        {
+          "name": "Vasculitic ← THIS CASE",
+          "eg": "Giant cell arteritis (temporal arteritis)",
+          "hl": true
+        },
+        {
+          "name": "Vascular — bleeding",
+          "eg": "Subarachnoid haemorrhage",
+          "hl": false
+        },
+        {
+          "name": "Vascular — clot",
+          "eg": "Ischaemic stroke, TIA",
+          "hl": false
+        },
+        {
+          "name": "Raised pressure / mass",
+          "eg": "Space-occupying lesion, raised ICP",
+          "hl": false
+        },
+        {
+          "name": "Ophthalmological",
+          "eg": "Acute angle-closure glaucoma",
+          "hl": false
+        },
+        {
+          "name": "Primary / secondary (exclusion)",
+          "eg": "Tension, migraine, medication-overuse, cervicogenic, trigeminal neuralgia",
+          "hl": false
+        }
+      ],
+      "approachInsight": "The whole game in this presentation is time-to-steroids. Giant cell arteritis announces itself through a cluster of features — new temporal headache, scalp tenderness, jaw claudication, girdle stiffness and, most ominously, transient visual loss — and the examination adds a tender, pulseless temporal artery and, if you look, a pale swollen disc. ESR and CRP are the fast confirmatory pivot, and the temporal artery biopsy (or an ultrasound halo sign) seals it. But the teaching point that outranks all others is that you do NOT wait for the biopsy: once GCA is suspected, high-dose steroids are started immediately to save sight, and the biopsy — which stays positive for weeks — is done afterwards. The parallel discipline is to keep the other dangerous causes live until excluded: a thunderclap onset would force a SAH work-up, a focal deficit would force imaging for stroke or a mass.",
+      "expertNarrative": "Confronted with a new headache in a 72-year-old, the clinician's first instinct is GCA, and the consultation is built around proving it fast enough to save vision. The history deliberately seeks the high-yield features — jaw claudication (the most specific), amaurosis fugax (the most dangerous), scalp tenderness and PMR-type stiffness — while screening out the thunderclap and focal-deficit stories that would redirect to SAH or stroke. The examination palpates the temporal artery and inspects the optic disc, and ESR/CRP are sent immediately. The crucial move, taught but not simulated here, is to start high-dose corticosteroids the moment GCA is suspected rather than waiting for histology, because the biopsy stays positive for weeks but the optic nerve does not wait. Ultrasound (halo sign) and biopsy then confirm, and CT excludes the structural mimics. The skill rewarded is recognising a sight-threatening emergency from a cluster of ordinary-sounding symptoms and not letting confirmatory testing delay treatment.",
+      "sensitivityNote": "ESR and CRP together are highly sensitive — a normal ESR AND CRP makes GCA unlikely — but neither is specific. Temporal artery biopsy is specific but can miss disease through skip lesions (sampling error), so a negative biopsy does not exclude GCA when the clinical picture and ultrasound are supportive.",
+      "specificityNote": "Jaw claudication and a tender, pulseless temporal artery are relatively specific clinical features, and biopsy-proven granulomatous arteritis is definitive. The ultrasound halo sign is a specific imaging adjunct. Raised inflammatory markers alone are non-specific and must be interpreted within the weighted 2022 criteria and the clinical context.",
+      "linkedPairs": []
+    },
+    {
+      "id": "case_010",
+      "title": "Palpitations & Feeling on Edge",
+      "approach": "An Approach to Palpitations",
+      "secondaryApproach": "An Approach to Weight Loss",
+      "system": "Endocrine / Metabolic",
+      "difficulty": "challenging",
+      "patient": "Ms Priya Devi, 32F, Bank Officer",
+      "snomedCode": "353295004",
+      "demographics": {
+        "name": "Priya Devi",
+        "age": "32",
+        "sex": "F",
+        "occupation": "Bank Officer",
+        "mrn": "353295"
+      },
+      "vitals": {
+        "hr": {
+          "value": "112",
+          "unit": "bpm",
+          "abnormal": true
+        },
+        "bp": {
+          "value": "142/64",
+          "unit": "mmHg",
+          "abnormal": true
+        },
+        "spo2": {
+          "value": "99",
+          "unit": "%",
+          "abnormal": false
+        },
+        "rr": {
+          "value": "18",
+          "unit": "/min",
+          "abnormal": false
+        },
+        "temp": {
+          "value": "37.2",
+          "unit": "°C",
+          "abnormal": false
+        }
+      },
+      "allergies": "NKDA",
+      "background": [
+        "No regular medications",
+        "Sister has Graves' disease",
+        "Non-smoker",
+        "Two cups of coffee a day"
+      ],
+      "pathway": {
+        "validation": {
+          "status": "draft",
+          "validatedBy": null,
+          "validatedAt": null,
+          "notes": "Awaiting endocrinology sign-off on the uptake-scan/TRAb sequence."
+        },
+        "reasoning": {
+          "bi01": "A 12-lead ECG is the immediate can't-miss screen — it separates sinus tachycardia from VT, AF and ischaemia before anything else.",
+          "bi02": "Thyroid function (suppressed TSH, high free T4/T3) confirms thyrotoxicosis — but only establishes that it IS the thyroid, not the cause.",
+          "ai01": "TRAb and the uptake scan are withheld to this stage as the cause-defining discriminators: they separate Graves' from toxic nodules and from thyroiditis.",
+          "graves_disease": "Thyrotoxicosis with a diffuse goitre + bruit, eye signs, pretibial myxoedema, positive TRAb and diffusely increased uptake = Graves' disease."
+        },
+        "reveal": {
+          "hint": "mask-diagnoses",
+          "debrief": "full"
+        }
+      },
+      "vignette": "Ms Priya Devi is a 32-year-old bank officer who presents with several weeks of intermittent palpitations — a racing, pounding awareness of her own heartbeat — which have become more frequent over the last week.",
+      "caseMNMs": [
+        {
+          "name": "Ventricular Tachycardia",
+          "tier": 1
+        },
+        {
+          "name": "Myocardial Infarction",
+          "tier": 1
+        },
+        {
+          "name": "Thyroid Storm",
+          "tier": 2
+        },
+        {
+          "name": "Phaeochromocytoma",
+          "tier": 2
+        },
+        {
+          "name": "Atrial Fibrillation",
+          "tier": 2
+        }
+      ],
+      "expectedP1": [
+        "Hyperthyroidism / Thyrotoxicosis",
+        "Supraventricular Tachycardia (SVT)",
+        "Sinus Tachycardia",
+        "Panic Disorder / Acute Anxiety",
+        "Severe Anaemia",
+        "Hypoglycaemia"
+      ],
+      "finalDx": "Graves' Disease",
+      "finalUmbrella": "Hyperthyroidism / Thyrotoxicosis",
+      "diagnosisScore": {
+        "Graves' Disease": 100,
+        "Graves Disease": 100,
+        "Hyperthyroidism / Thyrotoxicosis": 85,
+        "Hyperthyroidism": 85,
+        "Thyrotoxicosis": 85,
+        "Toxic Multinodular Goitre": 55,
+        "Toxic Adenoma": 50,
+        "Thyroiditis (thyrotoxic phase)": 40,
+        "Atrial Fibrillation": 20,
+        "Supraventricular Tachycardia (SVT)": 15,
+        "Sinus Tachycardia": 15,
+        "Panic Disorder / Acute Anxiety": 10
+      },
+      "required": [
+        "pe01",
+        "bi02",
+        "ai01"
+      ],
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Palpitations — rhythm, onset, duration",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "palpitations",
+            "racing heart",
+            "pounding",
+            "regular or irregular",
+            "fast heartbeat",
+            "paroxysmal",
+            "heart racing",
+            "awareness of heartbeat"
+          ],
+          "find": "A fast, regular, pounding sensation rather than an obviously irregular one. Episodes are increasingly frequent and now sometimes sustained, with awareness of a forceful heartbeat.",
+          "exp": "Characterising the rhythm matters: a regular tachycardia suggests sinus tachycardia or SVT, whereas an irregularly irregular one suggests atrial fibrillation. Paroxysmal-then-sustained palpitations raise the index of suspicion."
+        },
+        {
+          "id": "h02",
+          "lbl": "Weight & appetite",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "weight loss",
+            "appetite",
+            "losing weight",
+            "eating more",
+            "weight despite appetite",
+            "hungry"
+          ],
+          "find": "She has lost about 4 kg over a few weeks DESPITE a good — if not increased — appetite.",
+          "exp": "Weight loss in the face of a preserved or increased appetite is a hallmark of a hypermetabolic thyrotoxic state."
+        },
+        {
+          "id": "h03",
+          "lbl": "Heat intolerance & sweating",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "heat intolerance",
+            "sweating",
+            "feeling hot",
+            "prefers cold",
+            "sweaty",
+            "hot all the time"
+          ],
+          "find": "She feels hot all the time, has sweaty palms and now keeps the air-conditioning on at home.",
+          "exp": "Heat intolerance and sweating reflect the raised metabolic rate of thyrotoxicosis."
+        },
+        {
+          "id": "h04",
+          "lbl": "Tremor, anxiety & irritability",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "tremor",
+            "anxiety",
+            "irritable",
+            "on edge",
+            "nervous",
+            "shaky hands",
+            "concentration",
+            "restless"
+          ],
+          "find": "A fine hand tremor, feeling constantly 'on edge' and irritable, with poor concentration at work.",
+          "exp": "Adrenergic features overlap with an anxiety/panic disorder — which is exactly why the somatic clues (weight loss, goitre, eye signs) must be sought to separate them."
+        },
+        {
+          "id": "h05",
+          "lbl": "Bowel frequency & menstrual history",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "bowel frequency",
+            "loose stools",
+            "diarrhoea",
+            "periods",
+            "menstrual",
+            "oligomenorrhoea",
+            "light periods"
+          ],
+          "find": "More frequent bowel movements and lighter, less frequent periods (oligomenorrhoea).",
+          "exp": "Increased gut motility and menstrual disturbance are common systemic effects of thyrotoxicosis."
+        },
+        {
+          "id": "h06",
+          "lbl": "Eye symptoms",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "eyes",
+            "gritty eyes",
+            "bulging eyes",
+            "prominent eyes",
+            "double vision",
+            "eye discomfort",
+            "staring"
+          ],
+          "find": "Her eyes feel gritty and look more prominent, with occasional double vision.",
+          "exp": "Gritty, prominent eyes and diplopia point specifically to Graves' orbitopathy, which is unique to Graves' among the causes of thyrotoxicosis."
+        },
+        {
+          "id": "h07",
+          "lbl": "Neck swelling & family history",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "neck swelling",
+            "goitre",
+            "lump in neck",
+            "family history",
+            "thyroid family history",
+            "sister thyroid"
+          ],
+          "find": "She has noticed a fullness in the front of her neck. Her sister has Graves' disease.",
+          "exp": "A goitre plus a family history of autoimmune thyroid disease strongly supports an autoimmune (Graves') cause."
+        },
+        {
+          "id": "h08",
+          "lbl": "Caffeine/stimulants, drugs & recent viral illness",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "caffeine",
+            "coffee",
+            "stimulants",
+            "salbutamol",
+            "decongestant",
+            "drugs",
+            "viral illness",
+            "painful neck",
+            "sore throat",
+            "thyroiditis"
+          ],
+          "find": "Two coffees a day (long-standing, not increased), no salbutamol or decongestants, and NO recent viral illness or painful, tender neck.",
+          "exp": "Caffeine/stimulants are a tempting alternative explanation but are unchanged here. The absence of a recent viral prodrome with a painful neck argues against subacute (de Quervain's) thyroiditis, which shows LOW uptake and is managed differently."
+        },
+        {
+          "id": "h09",
+          "lbl": "Chest pain, syncope & cardiac family history",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "ice": true,
+          "aliases": [
+            "chest pain",
+            "exertional chest pain",
+            "syncope",
+            "blackout",
+            "collapse",
+            "family history sudden death",
+            "worried heart attack",
+            "ice"
+          ],
+          "find": "No exertional chest pain and no blackouts. No family history of sudden cardiac death. She is frightened she is having 'heart attacks' like her late father.",
+          "exp": "Screening for chest pain, syncope and a family history of sudden death addresses the cardiac can't-miss diagnoses (ACS, ventricular tachycardia). Eliciting her specific fear allows targeted reassurance once the cause is clear."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "Vital signs & pulse rhythm",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "sigNeg": true,
+          "aliases": [
+            "vital signs",
+            "pulse",
+            "heart rate",
+            "rhythm",
+            "regular",
+            "irregularly irregular",
+            "pulse pressure",
+            "tachycardia",
+            "blood pressure"
+          ],
+          "find": "Heart rate ~112 and REGULAR (not irregularly irregular), with a wide pulse pressure (142/64) and warm peripheries.",
+          "exp": "A regular pulse argues against atrial fibrillation and fits sinus tachycardia or SVT; a wide pulse pressure and warm peripheries reflect the hyperdynamic thyrotoxic circulation.",
+          "lookingFor": "Regular vs irregularly irregular pulse (AF); wide pulse pressure / warm peripheries (thyrotoxic)."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Hands — tremor, sweating, nails",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "hands",
+            "fine tremor",
+            "postural tremor",
+            "sweaty palms",
+            "onycholysis",
+            "thyroid acropachy",
+            "tremor exam"
+          ],
+          "find": "A fine postural tremor, warm sweaty palms and onycholysis. No thyroid acropachy.",
+          "exp": "Peripheral signs of thyrotoxicosis; acropachy, if present, would be specific to Graves'.",
+          "lookingFor": "Fine postural tremor, warm sweaty palms (thyrotoxic); acropachy (Graves)."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Thyroid examination (goitre ± bruit)",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "thyroid exam",
+            "goitre",
+            "neck lump",
+            "bruit",
+            "diffuse goitre",
+            "nodular goitre",
+            "palpate thyroid"
+          ],
+          "find": "A smoothly, diffusely enlarged thyroid with an audible bruit over it. No discrete dominant nodule.",
+          "exp": "A diffuse, vascular goitre with a bruit points to Graves' (hypervascularity); a nodular gland would suggest a toxic adenoma or toxic multinodular goitre instead.",
+          "lookingFor": "Diffuse goitre + bruit (Graves) vs nodular gland (toxic nodule/MNG)."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Eye signs",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "eye signs",
+            "exophthalmos",
+            "proptosis",
+            "lid lag",
+            "lid retraction",
+            "ophthalmoplegia",
+            "graves eye",
+            "staring eyes"
+          ],
+          "find": "Exophthalmos with lid retraction and lid lag, and mild restriction of upgaze (restrictive ophthalmoplegia).",
+          "exp": "Exophthalmos, lid lag and ophthalmoplegia are specific to Graves' disease and are not seen with the other causes of thyrotoxicosis.",
+          "lookingFor": "Exophthalmos / lid lag / ophthalmoplegia — specific to Graves."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Shins — pretibial myxoedema",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "pretibial myxoedema",
+            "shins",
+            "skin plaques",
+            "waxy plaques",
+            "legs skin",
+            "dermopathy"
+          ],
+          "find": "Raised, waxy, non-pitting plaques over both shins (pretibial myxoedema).",
+          "exp": "Pretibial myxoedema is a specific, though less common, dermatological sign of Graves' disease.",
+          "lookingFor": "Pretibial myxoedema — specific to Graves."
+        },
+        {
+          "id": "pe06",
+          "lbl": "Cardiovascular examination",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "cardiovascular exam",
+            "heart sounds",
+            "murmur",
+            "flow murmur",
+            "heart failure",
+            "jvp",
+            "oedema",
+            "auscultation"
+          ],
+          "find": "Hyperdynamic apex with loud heart sounds and a soft ejection flow murmur. No raised JVP, no basal crepitations, no peripheral oedema — no heart failure.",
+          "exp": "A hyperdynamic precordium fits thyrotoxicosis. The absence of heart failure and hyperpyrexia argues against decompensation into thyroid storm.",
+          "lookingFor": "Heart-failure or hyperpyrexia/delirium features → thyroid storm (absent here)."
+        },
+        {
+          "id": "pe07",
+          "lbl": "Reflexes",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "reflexes",
+            "brisk reflexes",
+            "relaxation phase",
+            "deep tendon reflexes",
+            "hyperreflexia"
+          ],
+          "find": "Briskly brisk reflexes with a quick relaxation phase.",
+          "exp": "Brisk reflexes with rapid relaxation are typical of thyrotoxicosis (the opposite of the slow-relaxing reflexes of hypothyroidism)."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "12-lead ECG",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "ecg",
+            "ekg",
+            "12 lead",
+            "electrocardiogram",
+            "rhythm strip",
+            "heart tracing"
+          ],
+          "find": "Sinus tachycardia at ~110, regular, with no ischaemic ST/T changes, no broad-complex tachycardia and no atrial fibrillation.",
+          "exp": "The ECG is the immediate triage for palpitations: it distinguishes sinus tachycardia from SVT, atrial fibrillation and ventricular tachycardia, and screens for ischaemia.",
+          "imageUrl": "case010_ecg_sinus_tachy.jpg"
+        },
+        {
+          "id": "bi02",
+          "lbl": "Thyroid Function Test (TSH, free T4, free T3)",
+          "cost": "low",
+          "rel": true,
+          "required": true,
+          "sigNeg": true,
+          "aliases": [
+            "tft",
+            "thyroid function",
+            "tsh",
+            "free t4",
+            "free t3",
+            "ft4",
+            "ft3",
+            "thyroid blood test"
+          ],
+          "find": "TSH suppressed/undetectable with elevated free T4 and free T3 — confirming primary thyrotoxicosis.",
+          "exp": "A suppressed TSH with raised free T4/T3 confirms thyrotoxicosis (ATA 2016 thyrotoxicosis guideline). This is the diagnostic discriminator that it IS the thyroid; the cause is then established with TRAb and an uptake scan."
+        },
+        {
+          "id": "bi03",
+          "lbl": "Full Blood Count",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "fbc",
+            "full blood count",
+            "haemoglobin",
+            "anaemia",
+            "blood count"
+          ],
+          "find": "Haemoglobin normal — no anaemia.",
+          "exp": "A normal haemoglobin removes anaemia as a cause of the palpitations and tachycardia."
+        },
+        {
+          "id": "bi04",
+          "lbl": "Capillary & Serum Glucose",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "glucose",
+            "capillary glucose",
+            "blood sugar",
+            "hypoglycaemia",
+            "bm"
+          ],
+          "find": "Glucose normal.",
+          "exp": "Normal glucose excludes hypoglycaemia, another adrenergic mimic of palpitations."
+        },
+        {
+          "id": "bi05",
+          "lbl": "Renal Panel, Calcium & High-Sensitivity Troponin T",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "renal panel",
+            "electrolytes",
+            "calcium",
+            "troponin",
+            "hs troponin",
+            "cardiac enzymes"
+          ],
+          "find": "Electrolytes and calcium normal; high-sensitivity troponin normal.",
+          "exp": "A normal troponin with a non-ischaemic ECG de-escalates acute coronary syndrome; electrolytes/calcium are checked as arrhythmia contributors and pre-treatment baseline."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "TSH-Receptor Antibodies (TRAb)",
+          "cost": "mid",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "trab",
+            "tsh receptor antibody",
+            "thyroid stimulating antibody",
+            "tsi",
+            "graves antibody"
+          ],
+          "find": "TRAb POSITIVE — confirming Graves' disease as the cause of the thyrotoxicosis.",
+          "exp": "A positive TRAb is diagnostic of Graves' disease and is the cause-defining test. In the right clinical context it can confirm Graves' without a radioiodine uptake scan (ATA 2016)."
+        },
+        {
+          "id": "ai02",
+          "lbl": "Radioactive Iodine Uptake Scan (RAIU)",
+          "cost": "mid",
+          "rel": true,
+          "aliases": [
+            "raiu",
+            "radioactive iodine uptake",
+            "uptake scan",
+            "thyroid scintigraphy",
+            "nuclear thyroid scan",
+            "i-123"
+          ],
+          "find": "Diffusely INCREASED uptake across the whole gland — the pattern of Graves' disease.",
+          "exp": "The uptake pattern establishes the cause: diffuse high uptake = Graves'; one or more 'hot' nodules = toxic adenoma/multinodular goitre; LOW uptake = thyroiditis (a self-limiting thyrotoxic phase managed quite differently).",
+          "imageUrl": "case010_raiu_diffuse.jpg"
+        },
+        {
+          "id": "ai03",
+          "lbl": "Thyroid Ultrasound (with Doppler)",
+          "cost": "mid",
+          "rel": true,
+          "aliases": [
+            "thyroid ultrasound",
+            "thyroid us",
+            "doppler",
+            "thyroid inferno",
+            "gland vascularity",
+            "neck ultrasound"
+          ],
+          "find": "A diffusely enlarged, hypervascular gland ('thyroid inferno' on Doppler) without a discrete nodule.",
+          "exp": "Ultrasound supports a hypervascular Graves' gland and characterises any nodules; it complements rather than replaces TRAb/uptake."
+        },
+        {
+          "id": "ai04",
+          "lbl": "Plasma Free Metanephrines",
+          "cost": "mid",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "metanephrines",
+            "plasma metanephrines",
+            "urinary metanephrines",
+            "catecholamines",
+            "phaeochromocytoma screen",
+            "phaeo"
+          ],
+          "find": "Plasma free metanephrines normal — no biochemical evidence of a phaeochromocytoma.",
+          "exp": "Phaeochromocytoma is the catecholamine-secreting can't-miss mimic of an adrenergic crisis; normal metanephrines exclude it."
+        },
+        {
+          "id": "ai05",
+          "lbl": "CT Coronary Angiogram",
+          "cost": "high",
+          "rel": false,
+          "penalize": true,
+          "aliases": [
+            "ct coronary angiogram",
+            "ctca",
+            "coronary ct",
+            "cardiac ct"
+          ],
+          "find": "Normal coronary arteries — and not indicated in this presentation.",
+          "exp": "In a young woman with biochemically confirmed thyrotoxicosis driving a sinus tachycardia, CT coronary angiography is unnecessary radiation/contrast and reflects anchoring on a cardiac cause after the real cause is established."
+        }
+      ],
+      "sigNegs": [
+        {
+          "id": "pe01",
+          "label": "Regular pulse → atrial fibrillation less likely",
+          "pts": 8
+        },
+        {
+          "id": "bi05",
+          "label": "Normal troponin with a non-ischaemic ECG → acute coronary syndrome de-escalated",
+          "pts": 8
+        },
+        {
+          "id": "ai04",
+          "label": "Normal plasma metanephrines → phaeochromocytoma excluded",
+          "pts": 8
+        },
+        {
+          "id": "bi03",
+          "label": "Normal haemoglobin → anaemia excluded as a cause of palpitations",
+          "pts": 6
+        }
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Ventricular Tachycardia",
+          "status": "ruled-out",
+          "statusLbl": "Excluded",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No syncope or pre-syncope and no family history of sudden cardiac death"
+            },
+            {
+              "type": "inv",
+              "text": "ECG shows a regular narrow-complex sinus tachycardia, not a broad-complex tachycardia"
+            }
+          ]
+        },
+        {
+          "mnm": "Myocardial Infarction",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No exertional or rest chest pain"
+            },
+            {
+              "type": "inv",
+              "text": "ECG shows no ischaemic changes and high-sensitivity troponin is normal"
+            }
+          ]
+        },
+        {
+          "mnm": "Thyroid Storm",
+          "status": "ruled-out",
+          "statusLbl": "Not in storm",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "No hyperpyrexia, no delirium/agitation beyond mild anxiety, and no heart failure (a low Burch-Wartofsky score)"
+            },
+            {
+              "type": "inv",
+              "text": "Thyrotoxic biochemistry but without the decompensation that defines storm"
+            }
+          ]
+        },
+        {
+          "mnm": "Phaeochromocytoma",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No paroxysmal headache–palpitation–sweating crises with severe hypertension"
+            },
+            {
+              "type": "inv",
+              "text": "Plasma free metanephrines normal"
+            }
+          ]
+        },
+        {
+          "mnm": "Atrial Fibrillation",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "Pulse is regular, not irregularly irregular"
+            },
+            {
+              "type": "inv",
+              "text": "ECG shows sinus rhythm — though AF can be the presenting feature of thyrotoxicosis, so thyroid function is checked in all new AF"
+            }
+          ]
+        }
+      ],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Thyroid Storm",
+          "after_item": "pe06",
+          "snapshot": "Examination",
+          "note": "No hyperpyrexia, delirium or heart failure — thyrotoxic but not in storm"
+        },
+        {
+          "mnm": "Ventricular Tachycardia",
+          "after_item": "bi01",
+          "snapshot": "Basic Inv",
+          "note": "ECG shows a regular narrow-complex sinus tachycardia"
+        },
+        {
+          "mnm": "Atrial Fibrillation",
+          "after_item": "bi01",
+          "snapshot": "Basic Inv",
+          "note": "ECG shows sinus rhythm with a regular pulse"
+        },
+        {
+          "mnm": "Myocardial Infarction",
+          "after_item": "bi05",
+          "snapshot": "Basic Inv",
+          "note": "Non-ischaemic ECG and normal troponin"
+        },
+        {
+          "mnm": "Phaeochromocytoma",
+          "after_item": "ai04",
+          "snapshot": "Advanced Inv",
+          "note": "Normal plasma metanephrines"
+        }
+      ],
+      "keyTeachingPoints": [
+        "Palpitations need a 'can't-miss' pass first — ventricular tachycardia, acute coronary syndrome and atrial fibrillation with a rapid ventricular response — before settling on a benign or endocrine cause.",
+        "A suppressed TSH with elevated free T4/T3 confirms thyrotoxicosis (ATA 2016). The next step is to establish the CAUSE, not to stop at 'overactive thyroid'.",
+        "TSH-receptor antibodies (TRAb) and the radioiodine uptake pattern define the cause: positive TRAb with diffuse uptake = Graves'; one/more 'hot' nodules = toxic adenoma or toxic multinodular goitre; LOW uptake = thyroiditis (a self-limiting thyrotoxic phase managed differently).",
+        "Eye signs (exophthalmos, lid lag, ophthalmoplegia) and pretibial myxoedema are specific to Graves' disease.",
+        "Atrial fibrillation can be the presenting feature of thyrotoxicosis — always check thyroid function in new AF.",
+        "A regular pulse argues against atrial fibrillation; an irregularly irregular pulse with a confirmatory ECG establishes it.",
+        "Thyrotoxicosis and a panic/anxiety disorder share adrenergic features — weight loss with a good appetite, a goitre and eye signs are the clues that separate them, and stimulant/caffeine excess should also be considered.",
+        "Thyroid storm is the life-threatening extreme — hyperpyrexia, delirium, tachyarrhythmia and heart failure — recognised clinically (e.g. the Burch-Wartofsky score), not by a single test."
+      ],
+      "approachTitle": "An Approach to Palpitations",
+      "approachSub": "Clear the dangerous arrhythmias first, then work the systemic causes",
+      "approachText": "Palpitations are triaged by first excluding the dangerous cardiac causes (ventricular tachycardia, ACS, AF with rapid rate) with an ECG, then working through the systemic drivers — endocrine (thyrotoxicosis, phaeochromocytoma, hypoglycaemia), haematological (anaemia) and psychogenic (anxiety) — and finally stimulant/drug effects.",
+      "approachCats": [
+        {
+          "name": "Cardiac — arrhythmia",
+          "eg": "Ventricular tachycardia, SVT, atrial fibrillation",
+          "hl": false
+        },
+        {
+          "name": "Cardiac — ischaemic",
+          "eg": "Acute coronary syndrome",
+          "hl": false
+        },
+        {
+          "name": "Endocrine / metabolic ← THIS CASE",
+          "eg": "Thyrotoxicosis (Graves'), phaeochromocytoma, hypoglycaemia",
+          "hl": true
+        },
+        {
+          "name": "Haematological",
+          "eg": "Severe anaemia",
+          "hl": false
+        },
+        {
+          "name": "Psychogenic",
+          "eg": "Panic disorder / acute anxiety",
+          "hl": false
+        },
+        {
+          "name": "Drugs / stimulants",
+          "eg": "Caffeine, salbutamol, decongestants",
+          "hl": false
+        }
+      ],
+      "approachInsight": "The discipline in palpitations is to clear the dangerous arrhythmias before chasing the endocrine story, even when the endocrine story is loud. An ECG up front retires ventricular tachycardia and confirms whether the rhythm is sinus or atrial fibrillation, and a troponin de-escalates ACS. Only then is the rich thyrotoxic picture assembled — weight loss with a good appetite, heat intolerance, tremor, a diffuse goitre with a bruit, eye signs and pretibial myxoedema — and the key intellectual step is not stopping at 'thyrotoxic' but going on to prove the cause: TRAb and a diffuse uptake pattern nail Graves', distinguishing it from toxic nodules and from the low-uptake thyroiditis that is managed entirely differently. Anxiety, anaemia, hypoglycaemia, stimulant use and phaeochromocytoma are the adrenergic mimics held in mind and retired in turn.",
+      "expertNarrative": "A young woman with weeks of palpitations gets an ECG before anything else — not because thyrotoxicosis isn't obvious once you look, but because ventricular tachycardia and ACS do not forgive being deferred. With a regular sinus tachycardia and a normal troponin, the clinician then reads the thyrotoxic signature that the vignette deliberately withheld: the weight loss with preserved appetite, the heat intolerance and tremor, and on examination the diffuse vascular goitre, the exophthalmos and lid lag, the pretibial myxoedema. Thyroid function confirms thyrotoxicosis, but the expert does not stop there — TRAb and a radioiodine uptake scan are used to prove Graves' specifically, because the management of Graves', a toxic nodule and thyroiditis diverge. Throughout, the adrenergic mimics — anxiety, anaemia, hypoglycaemia, phaeochromocytoma, caffeine — are each actively excluded rather than assumed away.",
+      "sensitivityNote": "A suppressed TSH is the most sensitive single screen for thyrotoxicosis; free T4 and free T3 confirm and grade it. TRAb is sensitive for Graves' (the great majority are positive), and a radioiodine uptake scan reliably separates the high-uptake causes from low-uptake thyroiditis. The ECG is sensitive for the dangerous arrhythmias at the moment of recording but may miss paroxysmal events, which is why the rhythm history matters.",
+      "specificityNote": "Eye signs, pretibial myxoedema and a positive TRAb are highly specific for Graves' disease. A diffusely increased radioiodine uptake is specific for Graves' versus toxic nodules (focal uptake) and thyroiditis (low uptake). A regular pulse with sinus rhythm on ECG is specific against atrial fibrillation, and normal metanephrines specifically exclude phaeochromocytoma.",
+      "linkedPairs": []
+    },
+    {
+      "id": "case_011",
+      "title": "Evolving Arm Numbness & Weakness",
+      "approach": "An Approach to Limb Weakness / Sensory Disturbance",
+      "secondaryApproach": "An Approach to Subacute Neurological Deficit",
+      "system": "Neurology",
+      "difficulty": "challenging",
+      "patient": "Ms Rachel Lim, 29F, Graphic Designer",
+      "snomedCode": "24700007",
+      "demographics": {
+        "name": "Rachel Lim",
+        "age": "29",
+        "sex": "F",
+        "occupation": "Graphic Designer",
+        "mrn": "247000"
+      },
+      "vitals": {
+        "hr": {
+          "value": "76",
+          "unit": "bpm",
+          "abnormal": false
+        },
+        "bp": {
+          "value": "118/74",
+          "unit": "mmHg",
+          "abnormal": false
+        },
+        "spo2": {
+          "value": "99",
+          "unit": "%",
+          "abnormal": false
+        },
+        "rr": {
+          "value": "14",
+          "unit": "/min",
+          "abnormal": false
+        },
+        "temp": {
+          "value": "36.8",
+          "unit": "°C",
+          "abnormal": false
+        }
+      },
+      "allergies": "NKDA",
+      "background": [
+        "Previously well",
+        "Painful blurred vision in the right eye ~1 year ago (recovered, not investigated)",
+        "Non-smoker",
+        "No regular medications"
+      ],
+      "pathway": {
+        "validation": {
+          "status": "draft",
+          "validatedBy": null,
+          "validatedAt": null,
+          "notes": "Awaiting neurology sign-off — authored to the 2024 McDonald criteria; AQP4 to exclude NMOSD."
+        },
+        "reasoning": {
+          "h03": "The deliberate hunt for PRIOR events (optic neuritis, transient sensory/motor symptoms) is what converts a single attack into disseminated-in-time disease.",
+          "ai01": "MRI brain + whole spine is the discriminator withheld to this stage: it shows dissemination in space and (via simultaneous enhancing + non-enhancing lesions) in time.",
+          "ai02": "CSF oligoclonal bands / kappa free light chains support MS and, under the 2024 criteria, can substitute for dissemination in time.",
+          "multiple_sclerosis": "A subacute deficit in a young woman, prior optic neuritis, INO, MRI lesions disseminated in space + time, CSF-specific oligoclonal bands and a negative AQP4 = multiple sclerosis."
+        },
+        "reveal": {
+          "hint": "mask-diagnoses",
+          "debrief": "full"
+        }
+      },
+      "vignette": "Ms Rachel Lim is a 29-year-old graphic designer who presents with four days of numbness, and then weakness, spreading up her left arm. It has come on gradually rather than all at once.",
+      "caseMNMs": [
+        {
+          "name": "Spinal Cord Compression",
+          "tier": 1
+        },
+        {
+          "name": "Ischaemic Stroke",
+          "tier": 1
+        },
+        {
+          "name": "Cerebral Venous Sinus Thrombosis (CVST)",
+          "tier": 2
+        },
+        {
+          "name": "Transverse Myelitis",
+          "tier": 2
+        }
+      ],
+      "expectedP1": [
+        "Multiple Sclerosis",
+        "Clinically Isolated Syndrome",
+        "Subacute Combined Degeneration of the Cord (B12)",
+        "SLE (Systemic Lupus Erythematosus)",
+        "Functional Neurological Disorder"
+      ],
+      "finalDx": "Multiple Sclerosis",
+      "finalUmbrella": "Multiple Sclerosis",
+      "diagnosisScore": {
+        "Multiple Sclerosis": 100,
+        "MS": 100,
+        "Relapsing-Remitting Multiple Sclerosis": 100,
+        "Clinically Isolated Syndrome": 70,
+        "Transverse Myelitis": 35,
+        "Subacute Combined Degeneration of the Cord (B12)": 20,
+        "SLE (Systemic Lupus Erythematosus)": 10,
+        "Functional Neurological Disorder": 5
+      },
+      "required": [
+        "pe03",
+        "ai01",
+        "ai02"
+      ],
+      "history": [
+        {
+          "id": "h01",
+          "lbl": "Current deficit — onset, evolution, distribution",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "weakness",
+            "numbness",
+            "onset",
+            "evolution",
+            "distribution",
+            "arm",
+            "spreading",
+            "how it started",
+            "sensory disturbance"
+          ],
+          "find": "Numbness began in the left hand four days ago and has spread up the arm, with weakness following. There is a band of altered sensation; it has evolved over days rather than appearing instantly.",
+          "exp": "A deficit that EVOLVES over days fits an inflammatory/demyelinating process; the distribution and tempo are the first discriminators against a vascular event."
+        },
+        {
+          "id": "h02",
+          "lbl": "Speed of onset / time course",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "sudden",
+            "seconds",
+            "gradual",
+            "over days",
+            "time course",
+            "speed of onset",
+            "abrupt",
+            "stroke onset"
+          ],
+          "find": "It developed gradually over several days — nothing came on suddenly or was maximal within seconds.",
+          "exp": "Onset over seconds-to-minutes points to a vascular cause (stroke); a subacute course over days is far more typical of demyelination."
+        },
+        {
+          "id": "h03",
+          "lbl": "Prior neurological episodes (dissemination in time)",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "previous episodes",
+            "prior attack",
+            "optic neuritis",
+            "past symptoms",
+            "eye problem before",
+            "transient symptoms",
+            "dissemination in time",
+            "relapse"
+          ],
+          "find": "About a year ago she had painful loss of vision in the right eye that came on over days and then recovered (an untreated episode of optic neuritis). She also recalls a transient patch of leg numbness months ago.",
+          "exp": "Eliciting PRIOR self-limiting neurological events establishes dissemination in time — the conceptual core of MS. Past optic neuritis is a particularly strong clue."
+        },
+        {
+          "id": "h04",
+          "lbl": "Lhermitte's & Uhthoff's phenomena",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "lhermitte",
+            "electric shock neck",
+            "neck flexion",
+            "uhthoff",
+            "worse with heat",
+            "hot shower",
+            "worse with exercise",
+            "heat sensitivity"
+          ],
+          "find": "Bending her neck triggers an electric-shock sensation down her spine (Lhermitte's), and her symptoms worsen in hot showers and with exercise (Uhthoff's).",
+          "exp": "Lhermitte's phenomenon (posterior-column demyelination) and Uhthoff's phenomenon (heat-sensitive conduction block) are classic demyelinating features."
+        },
+        {
+          "id": "h05",
+          "lbl": "Bladder/bowel function & back pain (cord screen)",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "bladder",
+            "urinary urgency",
+            "retention",
+            "bowel",
+            "back pain",
+            "saddle anaesthesia",
+            "sphincter",
+            "cord compression screen"
+          ],
+          "find": "Mild urinary urgency only — no severe back pain, no bilateral leg weakness, no saddle anaesthesia and no retention.",
+          "exp": "Severe back pain with a sensory level and early sphincter loss would point to spinal cord compression — a surgical emergency to be excluded before attributing symptoms to MS."
+        },
+        {
+          "id": "h06",
+          "lbl": "Fatigue & connective-tissue symptoms",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "fatigue",
+            "tiredness",
+            "rash",
+            "joint pain",
+            "arthralgia",
+            "oral ulcers",
+            "photosensitivity",
+            "lupus",
+            "sle screen",
+            "raynaud"
+          ],
+          "find": "Significant fatigue, but no rash, joint pains, mouth ulcers or photosensitivity.",
+          "exp": "Fatigue is common in MS; the absence of multisystem features makes SLE/CNS vasculitis less likely, though it is still screened serologically."
+        },
+        {
+          "id": "h07",
+          "lbl": "Diet & B12-deficiency risk",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "diet",
+            "vegan",
+            "vegetarian",
+            "b12",
+            "pernicious anaemia",
+            "nutrition",
+            "glove and stocking",
+            "sacd"
+          ],
+          "find": "A normal mixed diet with no features of malabsorption, and no glove-and-stocking sensory pattern.",
+          "exp": "Subacute combined degeneration from B12 deficiency can mimic a myelopathy; dietary/risk screening and a B12 level address it."
+        },
+        {
+          "id": "h08",
+          "lbl": "Symptom consistency & ICE",
+          "cost": "free",
+          "rel": true,
+          "ice": true,
+          "aliases": [
+            "functional",
+            "inconsistency",
+            "variability",
+            "distractible",
+            "ideas concerns expectations",
+            "worried",
+            "brain tumour",
+            "what she thinks"
+          ],
+          "find": "The symptoms are consistent and reproducible, not variable or distractible. She is frightened she has a brain tumour.",
+          "exp": "Functional neurological disorder shows internal inconsistency and positive signs; consistent, anatomically coherent findings argue for organic disease. Naming her fear (a tumour) guides later explanation."
+        }
+      ],
+      "pe": [
+        {
+          "id": "pe01",
+          "lbl": "Visual / optic nerve assessment",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "visual",
+            "optic nerve",
+            "rapd",
+            "relative afferent pupillary defect",
+            "colour vision",
+            "red desaturation",
+            "scotoma",
+            "fundoscopy",
+            "optic atrophy"
+          ],
+          "find": "Right relative afferent pupillary defect (RAPD) with reduced red colour vision and a small central scotoma; the right optic disc is pale (optic atrophy from the previous attack).",
+          "exp": "An RAPD with colour desaturation indicates optic nerve involvement — and under the 2024 McDonald criteria the optic nerve counts as a fifth CNS location for dissemination in space.",
+          "lookingFor": "RAPD / colour desaturation / optic atrophy → optic nerve lesion (a CNS location)."
+        },
+        {
+          "id": "pe02",
+          "lbl": "Eye movements (internuclear ophthalmoplegia)",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "eye movements",
+            "ino",
+            "internuclear ophthalmoplegia",
+            "adduction",
+            "nystagmus",
+            "mlf",
+            "diplopia exam"
+          ],
+          "find": "Internuclear ophthalmoplegia — impaired adduction of the left eye with nystagmus of the abducting right eye on right gaze.",
+          "exp": "An INO from a medial longitudinal fasciculus lesion is highly suggestive of MS in a young adult and is itself evidence of a brainstem (infratentorial) lesion.",
+          "lookingFor": "Internuclear ophthalmoplegia — strongly suggests demyelination in a young person."
+        },
+        {
+          "id": "pe03",
+          "lbl": "Limb tone, power & reflexes (UMN signs)",
+          "cost": "free",
+          "rel": true,
+          "required": true,
+          "sigNeg": true,
+          "aliases": [
+            "tone",
+            "power",
+            "reflexes",
+            "umn",
+            "pyramidal",
+            "spasticity",
+            "hyperreflexia",
+            "upgoing plantar",
+            "babinski",
+            "weakness exam"
+          ],
+          "find": "Left arm pyramidal-pattern weakness with increased tone, hyperreflexia and an upgoing plantar. There is NO discrete sensory level across the trunk.",
+          "exp": "Upper-motor-neuron signs localise to the CNS. The absence of a clear truncal sensory level argues against a single compressive cord lesion and fits multifocal demyelination.",
+          "lookingFor": "UMN signs (CNS lesion); a discrete sensory level → cord compression (absent here)."
+        },
+        {
+          "id": "pe04",
+          "lbl": "Sensory examination & sensory level",
+          "cost": "free",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "sensory exam",
+            "sensory level",
+            "pinprick",
+            "proprioception",
+            "vibration",
+            "dorsal column",
+            "trunk level",
+            "dermatome"
+          ],
+          "find": "Patchy sensory loss in the left arm with reduced vibration/proprioception, but NO clear-cut sensory level on the trunk.",
+          "exp": "A discrete sensory level would mandate urgent cord imaging for compression or transverse myelitis; its absence supports a multifocal demyelinating process.",
+          "lookingFor": "A truncal sensory level → cord compression / transverse myelitis (absent here)."
+        },
+        {
+          "id": "pe05",
+          "lbl": "Cerebellar examination",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "cerebellar",
+            "dysmetria",
+            "intention tremor",
+            "finger nose",
+            "coordination",
+            "ataxia",
+            "dysdiadochokinesia"
+          ],
+          "find": "Mild left-sided dysmetria and an intention tremor on finger–nose testing.",
+          "exp": "Cerebellar signs add a further, separately-localising lesion — supporting dissemination in space across the CNS."
+        },
+        {
+          "id": "pe06",
+          "lbl": "General examination & vital signs",
+          "cost": "free",
+          "rel": true,
+          "aliases": [
+            "general examination",
+            "vitals",
+            "rash",
+            "joints",
+            "temperature",
+            "observations",
+            "skin",
+            "connective tissue"
+          ],
+          "find": "Afebrile and haemodynamically normal, with no rash or arthritis.",
+          "exp": "A normal systemic examination argues against an infective or florid connective-tissue process and sets a baseline."
+        }
+      ],
+      "basic": [
+        {
+          "id": "bi01",
+          "lbl": "Full Blood Count + Renal Panel",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "fbc",
+            "full blood count",
+            "renal panel",
+            "u&e",
+            "baseline bloods",
+            "electrolytes"
+          ],
+          "find": "Full blood count and renal panel normal.",
+          "exp": "Baseline bloods; a macrocytosis, for instance, might hint at B12 deficiency."
+        },
+        {
+          "id": "bi02",
+          "lbl": "Vitamin B12",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "b12",
+            "vitamin b12",
+            "cobalamin",
+            "sacd",
+            "b12 deficiency"
+          ],
+          "find": "Vitamin B12 normal.",
+          "exp": "A normal B12 makes subacute combined degeneration of the cord an unlikely explanation for the myelopathic signs."
+        },
+        {
+          "id": "bi03",
+          "lbl": "ESR/CRP + ANA",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "esr",
+            "crp",
+            "ana",
+            "antinuclear antibody",
+            "autoimmune screen",
+            "vasculitis screen",
+            "lupus screen",
+            "inflammatory markers"
+          ],
+          "find": "ESR and CRP normal; ANA negative.",
+          "exp": "Normal inflammatory markers and a negative ANA make SLE/CNS vasculitis less likely as a cause of multifocal CNS lesions."
+        },
+        {
+          "id": "bi04",
+          "lbl": "Thyroid Function Test + Glucose",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "tft",
+            "thyroid function",
+            "tsh",
+            "glucose",
+            "metabolic screen"
+          ],
+          "find": "Thyroid function and glucose normal.",
+          "exp": "Screens treatable metabolic contributors to neurological symptoms."
+        },
+        {
+          "id": "bi05",
+          "lbl": "Aquaporin-4 (AQP4) & MOG antibodies",
+          "cost": "mid",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "aqp4",
+            "aquaporin",
+            "nmo",
+            "neuromyelitis optica",
+            "mog",
+            "mog antibody",
+            "nmosd"
+          ],
+          "find": "AQP4 and MOG antibodies negative.",
+          "exp": "A negative AQP4 antibody excludes neuromyelitis optica spectrum disorder (NMOSD) — important because NMOSD is managed differently and can be WORSENED by some MS disease-modifying therapies."
+        }
+      ],
+      "advanced": [
+        {
+          "id": "ai01",
+          "lbl": "MRI Brain + Whole Spine (with gadolinium)",
+          "cost": "high",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "mri brain",
+            "mri spine",
+            "mri whole spine",
+            "gadolinium",
+            "contrast mri",
+            "demyelination",
+            "periventricular",
+            "enhancing lesions",
+            "dissemination"
+          ],
+          "find": "Multiple T2-hyperintense lesions — periventricular, juxtacortical, infratentorial and within the cervical cord. Some enhance with gadolinium and some do not, on the same study.",
+          "exp": "This demonstrates dissemination in SPACE across several CNS locations (the 2024 McDonald criteria recognise five, including the optic nerve), and simultaneous enhancing + non-enhancing lesions show dissemination in TIME on a single scan.",
+          "imageUrl": "case011_mri_brain_spine.jpg"
+        },
+        {
+          "id": "ai02",
+          "lbl": "Lumbar Puncture — CSF oligoclonal bands / kappa free light chains",
+          "cost": "mid",
+          "rel": true,
+          "required": true,
+          "aliases": [
+            "lumbar puncture",
+            "lp",
+            "csf",
+            "oligoclonal bands",
+            "ocb",
+            "kappa free light chains",
+            "kflc",
+            "spinal tap",
+            "intrathecal"
+          ],
+          "find": "CSF-restricted oligoclonal bands present (absent in paired serum), with raised kappa free light chains.",
+          "exp": "CSF-specific oligoclonal bands — or raised kappa free light chains, accepted in the 2024 revision — support MS and can substitute for dissemination in time."
+        },
+        {
+          "id": "ai03",
+          "lbl": "Visual Evoked Potentials (VEP)",
+          "cost": "mid",
+          "rel": true,
+          "aliases": [
+            "vep",
+            "visual evoked potentials",
+            "evoked potentials",
+            "p100",
+            "optic nerve conduction"
+          ],
+          "find": "Delayed P100 latency in the right eye — evidence of previous optic-nerve demyelination.",
+          "exp": "VEP can demonstrate clinically silent or prior optic-nerve involvement, contributing a further CNS location."
+        },
+        {
+          "id": "ai04",
+          "lbl": "CT Brain (non-contrast)",
+          "cost": "mid",
+          "rel": false,
+          "penalize": true,
+          "aliases": [
+            "ct brain",
+            "ct head",
+            "non-contrast ct",
+            "plain ct"
+          ],
+          "find": "Normal — but CT is insensitive for demyelinating plaques and cannot exclude MS.",
+          "exp": "CT is the wrong tool here: it misses demyelination and a normal scan offers false reassurance. MRI of the brain and spine is required."
+        }
+      ],
+      "sigNegs": [
+        {
+          "id": "h02",
+          "label": "Onset over days (not seconds) → ischaemic stroke less likely",
+          "pts": 10
+        },
+        {
+          "id": "pe04",
+          "label": "No discrete sensory level → spinal cord compression less likely",
+          "pts": 10
+        },
+        {
+          "id": "bi05",
+          "label": "AQP4/MOG antibodies negative → neuromyelitis optica spectrum disorder excluded",
+          "pts": 6
+        },
+        {
+          "id": "bi02",
+          "label": "Normal vitamin B12 → subacute combined degeneration excluded",
+          "pts": 6
+        }
+      ],
+      "mnmRuleOut": [
+        {
+          "mnm": "Spinal Cord Compression",
+          "status": "ruled-out",
+          "statusLbl": "Excluded on imaging",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No severe back pain, no bilateral leg weakness and no early sphincter retention"
+            },
+            {
+              "type": "ex",
+              "text": "No discrete truncal sensory level"
+            },
+            {
+              "type": "inv",
+              "text": "MRI whole spine shows no compressive lesion — only an intrinsic cord plaque"
+            }
+          ]
+        },
+        {
+          "mnm": "Ischaemic Stroke",
+          "status": "ruled-out",
+          "statusLbl": "Excluded",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "Deficit evolved over days, not seconds to minutes"
+            },
+            {
+              "type": "ex",
+              "text": "Multifocal CNS signs (INO, optic neuropathy, cerebellar) rather than a single vascular territory"
+            },
+            {
+              "type": "inv",
+              "text": "MRI shows multiple demyelinating lesions and no acute infarct"
+            }
+          ]
+        },
+        {
+          "mnm": "Cerebral Venous Sinus Thrombosis (CVST)",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "hx",
+              "text": "No progressive headache or features of raised intracranial pressure"
+            },
+            {
+              "type": "inv",
+              "text": "MRI/MR venography shows normal venous sinuses and no venous infarction"
+            }
+          ]
+        },
+        {
+          "mnm": "Transverse Myelitis",
+          "status": "ruled-out",
+          "statusLbl": "Ruled out",
+          "findings": [
+            {
+              "type": "ex",
+              "text": "No complete transverse cord syndrome with a sensory level"
+            },
+            {
+              "type": "inv",
+              "text": "MRI shows short-segment cord and multiple brain lesions (an MS pattern) rather than a longitudinally extensive lesion; AQP4 negative"
+            }
+          ]
+        }
+      ],
+      "mnmExpectedDemotion": [
+        {
+          "mnm": "Ischaemic Stroke",
+          "after_item": "h02",
+          "snapshot": "History",
+          "note": "Subacute onset over days argues against a vascular stroke"
+        },
+        {
+          "mnm": "Spinal Cord Compression",
+          "after_item": "pe04",
+          "snapshot": "Examination",
+          "note": "No discrete sensory level"
+        },
+        {
+          "mnm": "Transverse Myelitis",
+          "after_item": "ai01",
+          "snapshot": "Advanced Inv",
+          "note": "MRI shows a multifocal MS pattern rather than longitudinally extensive transverse myelitis"
+        },
+        {
+          "mnm": "Cerebral Venous Sinus Thrombosis (CVST)",
+          "after_item": "ai01",
+          "snapshot": "Advanced Inv",
+          "note": "MR venography shows patent sinuses with no venous infarct"
+        }
+      ],
+      "keyTeachingPoints": [
+        "Multiple sclerosis is CNS demyelination disseminated in space and time — when a young adult presents with a subacute deficit, actively hunt for PRIOR events (optic neuritis, transient sensory/motor symptoms).",
+        "The 2024 revision of the McDonald criteria emphasises dissemination in space across CNS locations (now five, adding the OPTIC NERVE) and no longer strictly requires dissemination in time — CSF-specific oligoclonal bands (or kappa free light chains) and newer MRI markers (central vein sign, paramagnetic rim lesions) allow earlier diagnosis.",
+        "A subacute course over days (rather than seconds) is a key discriminator from a vascular stroke.",
+        "A discrete sensory level is a red flag for spinal cord compression — image the cord urgently before attributing the deficit to MS.",
+        "MRI of the brain and whole spine with gadolinium is the key investigation; simultaneous enhancing and non-enhancing lesions demonstrate dissemination in time on a single scan.",
+        "CSF oligoclonal bands restricted to the CSF (or raised kappa free light chains, accepted in 2024) support the diagnosis.",
+        "Internuclear ophthalmoplegia and optic neuritis (RAPD, reduced colour vision) are classic clues to demyelination in a young person.",
+        "Check aquaporin-4 (and MOG) antibodies to exclude neuromyelitis optica spectrum disorder, which is managed differently and can be worsened by some MS therapies."
+      ],
+      "approachTitle": "An Approach to Subacute Limb Weakness & Sensory Disturbance",
+      "approachSub": "Fix the tempo and the level first, then prove dissemination in space and time",
+      "approachText": "A subacute limb deficit in a young adult is localised by tempo and by level: days-not-seconds points away from stroke, and the presence or absence of a sensory level decides how urgently the cord must be imaged. If the picture is multifocal and demyelinating, the task becomes proving dissemination in space and time while excluding the compressive, vascular and nutritional mimics.",
+      "approachCats": [
+        {
+          "name": "Demyelinating / inflammatory ← THIS CASE",
+          "eg": "Multiple sclerosis, clinically isolated syndrome, transverse myelitis",
+          "hl": true
+        },
+        {
+          "name": "Vascular",
+          "eg": "Ischaemic stroke, cerebral venous sinus thrombosis",
+          "hl": false
+        },
+        {
+          "name": "Compressive",
+          "eg": "Spinal cord compression",
+          "hl": false
+        },
+        {
+          "name": "Metabolic / nutritional",
+          "eg": "Subacute combined degeneration (B12)",
+          "hl": false
+        },
+        {
+          "name": "Systemic autoimmune",
+          "eg": "SLE / CNS vasculitis",
+          "hl": false
+        },
+        {
+          "name": "Functional",
+          "eg": "Functional neurological disorder (inconsistency, positive signs)",
+          "hl": false
+        }
+      ],
+      "approachInsight": "Two early decisions shape this case: the tempo and the level. A deficit that evolves over days rather than seconds steers away from stroke, and the search for a discrete sensory level decides whether the cord must be imaged urgently for compression. From there the work is to assemble a multifocal CNS picture — optic neuropathy, internuclear ophthalmoplegia, pyramidal and cerebellar signs — and to convert a single attack into disease disseminated in time by mining the history for past events such as the year-old optic neuritis. MRI of the brain and whole spine then demonstrates dissemination in space (and, through simultaneous enhancing and non-enhancing lesions, in time), CSF oligoclonal bands or kappa free light chains lend support under the 2024 criteria, and a negative AQP4 retires NMOSD. The trap is anchoring on MS and skipping the cord MRI that excludes a treatable compressive lesion.",
+      "expertNarrative": "A young woman with a deficit evolving over days reads as demyelination almost immediately — but the experienced clinician's first safety move is to look for a sensory level and screen for back pain and sphincter loss, because a compressive cord lesion is the one mimic that cannot wait. Reassured by its absence, attention turns to assembling a multifocal CNS picture and, crucially, to the history: the year-old episode of painful visual loss is the dissemination-in-time that the vignette withheld. The examination harvests further separately-localising signs (an RAPD and pale disc, an internuclear ophthalmoplegia, cerebellar dysmetria), and MRI of the brain and whole spine then proves dissemination in space and time on a single study. CSF oligoclonal bands or kappa free light chains support the diagnosis under the 2024 McDonald criteria, while a negative AQP4 antibody specifically excludes NMOSD. The skill rewarded is holding the vascular, compressive and nutritional mimics live until each is retired — not collapsing onto MS because it fits the demographic.",
+      "sensitivityNote": "MRI of the brain and spine is the most sensitive test for demyelinating lesions and for demonstrating dissemination in space; CSF oligoclonal bands (or kappa free light chains) are sensitive supportive markers. The 2024 criteria increase early sensitivity by adding the optic nerve as a location and by relaxing the strict requirement for dissemination in time. History is the sensitive instrument for past attacks — they are easily missed if not specifically sought.",
+      "specificityNote": "CSF-restricted oligoclonal bands, an internuclear ophthalmoplegia and the combination of dissemination in space and time on MRI are relatively specific for MS in the right context. The central vein sign and paramagnetic rim lesions are highly specific newer markers. A negative AQP4 antibody specifically excludes NMOSD, and the absence of a sensory level argues specifically against a compressive cord lesion.",
+      "linkedPairs": []
     }
   ]
 }
