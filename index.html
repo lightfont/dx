@@ -5,28 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20260703b">
+<link rel="stylesheet" href="style.css?v=20260703c">
 <script>
-/* Design compare: "classic" (style.css) vs "v2" (style2.css override). Runs before paint — no FOUC.
-   Switch via the floating toggle, or ?design=v2 / ?design=classic in the URL. */
+/* Design compare: "classic" (style.css) · "v2" Obsidian Glass (style2.css) · "v3" Case File (style3.css).
+   Runs before paint — no FOUC. Switch via the floating toggle, or ?design=classic|v2|v3 in the URL. */
 (function(){
+  var DESIGNS=['classic','v2','v3'];
+  var NAMES={classic:'Classic',v2:'V2 Obsidian',v3:'V3 Case File'};
   var q=new URLSearchParams(location.search).get('design');
-  if(q==='v2'||q==='classic'){try{localStorage.setItem('dxDesign',q)}catch(e){}}
-  var v2=false;try{v2=localStorage.getItem('dxDesign')==='v2'}catch(e){}
-  if(q==='v2')v2=true;if(q==='classic')v2=false;
-  if(v2){
+  if(DESIGNS.indexOf(q)>-1){try{localStorage.setItem('dxDesign',q)}catch(e){}}
+  var d='classic';try{d=localStorage.getItem('dxDesign')||'classic'}catch(e){}
+  if(DESIGNS.indexOf(q)>-1)d=q;
+  if(DESIGNS.indexOf(d)<0)d='classic';
+  function css(h){var l=document.createElement('link');l.rel='stylesheet';l.href=h;document.head.appendChild(l);}
+  if(d==='v2'){
     document.documentElement.classList.add('v2');
-    var f=document.createElement('link');f.rel='stylesheet';
-    f.href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap';
-    document.head.appendChild(f);
-    var s=document.createElement('link');s.rel='stylesheet';s.href='style2.css?v=20260703b';
-    document.head.appendChild(s);
+    css('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+    css('style2.css?v=20260703c');
+  }else if(d==='v3'){
+    document.documentElement.classList.add('v3');
+    css('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+    css('style3.css?v=20260703c');
   }
   window.addEventListener('DOMContentLoaded',function(){
+    var next=DESIGNS[(DESIGNS.indexOf(d)+1)%DESIGNS.length];
     var b=document.createElement('button');b.id='designToggle';b.type='button';
-    b.textContent=v2?'Design: V2 · switch to Classic':'Design: Classic · try V2 ✨';
-    b.title='Compare the two design languages';
-    b.onclick=function(){try{localStorage.setItem('dxDesign',v2?'classic':'v2')}catch(e){}
+    b.textContent='Design: '+NAMES[d]+' → '+NAMES[next];
+    b.title='Cycle design languages (Classic / V2 Obsidian / V3 Case File)';
+    b.onclick=function(){try{localStorage.setItem('dxDesign',next)}catch(e){}
       location.href=location.pathname;};
     document.body.appendChild(b);
   });
