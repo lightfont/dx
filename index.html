@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=20260703">
 </head>
 <body>
 
@@ -852,20 +852,22 @@ function renderWelcome(){
   function sc(s){return SYS_COLOR[s]||SYS_COLOR.default;}
   function sd(s){return SYS_DIM[s]||SYS_DIM.default;}
   const cards=CASES.map((c,i)=>`
-    <div class="case-card" onclick="startCase(${i})">
-      <div class="case-badges"><div class="case-sys-badge" style="background:${sd(c.system)};color:${sc(c.system)}">${c.system||'Clinical'}</div>${c.discipline?`<div class="case-disc-badge" title="${c.discipline}">${c.discipline}</div>`:''}</div>
+    <div class="case-card" style="--sysc:${sc(c.system)};--sysd:${sd(c.system)}" role="button" tabindex="0" onclick="startCase(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();startCase(${i})}">
+      <div class="case-badges"><div class="case-sys-badge" style="background:${sd(c.system)};color:${sc(c.system)}">${c.system||'Clinical'}</div>${c.discipline?`<div class="case-disc-badge" title="${c.discipline}">${c.discipline}</div>`:''}<span class="case-num">${String(i+1).padStart(2,'0')}</span></div>
       <div class="case-card-title">${c.title}</div>
       <div class="case-card-patient">${c.patient||''}</div>
       <div class="case-card-meta">
         <span>${c.approach||''}</span>
-        <span style="margin-left:auto">${c.difficulty==='challenging'?'⚡ Challenging':'Straightforward'}</span>
+        <span class="case-diff${c.difficulty==='challenging'?' hard':''}">${c.difficulty==='challenging'?'⚡ Challenging':'Straightforward'}</span>
       </div>
     </div>`).join('');
   document.getElementById('content').innerHTML=`
-    <div class="inner" style="display:flex;flex-direction:column;align-items:center">
+    <div class="inner wide welcome-page">
       <div class="welcome">
+        <div class="wl-eyebrow">Clinical Reasoning Trainer</div>
         <div class="wl"><span>Dx</span>/</div>
         <div class="ws">Build your differential. Investigate systematically. Commit to a diagnosis.</div>
+        <div class="wl-count">${CASES.length} cases · history → examination → investigations → diagnosis</div>
       </div>
       <div class="case-grid">${cards}</div>
     </div>`;
