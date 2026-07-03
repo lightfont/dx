@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20260703d">
+<link rel="stylesheet" href="style.css?v=20260703e">
 <script>
 /* Design compare: "classic" (style.css) · "v2" Obsidian Glass (style2.css) · "v3" Case File (style3.css).
    Runs before paint — no FOUC. Switch via the floating toggle, or ?design=classic|v2|v3 in the URL. */
@@ -589,7 +589,8 @@ function wsStageCount(key){
   const total=((CASES[G.caseIdx]||{})[m[1]]||[]).length;
   return m[0].length+'/'+total;
 }
-function wsBanner(cas){
+const NEXT_SHORT={setup:'Begin: History →',history:'Next: Examination →',pe:'Next: Basic Ix →',basic:'Next: Advanced Ix →',advanced:'Proceed to Commit →'};
+function wsBanner(cas,stage){
   const d=cas.demographics||{};
   const nm=d.name||(cas.patient||'').split(',')[0]||'Patient';
   const initials=(nm.split(/\s+/).map(w=>w[0]).slice(0,2).join('')||'P').toUpperCase();
@@ -597,11 +598,15 @@ function wsBanner(cas){
   const v=cas.vitals||{};
   const cells=[['HR',v.hr],['BP',v.bp],['SpO₂',v.spo2],['RR',v.rr],['Temp',v.temp]].filter(c=>c[1]&&c[1].value)
     .map(([lbl,val])=>`<div class="ws-vital${val.abnormal?' abn':''}"><div class="ws-vital-lbl">${lbl}</div><div class="ws-vital-val">${val.value}</div></div>`).join('');
+  const nextBtn=stage==='setup'
+    ?`<button class="ws-next" onclick="toHistory()">${NEXT_SHORT.setup}</button>`
+    :NEXT_SHORT[stage]?`<button class="ws-next" onclick="doneStage('${stage}')">${NEXT_SHORT[stage]}</button>`:'';
   return`<div class="ws-banner">
     <div class="ws-id"><div class="ws-avatar">${initials}</div>
       <div class="ws-id-txt"><div class="ws-id-nm">${nm}</div><div class="ws-id-sub">${sub}</div></div></div>
     <div class="ws-vitals">${cells}</div>
     <div class="ws-mode"><span class="ws-mode-dot"></span>${playerLevel==='m3'?'M3+':'M2'} · ${studyMode?'Study':'Exam'}</div>
+    ${nextBtn}
   </div>`;
 }
 function wsElicited(cas){
@@ -699,7 +704,7 @@ function renderWorkstation(stage){
   const cas=CASES[G.caseIdx];
   const mt=G._mtab||'work';
   document.getElementById('content').innerHTML=
-    `<div class="wks m-${mt}">${wsBanner(cas)}<div class="ws-body">${wsChart(cas,stage)}<div class="ws-center">${wsCenter(cas,stage)}</div>${wsRail(cas,stage)}</div>
+    `<div class="wks m-${mt}">${wsBanner(cas,stage)}<div class="ws-body">${wsChart(cas,stage)}<div class="ws-center">${wsCenter(cas,stage)}</div>${wsRail(cas,stage)}</div>
       <div class="ws-mtabs">
         <button class="ws-mtab${mt==='chart'?' on':''}" onclick="setMTab('chart')">📋 Chart</button>
         <button class="ws-mtab${mt==='work'?' on':''}" onclick="setMTab('work')">🩺 Workspace</button>
