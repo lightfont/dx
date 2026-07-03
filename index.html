@@ -1621,8 +1621,9 @@ function renderDebrief(){
     const isSig=(cas.sigNegs||[]).some(s=>s.id===item.id);
     return isReq||isSig;
   });
+  const _allCaseItems=(cas.history||[]).concat(cas.pe||[],cas.basic||[],cas.advanced||[]);
   const missedReq=(cas.required||[]).filter(r=>!allDone.some(i=>i.id===r)).map(r=>{
-    const it=(cas.basic||[]).find(i=>i.id===r)||(cas.pe||[]).find(i=>i.id===r);
+    const it=_allCaseItems.find(i=>i.id===r);
     return it?it.lbl:r;
   });
   const pivotHtml=pivotItems.length?pivotItems.map(item=>{
@@ -1754,6 +1755,22 @@ function renderDebrief(){
       <div class="kp-grid">${pivotHtml}</div>
     </div>`;
 
+  // Full case reveal — every hx/exam/investigation in the case + its finding, marking what the student ordered.
+  const _doneIds=new Set([].concat(G.done.h||[],G.done.pe||[],G.done.b||[],G.done.a||[]));
+  const _revealStages=[['history','History'],['pe','Examination'],['basic','Basic Investigations'],['advanced','Advanced Investigations']];
+  const revealHtml=_revealStages.map(([k,lbl])=>{
+    const items=cas[k]||[];if(!items.length)return'';
+    const rows=items.map(it=>{
+      const done=_doneIds.has(it.id);
+      const badge=done
+        ?'<span class="kp-badge" style="background:var(--ok-dim);color:var(--ok)">✓ You ordered</span>'
+        :'<span class="kp-badge" style="background:var(--surf3);color:var(--muted)">Not ordered</span>';
+      return '<div class="kp-item" style="border-left-color:'+(done?'var(--ok)':'var(--bdr2)')+'"><div class="kp-hd">'+badge+'<span class="kp-lbl">'+it.lbl+'</span></div><div class="kp-find">'+it.find+'</div></div>';
+    }).join('');
+    return '<div class="db-card-lbl" style="margin:16px 0 8px">'+lbl+'</div>'+rows;
+  }).join('')
+  +'<div class="kp-find" style="color:var(--muted);font-style:italic;margin-top:14px">Any other examination or investigation you could order in the record would return a normal / non-contributory result for this case.</div>';
+
   const analysisPanel=`
     <div class="db-section">
       <div class="db-section-hd" onclick="toggleSection('mnm-ro')">
@@ -1792,6 +1809,13 @@ function renderDebrief(){
         <span class="db-section-arr" id="timeline-arr">▶</span>
       </div>
       <div class="db-section-body" id="timeline-body">${tlItems||'<p style="font-size:.82rem;color:var(--muted);font-style:italic">No investigations performed.</p>'}</div>
+    </div>
+    <div class="db-section">
+      <div class="db-section-hd" onclick="toggleSection('reveal')">
+        <span class="db-section-lbl">Full case reveal — everything you could have asked or ordered</span>
+        <span class="db-section-arr" id="reveal-arr">▶</span>
+      </div>
+      <div class="db-section-body" id="reveal-body">${revealHtml}</div>
     </div>
     <div class="db-section">
       <div class="db-section-hd" onclick="toggleSection('senspec')">
