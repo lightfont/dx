@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20260703c">
+<link rel="stylesheet" href="style.css?v=20260703d">
 <script>
 /* Design compare: "classic" (style.css) · "v2" Obsidian Glass (style2.css) · "v3" Case File (style3.css).
    Runs before paint — no FOUC. Switch via the floating toggle, or ?design=classic|v2|v3 in the URL. */
@@ -1870,12 +1870,14 @@ function renderDebrief(){
       <div class="db-tabs">
         <button class="db-tab ${debriefTab==='score'?'active':''}" data-tab="score" onclick="setDebriefTab('score')">Score Breakdown</button>
         <button class="db-tab ${debriefTab==='pathway'?'active':''}" data-tab="pathway" onclick="setDebriefTab('pathway')">Pathway</button>
+        <button class="db-tab ${debriefTab==='recpath'?'active':''}" data-tab="recpath" onclick="setDebriefTab('recpath')">Recommended vs Yours</button>
         <button class="db-tab ${debriefTab==='teaching'?'active':''}" data-tab="teaching" onclick="setDebriefTab('teaching')">Teaching Points</button>
         <button class="db-tab ${debriefTab==='analysis'?'active':''}" data-tab="analysis" onclick="setDebriefTab('analysis')">Full Analysis</button>
       </div>
 
       <div id="db-panel-score" class="db-panel ${debriefTab==='score'?'active':''}">${scorePanel}</div>
       <div id="db-panel-pathway" class="db-panel ${debriefTab==='pathway'?'active':''}">${renderPathwayHtml(cas,'debrief')}</div>
+      <div id="db-panel-recpath" class="db-panel ${debriefTab==='recpath'?'active':''}">${renderRecoCompare(cas)}</div>
       <div id="db-panel-teaching" class="db-panel ${debriefTab==='teaching'?'active':''}">${teachingPanel}</div>
       <div id="db-panel-analysis" class="db-panel ${debriefTab==='analysis'?'active':''}">${analysisPanel}</div>
 
@@ -1994,6 +1996,54 @@ function dDE(){dragSrc=null;document.querySelectorAll('.de').forEach(el=>el.clas
 // PATHWAY (Concept F) — derived from the case + thin overlay
 // ═══════════════════════════════════════════
 function pwSlug(s){return(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_+$/g,'');}
+// Side-by-side "recommended workup vs the player's pathway", derived from the case (script-authored) content.
+function renderRecoCompare(cas){
+  const doneIds=new Set([].concat(G.done.h||[],G.done.pe||[],G.done.b||[],G.done.a||[]));
+  const req=cas.required||[];
+  // Recommended: a complete history & examination; the high-yield (relevant/required/significant-negative) investigations.
+  const recFilter={history:()=>true,pe:()=>true,
+    basic:it=>it.rel||it.sigNeg||req.includes(it.id),advanced:it=>it.rel||it.sigNeg||req.includes(it.id)};
+  const stageLbl={history:'Focused history',pe:'Examination',basic:'Basic investigations',advanced:'Advanced investigations'};
+  const recIds=new Set();
+  ['history','pe','basic','advanced'].forEach(st=>(cas[st]||[]).filter(recFilter[st]).forEach(it=>recIds.add(it.id)));
+  const dot=(cls,txt)=>'<span class="rp-dot '+cls+'">'+txt+'</span>';
+  // ---- Recommended column ----
+  let rec='';
+  const mnms=cas.caseMNMs||[];
+  if(mnms.length){
+    rec+='<div class="rp-sec-hd">Key differentials to rule out</div>';
+    mnms.forEach(m=>{const nm=getMNMName(m);const ro=(cas.mnmRuleOut||[]).find(r=>normMatch(r.mnm,nm));
+      const how=ro&&(ro.findings||[]).length?ro.findings.map(f=>f.text).join(' '):'';
+      const st=ro?(ro.status==='ruled-in'?dot('done',ro.statusLbl||'Confirmed'):dot('miss',ro.statusLbl||'Ruled out')):'';
+      rec+='<div class="rp-mnm"><div class="rp-lbl">'+nm+(m.tier?' '+dot('tier','T'+m.tier):'')+' '+st+'</div>'+(how?'<div class="rp-find">'+how+'</div>':'')+'</div>';});
+  }
+  ['history','pe','basic','advanced'].forEach(st=>{
+    const items=(cas[st]||[]).filter(recFilter[st]);if(!items.length)return;
+    rec+='<div class="rp-sec-hd">'+stageLbl[st]+'</div>';
+    items.forEach(it=>{const done=doneIds.has(it.id);
+      rec+='<div class="rp-item '+(done?'done':'miss')+'"><div class="rp-lbl">'+dot(done?'done':'miss',done?'✓ done':'✗ missed')+it.lbl+'</div><div class="rp-find">'+it.find+'</div></div>';});
+  });
+  // ---- Your-pathway column ----
+  const log=G.orderLog||[];let you='';
+  if(!log.length)you='<p style="font-size:.8rem;color:var(--muted);font-style:italic">No history, examination or investigations were performed.</p>';
+  else ['history','pe','basic','advanced'].forEach(st=>{
+    const entries=log.filter(e=>e.cat===st);if(!entries.length)return;
+    you+='<div class="rp-sec-hd">'+stageLbl[st]+'</div>';
+    entries.forEach(e=>{const it=getStageItems(st).find(x=>x.id===e.id);if(!it)return;
+      const extra=!recIds.has(it.id);
+      you+='<div class="rp-item '+(extra?'extra':'done')+'"><div class="rp-lbl">'+dot(extra?'extra':'done',extra?'extra':'✓ key')+it.lbl+'</div></div>';});
+  });
+  const committed=G.commitSub||G.commitSel||'—';
+  const dxOk=!!(G.finalScore&&G.finalScore.diagnosis>=75);
+  you+='<div class="rp-sec-hd">Diagnosis</div><div class="rp-item '+(dxOk?'done':'miss')+'"><div class="rp-lbl">'+dot(dxOk?'done':'miss',dxOk?'✓':'✗')+'You committed: '+committed+'</div>'+(dxOk?'':'<div class="rp-find">Expected: '+cas.finalDx+'</div>')+'</div>';
+  const missed=[...recIds].filter(id=>!doneIds.has(id)).length;
+  const extraN=log.filter(e=>{const it=getStageItems(e.cat).find(x=>x.id===e.id);return it&&!recIds.has(it.id);}).length;
+  return '<div class="rp-lead">A model workup for this presentation, side by side with what you actually did. The recommended column is generated from the case’s teaching content.</div>'
+    +'<div class="rp-cols">'
+    +'<div class="rp-col rec"><div class="rp-col-hd">Recommended workup</div><div class="rp-col-sub">Complete history &amp; examination, then the high-yield investigations. <b>'+missed+'</b> recommended step'+(missed===1?'':'s')+' missed.</div>'+rec+'</div>'
+    +'<div class="rp-col you"><div class="rp-col-hd">Your pathway</div><div class="rp-col-sub">'+log.length+' action'+(log.length===1?'':'s')+' in order taken · <b>'+extraN+'</b> non-contributory.</div>'+you+'</div>'
+    +'</div>';
+}
 function buildPathway(cas){
   const ov=cas.pathway||{};const reasoning=ov.reasoning||{};
   const nodes=[],edges=[];
