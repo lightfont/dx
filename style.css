@@ -147,6 +147,11 @@ body.exam .lrow-desc{display:none!important}
 }
 .mode-btn.study{border-color:color-mix(in oklch,var(--ok) 50%,transparent);color:var(--green)}
 .mode-btn.exam{border-color:color-mix(in oklch,var(--warn) 50%,transparent);color:var(--yellow)}
+.tb-back,.tb-quit{align-items:center;gap:5px;font-family:var(--sans);border-radius:20px;padding:4px 11px;font-size:.7rem;font-weight:600;cursor:pointer;background:transparent;transition:all .13s;white-space:nowrap}
+.tb-back{border:1.5px solid var(--bdr2);color:var(--muted)}
+.tb-back:hover{color:var(--text);border-color:var(--muted)}
+.tb-quit{border:1.5px solid color-mix(in oklch,var(--danger) 34%,transparent);color:var(--danger)}
+.tb-quit:hover{background:var(--danger-dim);border-color:var(--danger)}
 
 /* ──────────────────────────────────────────
    CONTENT SCROLL AREA

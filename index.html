@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20260703e">
+<link rel="stylesheet" href="style.css?v=20260703f">
 <script>
 /* Design compare: "classic" (style.css) · "v2" Obsidian Glass (style2.css) · "v3" Case File (style3.css).
    Runs before paint — no FOUC. Switch via the floating toggle, or ?design=classic|v2|v3 in the URL. */
@@ -140,11 +140,13 @@
       <div class="tb-brand">Dx<span>/</span></div>
       <div class="tb-sep"></div>
       <div class="tb-cname" id="tbCname">—</div>
+      <button class="tb-back" id="tbBack" onclick="stageBack()" style="display:none">← Back</button>
     </div>
     <div class="tb-phases" id="tbStages"></div>
     <div class="tb-right">
       <span class="tb-level m2" id="levelBadge" onclick="resetLevel()">M2</span>
       <button class="mode-btn study" id="modeBtn" onclick="toggleMode()">Study</button>
+      <button class="tb-quit" id="tbQuit" onclick="quitGame()" style="display:none">Quit</button>
     </div>
   </div>
   <div id="content"></div>
@@ -531,6 +533,10 @@ function buildTopbar(){
   document.getElementById('tbCname').textContent=cas?cas.title:'—';
 
   const stage=G?G.stage:null;
+  // Back (M2 guided mode only, once past the differential) + Quit (any time in-game)
+  const backBtn=document.getElementById('tbBack'),quitBtn=document.getElementById('tbQuit');
+  if(backBtn)backBtn.style.display=(G&&playerLevel==='m2'&&['history','pe','basic','advanced','commit'].includes(stage))?'inline-flex':'none';
+  if(quitBtn)quitBtn.style.display=G?'inline-flex':'none';
   const p2stages=['history','pe','basic','advanced'];
   const p2idx=p2stages.indexOf(stage);
   const p1done=stage&&stage!=='setup';
@@ -927,6 +933,23 @@ function setLevel(lv){
   render();
 }
 function resetLevel(){playerLevel=null;pendingCaseIdx=null;document.getElementById('yrmover').style.display='flex';}
+
+// M2 (guided) only — step back to the previous stage to review/continue. Progress is kept.
+const PREV_STAGE={history:'setup',pe:'history',basic:'pe',advanced:'basic',commit:'advanced'};
+function stageBack(){
+  if(!G||playerLevel!=='m2')return;
+  const prev=PREV_STAGE[G.stage];if(!prev)return;
+  G.stage=prev;G._review=null;G.nudge=null;G.profOpen=false;render();
+}
+// Exit cleanly to the case list from any point.
+function quitGame(){
+  if(!G)return;
+  if(!confirm('Quit this case and return to the case list? Your progress on this case will be lost.'))return;
+  if(typeof closePalette==='function')closePalette();
+  if(typeof closeRankModal==='function')closeRankModal();
+  const dr=document.getElementById('drawer');if(dr)dr.classList.add('hide');
+  G=null;render();
+}
 
 function renderSetup(){
   const cas=CASES[G.caseIdx];
