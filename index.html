@@ -88,11 +88,11 @@
 <div id="yrmover" style="position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:700;display:none;align-items:center;justify-content:center;padding:20px">
   <div class="yr-modal">
     <div class="yr-title"><span>Dx</span>/ — What year are you?</div>
-    <div class="yr-sub">Sets your experience level. M2 shows study aids and guidance. M3+ hides them to simulate clinical reasoning under exam conditions. Toggle anytime.</div>
+    <div class="yr-sub">Sets your experience level. M1/M2 shows study aids and guidance. M3+ hides them to simulate clinical reasoning under exam conditions. Toggle anytime.</div>
     <div class="yr-opts">
       <button class="yr-opt" onclick="setLevel('m2')">
-        <span class="yr-badge m2">M2 Preclinical</span>
-        <div class="yr-opt-title">Year 2 — Guided Mode</div>
+        <span class="yr-badge m2">M1/M2 Preclinical</span>
+        <div class="yr-opt-title">Year 1–2 — Guided Mode</div>
         <div class="yr-opt-desc">Study aids visible: condition descriptions, significant negative labels, expert commentary, professor hints.</div>
       </button>
       <button class="yr-opt" onclick="setLevel('m3')">
@@ -144,7 +144,7 @@
     </div>
     <div class="tb-phases" id="tbStages"></div>
     <div class="tb-right">
-      <span class="tb-level m2" id="levelBadge" onclick="resetLevel()">M2</span>
+      <span class="tb-level m2" id="levelBadge" onclick="resetLevel()">M1/M2</span>
       <button class="mode-btn study" id="modeBtn" onclick="toggleMode()">Study</button>
       <button class="tb-quit" id="tbQuit" onclick="quitGame()" style="display:none">Quit</button>
     </div>
@@ -424,7 +424,7 @@ function applyLevelMode(){
   const b=document.getElementById('modeBtn');
   if(b){b.className='mode-btn '+(studyMode?'study':'exam');b.textContent=studyMode?'Study':'Exam';}
   const lv=document.getElementById('levelBadge');
-  if(lv){lv.className='tb-level '+(playerLevel||'m2');lv.textContent=playerLevel==='m3'?'M3+':'M2';}
+  if(lv){lv.className='tb-level '+(playerLevel||'m2');lv.textContent=playerLevel==='m3'?'M3+':'M1/M2';}
 }
 function closeModal(){document.getElementById('mover').classList.add('hide');}
 
@@ -611,7 +611,7 @@ function wsBanner(cas,stage){
     <div class="ws-id"><div class="ws-avatar">${initials}</div>
       <div class="ws-id-txt"><div class="ws-id-nm">${nm}</div><div class="ws-id-sub">${sub}</div></div></div>
     <div class="ws-vitals">${cells}</div>
-    <div class="ws-mode"><span class="ws-mode-dot"></span>${playerLevel==='m3'?'M3+':'M2'} · ${studyMode?'Study':'Exam'}</div>
+    <div class="ws-mode"><span class="ws-mode-dot"></span>${playerLevel==='m3'?'M3+':'M1/M2'} · ${studyMode?'Study':'Exam'}</div>
     ${nextBtn}
   </div>`;
 }
@@ -654,7 +654,9 @@ function wsRail(cas,stage){
     <div class="ws-rail-hd">
       <div class="ws-rail-top"><span class="ws-rail-title">Differential</span>${total?`<span class="mnm-cover ${cls}">MNM ${cov}/${total}${cov===total?' cleared':''}</span>`:''}</div>
       ${total?`<div class="ws-cov">${segs}</div>`:''}
-      <button class="ws-add-btn" onclick="openDrawer()">+ Add diagnosis</button>
+      ${playerLevel==='m3'
+        ?`<button class="ws-add-btn ws-add-type" onclick="openPalette()"><span class="ws-cmdk-key">⌘K</span> Add diagnosis — type it</button>`
+        :`<button class="ws-add-btn" onclick="openDrawer()">+ Add diagnosis</button>`}
     </div>
     <div class="ws-rail-list dlist" id="dlist">${renderDiff()}</div>
     <div class="ws-rail-foot">${cta}</div>
@@ -668,7 +670,7 @@ function wsCenter(cas,stage){
       <div class="ws-vignette">${cas.vignette}</div>
       ${G.nudge?`<div class="nudge">${G.nudge}</div>`:''}
       <div class="ws-center-nav"><button class="btn-hint study-aid" onclick="toggleProf()">Hint</button></div>
-      ${G.profOpen?`<div class="prof-reveal study-aid">Use <strong>+ Add diagnosis</strong> (right) to open the library. Tag dangerous, can't-miss diagnoses as <strong>Must Not Miss</strong> and your leading candidates as <strong>Working Dx</strong>. Think across every system.${isIndep?' In Independent mode you can also press <strong>⌘K</strong> to add diagnoses by name.':''}</div>`:''}`;
+      ${G.profOpen?`<div class="prof-reveal study-aid">${isIndep?'Press <strong>⌘K</strong> (or the <strong>Add diagnosis</strong> button on the right) and <strong>type</strong> each diagnosis to add it — just like ordering history, examination and investigations.':'Use <strong>+ Add diagnosis</strong> (right) to open the library.'} Tag dangerous, can\'t-miss diagnoses as <strong>Must Not Miss</strong> and your leading candidates as <strong>Working Dx</strong>. Think across every system.</div>`:''}`;
   }
   const cfg=SCFG[stage];
   const allItems=getSrcItems(stage);
