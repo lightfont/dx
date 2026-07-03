@@ -664,7 +664,8 @@ function wsCenter(cas,stage){
   const doneArr=getDoneArr(stage);
   const doneItems=doneArr.map(id=>allItems.find(i=>i.id===id)).filter(Boolean);
   const pendItems=allItems.filter(i=>!doneArr.includes(i.id));
-  let html=`<div class="ws-stage-hd"><span class="ws-stage-title">${cfg.label}</span><span class="ws-stage-meta">${doneItems.length} of ${allItems.length} performed</span></div>`;
+  const _mPerf=isIndep?(G.orderLog||[]).filter(e=>e.cat===stage).length:doneItems.length;
+  let html=`<div class="ws-stage-hd"><span class="ws-stage-title">${cfg.label}</span><span class="ws-stage-meta">${isIndep?_mPerf+' performed':_mPerf+' of '+allItems.length+' performed'}</span></div>`;
   const vigOpen=G._vigOpen!=null?G._vigOpen:isIndep;
   html+=`<div class="ws-vigc"><div class="ws-vigc-toggle" onclick="G._vigOpen=${!vigOpen};render()"><span>${(cas.demographics&&cas.demographics.name)||'Patient'} — presentation</span><span class="ws-vigc-arr${vigOpen?' open':''}">▶</span></div>${vigOpen?`<div class="ws-vigc-body">${cas.vignette}</div>`:''}</div>`;
   if(isIndep){
@@ -672,7 +673,7 @@ function wsCenter(cas,stage){
     const log=G.orderLog||[];
     if(log.length){
       html+=`<div class="ws-findings"><div class="ws-sub-lbl">Findings on chart — in the order you asked</div>`
-        +log.map((e,i)=>{const it=(cas[e.cat]||[]).find(x=>x.id===e.id);if(!it)return'';const cm=CAT_META[e.cat]||['hf','History'];
+        +log.map((e,i)=>{const it=getStageItems(e.cat).find(x=>x.id===e.id);if(!it)return'';const cm=CAT_META[e.cat]||['hf','History'];
           return`<div class="ws-logitem"><div class="ws-logmeta"><span class="ws-lognum">${i+1}</span><span class="ws-logcat">${cm[1]}</span></div>${mkFinding(it,cm[0],cm[1])}</div>`;}).join('')
         +`</div>`;
     }
@@ -718,7 +719,7 @@ function wsReview(cas,key,curStage){
       <div class="ws-vignette">${cas.vignette}</div>${back}`;
   }
   const cfg=SCFG[key];if(!cfg)return back;
-  const allItems=getSrcItems(key);
+  const allItems=getStageItems(key);
   const doneItems=(getDoneArr(key)||[]).map(id=>allItems.find(i=>i.id===id)).filter(Boolean);
   let html=`<div class="ws-stage-hd"><span class="ws-stage-title">${cfg.label}</span><span class="ws-stage-meta">Review · read-only</span></div>`;
   if(doneItems.length)html+=`<div class="ws-findings"><div class="ws-sub-lbl">Findings on chart</div>${doneItems.map(i=>mkFinding(i,cfg.cat,cfg.catLbl)).join('')}</div>`;
@@ -808,7 +809,7 @@ function palCatalog(cas){
   const curRank=STAGE_RANK[G.stage]||0;
   PAL_CATS.forEach(([arr,stage,cat,icon,verb])=>{
     if((STAGE_RANK[stage]||99)>curRank)return;
-    (cas[arr]||[]).forEach(it=>out.push({type:'order',stage,cat,icon,verb,id:it.id,lbl:it.lbl,cost:it.cost,aliases:it.aliases,done:(getDoneArr(stage)||[]).includes(it.id)}));
+    getStageItems(stage).forEach(it=>out.push({type:'order',stage,cat,icon,verb,id:it.id,lbl:it.lbl,cost:it.cost,aliases:it.aliases,done:(getDoneArr(stage)||[]).includes(it.id)}));
   });
   const added=new Set(G.diff.map(d=>d.n));
   Object.values(DIAG_LIB).flatMap(s=>s.diags).forEach(d=>{
@@ -1077,6 +1078,96 @@ const SKIP_BTN={history:'Skip History',pe:'Skip Examination',basic:'Skip Basic I
 function getDoneArr(stage){return{history:G.done.h,pe:G.done.pe,basic:G.done.b,advanced:G.done.a}[stage]||G.done.h;}
 function getSrcItems(stage){return(CASES[G.caseIdx]||{})[SCFG[stage].src]||[];}
 
+// ═══════════════════════════════════════════
+// GLOBAL ORDER CATALOG (M3 EHR-style) — full PE/investigation suite orderable in every case.
+// A case's own curated item overrides the generic global (auto-matched by label/aliases);
+// ordering an unmatched global returns its generic normal/negative `find`. M2 & history unaffected.
+// ═══════════════════════════════════════════
+const GLOBAL_ORDERS=[
+  // ── Physical examination (tier 'pe', free) ──
+  {gid:'gpe_gen',tier:'pe',cost:'free',lbl:'General inspection & vital signs',aliases:['general examination','end of bed','inspection','observations','vitals exam'],find:'Alert and comfortable at rest; no acute distress. Vital signs as charted.'},
+  {gid:'gpe_cvs',tier:'pe',cost:'free',lbl:'Cardiovascular examination',aliases:['cardiac exam','heart examination','praecordium','murmurs','heart sounds','jvp','apex beat'],find:'Normal heart sounds with no murmurs; JVP not raised; no peripheral oedema.'},
+  {gid:'gpe_resp',tier:'pe',cost:'free',lbl:'Respiratory examination',aliases:['lung examination','chest examination','breath sounds','auscultate chest','percussion'],find:'Symmetrical chest expansion; resonant percussion; vesicular breath sounds with no added sounds.'},
+  {gid:'gpe_abdo',tier:'pe',cost:'free',lbl:'Abdominal examination',aliases:['abdomen','palpate abdomen','organomegaly','tenderness abdomen'],find:'Abdomen soft and non-tender; no masses or organomegaly; bowel sounds present and normal.'},
+  {gid:'gpe_neuro',tier:'pe',cost:'free',lbl:'Neurological examination (limbs)',aliases:['limb neurology','power','tone','reflexes','coordination','peripheral nervous system'],find:'Normal tone, power (5/5), reflexes and coordination in all four limbs; no focal deficit.'},
+  {gid:'gpe_cn',tier:'pe',cost:'free',lbl:'Cranial nerve examination',aliases:['cranial nerves','facial nerve','eye movements','bulbar'],find:'Cranial nerves II–XII grossly intact.'},
+  {gid:'gpe_fundus',tier:'pe',cost:'free',lbl:'Fundoscopy',aliases:['ophthalmoscopy','optic disc','retina','back of the eye','papilloedema'],find:'Optic discs sharp and pink; no papilloedema, haemorrhages or exudates.'},
+  {gid:'gpe_visual',tier:'pe',cost:'free',lbl:'Visual acuity & fields',aliases:['vision','snellen','visual fields','pupils','rapd'],find:'Visual acuity and fields normal; pupils equal and reactive with no RAPD.'},
+  {gid:'gpe_thyroid',tier:'pe',cost:'free',lbl:'Thyroid / neck examination',aliases:['goitre','neck lump','thyroid gland','neck examination'],find:'No goitre or neck masses; trachea central.'},
+  {gid:'gpe_nodes',tier:'pe',cost:'free',lbl:'Lymph node examination',aliases:['lymph nodes','lymphadenopathy','glands'],find:'No cervical, axillary or inguinal lymphadenopathy.'},
+  {gid:'gpe_pvasc',tier:'pe',cost:'free',lbl:'Peripheral vascular examination',aliases:['peripheral pulses','limb circulation','capillary refill','pulses'],find:'All peripheral pulses present and symmetrical; warm peripheries with normal capillary refill.'},
+  {gid:'gpe_dre',tier:'pe',cost:'free',lbl:'Digital rectal examination',aliases:['rectal examination','pr exam','per rectum','prostate'],find:'Normal anal tone; no masses; soft brown stool, no melaena or fresh blood.'},
+  {gid:'gpe_skin',tier:'pe',cost:'free',lbl:'Skin examination',aliases:['rash','dermatological','integument','petechiae','purpura'],find:'No rashes, petechiae or purpura; no significant skin lesions.'},
+  {gid:'gpe_msk',tier:'pe',cost:'free',lbl:'Musculoskeletal / joint examination',aliases:['joints','arthritis','joint examination','range of movement'],find:'No joint swelling, tenderness or deformity; full range of movement.'},
+  {gid:'gpe_ent',tier:'pe',cost:'free',lbl:'ENT examination',aliases:['ear nose throat','otoscopy','oropharynx','throat','tympanic'],find:'Ears, nose and throat unremarkable; tympanic membranes normal.'},
+  {gid:'gpe_lsbp',tier:'pe',cost:'free',lbl:'Lying & standing blood pressure',aliases:['postural blood pressure','orthostatic','lying standing bp'],find:'No significant postural drop in blood pressure.'},
+  {gid:'gpe_hydration',tier:'pe',cost:'free',lbl:'Hydration & fluid status',aliases:['fluid status','volume status','dehydration','mucous membranes','skin turgor'],find:'Euvolaemic — moist mucous membranes, normal skin turgor, no oedema.'},
+  {gid:'gpe_mening',tier:'pe',cost:'free',lbl:'Meningism (neck stiffness, Kernig’s)',aliases:['neck stiffness','kernig','brudzinski','meningism','photophobia'],find:'No neck stiffness; Kernig’s and Brudzinski’s signs negative.'},
+  // ── Basic investigations (tier 'basic') ──
+  {gid:'gbi_fbc',tier:'basic',cost:'low',lbl:'Full Blood Count',aliases:['fbc','blood count','haemoglobin','white cell count','platelets','cbc','hb'],find:'Haemoglobin, white cell count and platelets within normal limits.'},
+  {gid:'gbi_renal',tier:'basic',cost:'low',lbl:'Renal Panel',aliases:['u&e','urea and electrolytes','creatinine','sodium','potassium','egfr','kidney function'],find:'Sodium, potassium, urea and creatinine within normal limits.'},
+  {gid:'gbi_liver',tier:'basic',cost:'low',lbl:'Liver Panel',aliases:['lft','liver function','bilirubin','alt','alp','transaminases'],find:'Bilirubin, transaminases and ALP within normal limits.'},
+  {gid:'gbi_crp',tier:'basic',cost:'low',lbl:'C-Reactive Protein (CRP)',aliases:['crp','inflammatory marker'],find:'CRP not elevated.'},
+  {gid:'gbi_esr',tier:'basic',cost:'low',lbl:'ESR',aliases:['esr','sedimentation rate','sed rate'],find:'ESR within normal range.'},
+  {gid:'gbi_lipase',tier:'basic',cost:'low',lbl:'Serum Lipase',aliases:['lipase','amylase','pancreatic enzymes'],find:'Serum lipase within normal limits (not raised >3× upper limit).'},
+  {gid:'gbi_trop',tier:'basic',cost:'low',lbl:'High-Sensitivity Troponin T',aliases:['troponin','hs troponin','cardiac enzymes','hstnt'],find:'High-sensitivity troponin within normal limits with no significant delta.'},
+  {gid:'gbi_coag',tier:'basic',cost:'low',lbl:'Coagulation Panel (PT/PTT/INR)',aliases:['coagulation','clotting','pt','ptt','inr'],find:'PT, aPTT and INR within normal limits.'},
+  {gid:'gbi_glucose',tier:'basic',cost:'low',lbl:'Capillary & Serum Glucose',aliases:['glucose','blood sugar','capillary glucose'],find:'Blood glucose within the normal range.'},
+  {gid:'gbi_abg',tier:'basic',cost:'low',lbl:'Arterial Blood Gas (ABG)',aliases:['abg','blood gas','ph','lactate','acid base'],find:'Normal pH, pO₂, pCO₂, bicarbonate and lactate.'},
+  {gid:'gbi_bone',tier:'basic',cost:'low',lbl:'Calcium, Magnesium & Phosphate',aliases:['calcium','magnesium','phosphate','bone profile','corrected calcium'],find:'Corrected calcium, magnesium and phosphate within normal limits.'},
+  {gid:'gbi_tft',tier:'basic',cost:'low',lbl:'Thyroid Function Test',aliases:['tft','tsh','free t4','thyroid function'],find:'TSH and free T4 within normal limits.'},
+  {gid:'gbi_b12',tier:'basic',cost:'low',lbl:'Vitamin B12 & Folate',aliases:['b12','folate','cobalamin'],find:'Vitamin B12 and folate within normal limits.'},
+  {gid:'gbi_hba1c',tier:'basic',cost:'low',lbl:'HbA1c',aliases:['hba1c','glycated haemoglobin','diabetes control'],find:'HbA1c within the normal range.'},
+  {gid:'gbi_ddimer',tier:'basic',cost:'low',lbl:'D-Dimer',aliases:['d dimer','ddimer','fibrin degradation'],find:'D-dimer not elevated.'},
+  {gid:'gbi_cultures',tier:'basic',cost:'low',lbl:'Blood Cultures',aliases:['blood culture','cultures','septic screen'],find:'No growth on blood cultures to date.'},
+  {gid:'gbi_urine',tier:'basic',cost:'low',lbl:'Urine Dipstick',aliases:['urine dip','urinalysis','dipstick'],find:'Urine dipstick negative for blood, protein, leucocytes and nitrites.'},
+  {gid:'gbi_msu',tier:'basic',cost:'low',lbl:'Urine MC&S',aliases:['urine culture','msu','midstream urine'],find:'No significant growth on urine culture.'},
+  {gid:'gbi_upt',tier:'basic',cost:'low',lbl:'Urine Pregnancy Test',aliases:['pregnancy test','upt','bhcg','hcg'],find:'Urine pregnancy test negative.'},
+  {gid:'gbi_ecg',tier:'basic',cost:'low',lbl:'12-lead ECG',aliases:['ecg','ekg','electrocardiogram','rhythm strip'],find:'Sinus rhythm, normal axis and intervals; no acute ischaemic changes.'},
+  {gid:'gbi_cxr',tier:'basic',cost:'low',lbl:'Chest X-ray (CXR)',aliases:['cxr','chest xray','chest radiograph','chest film'],find:'Clear lung fields; no consolidation, effusion, pneumothorax or cardiomegaly.'},
+  {gid:'gbi_axr',tier:'basic',cost:'low',lbl:'Abdominal X-ray (AXR)',aliases:['axr','abdominal xray','kub','abdo film'],find:'No dilated bowel loops, obstruction or free air.'},
+  // ── Advanced investigations (tier 'advanced') ──
+  {gid:'gai_ctb',tier:'advanced',cost:'mid',lbl:'CT Brain (non-contrast)',aliases:['ct head','ct brain','non contrast ct head'],find:'No acute intracranial haemorrhage, infarct, mass or midline shift.'},
+  {gid:'gai_ctpa',tier:'advanced',cost:'high',lbl:'CT Pulmonary Angiogram (CTPA)',aliases:['ctpa','pulmonary angiogram','pe scan'],find:'No pulmonary embolus; lung parenchyma clear.'},
+  {gid:'gai_ctap',tier:'advanced',cost:'high',lbl:'CT Abdomen & Pelvis',aliases:['ct abdomen','ct abdo pelvis','ctap','abdominal ct'],find:'No acute intra-abdominal abnormality, collection or obstruction.'},
+  {gid:'gai_ctthorax',tier:'advanced',cost:'high',lbl:'CT Thorax',aliases:['ct chest','ct thorax','chest ct'],find:'No mass, effusion or mediastinal abnormality.'},
+  {gid:'gai_ctaorta',tier:'advanced',cost:'high',lbl:'CT Aortogram',aliases:['ct aortogram','ct aorta','aortic dissection scan'],find:'No aortic dissection, aneurysm or contained rupture.'},
+  {gid:'gai_mrib',tier:'advanced',cost:'mid',lbl:'MRI Brain',aliases:['mri brain','mri head','brain mri'],find:'No acute infarct, demyelination, mass or abnormal enhancement.'},
+  {gid:'gai_mrispine',tier:'advanced',cost:'high',lbl:'MRI Whole Spine',aliases:['mri spine','spinal mri','cord imaging'],find:'No cord compression, intramedullary lesion or nerve-root enhancement.'},
+  {gid:'gai_usabdo',tier:'advanced',cost:'mid',lbl:'Ultrasound Abdomen / Hepatobiliary',aliases:['ultrasound abdomen','us abdomen','hepatobiliary ultrasound','us hbs'],find:'Liver, gallbladder, biliary tree and kidneys unremarkable; no gallstones or duct dilatation.'},
+  {gid:'gai_echo',tier:'advanced',cost:'mid',lbl:'Echocardiogram (2D Echo)',aliases:['echo','echocardiogram','2d echo','cardiac ultrasound'],find:'Good biventricular function; no significant valvular lesion, effusion or regional wall motion abnormality.'},
+  {gid:'gai_lp',tier:'advanced',cost:'mid',lbl:'Lumbar Puncture (CSF)',aliases:['lumbar puncture','spinal tap','csf'],find:'Normal opening pressure; CSF clear with normal cell count, protein and glucose.'},
+  {gid:'gai_ncs',tier:'advanced',cost:'mid',lbl:'Nerve Conduction Studies / EMG',aliases:['ncs','nerve conduction','emg','electrophysiology'],find:'Normal motor and sensory conduction; no demyelination or denervation.'},
+  {gid:'gai_eeg',tier:'advanced',cost:'mid',lbl:'Electroencephalogram (EEG)',aliases:['eeg','brain waves','seizure study'],find:'Normal background rhythm; no epileptiform discharges.'},
+  {gid:'gai_ogd',tier:'advanced',cost:'high',lbl:'Oesophago-gastro-duodenoscopy (OGD)',aliases:['ogd','gastroscopy','upper endoscopy'],find:'Normal oesophagus, stomach and duodenum; no ulcer, mass or bleeding.'},
+  {gid:'gai_colon',tier:'advanced',cost:'high',lbl:'Colonoscopy',aliases:['colonoscopy','lower endoscopy','bowel scope'],find:'Normal colonic mucosa to the caecum; no mass, polyp or inflammation.'},
+  {gid:'gai_ercp',tier:'advanced',cost:'high',lbl:'ERCP',aliases:['ercp','endoscopic retrograde cholangiopancreatography'],find:'No ductal filling defect or obstruction (invasive — reserved for a therapeutic indication).'},
+  {gid:'gai_mrcp',tier:'advanced',cost:'high',lbl:'MRCP',aliases:['mrcp','magnetic resonance cholangiopancreatography','biliary mri'],find:'Biliary and pancreatic ducts normal; no stone or stricture.'},
+  {gid:'gai_bronch',tier:'advanced',cost:'high',lbl:'Bronchoscopy',aliases:['bronchoscopy','airway endoscopy'],find:'Normal airways; no endobronchial lesion; washings unremarkable.'},
+  {gid:'gai_vq',tier:'advanced',cost:'mid',lbl:'V/Q Scan',aliases:['vq scan','ventilation perfusion','lung scan'],find:'Low probability for pulmonary embolism; matched ventilation and perfusion.'},
+  {gid:'gai_doppler',tier:'advanced',cost:'mid',lbl:'Doppler Ultrasound (venous/limb)',aliases:['doppler','venous doppler','dvt scan','duplex'],find:'No deep vein thrombosis; normal venous compressibility and flow.'},
+  {gid:'gai_autoimmune',tier:'advanced',cost:'mid',lbl:'Autoimmune Screen (ANA/ENA/ANCA)',aliases:['ana','ena','anca','autoimmune screen','connective tissue screen','vasculitis screen'],find:'ANA, ENA and ANCA negative.'},
+  {gid:'gai_tumour',tier:'advanced',cost:'mid',lbl:'Tumour Markers',aliases:['tumour markers','ca 19-9','cea','afp','ca125','psa'],find:'Tumour markers within normal limits.'},
+  {gid:'gai_petct',tier:'advanced',cost:'high',lbl:'PET-CT',aliases:['pet ct','pet scan','fdg pet'],find:'No abnormal FDG-avid focus.'},
+];
+// A case's own curated item suppresses the generic global (label substring either way, or a distinctive global alias found in the case item's label/aliases).
+function sameOrder(ci,g){
+  const clean=s=>normTxt((s||'').replace(/\//g,' '));  // treat "/" as a separator so "CT Abdomen/Pelvis" == "CT Abdomen & Pelvis"
+  const a=clean(ci.lbl),gl=clean(g.lbl);
+  if(!a||!gl)return false;
+  if(a.indexOf(gl)>=0||gl.indexOf(a)>=0)return true;
+  const hay=clean((ci.lbl||'')+' '+((ci.aliases||[]).join(' ')));
+  return (g.aliases||[]).some(al=>{const n=clean(al);return n.length>=3&&(' '+hay+' ').indexOf(' '+n+' ')>=0;});
+}
+// M3-only merged order set for a stage: curated case items + non-overlapping globals. M2/history/setup = curated only.
+function getStageItems(stage){
+  const caseItems=getSrcItems(stage);
+  if(playerLevel!=='m3'||stage==='history'||stage==='setup')return caseItems;
+  const extra=GLOBAL_ORDERS.filter(g=>g.tier===stage&&!caseItems.some(ci=>sameOrder(ci,g)))
+    .map(g=>({id:g.gid,lbl:g.lbl,cost:g.cost,aliases:g.aliases,find:g.find,rel:false,_global:true}));
+  return caseItems.concat(extra);
+}
+
 function renderStage(stage){
   const cas=CASES[G.caseIdx];
   const cfg=SCFG[stage];
@@ -1197,7 +1288,7 @@ function doItem(stage,id){
   const arr=getDoneArr(stage);
   if(arr.includes(id))return;
   arr.push(id);
-  const item=getSrcItems(stage).find(i=>i.id===id);if(!item)return;
+  const item=getStageItems(stage).find(i=>i.id===id);if(!item)return;
   G.nudge=null;G.profOpen=false;
   if(stage==='history'){G.pb.hTotal++;if(item.rel)G.pb.hRel++;}
   else if(stage==='pe'){G.pb.peTotal++;if(item.rel)G.pb.peRel++;}
@@ -1206,6 +1297,11 @@ function doItem(stage,id){
     const pen=COST_PEN[item.cost]||8;
     G.pb.aiPen=(G.pb.aiPen||0)+pen;
     G.nudge=`"${item.lbl}" was not appropriate here — efficiency −${pen} pts.`;
+  }
+  // EHR sandbox: ordering an irrelevant mid/high-cost investigation (M3 global) costs efficiency.
+  if(item._global&&!item.rel&&(stage==='basic'||stage==='advanced')&&(item.cost==='mid'||item.cost==='high')){
+    const pen=COST_PEN[item.cost]||0;
+    if(pen){G.pb.aiPen=(G.pb.aiPen||0)+pen;G.nudge=`"${item.lbl}" was non-contributory here — efficiency −${pen} pts.`;}
   }
   const sn=(CASES[G.caseIdx].sigNegs||[]).find(n=>n.id===id);
   if(sn)G.sigNegsEarned.add(id);
@@ -1223,7 +1319,7 @@ function toggleProf(){G.profOpen=!G.profOpen;render();}
 // ═══════════════════════════════════════════
 function showRankModal(stage){
   const doneArr=getDoneArr(stage);
-  const allItems=getSrcItems(stage);
+  const allItems=getStageItems(stage);
   const doneItems=doneArr.map(id=>allItems.find(i=>i.id===id)).filter(Boolean);
   document.getElementById('rank-modal-inner').innerHTML=mkRankPanel(stage,doneItems);
   document.getElementById('rank-modal').classList.remove('hide');
@@ -1514,7 +1610,7 @@ function renderDebrief(){
   const allDone=[];
   [{arr:G.done.h,src:'history'},{arr:G.done.pe,src:'pe'},{arr:G.done.b,src:'basic'},{arr:G.done.a,src:'advanced'}]
     .forEach(({arr,src})=>{
-      const items=(cas[src]||[]);
+      const items=getStageItems(src);
       arr.map(id=>items.find(i=>i.id===id)).filter(Boolean)
         .forEach(i=>allDone.push({...i,cat:src==='pe'?'pe':src==='basic'?'basic':src==='advanced'?'advanced':'history'}));
     });
