@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dx/ — Engine Prototype (mechanics demo)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══ Dx/ ENGINE PROTOTYPE — standalone, does not touch the real engine ═══
+   Demonstrates three candidate mechanics on one condensed case:
+   1 · LIVE PATIENT CLOCK — actions cost minutes; the patient evolves
+   2 · PROBABILISTIC DIFFERENTIAL — % sliders + proper-score calibration
+   3 · LIKELIHOOD-RATIO FEEDBACK — each finding shows how it shifts each dx */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:oklch(0.952 0.014 88);--surf:oklch(0.985 0.008 95);--surf2:oklch(0.928 0.018 90);
+  --bdr:oklch(0.865 0.018 88);--bdr2:oklch(0.74 0.024 85);
+  --text:oklch(0.275 0.022 265);--muted:oklch(0.44 0.022 265);--faint:oklch(0.57 0.018 265);
+  --accent:oklch(0.485 0.145 262);--accent-dim:oklch(0.93 0.03 262);
+  --danger:oklch(0.53 0.19 27);--danger-dim:oklch(0.93 0.045 27);
+  --ok:oklch(0.53 0.125 155);--ok-dim:oklch(0.93 0.05 155);
+  --warn:oklch(0.55 0.115 70);--warn-dim:oklch(0.945 0.055 92);
+  --sans:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace;--display:'Fraunces',serif;
+  --sh:0 1px 2px rgba(84,62,26,.10);--sh-md:0 3px 12px rgba(84,62,26,.14);
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.5;padding-bottom:60px}
+.wrap{max-width:1060px;margin:0 auto;padding:20px 20px 40px}
+.proto-banner{
+  font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;
+  background:var(--warn-dim);border:1px dashed var(--warn);border-radius:3px;
+  padding:8px 12px;margin-bottom:16px;color:var(--muted);
+}
+h1{font-family:var(--display);font-size:1.7rem;font-weight:700;margin-bottom:2px}
+h1 span{color:var(--danger)}
+.sub{color:var(--muted);font-size:.85rem;margin-bottom:18px}
+.mech{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.mech span{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--bdr2);border-radius:3px;padding:3px 8px;background:var(--surf);color:var(--muted)}
+
+/* Patient banner with live clock */
+.banner{
+  background:var(--surf);border:1px solid var(--bdr2);border-bottom:2px solid var(--text);
+  border-radius:3px 10px 0 0;padding:12px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  position:sticky;top:0;z-index:5;box-shadow:var(--sh-md);
+}
+.pt-nm{font-family:var(--display);font-weight:600;font-size:1.05rem}
+.pt-sub{font-family:var(--mono);font-size:.66rem;color:var(--muted);text-transform:uppercase}
+.clock{margin-left:auto;text-align:right}
+.clock-t{font-family:var(--mono);font-size:1.3rem;font-weight:700;letter-spacing:-.5px}
+.clock-t.late{color:var(--danger)}
+.clock-lbl{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
+.vits{display:flex;gap:0;border-left:1px solid var(--bdr);flex-wrap:wrap}
+.vit{padding:2px 14px;border-right:1px solid var(--bdr)}
+.vit-l{font-family:var(--mono);font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.vit-v{font-family:var(--mono);font-size:.95rem;transition:color .3s}
+.vit.abn{background:var(--warn-dim)}
+.vit.abn .vit-v,.vit.abn .vit-l{color:var(--danger)}
+.vit-v.flash{animation:vflash .8s}
+@keyframes vflash{0%,60%{background:var(--danger-dim)}100%{background:transparent}}
+
+.cols{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start;margin-top:14px}
+.panel{background:var(--surf);border:1px solid var(--bdr2);border-radius:3px 10px 10px 10px;box-shadow:var(--sh)}
+.panel-hd{font-family:var(--mono);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--bdr)}
+.panel-bd{padding:12px 14px}
+
+/* Vignette */
+.vig{font-size:.92rem;line-height:1.75;color:var(--text);padding:12px 14px;border-bottom:1px solid var(--bdr);background:
+  linear-gradient(90deg,transparent 0 30px,oklch(0.75 0.09 25) 30px 31px,transparent 31px);padding-left:44px}
+
+/* Actions */
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:12px 14px}
+.act{
+  display:flex;align-items:center;gap:8px;background:var(--surf);border:1px solid var(--bdr2);
+  border-radius:4px;padding:9px 11px;cursor:pointer;font-size:.82rem;text-align:left;
+  font-family:var(--sans);box-shadow:0 1px 0 rgba(84,62,26,.08);transition:all .12s;
+}
+.act:hover:not(:disabled){border-color:var(--accent);background:var(--accent-dim)}
+.act:active:not(:disabled){transform:translateY(1px);box-shadow:none}
+.act:disabled{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+.act-min{margin-left:auto;font-family:var(--mono);font-size:.62rem;font-weight:700;color:var(--muted);background:var(--surf2);border-radius:3px;padding:2px 7px;white-space:nowrap}
+
+/* Findings feed */
+.feed{display:flex;flex-direction:column;gap:8px;padding:12px 14px}
+.note{border:1px solid var(--bdr);border-left:3px solid var(--accent);border-radius:2px 8px 8px 2px;padding:10px 12px;background:var(--surf);animation:rise .3s ease both}
+.note.event{border-left-color:var(--danger);background:var(--danger-dim)}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.note-hd{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.note-t{font-family:var(--mono);font-size:.6rem;color:var(--faint)}
+.note-lbl{font-family:var(--mono);font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.note.event .note-lbl{color:var(--danger)}
+.note-txt{font-size:.85rem;line-height:1.6}
+.lr-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;padding-top:7px;border-top:1px dashed var(--bdr)}
+.lr{font-family:var(--mono);font-size:.6rem;border:1px solid var(--bdr);border-radius:3px;padding:2px 7px;background:var(--surf)}
+.lr b{font-weight:700}
+.lr.up{color:var(--ok);border-color:var(--ok)}
+.lr.dn{color:var(--danger);border-color:color-mix(in oklch,var(--danger) 45%,transparent)}
+.lr.neut{color:var(--faint)}
+.lr-cap{font-family:var(--mono);font-size:.56rem;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);width:100%}
+
+/* Probabilistic differential */
+.dx{padding:10px 0;border-bottom:1px dashed var(--bdr)}
+.dx:last-child{border-bottom:none}
+.dx-hd{display:flex;align-items:baseline;gap:8px;margin-bottom:5px}
+.dx-nm{font-weight:600;font-size:.86rem}
+.dx-tag{font-family:var(--mono);font-size:.54rem;font-weight:700;text-transform:uppercase;color:var(--danger);border:1px solid var(--danger);border-radius:2px;padding:1px 5px}
+.dx-pct{margin-left:auto;font-family:var(--mono);font-weight:700;font-size:.92rem;min-width:44px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+.dx-bar{height:5px;border-radius:2px;background:var(--surf2);margin-top:4px;overflow:hidden}
+.dx-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .25s ease}
+.sum-note{font-family:var(--mono);font-size:.62rem;color:var(--faint);padding:8px 0 2px;text-align:center}
+.commit{
+  width:100%;margin-top:10px;padding:12px;border:none;border-radius:4px;cursor:pointer;
+  background:var(--accent);color:#fff;font-family:var(--sans);font-weight:700;font-size:.88rem;
+  box-shadow:0 2px 0 color-mix(in oklch,var(--accent) 65%,black),var(--sh);transition:all .12s;
+}
+.commit:hover{background:color-mix(in oklch,var(--accent) 88%,white)}
+.commit:active{transform:translateY(2px);box-shadow:var(--sh)}
+
+/* Debrief */
+.grade-row{display:flex;gap:20px;align-items:center;padding:16px 14px;flex-wrap:wrap}
+.grade{
+  font-family:var(--mono);font-size:1.6rem;font-weight:700;border:3px double currentColor;border-radius:50%;
+  width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transform:rotate(-4deg);animation:stamp .5s ease both;
+}
+@keyframes stamp{0%{opacity:0;transform:scale(1.5) rotate(-9deg)}60%{opacity:1;transform:scale(.94) rotate(-2deg)}100%{transform:scale(1) rotate(-4deg)}}
+.grade.hi{color:var(--ok)}.grade.mid{color:var(--warn)}.grade.lo{color:var(--danger)}
+.verdict{font-family:var(--mono);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;display:inline-block;border:2px solid currentColor;border-radius:3px;padding:3px 10px;transform:rotate(-2deg);margin-bottom:6px}
+.verdict.good{color:var(--ok)}.verdict.bad{color:var(--danger)}
+.g-dx{font-family:var(--display);font-size:1.2rem;font-weight:600}
+.brk{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
+.brk-row{display:flex;gap:10px;align-items:baseline;font-size:.82rem;border-top:1px dashed var(--bdr);padding-top:8px}
+.brk-lbl{font-family:var(--mono);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);min-width:150px}
+.hidden{display:none}
+.back{font-family:var(--mono);font-size:.66rem;color:var(--muted);text-decoration:none;border:1px solid var(--bdr2);border-radius:3px;padding:6px 12px;display:inline-block;margin-bottom:14px;background:var(--surf)}
+.back:hover{border-color:var(--text);color:var(--text)}
+@media(max-width:860px){.cols{grid-template-columns:1fr}.acts{grid-template-columns:1fr}.clock{margin-left:0}.vits{border-left:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← back to Dx/</a>
+  <div class="proto-banner">Engine prototype — mechanics demo only · the real engine &amp; cases are untouched · content abridged from case 001</div>
+  <h1>Dx<span>/</span> engine lab</h1>
+  <div class="sub">Three candidate mechanics, playable in one condensed case. Order actions on the left; manage your probabilistic differential on the right; watch the clock.</div>
+  <div class="mech"><span>① live patient clock</span><span>② probabilistic differential + calibration score</span><span>③ likelihood-ratio feedback per finding</span></div>
+
+  <div class="banner">
+    <div><div class="pt-nm">Tan Wei Ming</div><div class="pt-sub">62M · Bus driver · ED bay 4</div></div>
+    <div class="vits" id="vits"></div>
+    <div class="clock"><div class="clock-t" id="clock">T+0 min</div><div class="clock-lbl">time since arrival</div></div>
+  </div>
+
+  <div class="cols">
+    <div>
+      <div class="panel" id="playPanel">
+        <div class="vig">Walks into ED supported by his wife, pale and sweaty. Heavy, squeezing discomfort in his upper abdomen for the past 2 hours, nauseated, vomited once on the way in.</div>
+        <div class="panel-hd">Order — each action costs patient time</div>
+        <div class="acts" id="acts"></div>
+        <div class="panel-hd">Chart — findings in the order you asked</div>
+        <div class="feed" id="feed"><div class="note"><div class="note-hd"><span class="note-lbl" style="color:var(--faint)">Waiting</span></div><div class="note-txt" style="color:var(--faint);font-style:italic">Nothing charted yet. The patient is deteriorating whether or not you act.</div></div></div>
+      </div>
+
+      <div class="panel hidden" id="debrief" style="margin-top:14px">
+        <div class="panel-hd">Debrief — how this scores</div>
+        <div class="grade-row"><div class="grade" id="grade">—</div><div><div class="verdict" id="verdict">—</div><div class="g-dx" id="gdx">—</div><div class="pt-sub" id="gsub"></div></div></div>
+        <div class="brk" id="brk"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-hd">Differential — allocate your belief (%)</div>
+      <div class="panel-bd" id="dxlist"></div>
+      <div class="sum-note" id="sumNote"></div>
+      <div style="padding:0 14px 14px"><button class="commit" id="commitBtn" onclick="commit()">Commit</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* ── data ─────────────────────────────────── */
+const DXS=[
+  {id:'mi',  nm:'Myocardial Infarction', mnm:true, truth:1},
+  {id:'ad',  nm:'Aortic Dissection',     mnm:true, truth:0},
+  {id:'pe',  nm:'Pulmonary Embolism',    mnm:true, truth:0},
+  {id:'panc',nm:'Acute Pancreatitis',    mnm:false,truth:0},
+  {id:'gord',nm:'GORD / dyspepsia',      mnm:false,truth:0},
+];
+const LR_TXT={2:'↑↑',1:'↑',0:'—','-1':'↓','-2':'↓↓'};
+const ACTIONS=[
+  {id:'hx',  lbl:'Focused history',        min:5, find:'Crushing central pressure radiating to jaw and left arm. Gradual onset — no sudden tearing pain. Not pleuritic, not positional. Two milder self-limiting episodes this week.', lr:{mi:2,ad:-1,pe:-1,panc:0,gord:-1}},
+  {id:'bps', lbl:'Bilateral arm BPs',      min:2, find:'Right 158/96, left 154/94 — equal. No radio-radial delay, no pulse deficit.', lr:{mi:0,ad:-2,pe:0,panc:0,gord:0}},
+  {id:'ecg', lbl:'12-lead ECG',            min:5, find:'ST elevation in II, III, aVF with reciprocal depression in I and aVL.', lr:{mi:2,ad:0,pe:-1,panc:-2,gord:-2}},
+  {id:'trop',lbl:'hs-Troponin',            min:20,find:'hs-TnI 480 ng/L (ref <34) — markedly elevated.', lr:{mi:2,ad:0,pe:1,panc:-1,gord:-2}},
+  {id:'cxr', lbl:'Portable CXR',           min:15,find:'Normal mediastinal width. Clear lung fields.', lr:{mi:0,ad:-1,pe:0,panc:0,gord:0}},
+  {id:'lip', lbl:'Lipase',                 min:20,find:'Lipase 48 U/L — within normal limits.', lr:{mi:0,ad:0,pe:0,panc:-2,gord:0}},
+  {id:'cta', lbl:'CT aortogram',           min:35,find:'No intimal flap, no dissection. Heavy coronary calcification noted.', lr:{mi:1,ad:-2,pe:0,panc:0,gord:0}},
+];
+/* deterioration script: the patient evolves on the clock, not on your convenience */
+const EVENTS=[
+  {t:30, vit:{hr:'48',bp:'118/74'},   txt:'Nurse: “He looks worse — clammy, and the monitor shows his rate dropping.” (Inferior MIs love the AV node.)'},
+  {t:55, vit:{hr:'42',bp:'96/60'},    txt:'BP falling. He is now drowsy and peripherally cool. You are running out of runway.'},
+  {t:80, vit:{hr:'38',bp:'82/50',spo2:'92'}, txt:'Peri-arrest physiology. Any further delay to reperfusion is likely to be unsurvivable.'},
+];
+
+/* ── state ───────────────────────────────── */
+let t=0, done=[], probs={mi:20,ad:20,pe:20,panc:20,gord:20}, fired=[], committed=false, ecgAt=null;
+
+/* ── render ──────────────────────────────── */
+const $=id=>document.getElementById(id);
+function vitals(){
+  const base={hr:'56',bp:'158/96',spo2:'96',rr:'18'};
+  EVENTS.forEach(e=>{if(t>=e.t)Object.assign(base,e.vit)});
+  const abn=k=>({hr:+base.hr<50||+base.hr>100,bp:+base.bp.split('/')[0]<100,spo2:+base.spo2<94,rr:+base.rr>20}[k]);
+  $('vits').innerHTML=[['HR',base.hr],['BP',base.bp],['SpO₂',base.spo2],['RR',base.rr]]
+    .map(([l,v])=>`<div class="vit${abn(l.toLowerCase().replace('₂',''))?' abn':''}"><div class="vit-l">${l}</div><div class="vit-v">${v}</div></div>`).join('');
+}
+function renderActs(){
+  $('acts').innerHTML=ACTIONS.map(a=>`<button class="act" ${done.includes(a.id)||committed?'disabled':''} onclick="act('${a.id}')"><span>${a.lbl}</span><span class="act-min">+${a.min} min</span></button>`).join('');
+}
+function renderDx(){
+  const tot=Object.values(probs).reduce((s,v)=>s+v,0)||1;
+  $('dxlist').innerHTML=DXS.map(d=>{
+    const pct=Math.round(100*probs[d.id]/tot);
+    return`<div class="dx">
+      <div class="dx-hd"><span class="dx-nm">${d.nm}</span>${d.mnm?'<span class="dx-tag">MNM</span>':''}<span class="dx-pct">${pct}%</span></div>
+      <input type="range" min="0" max="100" value="${probs[d.id]}" ${committed?'disabled':''} oninput="slide('${d.id}',this.value)">
+      <div class="dx-bar"><div class="dx-fill" style="width:${pct}%"></div></div>
+    </div>`;}).join('');
+  $('sumNote').textContent='Raw sliders are normalised to 100% — the percentages are your committed belief.';
+  const top=DXS.reduce((a,b)=>probs[a.id]>=probs[b.id]?a:b);
+  $('commitBtn').textContent=committed?'Committed':'Commit: '+top.nm+' ('+Math.round(100*probs[top.id]/tot)+'%)';
+}
+function clock(){const c=$('clock');c.textContent='T+'+t+' min';c.classList.toggle('late',t>=30)}
+function addNote(lbl,txt,lr,ev){
+  const chips=lr?`<div class="lr-row"><span class="lr-cap">How this finding moves each diagnosis (likelihood ratio, study aid)</span>${DXS.map(d=>{
+    const v=lr[d.id]??0;const cls=v>0?'up':v<0?'dn':'neut';
+    return`<span class="lr ${cls}">${d.nm.split(' ')[0]} <b>${LR_TXT[v]}</b></span>`}).join('')}</div>`:'';
+  $('feed').insertAdjacentHTML('afterbegin',
+    `<div class="note${ev?' event':''}"><div class="note-hd"><span class="note-t">T+${t}′</span><span class="note-lbl">${lbl}</span></div><div class="note-txt">${txt}</div>${chips}</div>`);
+}
+function tick(){
+  EVENTS.forEach(e=>{if(t>=e.t&&!fired.includes(e.t)){fired.push(e.t);addNote('Patient update — deterioration',e.txt,null,true);}});
+  vitals();clock();
+}
+
+/* ── interactions ────────────────────────── */
+window.act=function(id){
+  if(committed)return;
+  const a=ACTIONS.find(x=>x.id===id);
+  done.push(id);t+=a.min;
+  if(id==='ecg')ecgAt=t;
+  addNote(a.lbl+' · +'+a.min+' min',a.find,a.lr);
+  tick();renderActs();
+};
+window.slide=function(id,v){probs[id]=+v;renderDx();};
+window.commit=function(){
+  if(committed)return;committed=true;
+  const tot=Object.values(probs).reduce((s,v)=>s+v,0)||1;
+  const p={};DXS.forEach(d=>p[d.id]=probs[d.id]/tot);
+  const top=DXS.reduce((a,b)=>p[a.id]>=p[b.id]?a:b);
+  const right=top.id==='mi';
+  /* Brier score over the differential — a proper scoring rule: you cannot game it by hedging or by overconfidence */
+  const brier=DXS.reduce((s,d)=>s+Math.pow(p[d.id]-d.truth,2),0);
+  const calib=Math.max(0,Math.round(100*(1-brier/2)));
+  const timeScore=t<=30?100:t<=55?70:t<=80?40:10;
+  const total=Math.round(.4*(right?100:0)+.35*calib+.25*timeScore);
+  $('grade').textContent=total;
+  $('grade').className='grade '+(total>=75?'hi':total>=50?'mid':'lo');
+  $('verdict').textContent=right?'Correct — Inferior STEMI':'Missed — it was Inferior STEMI';
+  $('verdict').className='verdict '+(right?'good':'bad');
+  $('gdx').textContent='You committed '+Math.round(p[top.id]*100)+'% to '+top.nm;
+  $('gsub').textContent='Door-to-commit: '+t+' min'+(ecgAt?' · door-to-ECG: '+ecgAt+' min':' · ECG never done');
+  $('brk').innerHTML=[
+    ['Diagnosis (40%)',right?'Top-weighted diagnosis correct.':'Top belief on '+top.nm+' — the ST elevation, troponin and jaw radiation pointed inferior.'],
+    ['Calibration (35%)','Brier '+brier.toFixed(2)+' → '+calib+'/100. Perfect = 100% on MI. Hedging everything equally scores poorly; so does confident-and-wrong. This is the mechanic ordinal ranking cannot teach.'],
+    ['Tempo (25%)',timeScore+'/100 for committing at T+'+t+'. The deterioration script ran at T+30/55/80 regardless of your choices — inferior MI with AV-node ischaemia does not wait. ECG (5 min) answers this case; the CT aortogram (35 min) costs a third of your survivable window.'],
+    ['Engine note','All three mechanics reuse existing case data: time costs extend the cost tiers, the LR chips extend each item\'s rel/exp fields, and the deterioration script is ~5 lines of authored JSON per case.']
+  ].map(r=>`<div class="brk-row"><span class="brk-lbl">${r[0]}</span><span>${r[1]}</span></div>`).join('');
+  $('debrief').classList.remove('hidden');
+  renderActs();renderDx();
+  $('debrief').scrollIntoView({behavior:'smooth'});
+};
+
+vitals();clock();renderActs();renderDx();
+</script>
+</body>
+</html>
