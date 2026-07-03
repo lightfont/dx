@@ -30,7 +30,7 @@
         },
         "reveal": { "hint": "mask-diagnoses", "debrief": "full" }
       },
-      "vignette": "Mr Tan Wei Ming is a 62-year-old male bus driver who walks into the Emergency Department supported by his wife, looking pale and sweaty. He tells you he has had a heavy, squeezing discomfort in his upper abdomen for the past 2 hours. He has also been feeling nauseous and vomited once on the way to hospital.",
+      "vignette": "Mr Tan Wei Ming is a 62-year-old bus driver brought into the Emergency Department by his wife with pain in his upper abdomen that came on a couple of hours ago. He looks unwell.",
       "caseMNMs": [
         {
           "name": "Myocardial Infarction",
@@ -487,7 +487,7 @@
           "lbl": "High-Sensitivity Troponin T",
           "cost": "low",
           "rel": true,
-          "find": "Troponin (hs-TnI): 248 ng/L at arrival (normal under 26 ng/L — about 10 times above normal). Repeat at 3 hours: 1,840 ng/L — rising significantly.",
+          "find": "Troponin (hs-TnT): 248 ng/L at arrival (normal under 14 ng/L — roughly 18 times above normal). Repeat at 3 hours: 1,840 ng/L — rising significantly.",
           "exp": "Rising troponin confirms heart muscle cells are dying. Troponin is a protein released when heart cells are damaged. The pattern of a rising level (not just a one-off elevation) is what tells us this is an acute, ongoing event. Combined with the ECG, this confirms Inferior STEMI."
         },
         {
@@ -707,7 +707,7 @@
         },
         "reveal": { "hint": "mask-diagnoses", "debrief": "full" }
       },
-      "vignette": "Mr Lim Ah Kow, a 58-year-old retired factory worker, is brought into the Emergency Department by his son. His son reports that his father has been getting progressively more breathless over the past 6 weeks, and has lost a lot of weight. Today, he seems more confused and unsteady than usual.",
+      "vignette": "Mr Lim Ah Kow, a 58-year-old retired factory worker, is brought into the Emergency Department by his son with breathlessness that has worsened over recent weeks. Today he seems more confused than usual.",
       "caseMNMs": [
         {
           "name": "Pulmonary Embolism",
@@ -1303,7 +1303,7 @@
         },
         "reveal": { "hint": "mask-diagnoses", "debrief": "full" }
       },
-      "vignette": "Miss Chen Mei Ling is a 28-year-old primary school teacher who presents to the Emergency Department with a 5-day history of progressively worsening headache. The headache has not responded to paracetamol. This morning, she noticed weakness in her left arm while writing on the whiteboard.",
+      "vignette": "Miss Chen Mei Ling is a 28-year-old primary school teacher who presents to the Emergency Department with a headache that has worsened over several days. This morning she noticed weakness in her left arm.",
       "caseMNMs": [
         {
           "name": "Subarachnoid Haemorrhage (SAH)",
@@ -1894,7 +1894,7 @@
           "debrief": "full"
         }
       },
-      "vignette": "Ms Siti Rahimah is a 30-year-old accountant who presents with a 3-week history of a drooping right eyelid and intermittent double vision. She has noticed that both are barely there when she wakes but become more obvious as the day goes on, particularly after long stretches at her computer.",
+      "vignette": "Ms Siti Rahimah is a 30-year-old accountant who presents with a drooping right eyelid and intermittent double vision that have come on over the past few weeks.",
       "caseMNMs": [
         {
           "name": "Myasthenic Crisis",
@@ -2579,7 +2579,7 @@
     },
     {
       "id": "case_005",
-      "title": "Right Upper Quadrant Pain & Fever",
+      "title": "Right-Sided Abdominal Pain",
       "approach": "An Approach to Abdominal Pain",
       "secondaryApproach": "An Approach to Right Upper Quadrant Pain",
       "system": "Gastrointestinal",
@@ -2646,7 +2646,7 @@
           "debrief": "full"
         }
       },
-      "vignette": "Mdm Liew Geok Choo is a 50-year-old business executive who presents with three days of constant pain in the right upper part of her abdomen, gradually worsening. She feels warm and has vomited twice, but has otherwise been coping at home until today.",
+      "vignette": "Mdm Liew Geok Choo is a 50-year-old business executive who presents with pain in the right side of her upper abdomen that has been troubling her for the past few days.",
       "caseMNMs": [
         {
           "name": "Ascending Cholangitis",
@@ -3358,7 +3358,7 @@
     },
     {
       "id": "case_006",
-      "title": "Epigastric Pain Radiating to the Back",
+      "title": "Upper Abdominal Pain",
       "approach": "An Approach to Abdominal Pain",
       "secondaryApproach": "An Approach to Epigastric Pain",
       "system": "Gastrointestinal",
@@ -3428,7 +3428,7 @@
           "debrief": "full"
         }
       },
-      "vignette": "Mdm Goh Swee Lan is a 52-year-old hawker who presents with two days of severe, constant pain in the upper-middle of her abdomen. It came on suddenly and has not let up. She has vomited twice and feels feverish.",
+      "vignette": "Mdm Goh Swee Lan is a 52-year-old hawker who presents with pain in the upper part of her abdomen that came on over the last day or two.",
       "caseMNMs": [
         {
           "name": "Aortic Dissection",
@@ -4176,7 +4176,7 @@
     },
     {
       "id": "case_007",
-      "title": "Hand Tremor at Rest",
+      "title": "Hand Tremor",
       "approach": "An Approach to Tremor",
       "secondaryApproach": "An Approach to Movement Disorders",
       "system": "Neurology",
@@ -4241,7 +4241,7 @@
           "debrief": "full"
         }
       },
-      "vignette": "Mr Tan Ah Seng is a 68-year-old retiree brought in by his daughter because of a tremor in his right hand that she has noticed over the past several months. She says it is most obvious when his hand is resting in his lap.",
+      "vignette": "Mr Tan Ah Seng is a 68-year-old retiree brought in by his daughter, who has noticed a tremor in his right hand over the past several months.",
       "caseMNMs": [
         {
           "name": "Drug-Induced Parkinsonism",
@@ -4848,7 +4848,7 @@
     },
     {
       "id": "case_008",
-      "title": "Ascending Leg Weakness",
+      "title": "Leg Weakness",
       "approach": "An Approach to Acute Generalised Weakness",
       "secondaryApproach": "An Approach to Ascending Weakness",
       "system": "Neurology",
@@ -4914,7 +4914,7 @@
           "debrief": "full"
         }
       },
-      "vignette": "Mr Kumar Raj is a 40-year-old delivery rider who presents with a few days of progressive weakness in both legs. Over the last day it has started to involve his hands, and he is finding it harder to climb the stairs to his flat.",
+      "vignette": "Mr Kumar Raj is a 40-year-old delivery rider who presents with weakness in both legs that has come on over the past few days.",
       "caseMNMs": [
         {
           "name": "Spinal Cord Compression",
@@ -5633,7 +5633,7 @@
           "debrief": "full"
         }
       },
-      "vignette": "Mdm Wong Lai Heng is a 72-year-old retired teacher who presents with a two-week history of a new headache over her right temple. She has never been troubled by headaches before.",
+      "vignette": "Mdm Wong Lai Heng is a 72-year-old retired teacher who presents with a new headache over her right temple that has been present for about two weeks.",
       "caseMNMs": [
         {
           "name": "Temporal Arteritis (Giant Cell Arteritis)",
@@ -6309,7 +6309,7 @@
           "debrief": "full"
         }
       },
-      "vignette": "Ms Priya Devi is a 32-year-old bank officer who presents with several weeks of intermittent palpitations — a racing, pounding awareness of her own heartbeat — which have become more frequent over the last week.",
+      "vignette": "Ms Priya Devi is a 32-year-old bank officer who presents with palpitations that have been happening on and off for several weeks and have become more frequent recently.",
       "caseMNMs": [
         {
           "name": "Ventricular Tachycardia",
@@ -7075,7 +7075,7 @@
           "debrief": "full"
         }
       },
-      "vignette": "Ms Rachel Lim is a 29-year-old graphic designer who presents with four days of numbness, and then weakness, spreading up her left arm. It has come on gradually rather than all at once.",
+      "vignette": "Ms Rachel Lim is a 29-year-old graphic designer who presents with numbness and weakness in her left arm that developed over the past few days.",
       "caseMNMs": [
         {
           "name": "Spinal Cord Compression",
