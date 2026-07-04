@@ -3307,7 +3307,7 @@
       ],
       "keyTeachingPoints": [
         "Tokyo Guidelines 2018 (TG18) define acute cholecystitis by three parts: A — local signs (Murphy's sign, RUQ pain/mass/tenderness); B — systemic signs (fever, raised CRP, raised white cell count); C — characteristic imaging. A definite diagnosis needs A + B + C; A + B alone is a suspected diagnosis.",
-        "Biliary colic is self-limiting (typically <6 hours) and follows fatty meals; when the pain becomes persistent (>6 hours) and is accompanied by fever and a raised white cell count, the stone has impacted the cystic duct and the picture is acute cholecystitis.",
+        "Biliary colic is self-limiting (typically <6 hours), follows fatty meals, and is characteristically AFEBRILE with a NORMAL white cell count — it is transient cystic-duct obstruction without inflammation or infection. Only once the pain becomes persistent (>6 hours) and is joined by fever and a raised white cell count has inflammation set in, and the picture has become acute cholecystitis.",
         "The dangerous escalation is ascending cholangitis — Charcot's triad (RUQ pain, fever, jaundice), and Reynolds' pentad with added hypotension and confusion. Look for jaundice, a cholestatic liver panel and a dilated CBD; their absence keeps the diagnosis at cholecystitis.",
         "Always check lipase: gallstones are the leading cause of acute pancreatitis, and a lipase >3× the upper limit of normal would reclassify the patient (Revised Atlanta classification, 2012).",
         "Ultrasound is the first-line investigation — gallbladder wall thickening (>3–4 mm), gallstones with posterior acoustic shadowing, pericholecystic fluid and a sonographic Murphy's sign — and it reads the CBD calibre to screen for ductal stones.",
@@ -3402,10 +3402,10 @@
       },
       "allergies": "NKDA",
       "background": [
-        "Gallstones noted on a previous ultrasound",
-        "Hyperlipidaemia (high triglycerides)",
         "Type 2 Diabetes",
         "Hypertension",
+        "Hyperlipidaemia",
+        "Osteoarthritis — occasional over-the-counter NSAIDs",
         "Only occasional alcohol"
       ],
       "pathway": {
@@ -3465,7 +3465,11 @@
         "Choledocholithiasis": 35,
         "Acute Cholecystitis": 30,
         "Ascending Cholangitis": 25,
-        "Peptic Ulcer Disease": 15
+        "Perforated Viscus": 20,
+        "Peptic Ulcer Disease": 15,
+        "Mesenteric Ischaemia": 15,
+        "Acute Gastritis": 10,
+        "Aortic Dissection": 10
       },
       "required": [
         "pe02",
@@ -3490,8 +3494,8 @@
             "character of pain",
             "constant pain"
           ],
-          "find": "Severe, constant, boring epigastric pain that began suddenly two days ago and has not eased. It radiates straight THROUGH to the back, is slightly better sitting up and leaning forward, and worse lying flat.",
-          "exp": "Epigastric pain boring through to the back, eased by leaning forward, is the classic pancreatitis script. But back radiation also overlaps with an aortic catastrophe, and epigastric pain with peptic ulcer disease — so the history must actively separate these."
+          "find": "Upper-abdominal (epigastric) pain that came on over the past day or so after a heavy meal and has steadily become severe and constant. She first put it down to her usual 'gastric' trouble and took an antacid without relief. On direct questioning it does bore through to the back and is perhaps a little easier sitting forward, worse lying flat.",
+          "exp": "Constant epigastric pain boring through to the back and eased by leaning forward is the classic pancreatitis script — but here it is partly masked by her long-standing dyspepsia and a fatty-meal trigger, and the same features overlap with a posterior peptic ulcer, biliary disease and, dangerously, an aortic catastrophe. A good pain history narrows the field but does NOT settle it: that is the job of the lipase and the imaging."
         },
         {
           "id": "h02",
@@ -3553,8 +3557,8 @@
             "peptic ulcer",
             "dyspepsia"
           ],
-          "find": "Nausea with two episodes of non-bilious, non-bloody vomiting. No haematemesis or melena. No long-term NSAID or steroid use and no known peptic ulcer or H. pylori.",
-          "exp": "A perforated or bleeding peptic ulcer is a key epigastric differential; the absence of bleeding and ulcer risk factors makes it less likely but does not exclude perforation, which the examination and erect film address."
+          "find": "Nausea with two episodes of non-bilious, non-bloody vomiting. No haematemesis and no melena. She does take over-the-counter NSAIDs intermittently for knee osteoarthritis and has had episodic epigastric 'gastric' discomfort for months, but has never been formally investigated for a peptic ulcer or H. pylori.",
+          "exp": "A perforated or bleeding peptic ulcer is a key epigastric differential, and her intermittent NSAID use plus chronic dyspepsia keep it firmly in play. There is no overt GI bleeding, but NSAID-related ulcers can perforate — which the abdominal examination and an erect chest film are used to exclude."
         },
         {
           "id": "h05",
@@ -3576,8 +3580,8 @@
             "mumps",
             "i get smashed"
           ],
-          "find": "Known gallstones on a previous ultrasound and longstanding post-meal dyspepsia. Only occasional, small amounts of alcohol. Hyperlipidaemic with a history of high triglycerides. No recent ERCP or OGD, no offending drugs, no symptoms of hypercalcaemia, and no recent mumps.",
-          "exp": "Walking through the 'I GET SMASHED' aetiologies, the leading candidates here are gallstones and hypertriglyceridaemia. Establishing the cause matters because gallstone disease is the part that may eventually need duct clearance and cholecystectomy."
+          "find": "On a previous ultrasound she was told she has gallstones, and she has had longstanding post-meal dyspepsia. Only occasional, small amounts of alcohol. Known hyperlipidaemia (the exact triglyceride level is checked on the bloods). No recent ERCP or OGD, no new medications, no symptoms of hypercalcaemia, and no recent mumps.",
+          "exp": "Walking through the 'I GET SMASHED' aetiologies, the candidates worth chasing here are gallstones and hypertriglyceridaemia. Establishing the cause matters: gallstone disease is what may eventually need duct clearance and a cholecystectomy, whereas a triglyceride level in the causal range (>11 mmol/L) would change management entirely — so the lipid level is checked rather than assumed."
         },
         {
           "id": "h06",
@@ -3652,9 +3656,9 @@
             "septic",
             "unwell"
           ],
-          "find": "Looks unwell and prefers to sit forward. Heart rate 104, respiratory rate 22, temperature 37.9°C, blood pressure 114/72, oxygen saturation 95% on room air — meeting SIRS criteria.",
-          "exp": "Tachycardia, tachypnoea and fever indicate a systemic inflammatory response. Tachypnoea and a borderline saturation are early warnings of severe disease (third-spacing, effusion, evolving ARDS) and feed the severity score.",
-          "lookingFor": "SIRS (HR, RR, temp, WCC); early respiratory compromise (RR, SpO₂) signalling severe pancreatitis."
+          "find": "Looks unwell and prefers to sit forward. Heart rate 104, respiratory rate 22, temperature 37.9°C, blood pressure 114/72, oxygen saturation 95% on room air. She meets SIRS through tachycardia (>90), tachypnoea (>20) and — once the bloods return — leukocytosis (>12); the temperature itself is only mildly raised.",
+          "exp": "Tachycardia, tachypnoea and (on the bloods) leukocytosis constitute a systemic inflammatory response. The mildly low oxygen saturation is NOT itself a SIRS criterion, but it is an early warning of severe disease (third-spacing, pleural effusion, evolving ARDS). Note the Glasgow severity score uses the arterial PaO₂ (<8 kPa) — not the bedside saturation.",
+          "lookingFor": "SIRS (HR, RR, temperature, WCC — not SpO₂); early respiratory compromise (RR, PaO₂) signalling severe pancreatitis."
         },
         {
           "id": "pe02",
@@ -3907,6 +3911,57 @@
           ],
           "find": "Clotting and group-and-match sent as a baseline (in case intervention is needed). Dengue NS1 negative.",
           "exp": "Baseline coagulation and crossmatch are prudent before any possible endoscopic or surgical intervention; the negative dengue test removes an endemic differential."
+        },
+        {
+          "id": "bi10",
+          "lbl": "Erect Chest X-ray (CXR)",
+          "cost": "low",
+          "rel": true,
+          "sigNeg": true,
+          "aliases": [
+            "cxr",
+            "chest xray",
+            "chest x-ray",
+            "erect chest film",
+            "air under diaphragm",
+            "free air",
+            "pneumoperitoneum",
+            "perforation film"
+          ],
+          "find": "No free air under the diaphragm. Lungs show a small left pleural effusion with mild basal atelectasis; no consolidation.",
+          "exp": "An erect chest film is the quick bedside screen for pneumoperitoneum from a perforated viscus (the key epigastric can't-miss) and for a basal pneumonia mimicking upper-abdominal pain. The absence of free air argues strongly against a free perforation; a small sympathetic pleural effusion is common in pancreatitis and feeds the severity picture.",
+          "imageUrl": "case006_cxr_erect.jpg"
+        },
+        {
+          "id": "bi11",
+          "lbl": "Fasting Lipids / Serum Triglycerides",
+          "cost": "low",
+          "rel": true,
+          "aliases": [
+            "triglycerides",
+            "fasting lipids",
+            "lipid panel",
+            "hypertriglyceridaemia",
+            "tg",
+            "cholesterol"
+          ],
+          "find": "Triglycerides mildly elevated at 3.6 mmol/L — well below the >11 mmol/L range at which hypertriglyceridaemia itself precipitates pancreatitis.",
+          "exp": "Severe hypertriglyceridaemia (>11 mmol/L) is the third-commonest cause of acute pancreatitis and must be checked, especially in a hyperlipidaemic patient. Here the level is only mildly raised — a cardiovascular risk factor, but not the culprit — which keeps gallstones as the leading aetiology once the ultrasound and ALT are seen."
+        },
+        {
+          "id": "bi12",
+          "lbl": "Urinalysis / Urine dip",
+          "cost": "low",
+          "rel": false,
+          "aliases": [
+            "urine dip",
+            "urinalysis",
+            "urine ketones",
+            "urine microscopy",
+            "urine dipstick"
+          ],
+          "find": "Trace ketones only; no glucose, no nitrites or leucocytes, no blood.",
+          "exp": "A cheap, quick screen: no significant ketonuria argues against diabetic ketoacidosis as a cause of the abdominal pain, and a clean dip makes a urinary-tract or renal-tract source unlikely. Low-yield here but reasonable for completeness."
         }
       ],
       "advanced": [
@@ -4007,6 +4062,21 @@
           ],
           "find": "Aorta of normal calibre with no dissection flap and no aneurysm.",
           "exp": "Appropriate when the back-radiating pain raises genuine concern for aortic dissection or a leaking aneurysm — because clinical signs alone cannot exclude them. Normal here, retiring the aortic differential."
+        },
+        {
+          "id": "ai07",
+          "lbl": "OGD (Oesophago-gastro-duodenoscopy)",
+          "cost": "high",
+          "rel": false,
+          "aliases": [
+            "ogd",
+            "endoscopy",
+            "gastroscopy",
+            "upper gi endoscopy",
+            "oesophagogastroduodenoscopy"
+          ],
+          "find": "Not appropriate in the acute setting. Endoscopy is not needed to diagnose pancreatitis and is best deferred; it would be considered electively for the dyspepsia/peptic-ulcer question once she has recovered.",
+          "exp": "OGD is the definitive test for peptic ulcer disease, so it is tempting if you have anchored on dyspepsia — but it has no acute role here (the diagnosis is made on lipase) and air insufflation is unwise if a perforation has not been excluded. The right move is to exclude free air on the erect film first and defer endoscopy to the outpatient setting."
         }
       ],
       "sigNegs": [
@@ -4023,6 +4093,11 @@
         {
           "id": "pe03",
           "label": "No generalised peritonism, bowel sounds present → perforated viscus less likely",
+          "pts": 8
+        },
+        {
+          "id": "bi10",
+          "label": "No free air under the diaphragm on the erect chest film → perforated viscus less likely",
           "pts": 8
         },
         {
@@ -4092,7 +4167,8 @@
             },
             {
               "type": "inv",
-              "text": "No free air on the CT (or erect chest film)"
+              "item_id": "bi10",
+              "text": "No free air under the diaphragm on the erect chest film (and none on CT)"
             }
           ]
         }
