@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20260703f">
+<link rel="stylesheet" href="style.css?v=20260709a">
 <script>
 /* Design compare: "classic" (style.css) · "v2" Obsidian Glass (style2.css) · "v3" Case File (style3.css).
    Runs before paint — no FOUC. Switch via the floating toggle, or ?design=classic|v2|v3 in the URL. */
@@ -150,6 +150,7 @@
     </div>
   </div>
   <div id="content"></div>
+  <div id="stageToast" class="stage-toast hide" aria-live="polite"></div>
 </div>
 
 <script>
@@ -615,6 +616,19 @@ function wsBanner(cas,stage){
     ${nextBtn}
   </div>`;
 }
+// Always-visible stage stepper. Investigations shown as one step (Basic/Advanced sectioned within) to match the merged-but-sectioned direction.
+function wsStepper(stage){
+  const steps=[['history','History'],['pe','Examination'],['inv','Investigations'],['dx','Diagnosis']];
+  const idxByStage={setup:-1,history:0,pe:1,basic:2,advanced:2,commit:3,debrief:3};
+  const cur=idxByStage[stage]!=null?idxByStage[stage]:-1;
+  const subInv=stage==='basic'?' · Basic':stage==='advanced'?' · Advanced':'';
+  return`<div class="ws-stepper">`+steps.map((s,i)=>{
+    const cls=i<cur?'done':i===cur?'active':'upcoming';
+    const sub=(s[0]==='inv'&&i===cur&&subInv)?`<span class="ws-step-sub">${subInv}</span>`:'';
+    const line=i<steps.length-1?`<span class="ws-step-line ${i<cur?'done':''}"></span>`:'';
+    return`<div class="ws-step ${cls}"><span class="ws-step-dot">${i<cur?'✓':i+1}</span><span class="ws-step-lbl">${s[1]}${sub}</span></div>${line}`;
+  }).join('')+`</div>`;
+}
 function wsElicited(cas){
   // Allergies/background are only "known" once the student has taken the relevant history
   const labels=(G.done.h||[]).map(id=>(((cas.history||[]).find(i=>i.id===id))||{}).lbl||'').join(' | ').toLowerCase();
@@ -711,13 +725,32 @@ function wsCenter(cas,stage){
 function renderWorkstation(stage){
   const cas=CASES[G.caseIdx];
   const mt=G._mtab||'work';
+  // Stage-progression toast: fire when the stage actually changes (History → Examination → …)
+  if(G._shownStage!==undefined&&G._shownStage!==stage)showStageToast(STAGE_LBL[stage]||stage);
+  G._shownStage=stage;
   document.getElementById('content').innerHTML=
-    `<div class="wks m-${mt}">${wsBanner(cas,stage)}<div class="ws-body">${wsChart(cas,stage)}<div class="ws-center">${wsCenter(cas,stage)}</div>${wsRail(cas,stage)}</div>
+    `<div class="wks m-${mt}">${wsBanner(cas,stage)}<div class="ws-stepbar">${wsStepper(stage)}</div><div class="ws-body">${wsChart(cas,stage)}<div class="ws-center">${wsCenter(cas,stage)}</div>${wsRail(cas,stage)}</div>
       <div class="ws-mtabs">
         <button class="ws-mtab${mt==='chart'?' on':''}" onclick="setMTab('chart')">📋 Chart</button>
         <button class="ws-mtab${mt==='work'?' on':''}" onclick="setMTab('work')">🩺 Workspace</button>
         <button class="ws-mtab${mt==='diff'?' on':''}" onclick="setMTab('diff')">🧠 Differential</button>
       </div></div>`;
+  // After an action, reveal the newest finding instead of snapping back to the top of the chart.
+  if(G._followTail){
+    G._followTail=false;
+    requestAnimationFrame(()=>{
+      const fs=document.querySelectorAll('#content .ws-center .ws-findings .fc, #content .ws-center .ws-logitem');
+      const last=fs[fs.length-1];
+      if(last)last.scrollIntoView({block:'center',behavior:'smooth'});
+    });
+  }
+}
+// Transient "Now: <stage>" toast so stage progression is unmistakable (it was hidden behind the differential window).
+function showStageToast(label){
+  const t=document.getElementById('stageToast');if(!t)return;
+  t.textContent='Now: '+label;
+  t.classList.remove('hide');t.classList.remove('show');void t.offsetWidth;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>{t.classList.remove('show');t.classList.add('hide');},1900);
 }
 function setMTab(t){G._mtab=t;render();}
 const CAT_META={history:['hf','History'],pe:['pef','Examination'],basic:['bif','Basic Inv'],advanced:['aif','Advanced Inv']};
@@ -798,6 +831,27 @@ const SYN_GROUPS=[
   ['respiratory exam','chest exam','lung exam','auscultation'],
   ['vital signs','vitals','blood pressure','heart rate','observations'],
   ['neurological exam','neuro exam','cranial nerves','power','reflexes'],
+  // Lay ↔ medical symptom vocabulary (search recall — a student should never be blocked by phrasing)
+  ['bowel habit','bowel movement','stool','motion','defecation','change in bowel','stool frequency','opening bowels'],
+  ['diarrhoea','diarrhea','loose stool','loose stools','loose motion','watery stool','frequent stool','the runs','bowel habit'],
+  ['constipation','hard stool','not passing motion','no bowel movement','bowel habit'],
+  ['nausea','vomiting','vomit','vomited','throwing up','throw up','emesis','queasy','being sick'],
+  ['fever','febrile','temperature','pyrexia','feverish','feeling hot','high temperature'],
+  ['shortness of breath','breathlessness','dyspnoea','dyspnea','sob','breathless','difficulty breathing','out of breath'],
+  ['weight loss','losing weight','loss of weight','weight change'],
+  ['appetite','loss of appetite','poor appetite','anorexia','not eating'],
+  ['jaundice','yellow eyes','yellow skin','icterus','yellowing of skin','yellowish'],
+  ['dark urine','tea coloured urine','tea-coloured urine','dark coloured urine','brown urine'],
+  ['pale stool','pale stools','clay stool','clay-coloured stool','white stool'],
+  ['chest pain','chest tightness','chest discomfort','tight chest'],
+  ['abdominal pain','tummy pain','stomach pain','belly pain','abdo pain','stomach ache','tummy ache'],
+  ['fatigue','tiredness','lethargy','tired','malaise','feeling unwell','washed out'],
+  ['dizziness','lightheaded','light-headed','giddy','vertigo'],
+  ['palpitations','heart racing','racing heart','fluttering'],
+  ['bloody stool','blood in stool','pr bleeding','rectal bleeding','melena','melaena','black stool','tarry stool'],
+  ['haematemesis','vomiting blood','coffee ground vomit','blood in vomit'],
+  ['headache','head pain','head ache'],
+  ['rigors','chills','shaking chills','shivering'],
 ];
 function normTxt(s){return(s||'').toLowerCase().replace(/[^a-z0-9\s/]/g,' ').replace(/\s+/g,' ').trim();}
 function lev(a,b){
@@ -814,6 +868,18 @@ function matchItem(query,label,aliases){
   SYN_GROUPS.forEach(g=>{if(g.some(t=>lab.indexOf(normTxt(t))>=0))g.forEach(t=>normTxt(t).split(' ').forEach(w=>expanded.add(w)));});
   const exp=[...expanded].filter(Boolean);
   return q.split(' ').filter(Boolean).every(qt=>exp.some(t=>t===qt||(qt.length>=3&&t.startsWith(qt))||(t.length>=3&&qt.startsWith(t))||(qt.length>=4&&t.length>=4&&lev(t,qt)<=1)));
+}
+// Looser scorer for "did you mean" suggestions: how many query tokens hit (>=1 → a candidate). Never leave the searcher with an empty list.
+function itemMatchScore(query,label,aliases){
+  const q=normTxt(query);if(q.length<2)return 0;
+  const lab=normTxt(label+' '+((aliases||[]).join(' ')));
+  if(lab.indexOf(q)>=0)return 100;
+  const expanded=new Set(lab.split(' '));
+  SYN_GROUPS.forEach(g=>{if(g.some(t=>lab.indexOf(normTxt(t))>=0))g.forEach(t=>normTxt(t).split(' ').forEach(w=>expanded.add(w)));});
+  const exp=[...expanded].filter(Boolean);
+  let hit=0;
+  q.split(' ').filter(Boolean).forEach(qt=>{if(exp.some(t=>t===qt||(qt.length>=3&&t.startsWith(qt))||(t.length>=3&&qt.startsWith(t))||(qt.length>=4&&t.length>=4&&lev(t,qt)<=1)))hit++;});
+  return hit;
 }
 const PAL_CATS=[['history','history','History','HX','Ask: '],['pe','pe','Examination','PE','Examine: '],['basic','basic','Basic investigations','BAS','Order: '],['advanced','advanced','Advanced investigations','ADV','Order: ']];
 function palCatalog(cas){
@@ -850,8 +916,22 @@ function renderPalBody(){
   const bodyEl=document.getElementById('pal-body');if(!bodyEl)return;
   if(q.length<2){palList=[];bodyEl.innerHTML=`<div class="pal-hint">Type at least two letters to search…</div>`;return;}
   const all=palCatalog(cas).filter(it=>matchItem(palQuery,it.lbl,it.aliases));
+  if(!all.length){
+    // No exact match — offer the closest candidates rather than a dead end (his "loose stool couldn't be asked" issue).
+    const sug=palCatalog(cas).map(it=>({it,s:itemMatchScore(palQuery,it.lbl,it.aliases)}))
+      .filter(x=>x.s>0).sort((a,b)=>b.s-a.s||a.it.lbl.length-b.it.lbl.length).slice(0,6).map(x=>x.it);
+    palList=sug;palSel=0;
+    if(!sug.length){bodyEl.innerHTML=`<div class="pal-hint">No matches for “${palQuery}”. Try a symptom, test, or examination in other words.</div>`;return;}
+    let b=`<div class="pal-group">Did you mean…</div>`;
+    sug.forEach((it,i)=>{
+      const tier=it.cat.indexOf('Basic')>=0?'basic':it.cat.indexOf('Advanced')>=0?'advanced':it.cat.toLowerCase();
+      const meta=it.type==='order'?`${it.cat} · ${COST_LBL[it.cost]||''}`:(it.done?'on differential':'add');
+      b+=`<div class="pal-row${i===palSel?' sel':''}${it.done?' done':''}" data-i="${i}" onmouseenter="palSel=${i};palHi()" onclick="palRun(${i})">
+        <span class="pal-ico">${it.icon||'DX'}</span><span class="pal-lbl">${it.done?'✓ ':''}${it.verb||''}${it.lbl}</span><span class="pal-meta">${meta}</span></div>`;
+    });
+    bodyEl.innerHTML=b;return;
+  }
   palList=all;
-  if(!all.length){bodyEl.innerHTML=`<div class="pal-hint">No matches for “${palQuery}”.</div>`;return;}
   const order=['History','Examination','Basic investigations','Advanced investigations','Differential'];
   let idx=0,body='';
   order.forEach(cat=>{
@@ -1337,6 +1417,7 @@ function doItem(stage,id){
   if(sn)G.sigNegsEarned.add(id);
   // M3+ — log the order asked (cumulative chart). Hierarchy is enforced by palette scope.
   if(playerLevel==='m3')G.orderLog.push({id,cat:stage});
+  G._followTail=true; // after an action, scroll to reveal the newest finding (don't reset to top)
   calcLiveScore();render();
 }
 
@@ -1369,7 +1450,7 @@ function mkRankPanel(stage,doneItems){
     <div class="fc-stage">
       <div class="fc-eyebrow">Ranking checkpoint · after ${STAGE_LBL[stage]}</div>
       <div class="fc-prompt">Re-rank your differential</div>
-      <div class="fc-note">${evidence} Drag, or use ▲ ▼, to move the most likely diagnosis to the top.</div>
+      <div class="fc-note">${evidence} Drag, or use ▲ ▼, to move the most likely diagnosis to the top — or ✕ to remove one you've excluded.</div>
       ${active.length
         ?`<div class="fc-list rlist" id="rlist">${buildRItems(active)}</div>`
         :`<div class="fc-empty">No active diagnoses to rank.</div>`
@@ -1395,6 +1476,7 @@ function buildRItems(active){
       <span class="fc-nm">${d.n}</span>
       <span class="fc-tag ${tagCls}">${tagLbl}</span>
       <span class="fc-move"><button onclick="event.stopPropagation();rMove(${i},-1)"${i===0?' disabled':''}>▲</button><button onclick="event.stopPropagation();rMove(${i},1)"${i===n-1?' disabled':''}>▼</button></span>
+      <button class="fc-x" title="Remove from differential" onclick="event.stopPropagation();rRemove(${i})">✕</button>
     </div>`;
   }).join('');
 }
@@ -1403,6 +1485,15 @@ function rMove(i,dir){
   const j=i+dir;if(j<0||j>=act.length)return;
   const t=act[i];act[i]=act[j];act[j]=t;
   G.diff=[...act,...el];reRenderRList();
+}
+function rRemove(i){
+  const act=G.diff.filter(d=>!d.elim),el=G.diff.filter(d=>d.elim);
+  if(i<0||i>=act.length)return;
+  const removed=act.splice(i,1)[0];
+  G.diff=[...act,...el];
+  if(removed&&G.phase1Names)G.phase1Names.delete(removed.n); // keep Phase-1 breadth honest
+  if(act.length)reRenderRList();
+  else{const l=document.getElementById('rlist');if(l)l.outerHTML='<div class="fc-empty">No active diagnoses to rank.</div>';}
 }
 function reRenderRList(){const el=document.getElementById('rlist');if(el)el.innerHTML=buildRItems(G.diff.filter(d=>!d.elim));}
 function rankKeyHandler(e){

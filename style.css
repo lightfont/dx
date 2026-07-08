@@ -1053,6 +1053,31 @@ body.exam .lrow-desc{display:none!important}
 /* Banner stage-advance button — hidden on desktop (the differential rail carries the CTA), shown on mobile */
 .ws-next{display:none;align-items:center;gap:6px;border:none;border-radius:9px;font-family:var(--sans);font-weight:700;font-size:.76rem;line-height:1;padding:9px 14px;white-space:nowrap;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--accent),color-mix(in oklch,var(--accent) 66%,var(--bg)));box-shadow:var(--sh)}
 .ws-next:active{transform:translateY(1px)}
+
+/* Always-visible stage stepper */
+.ws-stepbar{flex-shrink:0;display:flex;justify-content:center;padding:7px 16px;background:color-mix(in oklch,var(--surf2) 40%,var(--surf));border-bottom:1px solid var(--bdr)}
+.ws-stepper{display:flex;align-items:center;gap:0;max-width:640px;width:100%;justify-content:space-between}
+.ws-step{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.ws-step-dot{width:20px;height:20px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;border:1.5px solid var(--bdr2);color:var(--muted);background:var(--surf)}
+.ws-step-lbl{font-size:.76rem;font-weight:600;color:var(--muted);letter-spacing:-.01em}
+.ws-step-sub{color:var(--accent);font-weight:700}
+.ws-step-line{flex:1;height:2px;min-width:14px;margin:0 8px;background:var(--bdr);border-radius:1px}
+.ws-step-line.done{background:var(--accent)}
+.ws-step.done .ws-step-dot{background:var(--accent);border-color:var(--accent);color:#fff}
+.ws-step.done .ws-step-lbl{color:var(--text)}
+.ws-step.active .ws-step-dot{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 3px color-mix(in oklch,var(--accent) 22%,transparent);animation:stepPulse 1.4s ease-in-out}
+.ws-step.active .ws-step-lbl{color:var(--text);font-weight:800}
+@keyframes stepPulse{0%{box-shadow:0 0 0 0 color-mix(in oklch,var(--accent) 40%,transparent)}100%{box-shadow:0 0 0 3px color-mix(in oklch,var(--accent) 22%,transparent)}}
+
+/* Stage-progression toast */
+.stage-toast{position:fixed;left:50%;top:70px;transform:translateX(-50%) translateY(-8px);z-index:60;background:var(--accent);color:#fff;font-weight:700;font-size:.82rem;padding:9px 18px;border-radius:999px;box-shadow:var(--sh-lg);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+.stage-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.stage-toast.hide{opacity:0}
+
+/* Remove-from-differential button in the ranking modal */
+.fc-x{flex-shrink:0;width:24px;height:24px;border-radius:6px;border:1px solid var(--bdr2);background:var(--surf);color:var(--muted);font-size:.72rem;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center}
+.fc-x:hover{border-color:var(--red);color:var(--red);background:color-mix(in oklch,var(--red) 12%,transparent)}
+
 .ws-body{flex:1;display:grid;grid-template-columns:286px 1fr 348px;overflow:hidden}
 
 .ws-chart{border-right:1px solid var(--bdr);background:color-mix(in oklch,var(--surf) 55%,transparent);padding:16px 14px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
@@ -1287,6 +1312,14 @@ body.exam .lrow-desc{display:none!important}
   .ws-mode{order:1}
   .ws-vitals{order:3;flex-basis:100%;border-left:none;border-top:1px solid var(--bdr-soft);overflow-x:auto;-webkit-overflow-scrolling:touch}
   .ws-vital{padding:5px 14px 5px 0;border-right:none;min-width:54px}
+
+  .ws-stepbar{padding:6px 8px}
+  .ws-stepper{gap:0}
+  .ws-step-lbl{font-size:.66rem}
+  .ws-step-sub{display:none}
+  .ws-step-dot{width:17px;height:17px;font-size:.6rem}
+  .ws-step-line{min-width:8px;margin:0 4px}
+  .stage-toast{top:auto;bottom:calc(70px + env(safe-area-inset-bottom));font-size:.78rem}
 
   .ws-body{display:block;flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:calc(72px + env(safe-area-inset-bottom))}
   .ws-chart,.ws-center,.ws-rail{display:none!important;border:none;height:auto;width:100%;overflow:visible}
