@@ -41,16 +41,21 @@ Directly answers the student's friction. Low risk, no scoring changes.
 
 **Verification:** driven in the Launch preview (desktop 1280 + mobile 375). Stepper states + toast + rank-remove + search all confirmed; zero console errors. `validate_cases.py` green; `style.css?v=20260709a`.
 
-## Track 2 — Anatomical differential reasoning (M1/2, NEURO FIRST)  🧭
-Reorganise the M1/2 differential list around the neuro scaffold: **Where** (localise) → **What** (pathology) → **When** (acute/subacute/chronic).
-- **Data:** add `region`/localisation + `tempo` tags to neuro `DIAG_LIB` entries (cortex, basal ganglia, cerebellum, brainstem, cord, root, plexus, peripheral nerve, NMJ, muscle…).
-- **UI:** in M1/2, `openDrawer()` groups by localisation first, pathology/tempo as sub-facets.
-- Pilot in neurology, then generalise the "where→what→when" frame to other systems. **Decided: neuro only first.**
+## Track 2 — Anatomical differential reasoning (M1/2, NEURO FIRST)  ✅ (verified 2026-07-09)
+Reorganises the M1/2 differential library for the **Neurology** system around Dr Derek's "where is the lesion?" scaffold.
+- **`NEURO_LOC` map** (index.html) tags every neuro diagnosis with **CNS / PNS / Other** + a sub-region hint (brain, brainstem, cord, cerebellum / nerve root, plexus, nerve, NMJ, muscle-end-organ). Kept as a separate map so `DIAG_LIB` is untouched.
+- **`renderLib`** groups the Neurology section into **Central / Peripheral / Non-localising** with a "Localise first — where → what → when" caption and a localisation tag pill on each row. All other systems render unchanged. Extracted `libDiagRow()` to avoid duplication.
+- **Decided:** CNS vs PNS first (per Dr Derek); sub-regions shown as tags. Generalising the frame to other systems + adding an explicit acute/chronic (`when`) facet remain future work.
 
-## Track 3 — Merge investigations (merged-but-sectioned)  🧭
-Present a single "Investigations" step; keep Basic → Advanced grouping internally.
-- Touches: stage hierarchy, `getStageItems`, scoring split (`biRel`/`aiPen`), the new stepper, debrief timeline.
-- Keep the "escalate appropriately — don't jump to CT/ERCP" teaching and its scoring. **Decided: build after Track 0/1.**
+## Track 3 — Merge investigations (merged-but-sectioned)  ✅ (verified 2026-07-09)
+One **Investigations** phase; Basic → Advanced kept as sections within it, and internally as separate item categories so scoring is untouched.
+- Stage flow is now History → Examination → **Investigations** → Commit (basic advances straight to commit; `NEXT`, `PREV_STAGE`, `wsPhases`, `p2stages`, `NEXT_SHORT`, `DONE_BTN`, `SKIP_BTN`, `STAGE_RANK` all updated; `advanced` shares rank 3 so it's orderable in the same phase).
+- `wsCenter` renders two sub-sections (`wsOrderSection` helper) for M2; M3 palette includes both tiers. **One rank checkpoint** — `confirmRank` emits `Investigations` plus `Basic Inv`/`Advanced Inv` snapshot aliases so the debrief demotion logic (and every case's `mnmExpectedDemotion`) still resolves with no case edits.
+- Scoring (`biRel`/`aiPen`) unchanged — items still tagged basic/advanced by origin.
+- **Bonus fix:** the commit screen's required-item check now includes `G.done.a`, so a required *advanced* item (e.g. `ai01` ultrasound) is no longer always flagged as missing.
+
+## Item (a) — "Not available yet at this stage"  ✅ (verified 2026-07-09)
+When an M3 search matches an order from a **later** stage, the palette now says **"⏳ Not available yet at this stage — <item> belongs to Investigations. Complete the current step first."** instead of guessing. Real typos still fall through to the "did you mean" suggestions. *(index.html `palLockedOrders`/`STAGE_FRIENDLY`/`renderPalBody`.)*
 
 ## Track 4 — AI integration (PLAN ONLY — do not build yet)  📋
 See full plan in the next section.
@@ -94,6 +99,7 @@ Prototype (flag, one case) → student pilot → evaluate → expand features/ca
 ## Progress log
 - **2026-07-09** — Plan created from Dr Derek's feedback; decisions locked (merged-but-sectioned investigations; AI plan-only; neuro-first anatomical reorg; do Track 0+1 now). Prior same-day work: revised GS pancreatitis (case_006) + corrected biliary-colic teaching (case_005), committed `8e31468`.
 - **2026-07-09** — **Track 1 shipped + browser-verified** (scroll-follow, always-visible stage stepper + toast, remove-in-rank-modal, search "did you mean" + lay-synonym lexicon). **Track 0** review-sheet generator (`case_review_sheet.py`) added. Tracks 2–4 remain deferred per sequencing.
+- **2026-07-09** — **Track 2 + Track 3 + item (a) shipped + browser-verified** (desktop 1300px + mobile). Track 2: neuro library grouped CNS/PNS/Other with localisation tags. Track 3: merged-but-sectioned Investigations (one phase, one checkpoint, scoring intact via snapshot aliases; fixed the required-advanced commit bug). (a): "not available yet at this stage" locked-order hint. `style.css?v=20260709b`; `validate_cases.py` green; console clean across full playthrough → debrief. **Track 4 (AI) remains plan-only** per decision.
 
 ## Open items / needs input
 - Confirm Friday slot with Dr Derek at NUS.
