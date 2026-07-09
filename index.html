@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dx/ — Clinical Reasoning</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20260709b">
+<link rel="stylesheet" href="style.css?v=20260709c">
 <script>
 /* Design compare: "classic" (style.css) · "v2" Obsidian Glass (style2.css) · "v3" Case File (style3.css).
    Runs before paint — no FOUC. Switch via the floating toggle, or ?design=classic|v2|v3 in the URL. */
@@ -1935,7 +1935,13 @@ function renderDebrief(){
 
   // MNM rule-out
   function playerDid(itemId){if(!itemId)return true;return G.done.h.includes(itemId)||G.done.pe.includes(itemId)||G.done.b.includes(itemId)||G.done.a.includes(itemId);}
+  // Did the player ever actually carry this diagnosis on their differential (Phase 1 or added later)?
+  function mnmConsidered(name){
+    if(G.phase1Names&&[...G.phase1Names].some(n=>normMatch(n,name)))return true;
+    return (G.diff||[]).some(d=>normMatch(d.n,name));
+  }
   const mnmHtml=(cas.mnmRuleOut||[]).map(m=>{
+    const considered=mnmConsidered(m.mnm);
     const findings=m.findings.map(f=>{
       const done=playerDid(f.item_id);
       const typeLbl=f.type==='hx'?'History':f.type==='ex'?'Exam':'Investigation';
@@ -1943,7 +1949,9 @@ function renderDebrief(){
       const showAsDone=done||f.type==='hx';
       return'<div class="mnm-f'+(showAsDone?'':' not-done')+'"><span class="mnm-ft '+(showAsDone?typeCls:'')+'">'+typeLbl+'</span><span>'+f.text+'</span>'+(showAsDone?'':'<span class="mnm-not-done-badge">not performed</span>')+'</div>';
     }).join('');
-    return'<div class="mnm-row"><div class="mnm-row-hd"><div class="mnm-row-nm">'+m.mnm+'</div><div class="mnm-status '+m.status+'">'+m.statusLbl+'</div></div><div class="mnm-findings">'+findings+'</div></div>';
+    const consBadge=considered?'':'<span class="mnm-uncons-badge">⚠ Never on your list</span>';
+    const consNote=considered?'':'<div class="mnm-uncons-note">You never added this to your differential, so you didn\'t actively rule it out — your history and examination happened to cover it. The reasoning below is the model answer for how it is excluded.</div>';
+    return'<div class="mnm-row'+(considered?'':' uncons')+'"><div class="mnm-row-hd"><div class="mnm-row-nm">'+m.mnm+consBadge+'</div><div class="mnm-status '+m.status+'">'+m.statusLbl+'</div></div>'+consNote+'<div class="mnm-findings">'+findings+'</div></div>';
   }).join('');
 
   const acats=(cas.approachCats||[]).map(c=>'<div class="acat'+(c.hl?' hl':'')+'"><div class="acat-nm">'+c.name+'</div><div class="acat-eg">'+c.eg+'</div></div>').join('');

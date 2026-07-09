@@ -882,8 +882,11 @@ body.exam .lrow-desc{display:none!important}
 /* MNM rule-out */
 .mnm-row{padding:12px 0;border-bottom:1px solid var(--bdr)}
 .mnm-row:last-child{border-bottom:none}
-.mnm-row-hd{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mnm-row.uncons{border-left:3px solid var(--warn);padding-left:12px;margin-left:-12px;background:color-mix(in oklch,var(--warn) 5%,transparent);border-radius:0 8px 8px 0}
+.mnm-row-hd{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
 .mnm-row-nm{font-size:.86rem;font-weight:700}
+.mnm-uncons-badge{font-size:.62rem;font-weight:800;color:var(--warn);background:color-mix(in oklch,var(--warn) 16%,transparent);border:1px solid color-mix(in oklch,var(--warn) 45%,transparent);padding:1px 7px;border-radius:20px;margin-left:8px;white-space:nowrap}
+.mnm-uncons-note{font-size:.72rem;color:var(--warn);line-height:1.4;margin:0 0 8px;font-style:italic}
 .mnm-status{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:20px}
 .mnm-status.ruled-out{background:var(--gdim);color:var(--green)}
 .mnm-status.ruled-in{background:var(--rdim);color:var(--red)}
