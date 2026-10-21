@@ -105,3 +105,4 @@ Prototype (flag, one case) → student pilot → evaluate → expand features/ca
 - Confirm Friday slot with Dr Derek at NUS.
 - After Track 0/1 land: schedule Track 2 (neuro anatomical reorg) design session with Dr Derek.
 - AICET / Dr Natasha: AI pilot feature confirmation (recommend A), key + cost ownership.
+- **2026-10-21** — Meeting follow-up: prototype **Neuro Explorer (Mode 1, vessel → deficit)** added on branch `neuro-explorer` — `neuro-explorer.html` + `neuro-syndromes.js` (13 vascular syndromes, lesion-side toggle, dominant/non-dominant signs, compare mode, axial / lateral / brainstem schematics). Syndrome table is DRAFT pending Dr Derek's validation.

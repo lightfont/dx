@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dx/ — Neuro Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:oklch(0.158 0.014 258);
+  --surf:oklch(0.198 0.015 258);--surf2:oklch(0.238 0.016 258);--surf3:oklch(0.285 0.017 258);
+  --bdr:oklch(0.305 0.016 258);--bdr2:oklch(0.36 0.016 258);
+  --text:oklch(0.952 0.006 258);--muted:oklch(0.70 0.013 258);--faint:oklch(0.545 0.013 258);
+  --accent:oklch(0.685 0.12 242);--accent-dim:oklch(0.295 0.05 242);
+  --orange:oklch(0.74 0.14 55);--odim:oklch(0.30 0.06 55);
+  --warn:oklch(0.80 0.125 78);--warn-dim:oklch(0.32 0.05 78);
+  --ok:oklch(0.78 0.13 165);--ok-dim:oklch(0.30 0.06 165);
+  --danger:oklch(0.655 0.15 28);--danger-dim:oklch(0.30 0.06 28);
+  --purple:oklch(0.72 0.14 305);--pdim:oklch(0.27 0.05 305);
+  --mono:'JetBrains Mono',monospace;--sans:'Hanken Grotesk',sans-serif;
+  --r:6px;--rl:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer}
+
+.top{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--bdr);background:var(--surf);position:sticky;top:0;z-index:5}
+.brand{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:-.02em}
+.brand span{color:var(--accent)}
+.top .title{font-weight:700}
+.top .back{margin-left:auto;font-size:13px;color:var(--muted);text-decoration:none}
+.top .back:hover{color:var(--text)}
+.draft{margin:14px 20px 0;padding:8px 12px;border:1px solid var(--warn-dim);background:color-mix(in oklch,var(--warn-dim) 45%,transparent);border-radius:var(--r);font-size:13px;color:var(--warn)}
+
+.wrap{display:grid;grid-template-columns:270px 1fr;gap:20px;padding:16px 20px 40px;max-width:1280px;margin:0 auto}
+.side{display:flex;flex-direction:column;gap:14px}
+.grp h3{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin:0 0 6px 4px}
+.syn{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:var(--r);padding:7px 9px;font-size:14px;color:var(--muted)}
+.syn:hover{background:var(--surf2);color:var(--text)}
+.syn.on{background:var(--accent-dim);border-color:color-mix(in oklch,var(--accent) 40%,transparent);color:var(--text)}
+.syn.cmp{background:var(--odim);border-color:color-mix(in oklch,var(--orange) 40%,transparent);color:var(--text)}
+.tag{font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:4px;background:var(--surf3);color:var(--muted);flex:none}
+
+.main{display:flex;flex-direction:column;gap:16px;min-width:0}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden}
+.seg button{background:var(--surf);border:none;padding:7px 12px;font-size:13px;color:var(--muted)}
+.seg button+button{border-left:1px solid var(--bdr)}
+.seg button.on{background:var(--accent-dim);color:var(--text)}
+.seg button:disabled{opacity:.45;cursor:not-allowed}
+label.cmpl{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+select{font:inherit;font-size:13px;background:var(--surf);color:var(--text);border:1px solid var(--bdr);border-radius:var(--r);padding:6px 8px;max-width:260px}
+.note{font-size:12px;color:var(--faint)}
+
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.fig{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:12px}
+.fig h4{font-size:12px;font-family:var(--mono);font-weight:500;color:var(--muted);margin-bottom:6px}
+.fig svg{width:100%;height:auto;display:block;max-height:440px;margin:0 auto}
+.fig .cap{font-size:11.5px;color:var(--faint);margin-top:6px}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+svg .base{fill:var(--surf2);stroke:var(--bdr2);stroke-width:1.2}
+svg .reg{fill:var(--surf3);stroke:var(--bdr2);stroke-width:1}
+svg .reg.hl{fill:color-mix(in oklch,var(--accent) 55%,transparent);stroke:var(--accent);stroke-width:1.6}
+svg .reg.hc{fill:color-mix(in oklch,var(--orange) 50%,transparent);stroke:var(--orange);stroke-width:1.6}
+svg .reg.hb{fill:color-mix(in oklch,var(--purple) 55%,transparent);stroke:var(--purple);stroke-width:1.6}
+svg .line{fill:none;stroke:var(--faint);stroke-width:1;stroke-dasharray:3 3}
+svg text{font-family:var(--mono);fill:var(--muted);font-size:10px}
+svg text.lab{fill:var(--text);font-size:10px;font-weight:500}
+svg text.ori{fill:var(--faint);font-size:9.5px;paint-order:stroke;stroke:var(--surf);stroke-width:3px;stroke-linejoin:round}
+svg .dot{fill:var(--text)}
+
+.cards{display:grid;grid-template-columns:1fr;gap:14px}
+.cards.two{grid-template-columns:1fr 1fr}
+.card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rl);padding:16px 18px;border-top:3px solid var(--accent)}
+.card.c2{border-top-color:var(--orange)}
+.card h2{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.meta .tag{font-size:11px}
+.terr{color:var(--muted);font-size:14px;margin-bottom:12px}
+.sec{margin-top:12px}
+.sec h5{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.pill{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:none;letter-spacing:0}
+.pill.contra{background:var(--accent-dim);color:var(--accent)}
+.pill.ipsi{background:var(--ok-dim);color:var(--ok)}
+.pill.bilat{background:var(--pdim);color:var(--purple)}
+ul.signs{list-style:none;display:flex;flex-direction:column;gap:5px}
+ul.signs li{font-size:14px;padding:6px 10px;background:var(--surf2);border-radius:var(--r);border-left:3px solid var(--bdr2)}
+ul.signs li.key{border-left-color:var(--warn)}
+ul.signs li .k{font-family:var(--mono);font-size:10px;color:var(--warn);margin-left:6px}
+ul.abs li{border-left-color:var(--danger-dim);color:var(--muted)}
+ul.abs li::before{content:'✕ ';color:var(--danger)}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:6px 12px;font-size:14px;margin-top:14px;padding-top:12px;border-top:1px solid var(--bdr)}
+.kv dt{font-family:var(--mono);font-size:11px;color:var(--faint);padding-top:2px}
+.kv dd{color:var(--text)}
+
+@media (max-width:820px){
+  .wrap{grid-template-columns:1fr;padding:12px 16px 32px}
+  .side{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:4px}
+  .grp{flex:none;min-width:230px}
+  .cards.two{grid-template-columns:1fr}
+  .draft{margin:12px 16px 0}
+  .top{padding:12px 16px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">Dx<span>/</span></div>
+  <div class="title">Neuro Explorer · vessel → deficit</div>
+  <a class="back" href="index.html">← Back to cases</a>
+</header>
+<div class="draft">Prototype — syndrome table awaiting clinician validation. Schematic diagrams, not to anatomical scale.</div>
+
+<div class="wrap">
+  <nav class="side" id="side"></nav>
+  <main class="main">
+    <div class="controls">
+      <div class="seg" id="sideSeg" role="group" aria-label="Lesion side">
+        <button data-side="L">Left-sided lesion</button>
+        <button data-side="R">Right-sided lesion</button>
+      </div>
+      <label class="cmpl">Compare with
+        <select id="cmpSel"><option value="">— none —</option></select>
+      </label>
+      <span class="note" id="domNote"></span>
+    </div>
+    <div class="figs" id="figs"></div>
+    <div class="legend" id="legend"></div>
+    <div class="cards" id="cards"></div>
+  </main>
+</div>
+
+<script src="neuro-syndromes.js"></script>
+<script>
+(function(){
+const S = window.NEURO_SYNDROMES || [];
+const byId = Object.fromEntries(S.map(s => [s.id, s]));
+const GROUPS = ['Anterior circulation', 'Posterior circulation', 'Small vessel (lacunar)'];
+const SIDE = { L: 'Left', R: 'Right' };
+const st = { sel: S[0] && S[0].id, cmp: '', side: 'L' };
+
+/* ---------- state <-> URL hash (#id/side/cmp) ---------- */
+function readHash(){
+  const p = location.hash.replace('#', '').split('/');
+  if (byId[p[0]]) st.sel = p[0];
+  if (p[1] === 'L' || p[1] === 'R') st.side = p[1];
+  st.cmp = byId[p[2]] && p[2] !== st.sel ? p[2] : '';
+}
+function writeHash(){
+  const h = '#' + [st.sel, st.side, st.cmp].filter(Boolean).join('/');
+  if (location.hash !== h) history.replaceState(null, '', h);
+}
+
+/* ---------- schematic diagrams ---------- */
+// Highlight map: view -> { L:Set(regions), R:Set(regions) } with a class per layer.
+function hlFor(s, side, cls){
+  const out = {};
+  const sides = s.bilateral ? ['L', 'R'] : [side];
+  for (const view of s.views){
+    const regs = (s.regions[view] || []);
+    out[view] = {};
+    for (const sd of sides) out[view][sd] = regs.map(r => [r, s.bilateral ? 'hb' : cls]);
+  }
+  return out;
+}
+function mergeHl(a, b){
+  const out = JSON.parse(JSON.stringify(a));
+  for (const v in b){ out[v] = out[v] || {};
+    for (const sd in b[v]){ out[v][sd] = (out[v][sd] || []).concat(b[v][sd]); } }
+  return out;
+}
+function cls(hl, view, sd, reg){
+  const list = ((hl[view] || {})[sd] || []).filter(x => x[0] === reg).map(x => x[1]);
+  return 'reg ' + list.join(' ');
+}
+
+// Axial slice, radiological convention: patient's LEFT on the image RIGHT.
+function axial(hl){
+  const half = sd => `
+    <path class="${cls(hl,'axial',sd,'aca')}" d="M160,20 A130,160 0 0 1 215,35 L190,140 L160,140 Z"/>
+    <path class="${cls(hl,'axial',sd,'mca')}" d="M215,35 A130,160 0 0 1 215,325 L190,240 L228,180 L190,140 Z"/>
+    <path class="${cls(hl,'axial',sd,'pca')}" d="M215,325 A130,160 0 0 1 160,340 L160,240 L190,240 Z"/>
+    <ellipse class="${cls(hl,'axial',sd,'deep')}" cx="205" cy="168" rx="19" ry="30"/>
+    <ellipse class="${cls(hl,'axial',sd,'thal')}" cx="176" cy="214" rx="14" ry="21"/>`;
+  const lab = (x, y, t) => `<text class="lab" x="${x}" y="${y}" text-anchor="middle">${t}</text><text class="lab" x="${320-x}" y="${y}" text-anchor="middle">${t}</text>`;
+  return `<svg viewBox="0 0 320 372" role="img" aria-label="Axial brain schematic">
+    <ellipse class="base" cx="160" cy="180" rx="130" ry="160"/>
+    <g>${half('L')}</g>
+    <g transform="translate(320,0) scale(-1,1)">${half('R')}</g>
+    <line class="line" x1="160" y1="20" x2="160" y2="340"/>
+    ${lab(185,80,'ACA')}${lab(258,180,'MCA')}${lab(182,300,'PCA')}${lab(205,171,'BG/IC')}${lab(176,217,'Th')}
+    <text class="ori" x="160" y="13" text-anchor="middle">anterior</text>
+    <text class="ori" x="160" y="366" text-anchor="middle">posterior</text>
+    <text class="ori" x="10" y="184">R</text><text class="ori" x="303" y="184">L</text>
+  </svg>`;
+}
+
+// Lateral surface of one hemisphere. Left hemisphere: frontal pole on the left. Right: mirrored.
+function lateral(hl, sd){
+  const O = 'M40,140 C40,70 110,30 190,30 C270,30 330,80 330,140 C330,175 315,200 290,205 C260,210 240,215 215,225 C185,240 140,235 110,215 C80,200 55,190 45,170 Z';
+  const id = 'clip' + sd + Math.random().toString(36).slice(2, 7);
+  const flip = sd === 'R' ? 'transform="translate(370,0) scale(-1,1)"' : '';
+  const X = x => sd === 'R' ? 370 - x : x;
+  const t = (x, y, s, c) => `<text class="${c||'lab'}" x="${X(x)}" y="${y}" text-anchor="middle">${s}</text>`;
+  return `<svg viewBox="0 0 370 262" role="img" aria-label="${SIDE[sd]} hemisphere lateral schematic">
+    <defs><clipPath id="${id}"><path d="${O}"/></clipPath></defs>
+    <g ${flip}>
+      <rect class="base" x="208" y="210" width="26" height="46" rx="6"/>
+      <ellipse class="base" cx="270" cy="226" rx="44" ry="20"/>
+      <path class="base" d="${O}"/>
+      <g clip-path="url(#${id})">
+        <path class="${cls(hl,'lateral',sd,'mcaSup')}" d="M0,0 L370,0 L370,100 L240,115 C190,135 140,140 95,150 L0,160 Z"/>
+        <path class="${cls(hl,'lateral',sd,'mcaInf')}" d="M0,160 L95,150 C140,140 190,135 240,115 L370,100 L370,262 L0,262 Z"/>
+        <path class="${cls(hl,'lateral',sd,'aca')}" d="M0,0 L300,0 L300,54 C230,46 140,50 50,108 L0,108 Z"/>
+        <path class="${cls(hl,'lateral',sd,'pca')}" d="M268,60 L370,60 L370,262 L150,262 C190,232 228,212 250,180 C262,158 266,118 268,60 Z"/>
+      </g>
+      <path class="line" d="M95,150 C140,140 190,135 240,115"/>
+      <path class="line" d="M200,32 C192,70 186,100 182,132"/>
+      <circle class="dot" cx="108" cy="132" r="3"/><circle class="dot" cx="228" cy="140" r="3"/>
+    </g>
+    ${t(150,90,'MCA sup.')}${t(165,185,'MCA inf.')}${t(120,52,'ACA')}${t(300,150,'PCA')}
+    ${t(108,124,'Broca','ori')}${t(228,156,'Wernicke','ori')}${t(203,24,'central sulcus','ori')}
+    ${t(270,252,'cerebellum','ori')}
+    <text class="ori" x="${sd==='R'?355:15}" y="140" text-anchor="${sd==='R'?'end':'start'}">front</text>
+  </svg>`;
+}
+
+// Brainstem cross-sections (ventral up), radiological convention.
+function brainstem(hl){
+  const L = [['midbrain',84,78,40],['pons',204,100,50],['medulla',324,62,38]];
+  let defs = '', body = '';
+  for (const [lv, cy, rx, ry] of L){
+    const cid = 'bs' + lv;
+    defs += `<clipPath id="${cid}"><ellipse cx="160" cy="${cy}" rx="${rx}" ry="${ry}"/></clipPath>`;
+    const half = sd => `
+      <rect class="${cls(hl,'brainstem',sd,lv+':med')}" x="160" y="${cy-ry}" width="${rx*0.45}" height="${ry*2}"/>
+      <rect class="${cls(hl,'brainstem',sd,lv+':lat')}" x="${160+rx*0.45}" y="${cy-ry}" width="${rx*0.55}" height="${ry*2}"/>`;
+    body += `<ellipse class="base" cx="160" cy="${cy}" rx="${rx}" ry="${ry}"/>
+      <g clip-path="url(#${cid})">${half('L')}<g transform="translate(320,0) scale(-1,1)">${half('R')}</g></g>
+      <line class="line" x1="160" y1="${cy-ry}" x2="160" y2="${cy+ry}"/>
+      <text class="lab" x="160" y="${cy-ry-6}" text-anchor="middle">${lv}</text>
+      <text class="ori" x="${160+rx*0.22}" y="${cy+4}" text-anchor="middle">med</text>
+      <text class="ori" x="${160+rx*0.72}" y="${cy+4}" text-anchor="middle">lat</text>
+      <text class="ori" x="${160-rx*0.22}" y="${cy+4}" text-anchor="middle">med</text>
+      <text class="ori" x="${160-rx*0.72}" y="${cy+4}" text-anchor="middle">lat</text>`;
+  }
+  return `<svg viewBox="0 0 320 372" role="img" aria-label="Brainstem cross-section schematic">
+    <defs>${defs}</defs>${body}
+    <text class="ori" x="160" y="12" text-anchor="middle">ventral (anterior) is up</text>
+    <text class="ori" x="10" y="208">R</text><text class="ori" x="303" y="208">L</text>
+  </svg>`;
+}
+
+function renderFigs(){
+  const s = byId[st.sel], c = byId[st.cmp];
+  let hl = hlFor(s, st.side, 'hl');
+  const views = new Set(s.views);
+  if (c){ hl = mergeHl(hl, hlFor(c, st.side, 'hc')); c.views.forEach(v => views.add(v)); }
+  const out = [];
+  if (views.has('axial')) out.push(`<div class="fig"><h4>Axial slice · level of the internal capsule</h4>${axial(hl)}<p class="cap">Radiological convention: the patient's left is on your right.</p></div>`);
+  if (views.has('lateral')){
+    const sides = (s.bilateral || (c && c.bilateral)) ? ['L','R'] : [st.side];
+    for (const sd of sides) out.push(`<div class="fig"><h4>${SIDE[sd]} hemisphere · lateral surface</h4>${lateral(hl, sd)}<p class="cap">ACA wraps over the vertex onto the medial surface; PCA covers the occipital pole and inferior temporal lobe.</p></div>`);
+  }
+  if (views.has('brainstem')) out.push(`<div class="fig"><h4>Brainstem · cross-sections</h4>${brainstem(hl)}<p class="cap">Medial = motor (corticospinal), medial lemniscus, midline cranial nerves III, VI, XII. Lateral = spinothalamic, trigeminal, sympathetic, cerebellar peduncles, V, VII, VIII, IX, X.</p></div>`);
+  document.getElementById('figs').innerHTML = out.join('');
+  const lg = [`<span><i style="background:var(${s.bilateral ? '--purple' : '--accent'})"></i>${esc(s.name)}</span>`];
+  if (c) lg.push(`<span><i style="background:var(--orange)"></i>${esc(c.name)}</span>`);
+  if (!s.bilateral && c && c.bilateral) lg.push(`<span><i style="background:var(--purple)"></i>bilateral</span>`);
+  document.getElementById('legend').innerHTML = lg.join('');
+}
+
+/* ---------- syndrome card ---------- */
+function esc(t){ return String(t).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
+function card(s, second){
+  const lesion = st.side, opp = lesion === 'L' ? 'R' : 'L';
+  const dom = lesion === 'L';
+  const shown = s.signs.filter(g => !g.hemi || (g.hemi === 'dom') === dom);
+  const grp = (side) => shown.filter(g => g.side === side);
+  const li = g => `<li class="${g.key ? 'key' : ''}">${esc(g.text)}${g.key ? '<span class="k">KEY</span>' : ''}</li>`;
+  const block = (side, title, pill) => {
+    const list = grp(side); if (!list.length) return '';
+    return `<div class="sec"><h5>${title}${pill || ''}</h5><ul class="signs">${list.map(li).join('')}</ul></div>`;
+  };
+  const sideLbl = s.bilateral ? 'Bilateral lesion' : `${SIDE[lesion]}-sided lesion`;
+  return `<article class="card ${second ? 'c2' : ''}">
+    <h2>${esc(s.name)}</h2>
+    <div class="meta"><span class="tag">${esc(s.vessel)}</span><span class="tag">${esc(s.group)}</span><span class="tag">Bamford: ${esc(s.bamford)}</span><span class="tag">${sideLbl}</span></div>
+    <p class="terr">${esc(s.territory)}</p>
+    ${block('contra', 'Opposite side', s.bilateral ? '' : `<span class="pill contra">${SIDE[opp]}</span>`)}
+    ${block('ipsi', 'Same side as lesion', s.bilateral ? '' : `<span class="pill ipsi">${SIDE[lesion]}</span>`)}
+    ${block('bilat', 'Both sides', '<span class="pill bilat">L + R</span>')}
+    ${block('none', 'Not lateralising', '')}
+    ${s.absent && s.absent.length ? `<div class="sec"><h5>Characteristically absent</h5><ul class="signs abs">${s.absent.map(a => `<li>${esc(a)}</li>`).join('')}</ul></div>` : ''}
+    <dl class="kv">
+      <dt>Discriminator</dt><dd>${esc(s.discriminator)}</dd>
+      <dt>Imaging</dt><dd>${esc(s.imaging)}</dd>
+      <dt>Mimic</dt><dd>${esc(s.mimic)}</dd>
+    </dl>
+  </article>`;
+}
+
+/* ---------- sidebar & controls ---------- */
+function renderSide(){
+  document.getElementById('side').innerHTML = GROUPS.map(g => `
+    <div class="grp"><h3>${g}</h3>${S.filter(s => s.group === g).map(s =>
+      `<button class="syn ${s.id === st.sel ? 'on' : ''} ${s.id === st.cmp ? 'cmp' : ''}" data-id="${s.id}"><span>${esc(s.name)}</span><span class="tag">${s.bamford}</span></button>`).join('')}</div>`).join('');
+  const sel = document.getElementById('cmpSel');
+  sel.innerHTML = '<option value="">— none —</option>' + S.filter(s => s.id !== st.sel).map(s => `<option value="${s.id}" ${s.id === st.cmp ? 'selected' : ''}>${esc(s.name)}</option>`).join('');
+}
+function renderControls(){
+  const s = byId[st.sel], c = byId[st.cmp];
+  const allBilat = s.bilateral && (!c || c.bilateral);
+  document.querySelectorAll('#sideSeg button').forEach(b => {
+    b.classList.toggle('on', b.dataset.side === st.side && !allBilat);
+    b.disabled = allBilat;
+  });
+  const cortical = [s, c].some(x => x && x.signs.some(g => g.hemi));
+  document.getElementById('domNote').textContent = cortical
+    ? (st.side === 'L' ? 'Left = dominant hemisphere (language): ~95% of right-handers, most left-handers.' : 'Right = non-dominant hemisphere: neglect and visuospatial signs replace aphasia.')
+    : '';
+}
+function render(){
+  renderSide(); renderControls(); renderFigs();
+  const s = byId[st.sel], c = byId[st.cmp];
+  const cards = document.getElementById('cards');
+  cards.className = 'cards' + (c ? ' two' : '');
+  cards.innerHTML = card(s) + (c ? card(c, true) : '');
+  writeHash();
+}
+
+document.getElementById('side').addEventListener('click', e => {
+  const b = e.target.closest('.syn'); if (!b) return;
+  st.sel = b.dataset.id; if (st.cmp === st.sel) st.cmp = '';
+  render();
+});
+document.getElementById('sideSeg').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || b.disabled) return;
+  st.side = b.dataset.side; render();
+});
+document.getElementById('cmpSel').addEventListener('change', e => { st.cmp = e.target.value; render(); });
+window.addEventListener('hashchange', () => { readHash(); render(); });
+
+readHash(); render();
+})();
+</script>
+</body>
+</html>
